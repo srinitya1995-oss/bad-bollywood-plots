@@ -117,7 +117,8 @@ body{
 .mode-item:hover::after{color:rgba(242,237,228,0.5);right:0.75rem}
 .mode-item:active{transform:scale(0.99)}
 .mode-pip{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.mode-pip-bw{background:var(--red2)}
+/* #13 fix: brighter pip for contrast on dark maroon bg */
+.mode-pip-bw{background:#f87171}
 .mode-pip-tw{background:var(--green2)}
 .mode-pip-all{background:var(--gold)}
 .mode-text-wrap{flex:1}
@@ -150,10 +151,10 @@ body{
 }
 .footer-copy{font-size:11px;color:rgba(242,237,228,0.2)}
 
-/* ── DIFFICULTY ── */
-#difficulty{justify-content:center;padding:2rem 1.25rem}
+/* ── DIFFICULTY — #6 fix: less dead space at top ── */
+#difficulty{justify-content:flex-start;padding:2rem 1.25rem}
 .screen-back{
-  display:flex;align-items:center;gap:6px;margin-bottom:2rem;
+  display:flex;align-items:center;gap:6px;margin-bottom:1rem;
   background:none;border:none;color:rgba(242,237,228,0.4);
   font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0;
 }
@@ -232,8 +233,9 @@ body{
   font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
   letter-spacing:0.05em;color:var(--gold);
 }
-.prog-track{height:1.5px;background:var(--ink3);flex-shrink:0}
-.prog-fill{height:100%;background:var(--gold);transition:width 0.5s ease;will-change:width}
+/* #10 fix: thicker progress bar */
+.prog-track{height:3px;background:var(--ink3);flex-shrink:0}
+.prog-fill{height:100%;background:var(--gold);transition:width 0.5s ease;will-change:width;border-radius:0 2px 2px 0}
 
 /* PLAYER TABS */
 .player-tabs{
@@ -255,11 +257,11 @@ body{
   padding:1px 6px;font-size:10px;color:var(--gold);
 }
 
-/* CARD STAGE */
+/* CARD STAGE — #1 fix: push card up, sticky buttons at bottom */
 .card-stage{
   flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:1rem 1rem 0.5rem;overflow:hidden;
+  align-items:center;justify-content:flex-start;
+  padding:1rem 1rem 0;overflow:hidden;
   position:relative;
 }
 .whose-turn{
@@ -270,12 +272,15 @@ body{
 }
 .whose-turn span{color:var(--gold)}
 
-/* FLIP CARD */
+/* FLIP CARD — #1 fix: taller card, less wasted space */
 .flip-wrap{
   width:100%;max-width:380px;
-  height:clamp(280px,55vh,360px);
+  height:clamp(300px,58vh,420px);
   perspective:1200px;cursor:pointer;margin-bottom:0.75rem;flex-shrink:0;
 }
+/* #14 fix: tap feedback */
+.flip-wrap:active .flip-inner{transform:scale(0.98)}
+.flip-wrap.flipped:active .flip-inner{transform:rotateY(180deg) scale(0.98)}
 .flip-inner{
   width:100%;height:100%;
   transform-style:preserve-3d;
@@ -305,7 +310,8 @@ body{
 /* Back face motifs use card color */
 .face-back .desi-corner.motif-bw{fill:var(--card-bw)}
 .face-back .desi-corner.motif-tw{fill:var(--card-tw)}
-.cf-inner{padding:1.1rem 1.2rem;flex:1;display:flex;flex-direction:column}
+/* #5 fix: more padding so content clears corner motifs */
+.cf-inner{padding:2.2rem 1.6rem 1.6rem;flex:1;display:flex;flex-direction:column}
 .cf-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem}
 .cf-ind{
   font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
@@ -342,9 +348,9 @@ body{
   border-top:0.5px solid var(--border);flex-shrink:0;
 }
 
-/* CARD BACK */
-.face-back{transform:rotateY(180deg);background:var(--cream);display:flex;flex-direction:column}
-.cb-header{padding:1.1rem 1.2rem 0.85rem;flex-shrink:0}
+/* CARD BACK — #2 fix: center content vertically */
+.face-back{transform:rotateY(180deg);background:var(--cream);display:flex;flex-direction:column;justify-content:center}
+.cb-header{padding:2.2rem 1.6rem 0.85rem;flex-shrink:0}
 .cb-ind-label{
   font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
   letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px;
@@ -360,19 +366,21 @@ body{
   letter-spacing:0.1em;text-transform:uppercase;color:rgba(13,13,13,0.4);
 }
 .cb-divider{height:0.5px;background:rgba(13,13,13,0.1);margin:0 1.2rem;flex-shrink:0}
-.cb-body{padding:0.75rem 1.2rem;flex:1;overflow:hidden}
+.cb-body{padding:0.75rem 1.6rem;flex:1;overflow:hidden}
 .cb-fact-label{
   font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;
   letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:4px;
 }
 .cb-fact{font-size:12px;line-height:1.6;color:rgba(13,13,13,0.65)}
 
-/* SCORE ZONE */
+/* SCORE ZONE — #1 fix: push to bottom of card stage */
 .score-zone{
   width:100%;max-width:380px;
   opacity:0;pointer-events:none;
   transform:translateY(6px);
   transition:all 0.22s;flex-shrink:0;
+  margin-top:auto;
+  padding-bottom:max(env(safe-area-inset-bottom),0.5rem);
 }
 .score-zone.show{opacity:1;pointer-events:all;transform:translateY(0)}
 .score-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:6px}
@@ -610,8 +618,8 @@ body{
 
     <div class="home-stats">
       <div class="h-stat">
-        <span class="h-stat-n">150</span>
-        <span class="h-stat-l">Cards</span>
+        <span class="h-stat-n">75</span>
+        <span class="h-stat-l">Per deck</span>
       </div>
       <div class="h-stat">
         <span class="h-stat-n">2</span>
@@ -643,7 +651,7 @@ body{
   <div style="padding:max(env(safe-area-inset-top),1rem) 1.25rem 0;flex-shrink:0">
     <button class="screen-back" onclick="show('home')">← Back</button>
   </div>
-  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:1rem 1.25rem">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:1rem 1.25rem">
     <div class="screen-title">Kitna mushkil?</div>
     <div class="screen-sub" id="diff-sub">Bollywood deck</div>
     <div class="diff-list">
@@ -689,13 +697,13 @@ body{
   <div class="player-list" id="player-list"></div>
   <button class="add-player-btn" onclick="addPlayer()" id="add-player-btn">+ Add player</button>
   <button class="mp-start-btn" onclick="startGame()">Start game</button>
-  <button class="ghost-btn" style="background:none;border:none;color:rgba(242,237,228,0.25);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;padding:0.5rem;margin-top:0.25rem" onclick="startGame()">Skip — play solo</button>
+  <!-- #8 fix: removed redundant "Skip — play solo" (Start Game handles both) -->
 </div>
 
 <!-- ══ GAME ══ -->
 <div id="game" class="screen">
   <div class="game-bar">
-    <div class="game-wordmark">BBP</div>
+    <button onclick="if(confirm('Exit game?'))show('home')" style="background:none;border:none;color:rgba(242,237,228,0.35);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0">← Exit</button>
     <div class="game-prog" id="g-prog">1 / 10</div>
     <div class="game-pts" id="g-pts">0 pts</div>
   </div>
@@ -1048,9 +1056,11 @@ function selectMode(m){
   mode=m;
   const labels={BW:'Bollywood deck',TW:'Tollywood deck',ALL:'Full mixed deck'};
   document.getElementById('diff-sub').textContent=labels[m];
+  /* #11 fix: dn-medium → dn-med to match HTML id */
+  const diffIds={all:'dn-all',easy:'dn-easy',medium:'dn-med',hard:'dn-hard'};
   ['all','easy','medium','hard'].forEach(d=>{
     const n=getFiltered(m,d).length;
-    const el=document.getElementById('dn-'+d);
+    const el=document.getElementById(diffIds[d]);
     if(el) el.textContent=n+' cards';
   });
   track('mode_selected',{mode:m});
