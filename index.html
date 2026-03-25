@@ -836,13 +836,11 @@ const POSTHOG_KEY  = 'phc_im021jzJ6Lx5QSvJdSSeVb23IROC0Kpbrs75X2NOzTd';
 const SESSION_ID = 'sp_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const SESSION_START = Date.now();
 
-// PostHog init (lazy — only loads if key is set)
-if(POSTHOG_KEY !== 'phc_im021jzJ6Lx5QSvJdSSeVb23IROC0Kpbrs75X2NOzTd'){
-  const s=document.createElement('script');
-  s.src='https://cdn.jsdelivr.net/npm/posthog-js@1/dist/posthog.min.js';
-  s.onload=()=>{ window.posthog && posthog.init(POSTHOG_KEY,{api_host:'https://app.posthog.com'}); };
-  document.head.appendChild(s);
-}
+// PostHog init — live
+const s=document.createElement('script');
+s.src='https://cdn.jsdelivr.net/npm/posthog-js@1/dist/posthog.min.js';
+s.onload=()=>{ window.posthog && posthog.init(POSTHOG_KEY,{api_host:'https://us.i.posthog.com'}); };
+document.head.appendChild(s);
 
 function track(event,props={}){
   const payload={event,session:SESSION_ID,ts:Date.now()-SESSION_START,...props};
