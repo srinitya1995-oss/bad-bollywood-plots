@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeedhaPlot Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#120808;--ink2:#1e0d0d;--ink3:#2a1515;--ink4:#352020;
+  --cream:#f2ede4;--cream2:#e8e1d5;
+  --gold:#d4a843;--gold2:#e8c070;--gold-dim:rgba(212,168,67,0.12);
+  --red:#6a111a;--red2:#8b1a24;--red-dim:rgba(106,17,26,0.15);
+  --green:#0b3d2c;--green2:#16a34a;--green-dim:rgba(21,128,61,0.12);
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.16);
+  --r:12px;--r-sm:8px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);-webkit-font-smoothing:antialiased}
+
+/* ── SCREENS ── */
+.screen{display:none;flex-direction:column;height:100vh;overflow-y:auto}
+.screen.active{display:flex}
+
+/* ── LOGIN ── */
+#login{align-items:center;justify-content:center;gap:1.5rem;padding:2rem}
+#login h1{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold)}
+#login input{background:var(--ink2);border:1px solid var(--border2);border-radius:var(--r-sm);padding:12px 16px;color:var(--cream);font-size:15px;width:280px;text-align:center}
+#login input:focus{outline:none;border-color:var(--gold)}
+#login button{background:var(--gold);color:var(--ink);border:none;border-radius:var(--r-sm);padding:10px 32px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer}
+.login-error{color:var(--red2);font-size:13px;min-height:20px}
+
+/* ── API KEY ENTRY ── */
+#keys{align-items:center;justify-content:center;gap:1rem;padding:2rem}
+#keys h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold)}
+.key-group{display:flex;flex-direction:column;gap:6px;width:400px;max-width:90vw}
+.key-group label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,237,228,0.4)}
+.key-group input{background:var(--ink2);border:1px solid var(--border2);border-radius:var(--r-sm);padding:10px 14px;color:var(--cream);font-size:13px;font-family:'DM Sans',sans-serif}
+.key-group input:focus{outline:none;border-color:var(--gold)}
+.key-group small{color:rgba(242,237,228,0.3);font-size:11px}
+.key-actions{display:flex;gap:12px;margin-top:0.5rem}
+.key-actions button{background:var(--gold);color:var(--ink);border:none;border-radius:var(--r-sm);padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer}
+.key-actions .btn-skip-keys{background:transparent;color:rgba(242,237,228,0.35);border:1px solid var(--border2)}
+
+/* ── DASHBOARD ── */
+#dashboard{padding:0}
+.dash-header{
+  display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;
+  border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--ink);z-index:10
+}
+.dash-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--gold)}
+.dash-actions{display:flex;gap:8px;align-items:center}
+.dash-actions button{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;color:var(--cream2);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.dash-actions button:hover{border-color:var(--border3)}
+
+/* ── TABS ── */
+.tab-bar{
+  display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 1.5rem;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none
+}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{
+  padding:10px 16px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;color:rgba(242,237,228,0.35);
+  cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s
+}
+.tab:hover{color:rgba(242,237,228,0.6)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── TAB CONTENT ── */
+.tab-content{display:none;padding:1.5rem;flex:1;overflow-y:auto}
+.tab-content.active{display:block}
+
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat-card{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,237,228,0.35);margin-bottom:4px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:800;color:var(--cream)}
+.stat-sub{font-size:12px;color:rgba(242,237,228,0.3);margin-top:2px}
+
+/* ── TABLES ── */
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(242,237,228,0.35);padding:8px 10px;text-align:left;
+  border-bottom:1px solid var(--border2);cursor:pointer;white-space:nowrap;user-select:none
+}
+.data-table th:hover{color:var(--gold)}
+.data-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--cream2)}
+.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+.diff-easy{color:var(--green2)}.diff-medium{color:var(--gold)}.diff-hard{color:var(--red2)}
+.pct-bar{height:6px;border-radius:3px;background:var(--ink4);position:relative;min-width:60px}
+.pct-fill{height:100%;border-radius:3px;position:absolute;left:0;top:0}
+
+/* ── CHARTS ── */
+.chart-box{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:1rem}
+.chart-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(242,237,228,0.4);margin-bottom:12px}
+.bar-chart{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-label{font-size:12px;color:var(--cream2);min-width:90px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:20px;background:var(--ink4);border-radius:4px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 0.4s ease}
+.bar-val{font-size:11px;font-weight:600;color:var(--cream);min-width:36px;text-align:right}
+
+/* ── FEEDBACK ── */
+.comment-card{background:var(--ink3);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;margin-bottom:8px}
+.comment-meta{font-size:11px;color:rgba(242,237,228,0.3);margin-bottom:4px}
+.comment-text{font-size:13px;color:var(--cream2);line-height:1.5}
+.tag-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-right:4px;margin-top:4px}
+.tag-too_easy{background:var(--green-dim);color:var(--green2)}
+.tag-too_hard{background:var(--red-dim);color:var(--red2)}
+.tag-clue_confusing{background:rgba(255,165,0,0.12);color:#f59e0b}
+.tag-clue_clever{background:var(--gold-dim);color:var(--gold)}
+.tag-fact_great{background:rgba(59,130,246,0.12);color:#60a5fa}
+.tag-wrong_info{background:rgba(239,68,68,0.15);color:#ef4444}
+
+/* ── EXPORT ── */
+.export-bar{display:flex;gap:8px;margin-bottom:1rem}
+.export-btn{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 12px;color:var(--cream2);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.export-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── AI CHAT ── */
+.chat-toggle{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:100;
+  background:var(--gold);color:var(--ink);border:none;border-radius:28px;
+  padding:12px 20px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);display:none
+}
+.chat-panel{
+  position:fixed;bottom:5rem;right:1.5rem;z-index:100;width:380px;max-width:calc(100vw - 2rem);
+  height:520px;max-height:calc(100vh - 8rem);background:var(--ink2);border:1px solid var(--border2);
+  border-radius:var(--r);display:none;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.5)
+}
+.chat-header{
+  padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between
+}
+.chat-header-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold)}
+.chat-close{background:none;border:none;color:rgba(242,237,228,0.3);font-size:18px;cursor:pointer}
+.chat-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:12px}
+.chat-msg{max-width:90%;padding:10px 14px;border-radius:var(--r-sm);font-size:13px;line-height:1.5}
+.chat-msg.user{align-self:flex-end;background:var(--ink4);color:var(--cream)}
+.chat-msg.ai{align-self:flex-start;background:var(--ink3);color:var(--cream2)}
+.chat-msg .cost{font-size:10px;color:rgba(242,237,228,0.25);margin-top:6px}
+.chat-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chat-input{flex:1;background:var(--ink);border:1px solid var(--border2);border-radius:var(--r-sm);padding:10px 14px;color:var(--cream);font-size:13px;font-family:'DM Sans',sans-serif}
+.chat-input:focus{outline:none;border-color:var(--gold)}
+.chat-send{background:var(--gold);color:var(--ink);border:none;border-radius:var(--r-sm);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer}
+.chat-send:disabled{opacity:0.4;cursor:not-allowed}
+
+/* ── LOADING ── */
+.loading{color:rgba(242,237,228,0.3);font-size:14px;padding:2rem;text-align:center}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r-sm);padding:10px 20px;color:var(--cream2);font-size:13px;transition:transform 0.3s ease;z-index:200;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── NO-DATA ── */
+.no-data{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;text-align:center;color:rgba(242,237,228,0.3);font-size:14px;margin:1rem 0}
+.no-data p{margin-bottom:0.5rem}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div class="screen active" id="login">
+  <h1>SeedhaPlot Admin</h1>
+  <input type="password" id="pwd-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()">
+  <button onclick="doLogin()">Enter</button>
+  <div class="login-error" id="login-error"></div>
+</div>
+
+<!-- ── API KEY ENTRY ── -->
+<div class="screen" id="keys">
+  <h2>Connect Data Sources</h2>
+  <div class="key-group">
+    <label>PostHog Personal API Key</label>
+    <input type="password" id="key-posthog" placeholder="phx_...">
+    <small>Settings > Personal API Keys in PostHog</small>
+  </div>
+  <div class="key-group">
+    <label>PostHog Project ID</label>
+    <input type="text" id="key-project-id" placeholder="12345">
+    <small>Settings > Project > Project ID</small>
+  </div>
+  <div class="key-group">
+    <label>Anthropic API Key (for AI chat)</label>
+    <input type="password" id="key-anthropic" placeholder="sk-ant-...">
+    <small>Optional — enables the Ask AI feature</small>
+  </div>
+  <div class="key-actions">
+    <button onclick="saveKeys()">Connect & Load Data</button>
+    <button class="btn-skip-keys" onclick="skipKeys()">Use Local Data Only</button>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div class="screen" id="dashboard">
+  <div class="dash-header">
+    <div class="dash-title">SeedhaPlot Admin</div>
+    <div class="dash-actions">
+      <button onclick="refreshData()">Refresh</button>
+      <button onclick="importLocalData()">Import localStorage</button>
+      <button onclick="importFileData()">Import JSON</button>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('engagement')">Engagement</div>
+    <div class="tab" onclick="switchTab('cards')">Cards</div>
+    <div class="tab" onclick="switchTab('feedback')">Feedback</div>
+    <div class="tab" onclick="switchTab('suggestions')">Suggestions</div>
+    <div class="tab" onclick="switchTab('modes')">Modes & Difficulty</div>
+    <div class="tab" onclick="switchTab('devices')">Devices</div>
+    <div class="tab" onclick="switchTab('geo')">Geography</div>
+  </div>
+
+  <!-- ── Engagement ── -->
+  <div class="tab-content active" id="tc-engagement">
+    <div class="stat-grid" id="engagement-stats"></div>
+    <div class="chart-box">
+      <div class="chart-title">Sessions Over Time</div>
+      <canvas id="sessions-chart" height="180"></canvas>
+    </div>
+  </div>
+
+  <!-- ── Cards ── -->
+  <div class="tab-content" id="tc-cards">
+    <div class="export-bar">
+      <button class="export-btn" onclick="exportData('cards','csv')">Export CSV</button>
+      <button class="export-btn" onclick="exportData('cards','json')">Export JSON</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="data-table" id="cards-table">
+        <thead><tr>
+          <th onclick="sortTable('cards','name')">Movie</th>
+          <th onclick="sortTable('cards','industry')">Ind</th>
+          <th onclick="sortTable('cards','difficulty')">Diff</th>
+          <th onclick="sortTable('cards','got')">Got</th>
+          <th onclick="sortTable('cards','miss')">Miss</th>
+          <th onclick="sortTable('cards','skip')">Skip</th>
+          <th onclick="sortTable('cards','total')">Plays</th>
+          <th onclick="sortTable('cards','gotPct')">Got %</th>
+        </tr></thead>
+        <tbody id="cards-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Feedback ── -->
+  <div class="tab-content" id="tc-feedback">
+    <div class="export-bar">
+      <button class="export-btn" onclick="exportData('feedback','csv')">Export CSV</button>
+      <button class="export-btn" onclick="exportData('feedback','json')">Export JSON</button>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Feedback Tags</div>
+      <div id="tag-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-title" style="margin:1rem 0 0.5rem">Recent Comments</div>
+    <div id="comments-list"></div>
+  </div>
+
+  <!-- ── Suggestions ── -->
+  <div class="tab-content" id="tc-suggestions">
+    <div class="export-bar">
+      <button class="export-btn" onclick="exportData('suggestions','csv')">Export CSV</button>
+      <button class="export-btn" onclick="exportData('suggestions','json')">Export JSON</button>
+    </div>
+    <div id="suggestions-content"></div>
+  </div>
+
+  <!-- ── Modes & Difficulty ── -->
+  <div class="tab-content" id="tc-modes">
+    <div class="chart-box">
+      <div class="chart-title">Games by Mode</div>
+      <div id="mode-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Games by Difficulty</div>
+      <div id="diff-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Solo vs Multiplayer</div>
+      <div id="solo-mp-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Player Distribution</div>
+      <div id="player-chart" class="bar-chart"></div>
+    </div>
+  </div>
+
+  <!-- ── Devices ── -->
+  <div class="tab-content" id="tc-devices">
+    <div class="chart-box">
+      <div class="chart-title">Device Type</div>
+      <div id="device-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Browsers</div>
+      <div id="browser-chart" class="bar-chart"></div>
+    </div>
+  </div>
+
+  <!-- ── Geography ── -->
+  <div class="tab-content" id="tc-geo">
+    <div class="stat-grid" id="geo-stats"></div>
+    <div class="chart-box">
+      <div class="chart-title">Countries</div>
+      <div id="country-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Cities</div>
+      <div id="city-chart" class="bar-chart"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── AI CHAT ── -->
+<button class="chat-toggle" id="chat-toggle" onclick="toggleChat()">Ask AI</button>
+<div class="chat-panel" id="chat-panel">
+  <div class="chat-header">
+    <span class="chat-header-title">Ask AI About Your Data</span>
+    <button class="chat-close" onclick="toggleChat()">&times;</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg ai">Ask me anything about your SeedhaPlot data. Try: "Do users need difficulty tiers?" or "Which cards are too easy?"</div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="Ask about your data..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendChat()">
+    <button class="chat-send" id="chat-send" onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Hidden file input -->
+<input type="file" id="file-input" accept=".json" style="display:none" onchange="handleFileImport(event)">
+
+<script>
+// ── CONFIG ──
+// SHA-256 hash of admin password — change this to your own
+// Default password: "seedhaplot" → hash below
+const PWD_HASH = '9f9400c381e40c13da6b5c83425582220c58f24516df594371dbbd5fb31bb284';
+
+// ── STATE ──
+let rawEvents = {};
+let rawFeedback = [];
+let rawSuggestions = [];
+let aggregated = null;
+let cardData = []; // card performance data
+let chatHistory = [];
+let sortState = {};
+
+// ── AUTH ──
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function doLogin() {
+  const pwd = document.getElementById('pwd-input').value;
+  const hash = await sha256(pwd);
+  if (hash === PWD_HASH) {
+    show('keys');
+  } else {
+    document.getElementById('login-error').textContent = 'Wrong password.';
+  }
+}
+
+function saveKeys() {
+  const ph = document.getElementById('key-posthog').value.trim();
+  const pid = document.getElementById('key-project-id').value.trim();
+  const ant = document.getElementById('key-anthropic').value.trim();
+  if (ph) sessionStorage.setItem('ph_key', ph);
+  if (pid) sessionStorage.setItem('ph_project', pid);
+  if (ant) sessionStorage.setItem('ant_key', ant);
+  show('dashboard');
+  if (ant) document.getElementById('chat-toggle').style.display = 'block';
+  loadPostHogData();
+}
+
+function skipKeys() {
+  show('dashboard');
+  const ant = document.getElementById('key-anthropic').value.trim();
+  if (ant) {
+    sessionStorage.setItem('ant_key', ant);
+    document.getElementById('chat-toggle').style.display = 'block';
+  }
+  showNoData();
+}
+
+// ── SCREEN NAV ──
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tc-' + name).classList.add('active');
+}
+
+// ── DATA LOADING ──
+async function loadPostHogData() {
+  const apiKey = sessionStorage.getItem('ph_key');
+  const projectId = sessionStorage.getItem('ph_project');
+  if (!apiKey || !projectId) { showNoData(); return; }
+
+  const eventTypes = ['app_load', 'game_start', 'game_end', 'card_result', 'card_view',
+    'card_flip', 'feedback_submitted', 'suggestion_submitted', 'replay', 'share',
+    'mode_selected', 'diff_selected'];
+
+  for (const ev of eventTypes) {
+    try {
+      rawEvents[ev] = await fetchPHEvents(apiKey, projectId, ev);
+    } catch (e) {
+      console.warn(`Failed ${ev}:`, e);
+      rawEvents[ev] = [];
+    }
+  }
+
+  // Extract feedback and suggestions from PostHog events
+  rawFeedback = (rawEvents['feedback_submitted'] || []).map(e => ({
+    card_id: e.properties?.card || null,
+    card_name: e.properties?.cardName || null,
+    tags: e.properties?.tags || [],
+    text: e.properties?.text || null,
+    type: e.properties?.type || 'card',
+    session_id: e.properties?.session,
+    ts: e.timestamp,
+  }));
+
+  rawSuggestions = (rawEvents['suggestion_submitted'] || []).map(e => ({
+    movie: e.properties?.movie || '',
+    industry: e.properties?.industry || '',
+    session_id: e.properties?.session,
+    ts: e.timestamp,
+  }));
+
+  processAndRender();
+}
+
+async function fetchPHEvents(apiKey, projectId, eventName, limit = 1000) {
+  let all = [];
+  let url = `https://us.i.posthog.com/api/projects/${projectId}/events/?event=${eventName}&limit=100`;
+  while (url && all.length < limit) {
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${apiKey}` } });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const data = await res.json();
+    all = all.concat(data.results || []);
+    url = data.next || null;
+  }
+  return all;
+}
+
+function importLocalData() {
+  // Read from same-origin localStorage
+  try {
+    const events = JSON.parse(localStorage.getItem('sp_events') || '[]');
+    const feedback = JSON.parse(localStorage.getItem('sp_feedback') || '[]');
+    const suggestions = JSON.parse(localStorage.getItem('sp_suggestions') || '[]');
+
+    // Convert flat events to grouped format
+    rawEvents = {};
+    for (const e of events) {
+      const name = e.event;
+      if (!name) continue;
+      if (!rawEvents[name]) rawEvents[name] = [];
+      rawEvents[name].push({ properties: e, timestamp: e.ts ? new Date(e.ts).toISOString() : null });
+    }
+    rawFeedback = feedback;
+    rawSuggestions = suggestions;
+    processAndRender();
+    toast('Loaded from localStorage');
+  } catch (e) {
+    toast('No localStorage data found');
+  }
+}
+
+function importFileData() {
+  document.getElementById('file-input').click();
+}
+
+function handleFileImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.events) rawEvents = data.events;
+      if (data.feedback) rawFeedback = data.feedback;
+      if (data.suggestions) rawSuggestions = data.suggestions;
+      processAndRender();
+      toast('Imported from file');
+    } catch (err) {
+      toast('Invalid JSON file');
+    }
+  };
+  reader.readAsText(file);
+}
+
+async function refreshData() {
+  await loadPostHogData();
+  toast('Data refreshed');
+}
+
+function showNoData() {
+  document.getElementById('engagement-stats').innerHTML = '<div class="no-data"><p>No data loaded yet.</p><p>Connect PostHog, import localStorage, or upload a JSON file.</p></div>';
+}
+
+// ── AGGREGATION ──
+function processAndRender() {
+  const prop = (e, key) => e.properties?.[key] ?? e[key];
+  const evList = (name) => rawEvents[name] || [];
+
+  // Sessions
+  const sessionIds = new Set();
+  for (const list of Object.values(rawEvents)) {
+    for (const e of list) {
+      const sid = prop(e, 'session') || prop(e, 'session_id');
+      if (sid) sessionIds.add(sid);
+    }
+  }
+
+  const gameStarts = evList('game_start');
+  const gameEnds = evList('game_end');
+  const replays = evList('replay');
+  const cardResults = evList('card_result');
+
+  // Card performance
+  const cardPerf = {};
+  for (const e of cardResults) {
+    const cid = prop(e, 'card');
+    if (!cid) continue;
+    if (!cardPerf[cid]) cardPerf[cid] = { id: cid, name: prop(e, 'name') || cid, got: 0, miss: 0, skip: 0, total: 0 };
+    const result = prop(e, 'result');
+    if (result === 'got') cardPerf[cid].got++;
+    else if (result === 'miss') cardPerf[cid].miss++;
+    else if (result === 'skip') cardPerf[cid].skip++;
+    cardPerf[cid].total++;
+  }
+
+  // Enrich with industry/difficulty from card IDs
+  cardData = Object.values(cardPerf).map(c => {
+    c.industry = c.id.startsWith('bw') ? 'BW' : 'TW';
+    c.difficulty = '—';
+    c.gotPct = c.total > 0 ? Math.round((c.got / c.total) * 100) : 0;
+    return c;
+  }).sort((a, b) => b.total - a.total);
+
+  // Mode & difficulty
+  const modes = {};
+  const diffs = {};
+  const playerCounts = {};
+  for (const e of gameStarts) {
+    const m = prop(e, 'mode') || '?';
+    modes[m] = (modes[m] || 0) + 1;
+    const d = prop(e, 'diff') || '?';
+    diffs[d] = (diffs[d] || 0) + 1;
+    const p = prop(e, 'players') || 1;
+    const pk = p === 1 ? 'Solo' : `${p} players`;
+    playerCounts[pk] = (playerCounts[pk] || 0) + 1;
+  }
+
+  // Feedback tags
+  const tagCounts = {};
+  for (const f of rawFeedback) {
+    const tags = f.tags || [];
+    for (const t of tags) tagCounts[t] = (tagCounts[t] || 0) + 1;
+  }
+
+  // Suggestions
+  const suggCounts = {};
+  const suggIndustry = {};
+  for (const s of rawSuggestions) {
+    const name = (s.movie || s.movie_name || '').trim();
+    if (name) suggCounts[name] = (suggCounts[name] || 0) + 1;
+    const ind = s.industry || '?';
+    suggIndustry[ind] = (suggIndustry[ind] || 0) + 1;
+  }
+
+  // Devices
+  const devices = {};
+  const browsers = {};
+  for (const e of evList('app_load')) {
+    const ua = prop(e, 'ua') || prop(e, '$browser') || '';
+    const isMobile = /mobile|android|iphone|ipad/i.test(ua);
+    const devType = isMobile ? 'Mobile' : 'Desktop';
+    devices[devType] = (devices[devType] || 0) + 1;
+    let browser = 'Other';
+    if (/chrome/i.test(ua) && !/edge/i.test(ua)) browser = 'Chrome';
+    else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = 'Safari';
+    else if (/firefox/i.test(ua)) browser = 'Firefox';
+    else if (/edge/i.test(ua)) browser = 'Edge';
+    else if (/samsung/i.test(ua)) browser = 'Samsung';
+    browsers[browser] = (browsers[browser] || 0) + 1;
+  }
+
+  // Geography (PostHog auto-captures $geoip_country_name, $geoip_city_name)
+  const countries = {};
+  const cities = {};
+  for (const e of evList('app_load')) {
+    const country = prop(e, '$geoip_country_name') || prop(e, 'country') || null;
+    const city = prop(e, '$geoip_city_name') || prop(e, 'city') || null;
+    if (country) countries[country] = (countries[country] || 0) + 1;
+    if (city) cities[city] = (cities[city] || 0) + 1;
+  }
+
+  // Solo vs Multiplayer
+  const soloMp = { 'Solo': 0, 'Multiplayer': 0 };
+  for (const e of gameStarts) {
+    const p = prop(e, 'players') || 1;
+    if (p === 1) soloMp['Solo']++;
+    else soloMp['Multiplayer']++;
+  }
+
+  // Sessions over time
+  const sessionDates = {};
+  for (const e of evList('app_load')) {
+    const ts = e.timestamp || prop(e, 'ts');
+    if (!ts) continue;
+    const day = new Date(typeof ts === 'number' ? ts : ts).toISOString().split('T')[0];
+    sessionDates[day] = (sessionDates[day] || 0) + 1;
+  }
+
+  // Store for AI
+  aggregated = {
+    overview: {
+      totalSessions: sessionIds.size,
+      gamesStarted: gameStarts.length,
+      gamesCompleted: gameEnds.length,
+      completionRate: gameStarts.length > 0 ? Math.round((gameEnds.length / gameStarts.length) * 100) + '%' : 'N/A',
+      totalCardsPlayed: cardResults.length,
+      replays: replays.length,
+      totalFeedback: rawFeedback.length,
+      totalSuggestions: rawSuggestions.length,
+    },
+    modeUsage: modes,
+    difficultyUsage: diffs,
+    playerDistribution: playerCounts,
+    feedbackTags: tagCounts,
+    recentComments: rawFeedback.filter(f => f.text || f.comment).slice(-25).map(f => ({
+      card: f.card_name || f.card_id, text: f.text || f.comment, tags: f.tags
+    })),
+    topSuggestions: Object.entries(suggCounts).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([m, c]) => ({ movie: m, count: c })),
+    soloVsMultiplayer: soloMp,
+    geography: { countries, cities: Object.fromEntries(Object.entries(cities).sort((a,b)=>b[1]-a[1]).slice(0,15)) },
+    cardPerformance: {
+      easiest: [...cardData].sort((a, b) => b.gotPct - a.gotPct).slice(0, 10),
+      hardest: [...cardData].sort((a, b) => a.gotPct - b.gotPct).slice(0, 10),
+    },
+  };
+
+  // ── RENDER ──
+  renderEngagement(sessionIds.size, gameStarts.length, gameEnds.length, cardResults.length, replays.length, sessionDates);
+  renderCards();
+  renderFeedback(tagCounts);
+  renderSuggestions(suggCounts, suggIndustry);
+  renderModes(modes, diffs, playerCounts, soloMp);
+  renderDevices(devices, browsers);
+  renderGeo(countries, cities);
+}
+
+// ── RENDER: ENGAGEMENT ──
+function renderEngagement(sessions, starts, ends, cards, replays, timeSeries) {
+  const rate = starts > 0 ? Math.round((ends / starts) * 100) : 0;
+  const replayRate = ends > 0 ? Math.round((replays / ends) * 100) : 0;
+  document.getElementById('engagement-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Sessions</div><div class="stat-val">${sessions}</div></div>
+    <div class="stat-card"><div class="stat-label">Games Started</div><div class="stat-val">${starts}</div></div>
+    <div class="stat-card"><div class="stat-label">Games Completed</div><div class="stat-val">${ends}</div><div class="stat-sub">${rate}% completion</div></div>
+    <div class="stat-card"><div class="stat-label">Cards Played</div><div class="stat-val">${cards}</div></div>
+    <div class="stat-card"><div class="stat-label">Replays</div><div class="stat-val">${replays}</div><div class="stat-sub">${replayRate}% replay rate</div></div>
+    <div class="stat-card"><div class="stat-label">Feedback</div><div class="stat-val">${rawFeedback.length}</div></div>
+  `;
+  drawTimeSeries('sessions-chart', timeSeries);
+}
+
+function drawTimeSeries(canvasId, data) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.parentElement.clientWidth - 32;
+  canvas.width = W;
+  canvas.height = 180;
+  ctx.clearRect(0, 0, W, 180);
+
+  const entries = Object.entries(data).sort((a, b) => a[0].localeCompare(b[0]));
+  if (entries.length === 0) {
+    ctx.fillStyle = 'rgba(242,237,228,0.2)';
+    ctx.font = '13px DM Sans';
+    ctx.textAlign = 'center';
+    ctx.fillText('No time series data', W / 2, 90);
+    return;
+  }
+
+  const maxVal = Math.max(...entries.map(e => e[1]), 1);
+  const pad = { t: 10, r: 10, b: 30, l: 40 };
+  const cw = W - pad.l - pad.r;
+  const ch = 180 - pad.t - pad.b;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.t + (ch / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+  }
+
+  // Line
+  ctx.strokeStyle = '#d4a843';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  entries.forEach((e, i) => {
+    const x = pad.l + (i / Math.max(entries.length - 1, 1)) * cw;
+    const y = pad.t + ch - (e[1] / maxVal) * ch;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Dots
+  ctx.fillStyle = '#d4a843';
+  entries.forEach((e, i) => {
+    const x = pad.l + (i / Math.max(entries.length - 1, 1)) * cw;
+    const y = pad.t + ch - (e[1] / maxVal) * ch;
+    ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+  });
+
+  // Labels
+  ctx.fillStyle = 'rgba(242,237,228,0.3)';
+  ctx.font = '10px DM Sans';
+  ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(entries.length / 6));
+  entries.forEach((e, i) => {
+    if (i % step === 0 || i === entries.length - 1) {
+      const x = pad.l + (i / Math.max(entries.length - 1, 1)) * cw;
+      ctx.fillText(e[0].slice(5), x, 180 - 8); // MM-DD
+    }
+  });
+  ctx.textAlign = 'right';
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.t + (ch / 4) * i;
+    ctx.fillText(Math.round(maxVal - (maxVal / 4) * i), pad.l - 6, y + 4);
+  }
+}
+
+// ── RENDER: CARDS ──
+function renderCards() {
+  const tbody = document.getElementById('cards-tbody');
+  if (cardData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:rgba(242,237,228,0.3);padding:2rem">No card data</td></tr>';
+    return;
+  }
+  tbody.innerHTML = cardData.map(c => `<tr>
+    <td>${c.name}</td>
+    <td>${c.industry}</td>
+    <td><span class="diff-${c.difficulty}">${c.difficulty}</span></td>
+    <td>${c.got}</td>
+    <td>${c.miss}</td>
+    <td>${c.skip}</td>
+    <td>${c.total}</td>
+    <td>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="pct-bar"><div class="pct-fill" style="width:${c.gotPct}%;background:${c.gotPct>70?'var(--green2)':c.gotPct>40?'var(--gold)':'var(--red2)'}"></div></div>
+        ${c.gotPct}%
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+function sortTable(table, key) {
+  if (!sortState[table]) sortState[table] = { key, asc: true };
+  else if (sortState[table].key === key) sortState[table].asc = !sortState[table].asc;
+  else sortState[table] = { key, asc: true };
+
+  const asc = sortState[table].asc;
+  cardData.sort((a, b) => {
+    const va = a[key], vb = b[key];
+    if (typeof va === 'number') return asc ? va - vb : vb - va;
+    return asc ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
+  });
+  renderCards();
+}
+
+// ── RENDER: FEEDBACK ──
+function renderFeedback(tagCounts) {
+  renderBarChart('tag-chart', tagCounts, {
+    too_easy: 'var(--green2)', too_hard: 'var(--red2)', clue_confusing: '#f59e0b',
+    clue_clever: 'var(--gold)', fact_great: '#60a5fa', wrong_info: '#ef4444',
+  });
+
+  const comments = rawFeedback.filter(f => f.text || f.comment);
+  const el = document.getElementById('comments-list');
+  if (comments.length === 0) {
+    el.innerHTML = '<div class="no-data">No text comments yet</div>';
+    return;
+  }
+  el.innerHTML = comments.slice(-30).reverse().map(f => `
+    <div class="comment-card">
+      <div class="comment-meta">${f.card_name || f.card_id || 'General'} ${f.ts ? '&middot; ' + new Date(f.ts).toLocaleDateString() : ''}</div>
+      <div class="comment-text">${escHtml(f.text || f.comment)}</div>
+      ${(f.tags || []).map(t => `<span class="tag-pill tag-${t}">${t.replace('_', ' ')}</span>`).join('')}
+    </div>
+  `).join('');
+}
+
+// ── RENDER: SUGGESTIONS ──
+function renderSuggestions(counts, industry) {
+  const el = document.getElementById('suggestions-content');
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  if (sorted.length === 0) {
+    el.innerHTML = '<div class="no-data">No suggestions yet</div>';
+    return;
+  }
+  el.innerHTML = `
+    <div class="chart-box">
+      <div class="chart-title">Industry Split</div>
+      <div id="sugg-industry-chart" class="bar-chart"></div>
+    </div>
+    <div class="chart-title" style="margin-bottom:0.5rem">Suggested Movies</div>
+    <table class="data-table"><thead><tr><th>Movie</th><th>Requests</th></tr></thead><tbody>
+      ${sorted.map(([m, c]) => `<tr><td>${escHtml(m)}</td><td>${c}</td></tr>`).join('')}
+    </tbody></table>
+  `;
+  renderBarChart('sugg-industry-chart', industry, {
+    BW: 'var(--red2)', TW: 'var(--green2)', Bollywood: 'var(--red2)', Tollywood: 'var(--green2)',
+  });
+}
+
+// ── RENDER: MODES ──
+function renderModes(modes, diffs, players, soloMp) {
+  renderBarChart('mode-chart', modes, { BW: 'var(--red2)', TW: 'var(--green2)', ALL: 'var(--gold)' });
+  renderBarChart('diff-chart', diffs, { all: '#60a5fa', easy: 'var(--green2)', medium: 'var(--gold)', hard: 'var(--red2)' });
+  renderBarChart('solo-mp-chart', soloMp, { Solo: 'var(--gold)', Multiplayer: '#60a5fa' });
+  renderBarChart('player-chart', players, { Solo: 'var(--gold)' });
+}
+
+// ── RENDER: DEVICES ──
+function renderDevices(devices, browsers) {
+  renderBarChart('device-chart', devices, { Mobile: 'var(--gold)', Desktop: '#60a5fa' });
+  renderBarChart('browser-chart', browsers, {
+    Chrome: '#4285f4', Safari: '#5ac8fa', Firefox: '#ff7139', Edge: '#0078d4', Samsung: '#1428a0',
+  });
+}
+
+// ── RENDER: GEOGRAPHY ──
+function renderGeo(countries, cities) {
+  const geoStats = document.getElementById('geo-stats');
+  const countryCount = Object.keys(countries).length;
+  const cityCount = Object.keys(cities).length;
+  const totalGeo = Object.values(countries).reduce((a, b) => a + b, 0);
+  const topCountry = Object.entries(countries).sort((a, b) => b[1] - a[1])[0];
+
+  if (totalGeo === 0) {
+    geoStats.innerHTML = '<div class="no-data"><p>No geographic data yet.</p><p>PostHog captures location automatically — data will appear once users access the game with PostHog connected.</p></div>';
+    return;
+  }
+
+  geoStats.innerHTML = `
+    <div class="stat-card"><div class="stat-label">Countries</div><div class="stat-val">${countryCount}</div></div>
+    <div class="stat-card"><div class="stat-label">Cities</div><div class="stat-val">${cityCount}</div></div>
+    <div class="stat-card"><div class="stat-label">Top Country</div><div class="stat-val" style="font-size:22px">${topCountry ? topCountry[0] : '—'}</div><div class="stat-sub">${topCountry ? topCountry[1] + ' sessions' : ''}</div></div>
+    <div class="stat-card"><div class="stat-label">Geo-tagged Sessions</div><div class="stat-val">${totalGeo}</div></div>
+  `;
+  renderBarChart('country-chart', countries, {
+    'India': 'var(--gold)', 'United States': '#60a5fa', 'United Kingdom': '#5ac8fa',
+    'Canada': '#ef4444', 'Australia': 'var(--green2)', 'Germany': '#f59e0b',
+  });
+  // Show top 15 cities
+  const topCities = Object.fromEntries(Object.entries(cities).sort((a, b) => b[1] - a[1]).slice(0, 15));
+  renderBarChart('city-chart', topCities, {});
+}
+
+// ── BAR CHART HELPER ──
+function renderBarChart(containerId, data, colors = {}) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
+  const max = Math.max(...entries.map(e => e[1]), 1);
+  el.innerHTML = entries.map(([label, val]) => {
+    const pct = Math.round((val / max) * 100);
+    const color = colors[label] || 'var(--gold)';
+    return `<div class="bar-row">
+      <div class="bar-label">${label.replace('_', ' ')}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="bar-val">${val}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── EXPORT ──
+function exportData(type, format) {
+  let data, filename;
+  if (type === 'cards') {
+    data = cardData;
+    filename = `seedhaplot-cards.${format}`;
+  } else if (type === 'feedback') {
+    data = rawFeedback;
+    filename = `seedhaplot-feedback.${format}`;
+  } else if (type === 'suggestions') {
+    data = rawSuggestions;
+    filename = `seedhaplot-suggestions.${format}`;
+  }
+
+  let content;
+  if (format === 'json') {
+    content = JSON.stringify(data, null, 2);
+  } else {
+    // CSV
+    if (!data.length) return;
+    const keys = Object.keys(data[0]);
+    const rows = [keys.join(','), ...data.map(r => keys.map(k => {
+      const v = r[k];
+      if (Array.isArray(v)) return `"${v.join(';')}"`;
+      if (typeof v === 'string' && (v.includes(',') || v.includes('"'))) return `"${v.replace(/"/g, '""')}"`;
+      return v ?? '';
+    }).join(','))];
+    content = rows.join('\n');
+  }
+
+  const blob = new Blob([content], { type: format === 'json' ? 'application/json' : 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  toast(`Exported ${filename}`);
+}
+
+// ── AI CHAT ──
+let chatOpen = false;
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-panel').style.display = chatOpen ? 'flex' : 'none';
+  if (chatOpen) document.getElementById('chat-input').focus();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const question = input.value.trim();
+  if (!question) return;
+  input.value = '';
+
+  const antKey = sessionStorage.getItem('ant_key');
+  if (!antKey) { toast('No Anthropic API key configured'); return; }
+
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML += `<div class="chat-msg user">${escHtml(question)}</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  const sendBtn = document.getElementById('chat-send');
+  sendBtn.disabled = true;
+  sendBtn.textContent = '...';
+
+  try {
+    const dataContext = aggregated ? JSON.stringify(aggregated) : '{"note":"No data loaded yet"}';
+    const sysPrompt = `You are an analytics assistant for SeedhaPlot (Bad Bollywood Plots), a Desi movie trivia party game with Bollywood and Tollywood cards in easy/medium/hard difficulty tiers.\n\nCURRENT DATA:\n${dataContext}\n\nAnalyze this data to answer questions. Be direct. Use numbers. Cite specific cards by name. Keep responses concise (3-5 paragraphs max).`;
+
+    chatHistory.push({ role: 'user', content: question });
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': antKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1024,
+        system: sysPrompt,
+        messages: chatHistory,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`API ${res.status}: ${err}`);
+    }
+
+    const data = await res.json();
+    const answer = data.content[0].text;
+    const usage = data.usage || {};
+    const inputCost = ((usage.input_tokens || 0) / 1_000_000) * 3;
+    const outputCost = ((usage.output_tokens || 0) / 1_000_000) * 15;
+    const totalCost = (inputCost + outputCost).toFixed(4);
+
+    chatHistory.push({ role: 'assistant', content: answer });
+
+    msgs.innerHTML += `<div class="chat-msg ai">${formatAIResponse(answer)}<div class="cost">${usage.input_tokens || '?'}in + ${usage.output_tokens || '?'}out = $${totalCost}</div></div>`;
+  } catch (e) {
+    msgs.innerHTML += `<div class="chat-msg ai" style="color:var(--red2)">Error: ${escHtml(e.message)}</div>`;
+  }
+
+  sendBtn.disabled = false;
+  sendBtn.textContent = 'Send';
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function formatAIResponse(text) {
+  // Basic markdown-like formatting
+  return escHtml(text)
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+// ── UTILS ──
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2600);
+}
+</script>
+</body>
+</html>
