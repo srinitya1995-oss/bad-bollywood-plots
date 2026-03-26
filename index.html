@@ -806,7 +806,7 @@ body{
     </div>
     <textarea class="fb-textarea" id="fb-text" placeholder="Anything else? (optional)"></textarea>
     <button class="fb-submit" onclick="submitFeedback()">Submit feedback</button>
-    <span class="fb-skip" onclick="closeFb()">Skip → next card</span>
+    <span class="fb-skip" id="fb-skip" onclick="closeFb()">Skip → next card</span>
   </div>
 </div>
 
@@ -1244,8 +1244,16 @@ function openFeedback(c){
   feedbackIsGeneral=false;
   document.getElementById('fb-title').textContent='How was this card?';
   document.getElementById('fb-card-name').textContent=c?c.n+' ('+c.y+')':'';
-  document.querySelectorAll('.fb-tag').forEach(t=>t.classList.remove('sel'));
+  // Restore card-specific tags
+  document.getElementById('fb-tags').innerHTML=`
+    <button class="fb-tag" data-v="too_easy" onclick="toggleTag(this)">Too easy</button>
+    <button class="fb-tag" data-v="too_hard" onclick="toggleTag(this)">Too hard</button>
+    <button class="fb-tag" data-v="clue_confusing" onclick="toggleTag(this)">Clue confusing</button>
+    <button class="fb-tag" data-v="clue_clever" onclick="toggleTag(this)">Clue is clever</button>
+    <button class="fb-tag" data-v="fact_great" onclick="toggleTag(this)">Fun fact is great</button>
+    <button class="fb-tag" data-v="wrong_info" onclick="toggleTag(this)">Something's wrong</button>`;
   document.getElementById('fb-text').value='';
+  document.getElementById('fb-skip').textContent='Skip → next card';
   document.getElementById('fb-overlay').classList.add('open');
 }
 function openFeedbackGeneral(){
@@ -1253,8 +1261,16 @@ function openFeedbackGeneral(){
   feedbackPending=null;
   document.getElementById('fb-title').textContent='Share your feedback';
   document.getElementById('fb-card-name').textContent='Tell us what\'s working and what\'s not';
-  document.querySelectorAll('.fb-tag').forEach(t=>t.classList.remove('sel'));
+  // Swap to general-purpose tags
+  document.getElementById('fb-tags').innerHTML=`
+    <button class="fb-tag" data-v="love_it" onclick="toggleTag(this)">Love it</button>
+    <button class="fb-tag" data-v="needs_work" onclick="toggleTag(this)">Needs work</button>
+    <button class="fb-tag" data-v="want_more_cards" onclick="toggleTag(this)">Want more cards</button>
+    <button class="fb-tag" data-v="great_for_parties" onclick="toggleTag(this)">Great for parties</button>
+    <button class="fb-tag" data-v="ui_issue" onclick="toggleTag(this)">UI issue</button>
+    <button class="fb-tag" data-v="bug" onclick="toggleTag(this)">Found a bug</button>`;
   document.getElementById('fb-text').value='';
+  document.getElementById('fb-skip').textContent='Cancel';
   document.getElementById('fb-overlay').classList.add('open');
   track('feedback_opened',{type:'general'});
 }
@@ -1280,7 +1296,7 @@ async function submitFeedback(){
   const local=JSON.parse(localStorage.getItem('sp_feedback')||'[]');
   local.push({...data,ts:new Date().toISOString()});
   localStorage.setItem('sp_feedback',JSON.stringify(local));
-  track('feedback_submitted',{type:data.type,tags,hasText:!!text});
+  track('feedback_submitted',{type:data.type,tags,hasText:!!text,text:text||null,card:data.card_id,cardName:data.card_name});
   toast('Feedback saved. Shukriya!');
   document.getElementById('fb-overlay').classList.remove('open');
   if(!feedbackIsGeneral){idx++;setTimeout(loadCard,80);}
