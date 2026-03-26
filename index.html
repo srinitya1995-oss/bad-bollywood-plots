@@ -703,7 +703,7 @@ body{
 <!-- ══ GAME ══ -->
 <div id="game" class="screen">
   <div class="game-bar">
-    <button onclick="if(confirm('Exit game?'))show('home')" style="background:none;border:none;color:rgba(242,237,228,0.35);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0">← Exit</button>
+    <button onclick="if(confirm('Exit game?')){track('game_exit',{cardsPlayed:idx,totalCards:deck.length,pts:totalPts,mode,diff:selectedDiff});show('home')}" style="background:none;border:none;color:rgba(242,237,228,0.35);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0">← Exit</button>
     <div class="game-prog" id="g-prog">1 / 10</div>
     <div class="game-pts" id="g-pts">0 pts</div>
   </div>
@@ -817,7 +817,12 @@ body{
     <div class="suggest-title">Suggest a movie</div>
     <div class="suggest-sub">We'll write a terrible plot description for it</div>
     <input class="suggest-input" id="suggest-movie" placeholder="Movie name" type="text">
-    <input class="suggest-input" id="suggest-industry" placeholder="Bollywood / Tollywood / Other" type="text">
+    <select class="suggest-input" id="suggest-industry">
+      <option value="" disabled selected>Bollywood / Tollywood / Other</option>
+      <option value="Bollywood">Bollywood</option>
+      <option value="Tollywood">Tollywood</option>
+      <option value="Other">Other</option>
+    </select>
     <div class="suggest-hint">We read every suggestion. If we add it, you'll be in the credits.</div>
     <button class="fb-submit" onclick="submitSuggestion()">Submit suggestion</button>
     <span class="fb-skip" onclick="closeSuggest()">Maybe later</span>
@@ -839,7 +844,13 @@ const SESSION_START = Date.now();
 // PostHog init — live
 const s=document.createElement('script');
 s.src='https://us-assets.i.posthog.com/static/array.js';
-s.onload=()=>{ window.posthog && posthog.init(POSTHOG_KEY,{api_host:'https://us.i.posthog.com'}); };
+s.onload=()=>{
+  if(window.posthog){
+    posthog.init(POSTHOG_KEY,{api_host:'https://us.i.posthog.com',loaded:function(ph){
+      ph.capture('app_load',{event:'app_load',session:SESSION_ID,ts:0,referrer:document.referrer,ua:navigator.userAgent.substring(0,80)});
+    }});
+  }
+};
 document.head.appendChild(s);
 
 function track(event,props={}){
@@ -1223,7 +1234,7 @@ function markCard(got){
     players[currentPlayerIdx].score+=pts;
     updateTabs();
   }
-  track('card_result',{card:c.id,result:got===true?'got':got===false?'miss':'skip',pts:got?pts:0,player:players[currentPlayerIdx]?.name,decideMs});
+  track('card_result',{card:c.id,name:c.n,diff:c.diff,result:got===true?'got':got===false?'miss':'skip',pts:got?pts:0,player:players[currentPlayerIdx]?.name,decideMs});
 
   // Rotate player
   if(players.length>1) currentPlayerIdx=(currentPlayerIdx+1)%players.length;
@@ -1388,7 +1399,7 @@ function toast(msg){
 }
 
 // ── INIT ──
-track('app_load',{referrer:document.referrer,ua:navigator.userAgent.substring(0,80)});
+// app_load now fires in posthog.init loaded callback to avoid race condition
 // Register SW for PWA
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

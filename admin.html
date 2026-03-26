@@ -159,6 +159,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);-
 /* ── NO-DATA ── */
 .no-data{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;text-align:center;color:rgba(242,237,228,0.3);font-size:14px;margin:1rem 0}
 .no-data p{margin-bottom:0.5rem}
+
+/* ── SCROLL HINT ── */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+.table-wrap::after{content:'scroll →';position:sticky;right:0;top:0;display:none;font-size:10px;color:rgba(242,237,228,0.25);padding:4px 8px;pointer-events:none}
+@media(max-width:700px){.table-wrap::after{display:inline}}
+
+/* ── LOADING SPINNER ── */
+.loading-bar{position:fixed;top:0;left:0;width:100%;height:3px;z-index:50;display:none}
+.loading-bar.active{display:block}
+.loading-bar::after{content:'';display:block;height:100%;width:30%;background:var(--gold);animation:loadSlide 1.2s ease-in-out infinite}
+@keyframes loadSlide{0%{transform:translateX(-100%)}50%{transform:translateX(200%)}100%{transform:translateX(400%)}}
 </style>
 </head>
 <body>
@@ -189,6 +200,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);-
     <input type="password" id="key-anthropic" placeholder="sk-ant-...">
     <small>Optional — enables the Ask AI feature</small>
   </div>
+  <label style="display:flex;align-items:center;gap:8px;margin-top:0.5rem;font-size:12px;color:rgba(242,237,228,0.35);cursor:pointer">
+    <input type="checkbox" id="key-remember" style="accent-color:var(--gold)"> Remember keys in this browser
+  </label>
   <div class="key-actions">
     <button onclick="saveKeys()">Connect & Load Data</button>
     <button class="btn-skip-keys" onclick="skipKeys()">Use Local Data Only</button>
@@ -196,6 +210,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);-
 </div>
 
 <!-- ── DASHBOARD ── -->
+<div class="loading-bar" id="loading-bar"></div>
 <div class="screen" id="dashboard">
   <div class="dash-header">
     <div class="dash-title">SeedhaPlot Admin</div>
@@ -231,7 +246,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);-
       <button class="export-btn" onclick="exportData('cards','csv')">Export CSV</button>
       <button class="export-btn" onclick="exportData('cards','json')">Export JSON</button>
     </div>
-    <div style="overflow-x:auto">
+    <div class="table-wrap">
       <table class="data-table" id="cards-table">
         <thead><tr>
           <th onclick="sortTable('cards','name')">Movie</th>
@@ -364,6 +379,17 @@ async function doLogin() {
   const pwd = document.getElementById('pwd-input').value;
   const hash = await sha256(pwd);
   if (hash === PWD_HASH) {
+    // Check for saved keys
+    const saved = localStorage.getItem('sp_admin_keys');
+    if (saved) {
+      try {
+        const keys = JSON.parse(saved);
+        document.getElementById('key-posthog').value = keys.ph || '';
+        document.getElementById('key-project-id').value = keys.pid || '';
+        document.getElementById('key-anthropic').value = keys.ant || '';
+        document.getElementById('key-remember').checked = true;
+      } catch(e) {}
+    }
     show('keys');
   } else {
     document.getElementById('login-error').textContent = 'Wrong password.';
@@ -374,9 +400,13 @@ function saveKeys() {
   const ph = document.getElementById('key-posthog').value.trim();
   const pid = document.getElementById('key-project-id').value.trim();
   const ant = document.getElementById('key-anthropic').value.trim();
+  const remember = document.getElementById('key-remember').checked;
   if (ph) sessionStorage.setItem('ph_key', ph);
   if (pid) sessionStorage.setItem('ph_project', pid);
   if (ant) sessionStorage.setItem('ant_key', ant);
+  if (remember) {
+    localStorage.setItem('sp_admin_keys', JSON.stringify({ph, pid, ant}));
+  }
   show('dashboard');
   if (ant) document.getElementById('chat-toggle').style.display = 'block';
   loadPostHogData();
@@ -410,6 +440,7 @@ async function loadPostHogData() {
   const apiKey = sessionStorage.getItem('ph_key');
   const projectId = sessionStorage.getItem('ph_project');
   if (!apiKey || !projectId) { showNoData(); return; }
+  document.getElementById('loading-bar').classList.add('active');
 
   const eventTypes = ['app_load', 'game_start', 'game_end', 'card_result', 'card_view',
     'card_flip', 'feedback_submitted', 'suggestion_submitted', 'replay', 'share',
@@ -442,6 +473,7 @@ async function loadPostHogData() {
     ts: e.timestamp,
   }));
 
+  document.getElementById('loading-bar').classList.remove('active');
   processAndRender();
 }
 
