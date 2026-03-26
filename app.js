@@ -261,7 +261,11 @@ function renderLives() {
 
 // ─── Card Loading with Transitions ───
 function loadCard(isFirst = false) {
-  if (gameMode === 'party' && idx >= deck.length) { endGame(); return; }
+  if (gameMode === 'party' && idx >= deck.length) {
+    // Offer to keep going instead of hard stop
+    offerContinue();
+    return;
+  }
   if (gameMode === 'endless') {
     if (lives <= 0) { endGame(); return; }
     if (idx >= deck.length) {
@@ -408,6 +412,52 @@ function onTurnReady() {
 }
 
 // ─── End Game & Results ───
+function offerContinue() {
+  // Show a "keep going?" interstitial instead of ending
+  const stage = document.getElementById('card-stage');
+  const scoreZone = document.getElementById('score-zone');
+  if (scoreZone) scoreZone.style.display = 'none';
+
+  // Reuse turn-interstitial for the "keep going?" prompt
+  const interstitial = document.getElementById('turn-interstitial');
+  document.getElementById('turn-name').textContent = `${totalPts} pts`;
+  document.querySelector('.turn-sub').textContent = `${correctCount} of ${idx} correct — keep going?`;
+  interstitial.style.display = '';
+  if (stage) stage.style.display = 'none';
+
+  const readyBtn = document.getElementById('turn-ready-btn');
+  readyBtn.textContent = 'Keep going';
+
+  // Add a "Done" button temporarily
+  let doneBtn = document.getElementById('turn-done-btn');
+  if (!doneBtn) {
+    doneBtn = document.createElement('button');
+    doneBtn.id = 'turn-done-btn';
+    doneBtn.className = 'btn-secondary';
+    doneBtn.style.maxWidth = '200px';
+    doneBtn.textContent = 'See results';
+    readyBtn.parentNode.insertBefore(doneBtn, readyBtn.nextSibling);
+  }
+  doneBtn.style.display = '';
+
+  readyBtn.onclick = () => {
+    interstitial.style.display = 'none';
+    if (stage) stage.style.display = '';
+    readyBtn.textContent = 'Ready';
+    doneBtn.style.display = 'none';
+    // Deal more cards from the remaining pool
+    const moreDeck = buildPartyDeck(mode);
+    deck.push(...moreDeck);
+    loadCard();
+  };
+  doneBtn.onclick = () => {
+    interstitial.style.display = 'none';
+    readyBtn.textContent = 'Ready';
+    doneBtn.style.display = 'none';
+    endGame();
+  };
+}
+
 function endGame() {
   const seenIds = deck.slice(0, idx).map(c => c.id);
   markCardsSeen(seenIds);
@@ -463,11 +513,20 @@ function replayGame() {
 }
 
 function doShare() {
-  const text = `Bad Plots v2: I scored ${totalPts} pts! 🎬\nCan you beat that?\nhttps://seedhaplot.com`;
+  const ind = mode === 'BW' ? 'Bollywood' : 'Tollywood';
+  const emoji = totalPts >= 30 ? '🔥' : totalPts >= 20 ? '💪' : totalPts >= 10 ? '🎬' : '😅';
+  const text = [
+    `${emoji} ${totalPts} pts on Bad Plots!`,
+    `${correctCount}/${idx} ${ind} movies guessed.`,
+    '',
+    'Terrible plots. Real movies.',
+    'Think you can beat that?',
+    'badbollywoodplots.com'
+  ].join('\n');
   if (navigator.share) {
-    navigator.share({ text }).catch(() => {});
+    navigator.share({ title: 'Bad Plots', text }).catch(() => {});
   } else {
-    navigator.clipboard.writeText(text).then(() => toast('Score copied to clipboard!')).catch(() => toast('Could not copy'));
+    navigator.clipboard.writeText(text).then(() => toast('Score copied!')).catch(() => toast('Could not copy'));
   }
 }
 
