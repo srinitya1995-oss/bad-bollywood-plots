@@ -1147,7 +1147,13 @@ function loadCard(){
   isFlipped=false;
   cardStartTime=Date.now();
 
+  // Fix: instantly reset flip (no animation) so next card's back isn't visible
+  const flipInner=document.getElementById('flip-inner');
+  flipInner.style.transition='none';
   document.getElementById('flip-wrap').classList.remove('flipped');
+  // Force reflow then re-enable transition
+  flipInner.offsetHeight;
+  flipInner.style.transition='';
   document.getElementById('score-zone').classList.remove('show');
   document.getElementById('g-bar').style.width=Math.round(idx/deck.length*100)+'%';
   document.getElementById('g-prog').textContent=(idx+1)+' / '+deck.length;
