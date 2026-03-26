@@ -1,0 +1,1492 @@
+[
+  {
+    "id": "bw01",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "90s",
+    "y": "1995",
+    "n": "Dilwale Dulhania Le Jayenge",
+    "f": "Ran continuously at Maratha Mandir for over 25 years. The train that never left.",
+    "c": "\"Boy meets girl. Father says no. They go to Europe anyway. Entire Punjab gives permission eventually.\""
+  },
+  {
+    "id": "bw02",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2001",
+    "n": "Kabhi Khushi Kabhie Gham",
+    "f": "Highest-grossing Bollywood film of 2001. The reason every NRI cries somewhere over the Atlantic.",
+    "c": "\"Eldest son marries a poor girl. Family is devastated. They fly to London to express this devastation at length.\""
+  },
+  {
+    "id": "bw03",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2003",
+    "n": "Kal Ho Na Ho",
+    "f": "SRK played a terminally ill man who meddles in everyone's relationships. Nobody stopped him.",
+    "c": "\"Best friend is in love with your wife. He is also dying. He decides to help arrange the wedding anyway.\""
+  },
+  {
+    "id": "bw04",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "90s",
+    "y": "1997",
+    "n": "Chachi 420",
+    "f": "Kamal Haasan wrote, directed, and starred. A remake of Mrs Doubtfire but considerably more unhinged.",
+    "c": "\"Man disguises as a woman to be his own child's nanny. Sari. Discovery. Redemption. More sari.\""
+  },
+  {
+    "id": "bw05",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2001",
+    "n": "Lagaan",
+    "f": "Oscar-nominated. Aamir Khan spent a full year actually learning cricket.",
+    "c": "\"Village challenges the British Empire to a cricket match to avoid paying taxes. They win. Obviously.\""
+  },
+  {
+    "id": "bw06",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2004",
+    "n": "Swades",
+    "f": "Flopped in 2004. Now considered SRK's finest. The ultimate sleeper film.",
+    "c": "\"NASA engineer returns to his village. Is horrified. Fixes the water supply. Stays. NASA says nothing.\""
+  },
+  {
+    "id": "bw07",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Chak De! India",
+    "f": "SRK waived his fee for this. Said it was the best script he'd read in years.",
+    "c": "\"Women's hockey team hates their coach. Coach has a secret. They win the World Cup. Everyone cries.\""
+  },
+  {
+    "id": "bw08",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "90s",
+    "y": "1994",
+    "n": "Hum Aapke Hain Koun",
+    "f": "A dog named Tuffy had more screen time than half the cast. He earned it.",
+    "c": "\"An entire family attends two weddings across four hours. A dog has a pivotal role in the resolution.\""
+  },
+  {
+    "id": "bw09",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Chennai Express",
+    "f": "Highest-grossing Bollywood film of 2013 at the time. Shot across six states.",
+    "c": "\"Man boards a train to scatter his grandfather's ashes. Accidentally ends up in a Tamil gangster's village. Accidentally gets engaged.\""
+  },
+  {
+    "id": "bw10",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2009",
+    "n": "3 Idiots",
+    "f": "Aamir Khan played a 20-year-old at age 44. Convincingly.",
+    "c": "\"Three college idiots. One is secretly a genius. This is discovered ten years later at a goat farm.\""
+  },
+  {
+    "id": "bw11",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Bajrangi Bhaijaan",
+    "f": "Based loosely on a true story. The real girl was found and returned to Pakistan in 2015.",
+    "c": "\"Extremely honest man tries to return a lost child across a border that does not want to be crossed. Becomes a Pakistani celebrity by accident.\""
+  },
+  {
+    "id": "bw12",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "90s",
+    "y": "1998",
+    "n": "Kuch Kuch Hota Hai",
+    "f": "Karan Johar's directorial debut. Won 8 Filmfare awards. The basketball scene is not realistic.",
+    "c": "\"Man realises he loved his best friend only after she married someone else. His daughter tries to fix this. She is eight.\""
+  },
+  {
+    "id": "bw13",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2001",
+    "n": "Dil Chahta Hai",
+    "f": "Changed how Indian films showed male friendship. Farhan Akhtar's directorial debut.",
+    "c": "\"Three friends graduate and immediately stop agreeing on anything. One falls for a divorcee twice his age. The others are very judgy about this.\""
+  },
+  {
+    "id": "bw14",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "70s",
+    "y": "1975",
+    "n": "Sholay",
+    "f": "The original was shot in 70mm widescreen. Played at one cinema in Mumbai for over five years.",
+    "c": "\"Handicapped man hires two petty criminals to avenge his entire family. The criminals are not prepared for this job.\""
+  },
+  {
+    "id": "bw15",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2003",
+    "n": "Munna Bhai MBBS",
+    "f": "Sanjay Dutt learned to play a doctor by shadowing real doctors at a Mumbai hospital for a month.",
+    "c": "\"Gangster pretends to be a doctor to impress his parents. Accidentally becomes a better doctor than the actual doctors.\""
+  },
+  {
+    "id": "bw16",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Rang De Basanti",
+    "f": "The film sparked real student protests in India. Life imitated art in ways the filmmakers did not expect.",
+    "c": "\"Group of friends make a documentary about freedom fighters and slowly become them. The government does not appreciate this.\""
+  },
+  {
+    "id": "bw17",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Taare Zameen Par",
+    "f": "Aamir Khan directed this. The child actor Darsheel Safary was genuinely dyslexic.",
+    "c": "\"Eight-year-old is sent to boarding school for being difficult. New teacher is the only adult who notices he is struggling. Parents needed a moment.\""
+  },
+  {
+    "id": "bw18",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2014",
+    "n": "Queen",
+    "f": "Kangana Ranaut won the National Award for this. The entire film cost less than most Bollywood item numbers.",
+    "c": "\"Woman gets dumped before her honeymoon. Goes on the honeymoon alone. Returns a completely different person. Ex-fiancé notices.\""
+  },
+  {
+    "id": "bw19",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2014",
+    "n": "PK",
+    "f": "Aamir Khan's highest-grossing film at the time. The nude poster caused significant controversy.",
+    "c": "\"Alien loses his remote control in Rajasthan. Spends the film asking questions about religion that nobody wants to answer.\""
+  },
+  {
+    "id": "bw20",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2011",
+    "n": "Zindagi Na Milegi Dobara",
+    "f": "Filmed entirely in Spain. Every extreme sport shown was done by the actors themselves.",
+    "c": "\"Three friends on a road trip across Spain. Two of them love the same woman. Everyone learns something. Mostly about themselves.\""
+  },
+  {
+    "id": "bw21",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Kabhi Alvida Naa Kehna",
+    "f": "Karan Johar's most controversial film. Addressed marital unhappiness in Indian cinema for the first time at scale.",
+    "c": "\"Two unhappily married people fall in love. Both spouses find out. Karan Johar explores consequences for once.\""
+  },
+  {
+    "id": "bw22",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Jab We Met",
+    "f": "Shahid Kapoor and Kareena were dating during filming and broke up shortly after. The chemistry was real. So was the breakup.",
+    "c": "\"Man tries to get off a train. Woman won't let him. Not because she cares — she just won't stop talking.\""
+  },
+  {
+    "id": "bw23",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "90s",
+    "y": "1994",
+    "n": "Andaz Apna Apna",
+    "f": "Flopped on release. Now considered the greatest Bollywood comedy ever made. It just needed time.",
+    "c": "\"Two broke men both try to marry the same heiress. Neither has a plan. Both plans fail constantly.\""
+  },
+  {
+    "id": "bw24",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2000",
+    "n": "Hera Pheri",
+    "f": "One of the most quoted Bollywood comedies ever. The trio chemistry was entirely improvised on set.",
+    "c": "\"Three failures receive a wrong number call about a kidnapping ransom. Decide to keep the money. This goes poorly.\""
+  },
+  {
+    "id": "bw25",
+    "ind": "BW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2016",
+    "n": "Dangal",
+    "f": "Aamir Khan gained 25 kg and then lost it all for different phases of filming. True story of the Phogat sisters.",
+    "c": "\"Father forces daughters to wrestle. Daughters are furious. They win Olympic gold. Father was right apparently.\""
+  },
+  {
+    "id": "bw26",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "90s",
+    "y": "1998",
+    "n": "Dil Se",
+    "f": "Chaiyya Chaiyya was shot on a moving train roof. AR Rahman. One take.",
+    "c": "\"Journalist falls for a woman who is about to blow something up. He knows this. He escalates anyway.\""
+  },
+  {
+    "id": "bw27",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Om Shanti Om",
+    "f": "Shah Rukh Khan's Om Shanti Om was a tribute to the 70s Bollywood era. 30+ stars appeared in the title song.",
+    "c": "\"Nobody man dies. Comes back with better cheekbones and a film career. Uses both to settle a score.\""
+  },
+  {
+    "id": "bw28",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2018",
+    "n": "Stree",
+    "f": "Shot in Chanderi, a real town in MP. Locals were briefed on the film's plot before production began.",
+    "c": "\"Men in a small town are vanishing during the festival. They write a polite note on their doors asking her to come back tomorrow.\""
+  },
+  {
+    "id": "bw29",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2008",
+    "n": "Jaane Tu Ya Jaane Na",
+    "f": "Imran Khan's debut. A horse played a significant supporting role. Horse's performance was uncontested.",
+    "c": "\"Boy and girl are just friends. Insist on this for two hours. Nobody believes them. They eventually stop believing themselves.\""
+  },
+  {
+    "id": "bw30",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Bhool Bhulaiyaa",
+    "f": "Priyadarshan remake of his own Malayalam film. Vidya Balan's performance in the climax is studied in acting schools.",
+    "c": "\"Family moves into a haunted mansion. Calls a psychiatrist instead of a priest. Psychiatrist makes things significantly worse.\""
+  },
+  {
+    "id": "bw31",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Dil Dhadakne Do",
+    "f": "Zoya Akhtar made the dog the narrator. Aamir Khan voiced the dog. Structural decision of the decade.",
+    "c": "\"Rich family goes on a cruise to fix their failing marriages. The dog is the only one being honest.\""
+  },
+  {
+    "id": "bw32",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2013",
+    "n": "The Lunchbox",
+    "f": "Irrfan Khan and Nimrat Kaur never share a scene. The film runs entirely on that tension.",
+    "c": "\"Wrong delivery address starts a correspondence between two strangers. They write letters. They never meet. Both are fine with this. Both are not fine with this.\""
+  },
+  {
+    "id": "bw33",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2010",
+    "n": "Karthik Calling Karthik",
+    "f": "Farhan Akhtar lost significant weight for this role. The twist was spoiled in the trailer. Nobody noticed until they watched it.",
+    "c": "\"Man receives motivational calls every morning. Calls are working great. Caller is him.\""
+  },
+  {
+    "id": "bw34",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2018",
+    "n": "Andhadhun",
+    "f": "Sriram Raghavan based this on a French short film. The ending deliberately refuses to confirm what really happened.",
+    "c": "\"Man pretends to have a disability. Witnesses something he shouldn't. Cannot reveal what he saw without revealing the lie. Situation worsens weekly.\""
+  },
+  {
+    "id": "bw35",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2009",
+    "n": "Dev D",
+    "f": "Anurag Kashyap's reimagining of Devdas. The only version where Devdas is sympathetic for about 20 minutes.",
+    "c": "\"Man is given unconditional love by two women. Responds by making terrible decisions for two hours. Gets a redemption arc he did not earn.\""
+  },
+  {
+    "id": "bw36",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2011",
+    "n": "Tanu Weds Manu",
+    "f": "Kangana Ranaut stole the film from a lead who had twice her screen time. Critics could not explain how.",
+    "c": "\"Quiet doctor falls for chaotic woman. Everyone tells him she is wrong for him. They marry. Everyone was correct.\""
+  },
+  {
+    "id": "bw37",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2011",
+    "n": "Rockstar",
+    "f": "Ranbir Kapoor learned to actually play guitar for this role. AR Rahman scored it. The grief is real.",
+    "c": "\"Young man wants to be a rockstar but is too happy. Is told he needs to suffer. Suffers enormously. Becomes a rockstar.\""
+  },
+  {
+    "id": "bw38",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Barfi!",
+    "f": "Ranbir Kapoor studied Charlie Chaplin for six months. Priyanka Chopra's performance was entirely physical.",
+    "c": "\"Man cannot speak or hear. Still the most charismatic person in every room he enters. Everyone else is embarrassed by this.\""
+  },
+  {
+    "id": "bw39",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Bhaag Milkha Bhaag",
+    "f": "Farhan Akhtar ran 13km a day for 13 months. His body fat dropped to 4%. Real Milkha Singh cried watching it.",
+    "c": "\"Partition survivor becomes India's fastest man. Loses one race. Never forgives himself. The nation forgave him immediately.\""
+  },
+  {
+    "id": "bw40",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Kahaani",
+    "f": "Filmed entirely on location in Kolkata during Durga Puja. The city becomes the co-star.",
+    "c": "\"Pregnant woman searches for her missing husband in a city that has never heard of him. She is very determined. The city will regret this.\""
+  },
+  {
+    "id": "bw41",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Lootera",
+    "f": "Set in 1953. Vikramaditya Motwane based it on an O. Henry short story. Sonakshi Sinha watches a tree for 40 minutes of screen time.",
+    "c": "\"Man cons a zamindaar's family. Falls genuinely in love with the daughter. Leaves anyway. She watches a tree and waits.\""
+  },
+  {
+    "id": "bw42",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Masaan",
+    "f": "Richa Chadha and Vicky Kaushal's breakthrough. Won two prizes at Cannes. Shot on a Rs 4 crore budget.",
+    "c": "\"Two separate grief stories in Varanasi. They never intersect. The Ganga connects them anyway.\""
+  },
+  {
+    "id": "bw43",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2009",
+    "n": "Love Aaj Kal",
+    "f": "Imtiaz Ali told the same love story twice across two timelines. One of them learns from the other. Barely.",
+    "c": "\"Man celebrates his breakup. Meets an old man who tells him a love story. Realises the story is a warning. Does not heed it.\""
+  },
+  {
+    "id": "bw44",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Dhoom 2",
+    "f": "Hrithik Roshan disguised as the Queen of England in the opening scene. Nobody questioned the casting.",
+    "c": "\"Cop spends the entire film admiring the man he is supposed to arrest. The man is flattered. This is the dynamic.\""
+  },
+  {
+    "id": "bw45",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2015",
+    "n": "NH10",
+    "f": "Anushka Sharma produced and starred. The film went to places Bollywood rarely visited. Critics were unsettled.",
+    "c": "\"Couple on a road trip witnesses something they should not have. They intervene. They are now being hunted. Road trip ends differently than planned.\""
+  },
+  {
+    "id": "bw46",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2016",
+    "n": "Kapoor and Sons",
+    "f": "Rishi Kapoor played a 90-year-old. The prosthetics took six hours to apply every day.",
+    "c": "\"Dysfunctional family reunites because grandfather is dying. Every family secret surfaces in order. Grandfather watches.\""
+  },
+  {
+    "id": "bw47",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2014",
+    "n": "Haider",
+    "f": "Vishal Bhardwaj set Hamlet in Kashmir during the 1990s conflict. The adaptation is scene-for-scene faithful.",
+    "c": "\"Kashmir. Missing father. Suspicious uncle. Mother who may know more than she says. Shakespeare did not set it here but he could have.\""
+  },
+  {
+    "id": "bw48",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Vicky Donor",
+    "f": "John Abraham produced. The film opened a national conversation about sperm donation. Urologist calls were up.",
+    "c": "\"Man is recruited to donate sperm for a fertility clinic. Is very good at this. Wife finds out later. The conversation is difficult.\""
+  },
+  {
+    "id": "bw49",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Paan Singh Tomar",
+    "f": "Irrfan Khan won the National Award. The real Paan Singh Tomar held 7 national records. The sports federation lost his paperwork.",
+    "c": "\"National champion athlete becomes a bandit because the sports federation loses his paperwork. The government created this problem.\""
+  },
+  {
+    "id": "bw50",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2008",
+    "n": "Rab Ne Bana Di Jodi",
+    "f": "Anushka Sharma's debut. SRK changed his entire body language for the alter-ego Raj. Wife does not notice. This says something.",
+    "c": "\"Wife does not recognise her own husband when he changes his hairstyle. Husband uses this to date his own wife. It works for longer than it should.\""
+  },
+  {
+    "id": "bw51",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2010",
+    "n": "Udaan",
+    "f": "Vikramaditya Motwane's debut. Won best film at multiple festivals. The father character became a reference point for cinematic villainy.",
+    "c": "\"Teenager expelled from boarding school is forced to work in his father's factory. Father is the actual villain of this film.\""
+  },
+  {
+    "id": "bw53",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Dhamaal",
+    "f": "Made on a tiny budget. Became one of the highest-grossing comedies of the year. Proof that chaos scales.",
+    "c": "\"Four idiots learn the location of hidden money. Race every other idiot in India to reach it first. Nobody is qualified for this.\""
+  },
+  {
+    "id": "bw54",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2008",
+    "n": "Dostana",
+    "f": "Two men faking a relationship for a flat was considered edgy in 2008. The flat was very nice.",
+    "c": "\"Two men tell one lie to rent a flat. The lie works so well it becomes their entire personality for six months.\""
+  },
+  {
+    "id": "bw55",
+    "ind": "BW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2019",
+    "n": "Article 15",
+    "f": "Based on real caste atrocity cases in UP. The director spent a year researching before writing a single scene.",
+    "c": "\"IPS officer posted to rural UP discovers a caste atrocity being covered up. His colleagues are the ones covering it up.\""
+  },
+  {
+    "id": "bw56",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1995",
+    "n": "Bombay",
+    "f": "Mani Ratnam was attacked at his home after release. AR Rahman's Bollywood debut. Banned in several states.",
+    "c": "\"Hindu-Muslim couple in Bombay. Their city catches fire. A film about love that nobody wanted to make.\""
+  },
+  {
+    "id": "bw57",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1998",
+    "n": "Satya",
+    "f": "Ram Gopal Varma. Manoj Bajpayee's breakthrough. Essentially invented the Mumbai crime film as a genre.",
+    "c": "\"Innocent man arrives in Bombay. Gets absorbed into the underworld. By the end he is the underworld.\""
+  },
+  {
+    "id": "bw58",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Gangs of Wasseypur",
+    "f": "Five and a half hours. Three generations. Anurag Kashyap shot it over 62 days without a single day off.",
+    "c": "\"Three generations of one family spend 70 years trying to kill one other family. Nobody finishes the job. Everyone is also in love with someone inconvenient.\""
+  },
+  {
+    "id": "bw59",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2018",
+    "n": "Tumbaad",
+    "f": "Took 6 years to make. Shot in Pune, Maharashtra and Iceland. The goddess is practical effects, not CGI.",
+    "c": "\"Man visits a cursed goddess every monsoon to steal from her. Goes well for decades. Then takes his son along.\""
+  },
+  {
+    "id": "bw60",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2016",
+    "n": "Raman Raghav 2.0",
+    "f": "Nawazuddin Siddiqui based his character on the real Raman Raghav who terrorised Bombay in the 1960s.",
+    "c": "\"Serial killer meets a cop who might be worse than him. They are fascinated by each other. This is not a buddy film.\""
+  },
+  {
+    "id": "bw61",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Omkara",
+    "f": "Vishal Bhardwaj's second Shakespeare adaptation. The dialect is from western UP. Ajay Devgn studied it for months.",
+    "c": "\"Othello but in UP gang politics and dialect. A sari replaces the handkerchief. Ends the same way.\""
+  },
+  {
+    "id": "bw62",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2020s",
+    "y": "2023",
+    "n": "Animal",
+    "f": "Ranbir Kapoor gained 10 kg for this role. The film runs 3.5 hours. The ending sets up a sequel nobody agreed to.",
+    "c": "\"Man loves his father. Father does not notice. Man escalates.\""
+  },
+  {
+    "id": "bw63",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2018",
+    "n": "Padmaavat",
+    "f": "Sanjay Leela Bhansali was attacked on set. The film was banned in four states before release.",
+    "c": "\"King spends an entire war trying to see one woman's face. She has thoughts about this.\""
+  },
+  {
+    "id": "bw64",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2009",
+    "n": "Gulaal",
+    "f": "Anurag Kashyap shelved this film for four years due to political pressure. Piyush Mishra wrote the lyrics while on set.",
+    "c": "\"Law student arrives in Rajasthan and is absorbed into a royalist political movement. Realises too late what he has joined.\""
+  },
+  {
+    "id": "bw65",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Ugly",
+    "f": "Anurag Kashyap's most underrated film. Every adult in the frame is failing the child. That is the point.",
+    "c": "\"Child goes missing. Father, ex-husband, stepfather, and the cops all suspect each other. Nobody is looking for the child.\""
+  },
+  {
+    "id": "bw66",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2008",
+    "n": "A Wednesday",
+    "f": "Naseeruddin Shah and Anupam Kher. 104 minutes. No filler. Still the most efficient Bollywood thriller made.",
+    "c": "\"Ordinary man calls the police commissioner with a bomb threat. His reasons are not what anyone expects.\""
+  },
+  {
+    "id": "bw67",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2004",
+    "n": "Maqbool",
+    "f": "Vishal Bhardwaj's first Shakespeare adaptation. The witches are corrupt cops who also predict the future. It works.",
+    "c": "\"Macbeth but in the Mumbai underworld. The witches are corrupt cops. Everything else is identical.\""
+  },
+  {
+    "id": "bw68",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2005",
+    "n": "Hazaaron Khwaishein Aisi",
+    "f": "Sudhir Mishra's most personal film. The Emergency-era politics are accurate. The heartbreak is worse.",
+    "c": "\"Three friends. Emergency-era India. One becomes a revolutionary. One becomes the establishment. One watches both and cannot choose.\""
+  },
+  {
+    "id": "bw69",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Dor",
+    "f": "Nagesh Kukunoor directed. Ayesha Takia and Gul Panag. Shot in Rajasthan and Himachal. Two women who should not meet, must.",
+    "c": "\"Two women. One's husband sentenced to death for allegedly killing the other's. One must travel to get the other to forgive.\""
+  },
+  {
+    "id": "bw70",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Shahid",
+    "f": "True story of advocate Shahid Azmi, who was assassinated in 2010. Rajkummar Rao won the National Award.",
+    "c": "\"Criminal lawyer defends the accused while becoming an accused himself. True story. The irony was not lost on him.\""
+  },
+  {
+    "id": "bw71",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Newton",
+    "f": "India's Oscar entry in 2017. A government clerk tries to conduct a fair election in a Naxal-controlled area. Systems resist.",
+    "c": "\"Government clerk is sent to conduct an election in a conflict zone. He insists on doing it properly. Everyone finds this inconvenient.\""
+  },
+  {
+    "id": "bw72",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Talvar",
+    "f": "Meghna Gulzar directed. Based on the Aarushi Talwar case. Irrfan Khan plays the CBI investigator. Three versions of the truth, none satisfying.",
+    "c": "\"A girl is found dead. Three agencies investigate. Each arrives at a different truth. The parents are convicted on the least convincing one.\""
+  },
+  {
+    "id": "bw73",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Mukkabaaz",
+    "f": "Anurag Kashyap's most personal film about caste, love, and boxing. The final match sequence runs 15 uncut minutes.",
+    "c": "\"Boxer falls for his coach's niece. Coach is a powerful upper-caste man. Love and ambition both require the same sacrifice.\""
+  },
+  {
+    "id": "bw74",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2020s",
+    "y": "2022",
+    "n": "Gehraiyaaan",
+    "f": "Shakun Batra. Deepika Padukone. The anxiety is physical. The apartment is the most expensive character in the film.",
+    "c": "\"Woman in a relationship starts another relationship. Both men are connected. The web tightens until someone drowns. Possibly literally.\""
+  },
+  {
+    "id": "bw75",
+    "ind": "BW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2019",
+    "n": "Sonchiriya",
+    "f": "Abhishek Chaubey directed. Sushant Singh Rajput. Shot in the Chambal ravines with real dacoits as extras.",
+    "c": "\"Dacoits in the Chambal ravines protect a girl the police also want. Honour is debated by men with rifles. The landscape does not care.\""
+  },
+  {
+    "id": "tw01",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2003",
+    "n": "Okkadu",
+    "f": "Relaunched Mahesh Babu as a mass hero. Remade in four languages. Bhumika Chawla became a star overnight.",
+    "c": "\"Village rowdy falls for a city girl. Her family is horrified. He defeats everyone in his path. Then does it again.\""
+  },
+  {
+    "id": "tw02",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Pokiri",
+    "f": "Highest-grossing Telugu film of its time. Remade as Wanted in Hindi. Puri Jagannadh wrote and directed.",
+    "c": "\"Undercover cop infiltrates a gang. Falls for the villain's sister. Has to arrest the family he has come to love.\""
+  },
+  {
+    "id": "tw03",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2011",
+    "n": "Dookudu",
+    "f": "Mahesh Babu + Trivikram dialogue = instant box office record. The one-liners became memes within hours.",
+    "c": "\"Cop's estranged son meets his father by chance. Together they catch the villain the father never could. Then feelings happen.\""
+  },
+  {
+    "id": "tw04",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2005",
+    "n": "Athadu",
+    "f": "Trivikram Srinivas wrote this. Considered by many critics to be Mahesh Babu's finest performance.",
+    "c": "\"Trained assassin takes on the identity of a harmless villager. Has to be gentle. Does not know how. Falls in love anyway.\""
+  },
+  {
+    "id": "tw05",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Baahubali: The Beginning",
+    "f": "Shot over five years. Highest-grossing Indian film of its time. The waterfall was entirely CGI.",
+    "c": "\"Foundling raised by a waterfall tribe discovers he might be royalty. Climbs the waterfall to confirm. Correct.\""
+  },
+  {
+    "id": "tw06",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Baahubali: The Conclusion",
+    "f": "The answer to #KattapaKyunMara broke the Indian internet. The film made Rs 1800 crore worldwide.",
+    "c": "\"The question everyone asked for two years is finally answered. The answer raises more questions.\""
+  },
+  {
+    "id": "tw07",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Arjun Reddy",
+    "f": "Shahid Kapoor remade this as Kabir Singh. Both films broke records. Both films started arguments.",
+    "c": "\"Brilliant surgeon self-destructs over a breakup. Everyone watches. Nobody stops him. He is very good looking so this takes longer than it should.\""
+  },
+  {
+    "id": "tw08",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2020s",
+    "y": "2022",
+    "n": "RRR",
+    "f": "S.S. Rajamouli. The Naatu Naatu dance sequence won the Oscar. It took three months to choreograph.",
+    "c": "\"Two freedom fighters meet, become best friends, and discover they are on opposite sides. They dance about it.\""
+  },
+  {
+    "id": "tw09",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2009",
+    "n": "Magadheera",
+    "f": "First Telugu film to use motion capture. The horse sequences were entirely practical. The horse was very brave.",
+    "c": "\"Warrior dies 400 years ago mid-love story. Reincarnates as a stuntman. The love story is still unfinished. He notices.\""
+  },
+  {
+    "id": "tw10",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2020s",
+    "y": "2021",
+    "n": "Pushpa: The Rise",
+    "f": "Allu Arjun spent 6 months on the accent and mannerisms. The hand tilt became a national gesture.",
+    "c": "\"Illegitimate son of a landlord becomes the most powerful red sandalwood smuggler in Andhra. Tilts his hand. Becomes a meme.\""
+  },
+  {
+    "id": "tw11",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2016",
+    "n": "Pelli Choopulu",
+    "f": "Won the National Award for Best Telugu Film. Made on a tiny budget. The food truck was real and operational.",
+    "c": "\"Two people meet for an arranged marriage meeting. Both are trying to escape their families' plans. They accidentally start a food truck.\""
+  },
+  {
+    "id": "tw12",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Fidaa",
+    "f": "Shot largely in and around Warangal. Sai Pallavi did not have a body double for a single scene.",
+    "c": "\"NRI visits Telangana to find a bride. Finds one immediately. She is too much for him. He leaves. He comes back.\""
+  },
+  {
+    "id": "tw13",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2018",
+    "n": "Geetha Govindam",
+    "f": "Vijay Deverakonda and Rashmika Mandanna. The bus scene alone generated 40 million YouTube views.",
+    "c": "\"Man accidentally compromises a girl's reputation on a bus. Spends the rest of the film apologising. She does not accept easily.\""
+  },
+  {
+    "id": "tw14",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2020s",
+    "y": "2020",
+    "n": "Ala Vaikunthapurramuloo",
+    "f": "Allu Arjun starrer. Butta Bomma became the most streamed Telugu song of the year. Babies swapped is the oldest plot. Still works.",
+    "c": "\"Babies swapped at birth. One grows up rich, one grows up poor. Rich father eventually notices something is off.\""
+  },
+  {
+    "id": "tw15",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Bommarillu",
+    "f": "Siddharth's career-defining role. The father-son dynamic was so accurately written that fathers complained.",
+    "c": "\"Overprotected son rebels against controlling father. Falls for a free-spirited girl. Father is the actual obstacle. Father eventually gets it.\""
+  },
+  {
+    "id": "tw16",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Happy Days",
+    "f": "Sekhar Kammula's most loved film. No songs during the film. No villain. Just people. Telugu audiences were disoriented then devoted.",
+    "c": "\"Group of engineering students navigate college. No villain. No item numbers. Just life. Telugu audiences were confused then loved it.\""
+  },
+  {
+    "id": "tw17",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Attarintiki Daredi",
+    "f": "Highest-grossing Telugu film of 2013. Pawan Kalyan's biggest commercial hit. Trivikram Srinivas dialogue.",
+    "c": "\"Grandson goes undercover in his estranged grandfather's house to reunite the family. Grandfather has no idea. Very large house.\""
+  },
+  {
+    "id": "tw18",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Srimanthudu",
+    "f": "Mahesh Babu starrer. The adoption of a village as a CSR concept was modelled on real government schemes.",
+    "c": "\"Billionaire's son adopts a poor village to prove himself. Village has problems. He solves them. Village is grateful. Father is proud.\""
+  },
+  {
+    "id": "tw19",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2018",
+    "n": "Bharat Ane Nenu",
+    "f": "Mahesh Babu played a Chief Minister who uses an app to receive public complaints. The app trended for a week.",
+    "c": "\"Young man inherits the Chief Minister position. Has no political experience. Governs better than everyone before him. Politicians are annoyed.\""
+  },
+  {
+    "id": "tw20",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2015",
+    "n": "Temper",
+    "f": "Jr NTR's transformation from corrupt to principled cop was the most dramatic character arc of that year.",
+    "c": "\"Corrupt cop is forced to confront his worst self after meeting a rape survivor. Becomes a good cop. The transformation is violent.\""
+  },
+  {
+    "id": "tw21",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2000s",
+    "y": "2001",
+    "n": "Kushi",
+    "f": "Pawan Kalyan and Bhoomika Chawla. The hate-to-love formula executed at full Telugu mass-cinema volume.",
+    "c": "\"Two people hate each other from the moment they meet. Stuck together by circumstance. Hate becomes something else. Surprise.\""
+  },
+  {
+    "id": "tw22",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Julayi",
+    "f": "Allu Arjun and Trivikram. The comedy sequences between Allu Arjun and Brahmanandam ran longer than the plot.",
+    "c": "\"Lazy man accidentally gets recruited by both a con man and the cops. Plays both sides. Is surprisingly good at this.\""
+  },
+  {
+    "id": "tw23",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2020s",
+    "y": "2021",
+    "n": "Uppena",
+    "f": "Panja Vaisshnav Tej's debut. The climax on the sea was shot in real waves. Nobody was insured for this.",
+    "c": "\"Fisherman's son falls for a landlord's daughter. Landlord disagrees with his whole body. The sea is involved in the ending.\""
+  },
+  {
+    "id": "tw24",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2020s",
+    "y": "2022",
+    "n": "Ante Sundaraniki",
+    "f": "Naveen Polishetty and Nazriya Fahadh. The lie they construct across two families escalates geometrically.",
+    "c": "\"Hindu boy and Christian girl want to marry. Both families need elaborate convincing. They construct an increasingly complicated lie.\""
+  },
+  {
+    "id": "tw25",
+    "ind": "TW",
+    "diff": "easy",
+    "era": "2010s",
+    "y": "2019",
+    "n": "Jersey",
+    "f": "Nani's career-best performance. Based on a true story. Shahid Kapoor remade it in Hindi. Neither version is easy to finish without crying.",
+    "c": "\"Washed-up cricketer attempts a comeback at 36 to buy his son a jersey. Son does not need the jersey. Dad needs this.\""
+  },
+  {
+    "id": "tw26",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2001",
+    "n": "Nuvvu Naaku Nachavu",
+    "f": "Venkatesh and Bhoomika. One of the first Telugu supernatural comedies. Spawned an entire subgenre.",
+    "c": "\"A ghost is in love with the hero. He is already engaged. She does not care. Very, very persistent ghost.\""
+  },
+  {
+    "id": "tw27",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2005",
+    "n": "Anukokunda Oka Roju",
+    "f": "Charmi's career-defining performance. The thriller structure was unprecedented in mainstream Telugu cinema at the time.",
+    "c": "\"Woman wakes up in a stranger's house with no memory of the previous night. Retraces her steps. Each step is worse than the last.\""
+  },
+  {
+    "id": "tw28",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2006",
+    "n": "Vikramarkudu",
+    "f": "Ravi Teja in a double role. The real cop and the real villager had to be equally convincing. Only one succeeds.",
+    "c": "\"Fierce cop is mistaken for a meek villager and vice versa. Cop has to be meek. Villager has to be fierce. Neither is suited to this.\""
+  },
+  {
+    "id": "tw29",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2009",
+    "n": "Kick",
+    "f": "Ravi Teja starrer. The adrenaline addiction concept was written before it was clinically defined in Telugu mass cinema.",
+    "c": "\"Man is addicted to the feeling of doing something for the first time. This is a quirky trait until it becomes a superpower.\""
+  },
+  {
+    "id": "tw30",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2010",
+    "n": "Khaleja",
+    "f": "Mahesh Babu starrer. The village deity angle was taken completely seriously. The auto-driver did not want this responsibility.",
+    "c": "\"Auto driver is prophesied to be a god by a village. He does not want to be a god. The village insists. He reluctantly becomes a god.\""
+  },
+  {
+    "id": "tw31",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2010",
+    "n": "Leader",
+    "f": "Rana Daggubati's debut. The political idealism felt naïve and then felt necessary. Both at the same time.",
+    "c": "\"Young man accidentally becomes a politician. Turns out to be an honest one. The entire system tries to destroy him for this.\""
+  },
+  {
+    "id": "tw32",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Seethamma Vakitlo Sirimalle Chettu",
+    "f": "Mahesh Babu and Venkatesh together. The family drama ran longer than needed and nobody complained.",
+    "c": "\"Two brothers love the same woman. One steps aside. The other doesn't know this for years. When he finds out, the film earns its runtime.\""
+  },
+  {
+    "id": "tw33",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2014",
+    "n": "1: Nenokkadine",
+    "f": "Mahesh Babu starrer. Sukumar directed. Visually the most ambitious Telugu film of that decade.",
+    "c": "\"Rock star cannot tell what is real and what is a hallucination. Neither can the audience. This is intentional.\""
+  },
+  {
+    "id": "tw34",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2012",
+    "n": "Swamy Ra Ra",
+    "f": "Nikhil Siddhartha and Swathi. Low-budget heist comedy that punched far above its weight.",
+    "c": "\"Small-time thief and a woman on the run are thrown together. Both are lying about everything. They fall in love anyway.\""
+  },
+  {
+    "id": "tw35",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2013",
+    "n": "Mirchi",
+    "f": "Prabhas before Baahubali. The flashback romance is considered one of the finest in Telugu cinema.",
+    "c": "\"Man visits his ancestral village and inherits a decades-old enemy along with the property. Enemy was not listed in the will.\""
+  },
+  {
+    "id": "tw36",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2015",
+    "n": "S/O Satyamurthy",
+    "f": "Allu Arjun starrer. Trivikram wrote the father character as a specific critique of unchecked generosity.",
+    "c": "\"Son of a generous man inherits his father's generosity and also his father's debts. Must repay both. Somehow does.\""
+  },
+  {
+    "id": "tw37",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2016",
+    "n": "Premam (Telugu)",
+    "f": "Remake of the Malayalam original. Vijay Deverakonda in a breakout supporting role. Three love stories, one man.",
+    "c": "\"Man falls in love three times across different decades of his life. Each time he is a different person. Third time it works.\""
+  },
+  {
+    "id": "tw38",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Duvvada Jagannadham",
+    "f": "Allu Arjun played a brahmin priest with absolute commitment. The dual identity gag sustained an entire film.",
+    "c": "\"Devout brahmin priest is secretly a contract killer. Has to keep these two identities separate. At a wedding. Challenging.\""
+  },
+  {
+    "id": "tw39",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2019",
+    "n": "Maharshi",
+    "f": "Mahesh Babu starrer. The NRI-returns-and-fixes-farming plot was earnest in a way Telugu blockbusters rarely allow.",
+    "c": "\"Successful NRI returns to his village after guilt catches up with him. Turns the village into a model farm. Guilt partially resolved.\""
+  },
+  {
+    "id": "tw40",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2020s",
+    "y": "2020",
+    "n": "Colour Photo",
+    "f": "Suhas and Chandini Chowdary. The 1990s period detail was meticulously researched. The ending does not comfort.",
+    "c": "\"Lower-caste boy falls for upper-caste girl in 1990s Andhra. His caste is discovered. The film does not look away from what happens next.\""
+  },
+  {
+    "id": "tw41",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2020s",
+    "y": "2022",
+    "n": "Bheemla Nayak",
+    "f": "Pawan Kalyan and Rana Daggubati. Remake of Ayyappanum Koshiyum. Two men and their ego. That's the film.",
+    "c": "\"Two men of equal stubbornness clash over ego and principle. Nobody backs down. The state suffers. The audience cheers.\""
+  },
+  {
+    "id": "tw42",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2002",
+    "n": "Manmadhudu",
+    "f": "Nagarjuna's biggest commercial hit. The anti-marriage argument is presented so convincingly that the reversal has to work harder.",
+    "c": "\"Committed bachelor with a mission to stay single meets someone who dismantles every argument he has. He argues until he can't.\""
+  },
+  {
+    "id": "tw43",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2005",
+    "n": "Nuvvostanante Nenoddantana",
+    "f": "Siddharth and Trisha. The impossible task structure goes through three iterations. Each one escalates.",
+    "c": "\"Man loves a girl whose family demands an impossible task. He does it. They add another task. He does that too.\""
+  },
+  {
+    "id": "tw44",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2005",
+    "n": "Munna",
+    "f": "Prabhas before the mega-stardom. The rowdy-with-a-heart role that built the template.",
+    "c": "\"Small-time rowdy with a big heart navigates loyalty, love, and violence in equal measure. Survives mostly on instinct.\""
+  },
+  {
+    "id": "tw45",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Tulasi",
+    "f": "Venkatesh starrer. The criminal family versus romance tension was handled with more nuance than the genre usually allows.",
+    "c": "\"Man raised in a criminal family tries to go straight for the woman he loves. Family has other plans. Violence has other plans.\""
+  },
+  {
+    "id": "tw46",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2008",
+    "n": "Parugu",
+    "f": "Allu Arjun and Sheela. The girl's rebellion is treated with more seriousness than the genre usually affords.",
+    "c": "\"Girl runs away from home repeatedly. A man keeps being sent to bring her back. He does. She runs again. He starts to understand why.\""
+  },
+  {
+    "id": "tw47",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2020s",
+    "y": "2021",
+    "n": "Mathu Vadalara",
+    "f": "Sri Simha and Satya. The crime comedy subgenre in Telugu needed exactly this film.",
+    "c": "\"Two broke men accidentally stumble into a murder investigation while trying to recover their stolen money. They are not detectives. It shows.\""
+  },
+  {
+    "id": "tw48",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2016",
+    "n": "Babu Bangaram",
+    "f": "Venkatesh and Nayanthara. The rom-com formula executed at senior star level. The chemistry was real.",
+    "c": "\"Easygoing man falls for a fierce woman. She does not want to fall for him. She falls anyway. He does not notice immediately.\""
+  },
+  {
+    "id": "tw49",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2014",
+    "n": "Manam",
+    "f": "Three generations of the Akkineni family acting together. Akkineni Nageswara Rao's final film. The meta dimension is overwhelming.",
+    "c": "\"Three generations of one family are reincarnations of each other. They all meet. The family reunion is complicated.\""
+  },
+  {
+    "id": "tw50",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2011",
+    "n": "Mirapakay",
+    "f": "Ravi Teja and Richa Gangopadhyay. The hired-troublemaker-falls-in-love plot runs on pure mass energy.",
+    "c": "\"Rowdy is hired to cause problems in a village. Falls for a girl there. Has to stop causing problems. His employer is unhappy.\""
+  },
+  {
+    "id": "tw51",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2008",
+    "n": "Jalsa",
+    "f": "Pawan Kalyan starrer. The family history reveal runs through two decades of backstory in one interval.",
+    "c": "\"Man discovers his girlfriend's family has a complicated history with his family. History is putting it mildly.\""
+  },
+  {
+    "id": "tw52",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Shatamanam Bhavati",
+    "f": "Sharwanand starrer. The grandfather-grandson relationship became the benchmark for sentiment in Telugu commercial cinema.",
+    "c": "\"Grandfather and grandson share a bond that skips a generation. Grandfather's final wish launches the grandson's life. Quietly devastating.\""
+  },
+  {
+    "id": "tw53",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2000s",
+    "y": "2007",
+    "n": "Desamuduru",
+    "f": "Allu Arjun's mass breakthrough. Puri Jagannadh direction. The action sequences were the most expensive in Telugu cinema at that point.",
+    "c": "\"Journalist investigates a crime in a small town. Town does not want to be investigated. He investigates harder.\""
+  },
+  {
+    "id": "tw54",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2010",
+    "n": "Brindavanam",
+    "f": "NTR Jr and Kajal Aggarwal. Trivikram's dialogue made every line quotable. The hero pretends to be a boyfriend and the pretence becomes real.",
+    "c": "\"Man agrees to pretend to be someone's boyfriend to fend off a villain. Meets the real family. Starts feeling things he was not contracted for.\""
+  },
+  {
+    "id": "tw55",
+    "ind": "TW",
+    "diff": "medium",
+    "era": "2010s",
+    "y": "2021",
+    "n": "Rang De",
+    "f": "Nithiin and Keerthy Suresh. The childhood-enemies-to-lovers arc runs on pure physical comedy.",
+    "c": "\"Girl has hated a specific boy since childhood. He moves next door as an adult. She still hates him. He finds this encouraging.\""
+  },
+  {
+    "id": "tw56",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "70s",
+    "y": "1978",
+    "n": "Maro Charithra",
+    "f": "K Balachander directed. Made Kamal Haasan a star in Telugu. The ending destroyed every audience that saw it.",
+    "c": "\"Young couple elope because their families say no. They run as far as they can. They do not make it.\""
+  },
+  {
+    "id": "tw57",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2019",
+    "n": "Brochevarevarura",
+    "f": "Priyadarshi and Sree Vishnu. Made on a small budget. Kickstarted a wave of low-budget Telugu comedies.",
+    "c": "\"Four friends try to cheat in their exams. One has a secret. Every plan fails more spectacularly than the last.\""
+  },
+  {
+    "id": "tw58",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "80s",
+    "y": "1980",
+    "n": "Sankarabharanam",
+    "f": "K Vishwanath directed. Won the National Award. The classical music sequences are performed live, not playback.",
+    "c": "\"Classical musician takes in a woman shunned by society. Teaches her everything. Society disapproves of this too.\""
+  },
+  {
+    "id": "tw59",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "80s",
+    "y": "1983",
+    "n": "Sagara Sangamam",
+    "f": "Kamal Haasan lost 20 kg for this role. The classical dance sequences are considered the finest in Telugu cinema.",
+    "c": "\"Brilliant classical dancer destroys himself with alcohol. His student surpasses him. He watches this happen from a distance.\""
+  },
+  {
+    "id": "tw60",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "80s",
+    "y": "1986",
+    "n": "Swathi Muthyam",
+    "f": "Kamal Haasan won the National Award. The film is still studied in psychology courses as a depiction of intellectual disability.",
+    "c": "\"Intellectually disabled man lives with absolute purity and kindness. The world is not designed for him. He is the best person in it.\""
+  },
+  {
+    "id": "tw61",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "80s",
+    "y": "1989",
+    "n": "Siva",
+    "f": "Ram Gopal Varma's directorial debut. Nagarjuna. The chain fight became a reference point for action choreography.",
+    "c": "\"Student takes on a criminal network that controls his college. This is treated as a reasonable response to ragging.\""
+  },
+  {
+    "id": "tw62",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1991",
+    "n": "Kshana Kshanam",
+    "f": "Ram Gopal Varma direction. Sridevi and Venkatesh. The on-the-run comedy thriller was unprecedented in Telugu.",
+    "c": "\"Woman accidentally witnesses a crime. Man accidentally gets blamed for a different crime. They run together. Neither trusts the other.\""
+  },
+  {
+    "id": "tw63",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1993",
+    "n": "Gaayam",
+    "f": "Mani Ratnam produced. Jagapathi Babu's defining role. The political violence is unflinching.",
+    "c": "\"Young man gets drawn into political violence without fully understanding what he is entering. By the time he understands, it is too late.\""
+  },
+  {
+    "id": "tw64",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1992",
+    "n": "Antham",
+    "f": "Ram Gopal Varma direction. Nagarjuna. The whodunit structure was the most complex Telugu thriller of its decade.",
+    "c": "\"A murder. A detective. A web of people with motive. The solution is not satisfying because reality rarely is.\""
+  },
+  {
+    "id": "tw65",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1998",
+    "n": "Tholi Prema",
+    "f": "Pawan Kalyan's breakthrough. The persistence-as-romance framing aged differently than it was intended.",
+    "c": "\"Boy loves girl. Pursues her for years. She says no repeatedly. He waits. The film thinks this is romantic.\""
+  },
+  {
+    "id": "tw66",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2003",
+    "n": "Tagore",
+    "f": "Chiranjeevi starrer. The corruption-fighting narrative ran three hours and felt necessary for every minute.",
+    "c": "\"Principled man takes on a corrupt system single-handedly. The system is large. He is persistent. One of them has to give.\""
+  },
+  {
+    "id": "tw67",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2000s",
+    "y": "2005",
+    "n": "Chatrapathi",
+    "f": "Prabhas and SS Rajamouli. The mother-son separation premise is executed at maximum melodrama. It earns it.",
+    "c": "\"Mother and son separated during a boat accident. Son grows up on the wrong side of the border. Mother waits. Son fights his way back.\""
+  },
+  {
+    "id": "tw68",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1995",
+    "n": "Gulabi",
+    "f": "JD Chakravarthy starrer. The spirit-seeking-justice subgenre begins here in Telugu cinema.",
+    "c": "\"Woman is murdered. Her spirit cannot rest until justice is served. A man she trusts must serve it. He is reluctant.\""
+  },
+  {
+    "id": "tw69",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "90s",
+    "y": "1996",
+    "n": "Ninne Pelladatha",
+    "f": "Nagarjuna starrer. The disguise-based wooing strategy ran through multiple cities. She kept saying no. The film thought this was funny.",
+    "c": "\"Man woos a woman across several cities using various disguises. She keeps rejecting him. He keeps changing the disguise.\""
+  },
+  {
+    "id": "tw70",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2014",
+    "n": "Rudramadevi",
+    "f": "Anushka Shetty played a queen raised as a prince. The historical accuracy was contested. The performance was not.",
+    "c": "\"Queen raised as a prince must rule a kingdom while hiding her gender. The kingdom has opinions. She ignores them.\""
+  },
+  {
+    "id": "tw71",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2020s",
+    "y": "2019",
+    "n": "Evaru",
+    "f": "Adivi Sesh and Regina Cassandra. The interrogation-room structure holds for the entire runtime. The twist recontextualises everything.",
+    "c": "\"A man is found dead. A woman confesses. A cop interrogates her. Every version of the story changes what actually happened.\""
+  },
+  {
+    "id": "tw72",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2020s",
+    "y": "2022",
+    "n": "Bimbisara",
+    "f": "Kalyan Ram's career-best. The ancient king in a modern hospital was played entirely straight. No winking at the audience.",
+    "c": "\"Ancient king is transported to the present day. Discovers hospitals, democracy, and that his dynasty ended badly. Tries to go back and fix it.\""
+  },
+  {
+    "id": "tw73",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2020s",
+    "y": "2022",
+    "n": "Virata Parvam",
+    "f": "Rana Daggubati and Sai Pallavi. The Naxalite movement backdrop is the most politically serious Telugu film in a decade.",
+    "c": "\"Woman falls in love with a Naxalite through his poetry. Joins the movement to find him. The movement is not what she imagined.\""
+  },
+  {
+    "id": "tw74",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2020s",
+    "y": "2023",
+    "n": "Dasara",
+    "f": "Nani's most ambitious film. The coal mine landscape is a character. The violence is earned not gratuitous.",
+    "c": "\"Coal mine town. Two friends on opposite sides of a power struggle. The landscape is as brutal as the men who live in it.\""
+  },
+  {
+    "id": "tw75",
+    "ind": "TW",
+    "diff": "hard",
+    "era": "2010s",
+    "y": "2017",
+    "n": "Nenu Local",
+    "f": "Nani starrer. The auto-driver character became one of his most loved roles. Trinadha Rao Nakkina directed.",
+    "c": "\"Auto driver falls for a girl whose father runs the local college. Father disapproves with his entire body. The auto becomes a getaway vehicle.\""
+  }
+]
