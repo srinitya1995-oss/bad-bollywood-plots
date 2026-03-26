@@ -1,38 +1,44 @@
-const CACHE = 'bbp-v3';
-const ASSETS = ['/', '/index.html', '/manifest.json'];
+const CACHE_NAME = 'badplots-v2';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/style.css',
+  '/app.js',
+  '/cards.json',
+  '/manifest.json',
+  '/assets/logo.svg',
+  '/assets/logo-favicon.svg',
+];
 
-// Install: cache core assets
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-  self.skipWaiting(); // activate immediately, don't wait
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+  );
 });
 
-// Activate: delete old caches
-self.addEventListener('activate', e => {
+self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim(); // take control of all pages immediately
 });
 
-// Fetch: network-first for HTML, cache-first for everything else
-self.addEventListener('fetch', e => {
+self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (url.pathname.endsWith('.html') || url.pathname === '/') {
-    // Network-first for HTML — always get latest
+    // Network-first for HTML
     e.respondWith(
       fetch(e.request)
         .then(r => {
           const clone = r.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
+          caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
           return r;
         })
         .catch(() => caches.match(e.request))
     );
   } else {
-    // Cache-first for other assets (fonts, images)
+    // Cache-first for other assets
     e.respondWith(
       caches.match(e.request).then(r => r || fetch(e.request))
     );

@@ -1,14 +1,14 @@
 {
-  "name": "Bad Bollywood Plots",
-  "short_name": "Bad Bollywood Plots",
-  "description": "Guess the movie from the worst possible plot summary.",
+  "name": "Bad Plots: The Desi Party Game",
+  "short_name": "Bad Plots",
+  "description": "Terrible plots. Real movies. Guess Bollywood & Tollywood films from hilariously bad descriptions.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f0a00",
-  "theme_color": "#0f0a00",
+  "background_color": "#1a0a2e",
+  "theme_color": "#1a0a2e",
   "orientation": "portrait-primary",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
