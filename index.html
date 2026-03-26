@@ -1,1409 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#120808">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bad Bollywood Plots">
-<meta name="description" content="Terrible plots. Real movies. Guess Bollywood & Tollywood films from hilariously bad descriptions.">
-<link rel="manifest" href="manifest.json">
-<title>Bad Movie Plots: The Desi Party Game</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-/* ── RESET & BASE ── */
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --ink:#120808;
-  --ink2:#1e0d0d;
-  --ink3:#2a1515;
-  --ink4:#352020;
-  --cream:#f2ede4;
-  --cream2:#e8e1d5;
-  --gold:#d4a843;
-  --gold2:#e8c070;
-  --gold-dim:rgba(212,168,67,0.12);
-  --red:#6a111a;
-  --red2:#8b1a24;
-  --red-dim:rgba(106,17,26,0.15);
-  --green:#0b3d2c;
-  --green2:#16a34a;
-  --green-dim:rgba(21,128,61,0.12);
-  --border:rgba(255,255,255,0.06);
-  --border2:rgba(255,255,255,0.1);
-  --border3:rgba(255,255,255,0.16);
-  --r:12px;
-  --r-sm:8px;
-  --card-bw:#6a111a;
-  --card-tw:#0b3d2c;
-  --motif-color:#d4a843;
-}
-html,body{height:100%;overflow:hidden}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--ink);
-  color:var(--cream);
-  display:flex;
-  flex-direction:column;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* ── SCREENS ── */
-.screen{display:none;flex-direction:column;height:100vh;overflow-y:auto;overflow-x:hidden}
-.screen.active{display:flex}
-
-/* ── TEXTURE ── */
-.tex{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-/* ── BETA BADGE ── */
-.beta-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  background:var(--gold-dim);border:0.5px solid rgba(212,168,67,0.25);
-  border-radius:4px;padding:2px 8px;
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;
-}
-.beta-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);
-  animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-
-/* ── HOME ── */
-#home{padding:0;justify-content:flex-start;position:relative}
-.home-top{
-  padding:env(safe-area-inset-top,16px) 1.25rem 0;
-  padding-top:max(env(safe-area-inset-top),16px);
-  position:relative;z-index:1;
-}
-.home-brand-row{display:flex;align-items:flex-start;justify-content:space-between;padding-top:1rem;margin-bottom:0.5rem}
-.home-logo{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(44px,12vw,72px);
-  font-weight:900;
-  line-height:0.9;
-  color:var(--cream);
-  letter-spacing:-0.02em;
-}
-.home-logo em{color:var(--gold);font-style:italic}
-.home-tagline{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;font-weight:600;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:rgba(242,237,228,0.35);
-  margin-bottom:1.5rem;
-}
-.home-rule{height:1px;background:linear-gradient(90deg,var(--red),var(--gold),transparent);margin-bottom:1.5rem;opacity:0.4}
-
-.home-body{padding:0 1.25rem;position:relative;z-index:1;flex:1}
-
-.home-section-label{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:10px;font-weight:700;letter-spacing:0.2em;
-  text-transform:uppercase;color:rgba(242,237,228,0.3);
-  margin-bottom:0.6rem;
-}
-
-.mode-list{display:flex;flex-direction:column;gap:6px;margin-bottom:1.25rem}
-.mode-item{
-  display:flex;align-items:center;gap:12px;
-  background:var(--ink2);border:0.5px solid var(--border2);
-  border-radius:var(--r);padding:0.85rem 1rem;
-  cursor:pointer;transition:all 0.18s;position:relative;overflow:hidden;
-}
-.mode-item::after{content:'›';position:absolute;right:1rem;
-  font-size:18px;color:rgba(242,237,228,0.2);transition:all 0.18s}
-.mode-item:hover{border-color:var(--border3);background:var(--ink3);transform:translateX(2px)}
-.mode-item:hover::after{color:rgba(242,237,228,0.5);right:0.75rem}
-.mode-item:active{transform:scale(0.99)}
-.mode-pip{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-/* #13 fix: brighter pip for contrast on dark maroon bg */
-.mode-pip-bw{background:#f87171}
-.mode-pip-tw{background:var(--green2)}
-.mode-pip-all{background:var(--gold)}
-.mode-text-wrap{flex:1}
-.mode-name{font-size:14px;font-weight:500;color:var(--cream);display:block}
-.mode-sub{font-size:11px;color:rgba(242,237,228,0.35);display:block;margin-top:1px}
-
-.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem}
-.h-stat{
-  background:var(--ink2);border:0.5px solid var(--border);
-  border-radius:var(--r-sm);padding:0.75rem 0.5rem;text-align:center;
-}
-.h-stat-n{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);display:block}
-.h-stat-l{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;
-  letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,237,228,0.3);margin-top:2px;display:block}
-
-.suggest-btn{
-  width:100%;display:flex;align-items:center;gap:10px;
-  background:transparent;border:0.5px solid var(--border2);
-  border-radius:var(--r);padding:0.75rem 1rem;
-  cursor:pointer;color:rgba(242,237,228,0.4);
-  font-family:'DM Sans',sans-serif;font-size:13px;
-  transition:all 0.15s;margin-bottom:1.5rem;
-}
-.suggest-btn:hover{border-color:var(--border3);color:rgba(242,237,228,0.7)}
-
-.home-footer{
-  padding:0.75rem 1.25rem max(env(safe-area-inset-bottom),1rem);
-  display:flex;align-items:center;justify-content:space-between;
-  border-top:0.5px solid var(--border);position:relative;z-index:1;
-}
-.footer-copy{font-size:11px;color:rgba(242,237,228,0.2)}
-
-/* ── DIFFICULTY — #6 fix: less dead space at top ── */
-#difficulty{justify-content:flex-start;padding:2rem 1.25rem}
-.screen-back{
-  display:flex;align-items:center;gap:6px;margin-bottom:1rem;
-  background:none;border:none;color:rgba(242,237,228,0.4);
-  font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0;
-}
-.screen-back:hover{color:rgba(242,237,228,0.7)}
-.screen-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:0.3rem}
-.screen-sub{font-size:13px;color:rgba(242,237,228,0.4);margin-bottom:1.75rem}
-.diff-list{display:flex;flex-direction:column;gap:7px;width:100%;max-width:340px;align-self:center}
-.diff-item{
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--ink2);border:0.5px solid var(--border);
-  border-radius:var(--r);padding:0.9rem 1rem;
-  cursor:pointer;transition:all 0.15s;
-}
-.diff-item:hover{border-color:var(--border2);background:var(--ink3)}
-.diff-left{display:flex;align-items:center;gap:10px}
-.diff-dot{width:8px;height:8px;border-radius:50%}
-.d-all{background:linear-gradient(135deg,var(--green2),var(--red2))}
-.d-easy{background:var(--green2)}
-.d-medium{background:var(--gold)}
-.d-hard{background:var(--red2)}
-.diff-name{font-size:14px;font-weight:500;color:var(--cream)}
-.diff-hint{font-size:11px;color:rgba(242,237,228,0.3);margin-top:1px}
-.diff-count{font-size:12px;color:rgba(242,237,228,0.3)}
-
-/* ── MULTIPLAYER SETUP ── */
-#mp-setup{justify-content:center;padding:2rem 1.25rem;gap:1rem}
-.mp-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;text-align:center}
-.mp-sub{font-size:13px;color:rgba(242,237,228,0.4);text-align:center;margin-top:0.3rem;margin-bottom:1.5rem}
-.player-list{width:100%;max-width:340px;align-self:center;display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
-.player-row{display:flex;align-items:center;gap:8px}
-.player-avatar{
-  width:36px;height:36px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;
-  flex-shrink:0;
-}
-.player-input{
-  flex:1;background:var(--ink2);border:0.5px solid var(--border2);
-  border-radius:var(--r-sm);padding:0.6rem 0.85rem;
-  color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;
-}
-.player-input:focus{outline:none;border-color:var(--border3)}
-.player-input::placeholder{color:rgba(242,237,228,0.2)}
-.player-remove{background:none;border:none;color:rgba(242,237,228,0.2);cursor:pointer;font-size:18px;padding:4px}
-.add-player-btn{
-  width:100%;max-width:340px;align-self:center;
-  background:none;border:0.5px dashed var(--border2);border-radius:var(--r);
-  padding:0.7rem;color:rgba(242,237,228,0.3);
-  font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;
-  transition:all 0.15s;
-}
-.add-player-btn:hover{border-color:var(--border3);color:rgba(242,237,228,0.5)}
-.mp-start-btn{
-  width:100%;max-width:340px;align-self:center;
-  background:var(--gold);color:var(--ink);
-  border:none;border-radius:var(--r-sm);padding:0.9rem;
-  font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;
-  letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;
-  transition:background 0.15s;margin-top:0.5rem;
-}
-.mp-start-btn:hover{background:var(--gold2)}
-
-/* ── GAME ── */
-#game{overflow:hidden;height:100vh}
-.game-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:max(env(safe-area-inset-top),10px) 1rem 10px;
-  background:var(--ink);border-bottom:0.5px solid var(--border);
-  position:relative;z-index:10;flex-shrink:0;
-}
-.game-wordmark{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold)}
-.game-prog{font-size:12px;color:rgba(242,237,228,0.3);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:0.05em}
-.game-pts{
-  background:var(--ink2);border:0.5px solid var(--border2);
-  border-radius:20px;padding:3px 10px;
-  font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
-  letter-spacing:0.05em;color:var(--gold);
-}
-/* #10 fix: thicker progress bar */
-.prog-track{height:3px;background:var(--ink3);flex-shrink:0}
-.prog-fill{height:100%;background:var(--gold);transition:width 0.5s ease;will-change:width;border-radius:0 2px 2px 0}
-
-/* PLAYER TABS */
-.player-tabs{
-  display:flex;gap:0;border-bottom:0.5px solid var(--border);
-  overflow-x:auto;flex-shrink:0;scrollbar-width:none;
-}
-.player-tabs::-webkit-scrollbar{display:none}
-.ptab{
-  flex-shrink:0;padding:8px 14px;
-  font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;
-  letter-spacing:0.05em;text-transform:uppercase;
-  color:rgba(242,237,228,0.3);border-bottom:2px solid transparent;
-  cursor:pointer;transition:all 0.15s;white-space:nowrap;
-}
-.ptab.active{color:var(--cream);border-bottom-color:var(--gold)}
-.ptab-score{
-  display:inline-block;margin-left:5px;
-  background:var(--gold-dim);border-radius:10px;
-  padding:1px 6px;font-size:10px;color:var(--gold);
-}
-
-/* CARD STAGE — #1 fix: push card up, sticky buttons at bottom */
-.card-stage{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;
-  padding:1rem 1rem 0;overflow:hidden;
-  position:relative;
-}
-.whose-turn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;font-weight:700;letter-spacing:0.15em;
-  text-transform:uppercase;color:rgba(242,237,228,0.3);
-  margin-bottom:0.75rem;text-align:center;
-}
-.whose-turn span{color:var(--gold)}
-
-/* FLIP CARD — #1 fix: taller card, less wasted space */
-.flip-wrap{
-  width:100%;max-width:380px;
-  height:clamp(300px,58vh,420px);
-  perspective:1200px;cursor:pointer;margin-bottom:0.75rem;flex-shrink:0;
-}
-/* #14 fix: tap feedback */
-.flip-wrap:active .flip-inner{transform:scale(0.98)}
-.flip-wrap.flipped:active .flip-inner{transform:rotateY(180deg) scale(0.98)}
-.flip-inner{
-  width:100%;height:100%;
-  transform-style:preserve-3d;
-  transition:transform 0.65s cubic-bezier(0.4,0,0.2,1);
-  position:relative;
-}
-.flip-wrap.flipped .flip-inner{transform:rotateY(180deg)}
-
-.flip-face{
-  position:absolute;inset:0;border-radius:16px;
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  display:flex;flex-direction:column;overflow:hidden;
-}
-
-/* CARD FRONT */
-.face-front{background:var(--card-bw);border:none;transform:rotateY(0deg);position:relative;box-shadow:0 12px 30px rgba(0,0,0,0.5)}
-.face-front.card-tw{background:var(--card-tw)}
-.cf-accent{display:none}
-.cf-accent-bw{background:var(--red2)}
-.cf-accent-tw{background:var(--green2)}
-/* Desi corner motifs */
-.desi-corner{position:absolute;width:56px;height:56px;fill:var(--motif-color);opacity:0.85;z-index:1;pointer-events:none}
-.desi-corner.top-left{top:10px;left:10px}
-.desi-corner.top-right{top:10px;right:10px;transform:scaleX(-1)}
-.desi-corner.bottom-left{bottom:10px;left:10px;transform:scaleY(-1)}
-.desi-corner.bottom-right{bottom:10px;right:10px;transform:scale(-1,-1)}
-/* Back face motifs use card color */
-.face-back .desi-corner.motif-bw{fill:var(--card-bw)}
-.face-back .desi-corner.motif-tw{fill:var(--card-tw)}
-/* #5 fix: more padding so content clears corner motifs */
-.cf-inner{padding:2.2rem 1.6rem 1.6rem;flex:1;display:flex;flex-direction:column}
-.cf-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem}
-.cf-ind{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:0.12em;text-transform:uppercase;
-  padding:2px 8px;border-radius:3px;
-}
-.cf-ind-bw{background:rgba(185,28,28,0.15);color:#f87171;border:0.5px solid rgba(185,28,28,0.25)}
-.cf-ind-tw{background:rgba(21,128,61,0.15);color:#4ade80;border:0.5px solid rgba(21,128,61,0.25)}
-.cf-pips{display:flex;gap:3px}
-.cf-pip{width:5px;height:5px;border-radius:50%;background:var(--ink4)}
-.cf-pip-on-easy{background:var(--green2)}
-.cf-pip-on-medium{background:var(--gold)}
-.cf-pip-on-hard{background:var(--red2)}
-.cf-era{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;
-  letter-spacing:0.1em;text-transform:uppercase;
-  color:rgba(242,237,228,0.2);margin-bottom:0.6rem;
-}
-.cf-clue-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;
-  color:rgba(242,237,228,0.2);margin-bottom:0.6rem;
-}
-.cf-clue{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:clamp(14px,3.5vw,17px);line-height:1.6;
-  color:var(--cream);flex:1;
-}
-.cf-tap{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:0.15em;text-transform:uppercase;
-  color:rgba(242,237,228,0.2);text-align:center;
-  margin-top:0.75rem;padding-top:0.75rem;
-  border-top:0.5px solid var(--border);flex-shrink:0;
-}
-
-/* CARD BACK — #2 fix: center content vertically */
-.face-back{transform:rotateY(180deg);background:var(--cream);display:flex;flex-direction:column;justify-content:center}
-.cb-header{padding:2.2rem 1.6rem 0.85rem;flex-shrink:0}
-.cb-ind-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px;
-}
-.cb-ind-label-bw{color:var(--red)}
-.cb-ind-label-tw{color:var(--green)}
-.cb-answer{
-  font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,26px);
-  font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:2px;
-}
-.cb-year{
-  font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;
-  letter-spacing:0.1em;text-transform:uppercase;color:rgba(13,13,13,0.4);
-}
-.cb-divider{height:0.5px;background:rgba(13,13,13,0.1);margin:0 1.2rem;flex-shrink:0}
-.cb-body{padding:0.75rem 1.6rem;flex:1;overflow:hidden}
-.cb-fact-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:4px;
-}
-.cb-fact{font-size:12px;line-height:1.6;color:rgba(13,13,13,0.65)}
-
-/* SCORE ZONE — #1 fix: push to bottom of card stage */
-.score-zone{
-  width:100%;max-width:380px;
-  opacity:0;pointer-events:none;
-  transform:translateY(6px);
-  transition:all 0.22s;flex-shrink:0;
-  margin-top:auto;
-  padding-bottom:max(env(safe-area-inset-bottom),0.5rem);
-}
-.score-zone.show{opacity:1;pointer-events:all;transform:translateY(0)}
-.score-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:6px}
-.score-btn{
-  padding:0.75rem;border-radius:var(--r-sm);border:0.5px solid var(--border);
-  background:var(--ink2);color:var(--cream);
-  font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
-  letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;
-  transition:all 0.15s;text-align:center;
-}
-.score-btn:active{transform:scale(0.97)}
-.btn-got{
-  background:rgba(21,128,61,0.1);border-color:rgba(21,128,61,0.25);color:#4ade80;
-}
-.btn-got:hover{background:rgba(21,128,61,0.18)}
-.btn-miss{
-  background:rgba(185,28,28,0.1);border-color:rgba(185,28,28,0.2);color:#f87171;
-}
-.btn-miss:hover{background:rgba(185,28,28,0.18)}
-.btn-skip{
-  width:100%;background:none;border:none;
-  color:rgba(242,237,228,0.2);font-family:'DM Sans',sans-serif;
-  font-size:12px;cursor:pointer;padding:6px;
-  transition:color 0.15s;
-}
-.btn-skip:hover{color:rgba(242,237,228,0.4)}
-
-/* ── RESULTS ── */
-#results{justify-content:flex-start;padding:0}
-.res-top{
-  padding:max(env(safe-area-inset-top),1.5rem) 1.25rem 1.5rem;
-  background:var(--ink2);border-bottom:0.5px solid var(--border);flex-shrink:0;
-}
-.res-eyebrow{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;
-}
-.res-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;line-height:1.05;margin-bottom:0.2rem}
-.res-sub{font-size:13px;color:rgba(242,237,228,0.4);margin-bottom:1rem}
-.res-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.res-stat{
-  background:var(--ink3);border:0.5px solid var(--border);
-  border-radius:var(--r-sm);padding:0.75rem 0.5rem;text-align:center;
-}
-.res-stat-n{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--gold);display:block}
-.res-stat-l{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;
-  letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,237,228,0.3);display:block;margin-top:2px}
-.res-body{padding:1.25rem;flex:1;overflow-y:auto}
-.res-verdict{
-  border-left:2px solid var(--gold);padding:0.75rem 0.85rem;
-  margin-bottom:1.25rem;
-}
-.res-verdict-text{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:14px;color:rgba(242,237,228,0.5);line-height:1.6;
-}
-
-/* LEADERBOARD */
-.leaderboard{margin-bottom:1.25rem}
-.lb-title{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;color:rgba(242,237,228,0.3);margin-bottom:0.6rem;
-}
-.lb-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:8px 0;border-bottom:0.5px solid var(--border);
-}
-.lb-rank{
-  font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
-  color:rgba(242,237,228,0.3);width:24px;flex-shrink:0;
-}
-.lb-rank.gold-rank{color:var(--gold)}
-.lb-name{font-size:14px;font-weight:500;flex:1;padding:0 8px}
-.lb-pts{
-  font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;
-  color:var(--gold);letter-spacing:0.05em;
-}
-
-.res-actions{display:flex;flex-direction:column;gap:7px}
-.btn-primary{
-  background:var(--gold);color:var(--ink);border:none;border-radius:var(--r-sm);
-  padding:0.85rem;font-family:'Barlow Condensed',sans-serif;
-  font-size:15px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;
-  cursor:pointer;transition:background 0.15s;
-}
-.btn-primary:hover{background:var(--gold2)}
-.btn-secondary{
-  background:var(--ink2);color:var(--cream);border:0.5px solid var(--border2);
-  border-radius:var(--r-sm);padding:0.85rem;
-  font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
-  letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;
-  transition:all 0.15s;
-}
-.btn-secondary:hover{border-color:var(--border3)}
-
-/* ── FEEDBACK SHEET ── */
-.sheet-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;
-  display:flex;align-items:flex-end;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity 0.22s;
-}
-.sheet-overlay.open{opacity:1;pointer-events:all}
-.sheet{
-  background:var(--ink2);border:0.5px solid var(--border2);
-  border-radius:16px 16px 0 0;
-  padding:0 1.25rem max(env(safe-area-inset-bottom),1.5rem);
-  width:100%;max-width:500px;
-  transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-.sheet-overlay.open .sheet{transform:translateY(0)}
-.sheet-handle{width:36px;height:3px;border-radius:2px;background:var(--border3);margin:12px auto 1rem}
-.sheet-title{font-size:15px;font-weight:500;margin-bottom:3px}
-.sheet-sub{font-size:12px;color:rgba(242,237,228,0.4);margin-bottom:1rem;font-style:italic}
-.fb-tags{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:0.85rem}
-.fb-tag{
-  padding:0.55rem 0.5rem;border-radius:var(--r-sm);
-  border:0.5px solid var(--border);background:var(--ink3);
-  color:rgba(242,237,228,0.4);font-family:'DM Sans',sans-serif;
-  font-size:12px;cursor:pointer;text-align:center;transition:all 0.15s;
-}
-.fb-tag:hover{border-color:var(--border2);color:var(--cream)}
-.fb-tag.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
-.fb-textarea{
-  width:100%;background:var(--ink3);border:0.5px solid var(--border);
-  border-radius:var(--r-sm);padding:0.65rem 0.85rem;
-  color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;
-  resize:none;height:64px;margin-bottom:0.75rem;
-}
-.fb-textarea:focus{outline:none;border-color:var(--border2)}
-.fb-textarea::placeholder{color:rgba(242,237,228,0.2)}
-.fb-submit{
-  width:100%;background:var(--gold);color:var(--ink);border:none;
-  border-radius:var(--r-sm);padding:0.75rem;
-  font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;
-  letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;
-  transition:background 0.15s;
-}
-.fb-submit:hover{background:var(--gold2)}
-.fb-skip{
-  display:block;text-align:center;margin-top:0.6rem;
-  font-size:12px;color:rgba(242,237,228,0.25);cursor:pointer;
-  transition:color 0.15s;
-}
-.fb-skip:hover{color:rgba(242,237,228,0.4)}
-
-/* ── SUGGEST SHEET ── */
-.suggest-title{font-size:15px;font-weight:500;margin-bottom:3px}
-.suggest-sub{font-size:12px;color:rgba(242,237,228,0.4);margin-bottom:1rem}
-.suggest-input{
-  width:100%;background:var(--ink3);border:0.5px solid var(--border);
-  border-radius:var(--r-sm);padding:0.65rem 0.85rem;
-  color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;
-  margin-bottom:0.6rem;
-}
-.suggest-input:focus{outline:none;border-color:var(--border2)}
-.suggest-input::placeholder{color:rgba(242,237,228,0.2)}
-.suggest-hint{font-size:11px;color:rgba(242,237,228,0.25);margin-bottom:0.85rem;line-height:1.5}
-
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom));
-  left:50%;transform:translateX(-50%) translateY(80px);
-  background:var(--ink3);border:0.5px solid var(--border3);
-  border-radius:var(--r-sm);padding:0.6rem 1.1rem;
-  font-size:13px;color:var(--cream);
-  transition:transform 0.28s ease;z-index:9000;white-space:nowrap;
-  pointer-events:none;
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* ── ANIMATIONS ── */
-@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.card-stage>*{animation:slideUp 0.3s ease forwards}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a0a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bad Plots">
+  <meta name="description" content="Terrible plots. Real movies. Guess Bollywood and Tollywood films from hilariously bad descriptions.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/logo-favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Bad Plots: The Desi Party Game</title>
 </head>
 <body>
-<!-- Desi ornamental corner motif — reused on all cards -->
-<svg style="display:none">
-  <symbol id="desi-motif" viewBox="0 0 100 100">
-    <path fill="currentColor" d="M22,22 C28,16 38,14 48,20 C42,28 36,36 28,40 C20,36 16,28 22,22 Z"/>
-    <path fill="currentColor" d="M16,26 C12,18 14,10 22,8 C24,14 22,22 18,28 Z"/>
-    <path fill="currentColor" d="M26,16 C18,12 10,14 8,22 C14,24 22,22 28,18 Z"/>
-    <circle fill="currentColor" cx="22" cy="22" r="4"/>
-    <path fill="currentColor" d="M38,12 C44,8 52,4 62,4 C68,4 74,6 78,10 C72,8 64,8 56,10 C50,12 44,14 38,14 Z"/>
-    <path fill="currentColor" d="M72,4 C82,2 92,6 94,16 C90,12 84,8 76,8 C72,8 68,10 66,14 C64,10 66,6 72,4 Z"/>
-    <path fill="currentColor" d="M52,6 C56,2 62,2 64,6 C60,6 56,8 52,6 Z"/>
-    <path fill="currentColor" d="M12,38 C8,44 4,52 4,62 C4,68 6,74 10,78 C8,72 8,64 10,56 C12,50 14,44 14,38 Z"/>
-    <path fill="currentColor" d="M4,72 C2,82 6,92 16,94 C12,90 8,84 8,76 C8,72 10,68 14,66 C10,64 6,66 4,72 Z"/>
-    <path fill="currentColor" d="M6,52 C2,56 2,62 6,64 C6,60 8,56 6,52 Z"/>
-    <path fill="currentColor" d="M32,8 C36,6 40,8 38,12 C36,10 34,10 32,8 Z"/>
-    <path fill="currentColor" d="M8,32 C6,36 8,40 12,38 C10,36 10,34 8,32 Z"/>
-    <circle fill="currentColor" cx="48" cy="8" r="2"/>
-    <circle fill="currentColor" cx="8" cy="48" r="2"/>
-    <circle fill="currentColor" cx="84" cy="10" r="2.5"/>
-    <circle fill="currentColor" cx="10" cy="84" r="2.5"/>
-  </symbol>
-</svg>
-<div class="tex"></div>
 
-<!-- ══ HOME ══ -->
-<div id="home" class="screen active">
-  <div class="home-top">
-    <div class="home-brand-row">
-      <div>
-        <div class="home-logo">Bad<br><em>Plots</em></div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding-top:6px">
-        <div class="beta-badge"><div class="beta-dot"></div>Beta</div>
-        <div style="font-size:10px;color:rgba(242,237,228,0.2);text-align:right;line-height:1.4">Open for<br>feedback</div>
-      </div>
-    </div>
-    <div class="home-tagline">Terrible plots. Real movies.</div>
-    <div class="home-rule"></div>
-  </div>
+<!-- Screen reader announcements -->
+<div id="sr-announce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-  <div class="home-body">
-    <div class="home-section-label">Play</div>
-    <div class="mode-list">
-      <div class="mode-item" onclick="selectMode('BW')">
-        <div class="mode-pip mode-pip-bw"></div>
-        <div class="mode-text-wrap">
-          <span class="mode-name">Bollywood</span>
-          <span class="mode-sub">Hindi films · 75 cards</span>
-        </div>
-      </div>
-      <div class="mode-item" onclick="selectMode('TW')">
-        <div class="mode-pip mode-pip-tw"></div>
-        <div class="mode-text-wrap">
-          <span class="mode-name">Tollywood</span>
-          <span class="mode-sub">Telugu films · 75 cards</span>
-        </div>
-      </div>
-      <!-- Full deck removed — will add back when more languages available -->
-    </div>
+<!-- Toast -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <div class="home-stats">
-      <div class="h-stat">
-        <span class="h-stat-n">75</span>
-        <span class="h-stat-l">Per deck</span>
-      </div>
-      <div class="h-stat">
-        <span class="h-stat-n">2</span>
-        <span class="h-stat-l">Industries</span>
-      </div>
-      <div class="h-stat">
-        <span class="h-stat-n">3</span>
-        <span class="h-stat-l">Difficulty</span>
-      </div>
-    </div>
+<!-- HOME -->
+<main id="home" class="screen active" aria-label="Home">
+  <header class="home-header">
+    <img src="assets/logo.svg" alt="Bad Plots" class="home-logo" width="240" height="80">
+    <p class="home-tagline">Terrible plots. Real movies.</p>
+  </header>
 
-    <button class="suggest-btn" onclick="openSuggest()">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0">
-        <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1"/>
-        <path d="M7 4v3m0 2h.01" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-      </svg>
-      Suggest a movie we should add
+  <nav class="home-modes" aria-label="Game modes">
+    <button class="mode-btn mode-btn-bw" data-mode="BW">
+      <span class="mode-name">Bollywood</span>
+      <span class="mode-sub">Hindi films</span>
     </button>
+    <button class="mode-btn mode-btn-tw" data-mode="TW">
+      <span class="mode-name">Tollywood</span>
+      <span class="mode-sub">Telugu films</span>
+    </button>
+  </nav>
+
+  <div class="home-toggle">
+    <button class="toggle-btn active" data-gamemode="party" aria-pressed="true">Party</button>
+    <button class="toggle-btn" data-gamemode="endless" aria-pressed="false">Endless</button>
   </div>
 
-  <div class="home-footer">
-    <span class="footer-copy">Made by <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" target="_blank" style="color:var(--gold);text-decoration:none">@Srinitya</a></span>
-    <span class="beta-badge" style="cursor:pointer" onclick="openFeedbackGeneral()"><div class="beta-dot"></div>Give feedback</span>
+  <footer class="home-footer">
+    <button class="link-btn" id="suggest-btn">Suggest a movie</button>
+    <span class="footer-divider" aria-hidden="true">&middot;</span>
+    <button class="link-btn" id="feedback-btn">Feedback</button>
+    <span class="footer-divider" aria-hidden="true">&middot;</span>
+    <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" target="_blank" rel="noopener" class="footer-credit">@Srinitya</a>
+  </footer>
+</main>
+
+<!-- PLAYER SETUP (bottom sheet) -->
+<div class="sheet-overlay" id="players-overlay" role="dialog" aria-modal="true" aria-labelledby="players-title">
+  <div class="sheet">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="players-title">Who's playing?</h2>
+    <p class="sheet-sub">Add players or just tap Start for solo</p>
+    <div id="player-list" class="player-list"></div>
+    <button class="add-player-btn" id="add-player-btn">+ Add player</button>
+    <button class="btn-primary" id="start-game-btn">Start game</button>
   </div>
 </div>
 
-<!-- ══ DIFFICULTY ══ -->
-<div id="difficulty" class="screen">
-  <div style="padding:max(env(safe-area-inset-top),1rem) 1.25rem 0;flex-shrink:0">
-    <button class="screen-back" onclick="show('home')">← Back</button>
-  </div>
-  <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:1rem 1.25rem">
-    <div class="screen-title">Kitna mushkil?</div>
-    <div class="screen-sub" id="diff-sub">Bollywood deck</div>
-    <div class="diff-list">
-      <div class="diff-item" onclick="setupMultiplayer('all')">
-        <div class="diff-left">
-          <div class="diff-dot d-all"></div>
-          <div><div class="diff-name">Sab kuch</div><div class="diff-hint">All levels mixed</div></div>
-        </div>
-        <span class="diff-count" id="dn-all"></span>
-      </div>
-      <div class="diff-item" onclick="setupMultiplayer('easy')">
-        <div class="diff-left">
-          <div class="diff-dot d-easy"></div>
-          <div><div class="diff-name">Easy</div><div class="diff-hint">Crowd favourites</div></div>
-        </div>
-        <span class="diff-count" id="dn-easy"></span>
-      </div>
-      <div class="diff-item" onclick="setupMultiplayer('medium')">
-        <div class="diff-left">
-          <div class="diff-dot d-medium"></div>
-          <div><div class="diff-name">Medium</div><div class="diff-hint">You've probably seen it</div></div>
-        </div>
-        <span class="diff-count" id="dn-med"></span>
-      </div>
-      <div class="diff-item" onclick="setupMultiplayer('hard')">
-        <div class="diff-left">
-          <div class="diff-dot d-hard"></div>
-          <div><div class="diff-name">Hard</div><div class="diff-hint">Cinephile territory</div></div>
-        </div>
-        <span class="diff-count" id="dn-hard"></span>
-      </div>
+<!-- GAME -->
+<main id="game" class="screen" aria-label="Game">
+  <header class="game-bar">
+    <button class="game-exit-btn" id="game-exit">
+      <span aria-hidden="true">&larr;</span> Exit
+    </button>
+    <div class="game-info" id="game-info">
+      <span class="game-prog" id="g-prog">1 / 12</span>
     </div>
+    <div class="game-score" id="g-pts">0 pts</div>
+  </header>
+  <div class="prog-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="g-bar-track">
+    <div class="prog-fill" id="g-bar"></div>
   </div>
-</div>
 
-<!-- ══ MULTIPLAYER SETUP ══ -->
-<div id="mp-setup" class="screen">
-  <div style="padding-top:max(env(safe-area-inset-top),1rem);align-self:stretch">
-    <button class="screen-back" style="padding:0 1.25rem" onclick="show('difficulty')">← Back</button>
+  <!-- Lives (endless mode only) -->
+  <div class="game-lives" id="game-lives" style="display:none" aria-label="Lives remaining">
+    <span class="life active" aria-label="Life 1"></span>
+    <span class="life active" aria-label="Life 2"></span>
+    <span class="life active" aria-label="Life 3"></span>
   </div>
-  <div class="mp-title">Who's playing?</div>
-  <div class="mp-sub">Add players for same-room multiplayer<br>or just tap Start to play solo</div>
-  <div class="player-list" id="player-list"></div>
-  <button class="add-player-btn" onclick="addPlayer()" id="add-player-btn">+ Add player</button>
-  <button class="mp-start-btn" onclick="startGame()">Start game</button>
-  <!-- #8 fix: removed redundant "Skip — play solo" (Start Game handles both) -->
-</div>
 
-<!-- ══ GAME ══ -->
-<div id="game" class="screen">
-  <div class="game-bar">
-    <button onclick="if(confirm('Exit game?')){track('game_exit',{cardsPlayed:idx,totalCards:deck.length,pts:totalPts,mode,diff:selectedDiff});show('home')}" style="background:none;border:none;color:rgba(242,237,228,0.35);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:0">← Exit</button>
-    <div class="game-prog" id="g-prog">1 / 10</div>
-    <div class="game-pts" id="g-pts">0 pts</div>
+  <!-- Player tabs (multiplayer only) -->
+  <div class="player-tabs" id="player-tabs" role="tablist" aria-label="Players" style="display:none"></div>
+
+  <!-- Pass-the-phone interstitial -->
+  <div class="turn-interstitial" id="turn-interstitial" style="display:none">
+    <h2 class="turn-name" id="turn-name">Player 1</h2>
+    <p class="turn-sub">Your turn</p>
+    <button class="btn-primary" id="turn-ready-btn">Ready</button>
   </div>
-  <div class="prog-track"><div class="prog-fill" id="g-bar" style="width:0%"></div></div>
-  <div class="player-tabs" id="player-tabs"></div>
 
-  <div class="card-stage">
-    <div class="whose-turn" id="whose-turn" style="display:none">
-      <span id="turn-name">Player 1</span>'s turn to answer
-    </div>
-
-    <div class="flip-wrap" id="flip-wrap" onclick="flipCard()">
-      <div class="flip-inner" id="flip-inner">
-        <div class="flip-face face-front" id="face-front">
-          <svg class="desi-corner top-left" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <svg class="desi-corner top-right" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <svg class="desi-corner bottom-left" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <svg class="desi-corner bottom-right" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <div class="cf-accent" id="cf-accent"></div>
-          <div class="cf-inner">
-            <div class="cf-header">
-              <span class="cf-ind" id="cf-ind">Bollywood</span>
-              <div class="cf-pips" id="cf-pips"></div>
+  <!-- Card stage -->
+  <div class="card-stage" id="card-stage">
+    <div class="card-wrap" id="card-wrap">
+      <div class="card-inner" id="card-inner">
+        <!-- Front face -->
+        <div class="card-face card-front" id="card-front">
+          <div class="card-frame" aria-hidden="true"></div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="card-ind" id="cf-ind">Bollywood</span>
+              <span class="card-era" id="cf-era">90s</span>
             </div>
-            <div class="cf-era" id="cf-era"></div>
-            <div class="cf-clue-label">Plot clue</div>
-            <div class="cf-clue" id="cf-clue"></div>
-            <div class="cf-tap">Tap to reveal answer</div>
+            <p class="card-clue" id="cf-clue"></p>
+            <span class="card-tap">Tap to reveal answer</span>
           </div>
         </div>
-        <div class="flip-face face-back">
-          <svg class="desi-corner top-left motif-bw" id="back-motif-tl" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <svg class="desi-corner top-right motif-bw" id="back-motif-tr" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <svg class="desi-corner bottom-left motif-bw" id="back-motif-bl" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <svg class="desi-corner bottom-right motif-bw" id="back-motif-br" viewBox="0 0 100 100"><use href="#desi-motif"/></svg>
-          <div class="cb-header">
-            <div class="cb-ind-label" id="cb-ind-label">Bollywood</div>
-            <div class="cb-answer" id="cb-answer"></div>
-            <div class="cb-year" id="cb-year"></div>
-          </div>
-          <div class="cb-divider"></div>
-          <div class="cb-body">
-            <div class="cb-fact-label">Did you know</div>
-            <div class="cb-fact" id="cb-fact"></div>
+        <!-- Back face -->
+        <div class="card-face card-back" id="card-back">
+          <div class="card-frame card-frame-back" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="card-ind-back" id="cb-ind">Bollywood</span>
+            <h3 class="card-answer" id="cb-answer"></h3>
+            <span class="card-year" id="cb-year"></span>
+            <hr class="card-divider" aria-hidden="true">
+            <p class="card-fact-label">Did you know</p>
+            <p class="card-fact" id="cb-fact"></p>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="score-zone" id="score-zone">
-      <div class="score-btns">
-        <button class="score-btn btn-got" onclick="markCard(true)">Got it ✓</button>
-        <button class="score-btn btn-miss" onclick="markCard(false)">Missed ✗</button>
+  <!-- Score zone -->
+  <div class="score-zone" id="score-zone" style="display:none">
+    <div class="score-btns">
+      <button class="score-btn btn-got" id="btn-got">Got it</button>
+      <button class="score-btn btn-miss" id="btn-miss">Missed</button>
+    </div>
+    <button class="btn-skip" id="btn-skip">Skip</button>
+  </div>
+</main>
+
+<!-- RESULTS -->
+<main id="results" class="screen" aria-label="Results">
+  <header class="res-top">
+    <p class="res-eyebrow">Game over</p>
+    <h1 class="res-title" id="r-title">Not bad.</h1>
+    <p class="res-sub" id="r-sub"></p>
+    <div class="res-stats">
+      <div class="res-stat">
+        <span class="res-stat-n" id="r-correct">0</span>
+        <span class="res-stat-l">Correct</span>
       </div>
-      <button class="btn-skip" onclick="markCard(null)">Skip this one →</button>
+      <div class="res-stat">
+        <span class="res-stat-n" id="r-played">0</span>
+        <span class="res-stat-l">Played</span>
+      </div>
+      <div class="res-stat">
+        <span class="res-stat-n" id="r-pts">0</span>
+        <span class="res-stat-l">Points</span>
+      </div>
     </div>
-  </div>
-</div>
-
-<!-- ══ RESULTS ══ -->
-<div id="results" class="screen">
-  <div class="res-top">
-    <div class="res-eyebrow">Game over</div>
-    <div class="res-title" id="r-title">Not bad.</div>
-    <div class="res-sub" id="r-sub">8 of 10 correct</div>
-    <div class="res-stat-row">
-      <div class="res-stat"><span class="res-stat-n" id="r-correct">0</span><span class="res-stat-l">Correct</span></div>
-      <div class="res-stat"><span class="res-stat-n" id="r-played">0</span><span class="res-stat-l">Played</span></div>
-      <div class="res-stat"><span class="res-stat-n" id="r-pts">0</span><span class="res-stat-l">Points</span></div>
-    </div>
-  </div>
+  </header>
   <div class="res-body">
-    <div class="res-verdict"><div class="res-verdict-text" id="r-verdict"></div></div>
+    <blockquote class="res-verdict">
+      <p class="res-verdict-text" id="r-verdict"></p>
+    </blockquote>
     <div class="leaderboard" id="leaderboard" style="display:none">
-      <div class="lb-title">Leaderboard</div>
+      <h2 class="lb-title">Leaderboard</h2>
       <div id="lb-rows"></div>
     </div>
     <div class="res-actions">
-      <button class="btn-primary" onclick="replayGame()">Play again</button>
-      <button class="btn-secondary" onclick="show('home')">Change mode</button>
-      <button class="btn-secondary" onclick="doShare()">Share score ↗</button>
-      <button class="btn-secondary" onclick="openFeedbackGeneral()" style="color:var(--gold);border-color:var(--gold-dim)">Leave feedback ↗</button>
+      <button class="btn-primary" id="btn-replay">Play again</button>
+      <button class="btn-secondary" id="btn-share">Share score</button>
+      <button class="link-btn" id="btn-feedback-end">How was that?</button>
     </div>
   </div>
-</div>
+</main>
 
-<!-- ══ FEEDBACK SHEET ══ -->
-<div class="sheet-overlay" id="fb-overlay" onclick="closeFbOverlay(event)">
+<!-- FEEDBACK SHEET -->
+<div class="sheet-overlay" id="fb-overlay" role="dialog" aria-modal="true" aria-labelledby="fb-title">
   <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title" id="fb-title">How was this card?</div>
-    <div class="sheet-sub" id="fb-card-name"></div>
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="fb-title">Share your feedback</h2>
+    <p class="sheet-sub" id="fb-sub">Tell us what's working and what's not</p>
     <div class="fb-tags" id="fb-tags">
-      <button class="fb-tag" data-v="too_easy" onclick="toggleTag(this)">Too easy</button>
-      <button class="fb-tag" data-v="too_hard" onclick="toggleTag(this)">Too hard</button>
-      <button class="fb-tag" data-v="clue_confusing" onclick="toggleTag(this)">Clue confusing</button>
-      <button class="fb-tag" data-v="clue_clever" onclick="toggleTag(this)">Clue is clever</button>
-      <button class="fb-tag" data-v="fact_great" onclick="toggleTag(this)">Fun fact is great</button>
-      <button class="fb-tag" data-v="wrong_info" onclick="toggleTag(this)">Something's wrong</button>
+      <button class="fb-tag" data-v="love_it" aria-pressed="false">Love it</button>
+      <button class="fb-tag" data-v="needs_work" aria-pressed="false">Needs work</button>
+      <button class="fb-tag" data-v="want_more_cards" aria-pressed="false">Want more cards</button>
+      <button class="fb-tag" data-v="great_for_parties" aria-pressed="false">Great for parties</button>
+      <button class="fb-tag" data-v="ui_issue" aria-pressed="false">UI issue</button>
+      <button class="fb-tag" data-v="bug" aria-pressed="false">Found a bug</button>
     </div>
+    <label for="fb-text" class="sr-only">Additional feedback</label>
     <textarea class="fb-textarea" id="fb-text" placeholder="Anything else? (optional)"></textarea>
-    <button class="fb-submit" onclick="submitFeedback()">Submit feedback</button>
-    <span class="fb-skip" id="fb-skip" onclick="closeFb()">Skip → next card</span>
+    <button class="btn-primary" id="fb-submit">Submit feedback</button>
+    <button class="btn-skip" id="fb-skip">Cancel</button>
   </div>
 </div>
 
-<!-- ══ SUGGEST SHEET ══ -->
-<div class="sheet-overlay" id="suggest-overlay" onclick="closeSuggestOverlay(event)">
+<!-- SUGGEST SHEET -->
+<div class="sheet-overlay" id="suggest-overlay" role="dialog" aria-modal="true" aria-labelledby="suggest-title">
   <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="suggest-title">Suggest a movie</div>
-    <div class="suggest-sub">We'll write a terrible plot description for it</div>
-    <input class="suggest-input" id="suggest-movie" placeholder="Movie name" type="text">
-    <select class="suggest-input" id="suggest-industry">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="suggest-title">Suggest a movie</h2>
+    <p class="sheet-sub">We'll write a terrible plot description for it</p>
+    <label for="suggest-movie" class="sr-only">Movie name</label>
+    <input class="form-input" id="suggest-movie" placeholder="Movie name" type="text" aria-label="Movie name">
+    <label for="suggest-industry" class="sr-only">Industry</label>
+    <select class="form-input" id="suggest-industry" aria-label="Industry">
       <option value="" disabled selected>Bollywood / Tollywood / Other</option>
       <option value="Bollywood">Bollywood</option>
       <option value="Tollywood">Tollywood</option>
       <option value="Other">Other</option>
     </select>
-    <div class="suggest-hint">We read every suggestion. If we add it, you'll be in the credits.</div>
-    <button class="fb-submit" onclick="submitSuggestion()">Submit suggestion</button>
-    <span class="fb-skip" onclick="closeSuggest()">Maybe later</span>
+    <p class="form-hint">We read every suggestion. If we add it, you'll be in the credits.</p>
+    <button class="btn-primary" id="suggest-submit">Submit suggestion</button>
+    <button class="btn-skip" id="suggest-cancel">Maybe later</button>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
-<script>
-// ══ ANALYTICS PLACEHOLDERS ══
-// Replace with your actual keys:
-const SUPABASE_URL = 'https://wmfxkkgktmfsipiihsjq.supabase.co';
-const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
-const POSTHOG_KEY  = 'phc_im021jzJ6Lx5QSvJdSSeVb23IROC0Kpbrs75X2NOzTd';
-
-const SESSION_ID = 'sp_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-const SESSION_START = Date.now();
-
-// PostHog init — live
-const s=document.createElement('script');
-s.src='https://us-assets.i.posthog.com/static/array.js';
-s.onload=()=>{
-  if(window.posthog){
-    posthog.init(POSTHOG_KEY,{api_host:'https://us.i.posthog.com',loaded:function(ph){
-      ph.capture('app_load',{event:'app_load',session:SESSION_ID,ts:0,referrer:document.referrer,ua:navigator.userAgent.substring(0,80)});
-    }});
-  }
-};
-document.head.appendChild(s);
-
-function track(event,props={}){
-  const payload={event,session:SESSION_ID,ts:Date.now()-SESSION_START,...props};
-  // PostHog
-  if(window.posthog) posthog.capture(event,payload);
-  // Supabase
-  if(SUPABASE_URL !== 'https://wmfxkkgktmfsipiihsjq.supabase.co'){
-    fetch(`${SUPABASE_URL}/rest/v1/events`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`},
-      body:JSON.stringify(payload)
-    }).catch(()=>{});
-  }
-  // Always local
-  const local=JSON.parse(localStorage.getItem('sp_events')||'[]');
-  local.push(payload);
-  localStorage.setItem('sp_events',JSON.stringify(local.slice(-500)));
-}
-
-async function saveToSupabase(table,data){
-  if(SUPABASE_URL==='https://wmfxkkgktmfsipiihsjq.supabase.co') return;
-  return fetch(`${SUPABASE_URL}/rest/v1/${table}`,{
-    method:'POST',
-    headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},
-    body:JSON.stringify({...data,session_id:SESSION_ID,created_at:new Date().toISOString()})
-  }).catch(()=>{});
-}
-
-// ══ CARD DATA ══
-const CARDS = [
-// ── BOLLYWOOD EASY ──
-{id:'bw01',ind:'BW',diff:'easy',era:'90s',y:'1995',n:'Dilwale Dulhania Le Jayenge',f:'Ran continuously at Maratha Mandir for over 25 years. The train that never left.',c:'"Boy meets girl. Father says no. They go to Europe anyway. Entire Punjab gives permission eventually."'},
-{id:'bw02',ind:'BW',diff:'easy',era:'2000s',y:'2001',n:'Kabhi Khushi Kabhie Gham',f:'Highest-grossing Bollywood film of 2001. The reason every NRI cries somewhere over the Atlantic.',c:'"Eldest son marries a poor girl. Family is devastated. They fly to London to express this devastation at length."'},
-{id:'bw03',ind:'BW',diff:'easy',era:'2000s',y:'2003',n:'Kal Ho Na Ho',f:'SRK played a terminally ill man who meddles in everyone\'s relationships. Nobody stopped him.',c:'"Best friend is in love with your wife. He is also dying. He decides to help arrange the wedding anyway."'},
-{id:'bw04',ind:'BW',diff:'easy',era:'90s',y:'1997',n:'Chachi 420',f:'Kamal Haasan wrote, directed, and starred. A remake of Mrs Doubtfire but considerably more unhinged.',c:'"Man disguises as a woman to be his own child\'s nanny. Sari. Discovery. Redemption. More sari."'},
-{id:'bw05',ind:'BW',diff:'easy',era:'2000s',y:'2001',n:'Lagaan',f:'Oscar-nominated. Aamir Khan spent a full year actually learning cricket.',c:'"Village challenges the British Empire to a cricket match to avoid paying taxes. They win. Obviously."'},
-{id:'bw06',ind:'BW',diff:'easy',era:'2000s',y:'2004',n:'Swades',f:'Flopped in 2004. Now considered SRK\'s finest. The ultimate sleeper film.',c:'"NASA engineer returns to his village. Is horrified. Fixes the water supply. Stays. NASA says nothing."'},
-{id:'bw07',ind:'BW',diff:'easy',era:'2000s',y:'2007',n:'Chak De! India',f:'SRK waived his fee for this. Said it was the best script he\'d read in years.',c:'"Women\'s hockey team hates their coach. Coach has a secret. They win the World Cup. Everyone cries."'},
-{id:'bw08',ind:'BW',diff:'easy',era:'90s',y:'1994',n:'Hum Aapke Hain Koun',f:'A dog named Tuffy had more screen time than half the cast. He earned it.',c:'"An entire family attends two weddings across four hours. A dog has a pivotal role in the resolution."'},
-{id:'bw09',ind:'BW',diff:'easy',era:'2010s',y:'2013',n:'Chennai Express',f:'Highest-grossing Bollywood film of 2013 at the time. Shot across six states.',c:'"Man boards a train to scatter his grandfather\'s ashes. Accidentally ends up in a Tamil gangster\'s village. Accidentally gets engaged."'},
-{id:'bw10',ind:'BW',diff:'easy',era:'2000s',y:'2009',n:'3 Idiots',f:'Aamir Khan played a 20-year-old at age 44. Convincingly.',c:'"Three college idiots. One is secretly a genius. This is discovered ten years later at a goat farm."'},
-{id:'bw11',ind:'BW',diff:'easy',era:'2010s',y:'2015',n:'Bajrangi Bhaijaan',f:'Based loosely on a true story. The real girl was found and returned to Pakistan in 2015.',c:'"Extremely honest man tries to return a lost child across a border that does not want to be crossed. Becomes a Pakistani celebrity by accident."'},
-{id:'bw12',ind:'BW',diff:'easy',era:'90s',y:'1998',n:'Kuch Kuch Hota Hai',f:'Karan Johar\'s directorial debut. Won 8 Filmfare awards. The basketball scene is not realistic.',c:'"Man realises he loved his best friend only after she married someone else. His daughter tries to fix this. She is eight."'},
-{id:'bw13',ind:'BW',diff:'easy',era:'2000s',y:'2001',n:'Dil Chahta Hai',f:'Changed how Indian films showed male friendship. Farhan Akhtar\'s directorial debut.',c:'"Three friends graduate and immediately stop agreeing on anything. One falls for a divorcee twice his age. The others are very judgy about this."'},
-{id:'bw14',ind:'BW',diff:'easy',era:'70s',y:'1975',n:'Sholay',f:'The original was shot in 70mm widescreen. Played at one cinema in Mumbai for over five years.',c:'"Handicapped man hires two petty criminals to avenge his entire family. The criminals are not prepared for this job."'},
-{id:'bw15',ind:'BW',diff:'easy',era:'2000s',y:'2003',n:'Munna Bhai MBBS',f:'Sanjay Dutt learned to play a doctor by shadowing real doctors at a Mumbai hospital for a month.',c:'"Gangster pretends to be a doctor to impress his parents. Accidentally becomes a better doctor than the actual doctors."'},
-{id:'bw16',ind:'BW',diff:'easy',era:'2000s',y:'2006',n:'Rang De Basanti',f:'The film sparked real student protests in India. Life imitated art in ways the filmmakers did not expect.',c:'"Group of friends make a documentary about freedom fighters and slowly become them. The government does not appreciate this."'},
-{id:'bw17',ind:'BW',diff:'easy',era:'2000s',y:'2007',n:'Taare Zameen Par',f:'Aamir Khan directed this. The child actor Darsheel Safary was genuinely dyslexic.',c:'"Eight-year-old is sent to boarding school for being difficult. New teacher is the only adult who notices he is struggling. Parents needed a moment."'},
-{id:'bw18',ind:'BW',diff:'easy',era:'2010s',y:'2014',n:'Queen',f:'Kangana Ranaut won the National Award for this. The entire film cost less than most Bollywood item numbers.',c:'"Woman gets dumped before her honeymoon. Goes on the honeymoon alone. Returns a completely different person. Ex-fiancé notices."'},
-{id:'bw19',ind:'BW',diff:'easy',era:'2010s',y:'2014',n:'PK',f:'Aamir Khan\'s highest-grossing film at the time. The nude poster caused significant controversy.',c:'"Alien loses his remote control in Rajasthan. Spends the film asking questions about religion that nobody wants to answer."'},
-{id:'bw20',ind:'BW',diff:'easy',era:'2010s',y:'2011',n:'Zindagi Na Milegi Dobara',f:'Filmed entirely in Spain. Every extreme sport shown was done by the actors themselves.',c:'"Three friends on a road trip across Spain. Two of them love the same woman. Everyone learns something. Mostly about themselves."'},
-{id:'bw21',ind:'BW',diff:'easy',era:'2000s',y:'2006',n:'Kabhi Alvida Naa Kehna',f:'Karan Johar\'s most controversial film. Addressed marital unhappiness in Indian cinema for the first time at scale.',c:'"Two unhappily married people fall in love. Both spouses find out. Karan Johar explores consequences for once."'},
-{id:'bw22',ind:'BW',diff:'easy',era:'2000s',y:'2007',n:'Jab We Met',f:'Shahid Kapoor and Kareena were dating during filming and broke up shortly after. The chemistry was real. So was the breakup.',c:'"Man tries to get off a train. Woman won\'t let him. Not because she cares — she just won\'t stop talking."'},
-{id:'bw23',ind:'BW',diff:'easy',era:'90s',y:'1994',n:'Andaz Apna Apna',f:'Flopped on release. Now considered the greatest Bollywood comedy ever made. It just needed time.',c:'"Two broke men both try to marry the same heiress. Neither has a plan. Both plans fail constantly."'},
-{id:'bw24',ind:'BW',diff:'easy',era:'2000s',y:'2000',n:'Hera Pheri',f:'One of the most quoted Bollywood comedies ever. The trio chemistry was entirely improvised on set.',c:'"Three failures receive a wrong number call about a kidnapping ransom. Decide to keep the money. This goes poorly."'},
-{id:'bw25',ind:'BW',diff:'easy',era:'2010s',y:'2016',n:'Dangal',f:'Aamir Khan gained 25 kg and then lost it all for different phases of filming. True story of the Phogat sisters.',c:'"Father forces daughters to wrestle. Daughters are furious. They win Olympic gold. Father was right apparently."'},
-// ── BOLLYWOOD MEDIUM ──
-{id:'bw26',ind:'BW',diff:'medium',era:'90s',y:'1998',n:'Dil Se',f:'Chaiyya Chaiyya was shot on a moving train roof. AR Rahman. One take.',c:'"Journalist falls for a woman who is about to blow something up. He knows this. He escalates anyway."'},
-{id:'bw27',ind:'BW',diff:'medium',era:'2000s',y:'2007',n:'Om Shanti Om',f:'Shah Rukh Khan\'s Om Shanti Om was a tribute to the 70s Bollywood era. 30+ stars appeared in the title song.',c:'"Nobody man dies. Comes back with better cheekbones and a film career. Uses both to settle a score."'},
-{id:'bw28',ind:'BW',diff:'medium',era:'2010s',y:'2018',n:'Stree',f:'Shot in Chanderi, a real town in MP. Locals were briefed on the film\'s plot before production began.',c:'"Men in a small town are vanishing during the festival. They write a polite note on their doors asking her to come back tomorrow."'},
-{id:'bw29',ind:'BW',diff:'medium',era:'2000s',y:'2008',n:'Jaane Tu Ya Jaane Na',f:'Imran Khan\'s debut. A horse played a significant supporting role. Horse\'s performance was uncontested.',c:'"Boy and girl are just friends. Insist on this for two hours. Nobody believes them. They eventually stop believing themselves."'},
-{id:'bw30',ind:'BW',diff:'medium',era:'2000s',y:'2007',n:'Bhool Bhulaiyaa',f:'Priyadarshan remake of his own Malayalam film. Vidya Balan\'s performance in the climax is studied in acting schools.',c:'"Family moves into a haunted mansion. Calls a psychiatrist instead of a priest. Psychiatrist makes things significantly worse."'},
-{id:'bw31',ind:'BW',diff:'medium',era:'2010s',y:'2015',n:'Dil Dhadakne Do',f:'Zoya Akhtar made the dog the narrator. Aamir Khan voiced the dog. Structural decision of the decade.',c:'"Rich family goes on a cruise to fix their failing marriages. The dog is the only one being honest."'},
-{id:'bw32',ind:'BW',diff:'medium',era:'2010s',y:'2013',n:'The Lunchbox',f:'Irrfan Khan and Nimrat Kaur never share a scene. The film runs entirely on that tension.',c:'"Wrong delivery address starts a correspondence between two strangers. They write letters. They never meet. Both are fine with this. Both are not fine with this."'},
-{id:'bw33',ind:'BW',diff:'medium',era:'2010s',y:'2010',n:'Karthik Calling Karthik',f:'Farhan Akhtar lost significant weight for this role. The twist was spoiled in the trailer. Nobody noticed until they watched it.',c:'"Man receives motivational calls every morning. Calls are working great. Caller is him."'},
-{id:'bw34',ind:'BW',diff:'medium',era:'2010s',y:'2018',n:'Andhadhun',f:'Sriram Raghavan based this on a French short film. The ending deliberately refuses to confirm what really happened.',c:'"Man pretends to have a disability. Witnesses something he shouldn\'t. Cannot reveal what he saw without revealing the lie. Situation worsens weekly."'},
-{id:'bw35',ind:'BW',diff:'medium',era:'2000s',y:'2009',n:'Dev D',f:'Anurag Kashyap\'s reimagining of Devdas. The only version where Devdas is sympathetic for about 20 minutes.',c:'"Man is given unconditional love by two women. Responds by making terrible decisions for two hours. Gets a redemption arc he did not earn."'},
-{id:'bw36',ind:'BW',diff:'medium',era:'2010s',y:'2011',n:'Tanu Weds Manu',f:'Kangana Ranaut stole the film from a lead who had twice her screen time. Critics could not explain how.',c:'"Quiet doctor falls for chaotic woman. Everyone tells him she is wrong for him. They marry. Everyone was correct."'},
-{id:'bw37',ind:'BW',diff:'medium',era:'2010s',y:'2011',n:'Rockstar',f:'Ranbir Kapoor learned to actually play guitar for this role. AR Rahman scored it. The grief is real.',c:'"Young man wants to be a rockstar but is too happy. Is told he needs to suffer. Suffers enormously. Becomes a rockstar."'},
-{id:'bw38',ind:'BW',diff:'medium',era:'2010s',y:'2012',n:'Barfi!',f:'Ranbir Kapoor studied Charlie Chaplin for six months. Priyanka Chopra\'s performance was entirely physical.',c:'"Man cannot speak or hear. Still the most charismatic person in every room he enters. Everyone else is embarrassed by this."'},
-{id:'bw39',ind:'BW',diff:'medium',era:'2010s',y:'2013',n:'Bhaag Milkha Bhaag',f:'Farhan Akhtar ran 13km a day for 13 months. His body fat dropped to 4%. Real Milkha Singh cried watching it.',c:'"Partition survivor becomes India\'s fastest man. Loses one race. Never forgives himself. The nation forgave him immediately."'},
-{id:'bw40',ind:'BW',diff:'medium',era:'2010s',y:'2012',n:'Kahaani',f:'Filmed entirely on location in Kolkata during Durga Puja. The city becomes the co-star.',c:'"Pregnant woman searches for her missing husband in a city that has never heard of him. She is very determined. The city will regret this."'},
-{id:'bw41',ind:'BW',diff:'medium',era:'2010s',y:'2013',n:'Lootera',f:'Set in 1953. Vikramaditya Motwane based it on an O. Henry short story. Sonakshi Sinha watches a tree for 40 minutes of screen time.',c:'"Man cons a zamindaar\'s family. Falls genuinely in love with the daughter. Leaves anyway. She watches a tree and waits."'},
-{id:'bw42',ind:'BW',diff:'medium',era:'2010s',y:'2015',n:'Masaan',f:'Richa Chadha and Vicky Kaushal\'s breakthrough. Won two prizes at Cannes. Shot on a Rs 4 crore budget.',c:'"Two separate grief stories in Varanasi. They never intersect. The Ganga connects them anyway."'},
-{id:'bw43',ind:'BW',diff:'medium',era:'2000s',y:'2009',n:'Love Aaj Kal',f:'Imtiaz Ali told the same love story twice across two timelines. One of them learns from the other. Barely.',c:'"Man celebrates his breakup. Meets an old man who tells him a love story. Realises the story is a warning. Does not heed it."'},
-{id:'bw44',ind:'BW',diff:'medium',era:'2000s',y:'2006',n:'Dhoom 2',f:'Hrithik Roshan disguised as the Queen of England in the opening scene. Nobody questioned the casting.',c:'"Cop spends the entire film admiring the man he is supposed to arrest. The man is flattered. This is the dynamic."'},
-{id:'bw45',ind:'BW',diff:'medium',era:'2010s',y:'2015',n:'NH10',f:'Anushka Sharma produced and starred. The film went to places Bollywood rarely visited. Critics were unsettled.',c:'"Couple on a road trip witnesses something they should not have. They intervene. They are now being hunted. Road trip ends differently than planned."'},
-{id:'bw46',ind:'BW',diff:'medium',era:'2010s',y:'2016',n:'Kapoor and Sons',f:'Rishi Kapoor played a 90-year-old. The prosthetics took six hours to apply every day.',c:'"Dysfunctional family reunites because grandfather is dying. Every family secret surfaces in order. Grandfather watches."'},
-{id:'bw47',ind:'BW',diff:'medium',era:'2010s',y:'2014',n:'Haider',f:'Vishal Bhardwaj set Hamlet in Kashmir during the 1990s conflict. The adaptation is scene-for-scene faithful.',c:'"Kashmir. Missing father. Suspicious uncle. Mother who may know more than she says. Shakespeare did not set it here but he could have."'},
-{id:'bw48',ind:'BW',diff:'medium',era:'2010s',y:'2012',n:'Vicky Donor',f:'John Abraham produced. The film opened a national conversation about sperm donation. Urologist calls were up.',c:'"Man is recruited to donate sperm for a fertility clinic. Is very good at this. Wife finds out later. The conversation is difficult."'},
-{id:'bw49',ind:'BW',diff:'medium',era:'2010s',y:'2012',n:'Paan Singh Tomar',f:'Irrfan Khan won the National Award. The real Paan Singh Tomar held 7 national records. The sports federation lost his paperwork.',c:'"National champion athlete becomes a bandit because the sports federation loses his paperwork. The government created this problem."'},
-{id:'bw50',ind:'BW',diff:'medium',era:'2000s',y:'2008',n:'Rab Ne Bana Di Jodi',f:'Anushka Sharma\'s debut. SRK changed his entire body language for the alter-ego Raj. Wife does not notice. This says something.',c:'"Wife does not recognise her own husband when he changes his hairstyle. Husband uses this to date his own wife. It works for longer than it should."'},
-{id:'bw51',ind:'BW',diff:'medium',era:'2010s',y:'2010',n:'Udaan',f:'Vikramaditya Motwane\'s debut. Won best film at multiple festivals. The father character became a reference point for cinematic villainy.',c:'"Teenager expelled from boarding school is forced to work in his father\'s factory. Father is the actual villain of this film."'},
-{id:'bw52',ind:'BW',diff:'medium',era:'2010s',y:'2012',n:'Barfi! (2)',f:'This card is a duplicate — discard and replace in final deck.',c:'"Man cannot speak or hear. Still the most charismatic person in every room. Everyone else is embarrassed by this."'},
-{id:'bw53',ind:'BW',diff:'medium',era:'2000s',y:'2007',n:'Dhamaal',f:'Made on a tiny budget. Became one of the highest-grossing comedies of the year. Proof that chaos scales.',c:'"Four idiots learn the location of hidden money. Race every other idiot in India to reach it first. Nobody is qualified for this."'},
-{id:'bw54',ind:'BW',diff:'medium',era:'2000s',y:'2008',n:'Dostana',f:'Two men faking a relationship for a flat was considered edgy in 2008. The flat was very nice.',c:'"Two men tell one lie to rent a flat. The lie works so well it becomes their entire personality for six months."'},
-{id:'bw55',ind:'BW',diff:'medium',era:'2010s',y:'2019',n:'Article 15',f:'Based on real caste atrocity cases in UP. The director spent a year researching before writing a single scene.',c:'"IPS officer posted to rural UP discovers a caste atrocity being covered up. His colleagues are the ones covering it up."'},
-// ── BOLLYWOOD HARD ──
-{id:'bw56',ind:'BW',diff:'hard',era:'90s',y:'1995',n:'Bombay',f:'Mani Ratnam was attacked at his home after release. AR Rahman\'s Bollywood debut. Banned in several states.',c:'"Hindu-Muslim couple in Bombay. Their city catches fire. A film about love that nobody wanted to make."'},
-{id:'bw57',ind:'BW',diff:'hard',era:'90s',y:'1998',n:'Satya',f:'Ram Gopal Varma. Manoj Bajpayee\'s breakthrough. Essentially invented the Mumbai crime film as a genre.',c:'"Innocent man arrives in Bombay. Gets absorbed into the underworld. By the end he is the underworld."'},
-{id:'bw58',ind:'BW',diff:'hard',era:'2010s',y:'2012',n:'Gangs of Wasseypur',f:'Five and a half hours. Three generations. Anurag Kashyap shot it over 62 days without a single day off.',c:'"Three generations of one family spend 70 years trying to kill one other family. Nobody finishes the job. Everyone is also in love with someone inconvenient."'},
-{id:'bw59',ind:'BW',diff:'hard',era:'2010s',y:'2018',n:'Tumbaad',f:'Took 6 years to make. Shot in Pune, Maharashtra and Iceland. The goddess is practical effects, not CGI.',c:'"Man visits a cursed goddess every monsoon to steal from her. Goes well for decades. Then takes his son along."'},
-{id:'bw60',ind:'BW',diff:'hard',era:'2010s',y:'2016',n:'Raman Raghav 2.0',f:'Nawazuddin Siddiqui based his character on the real Raman Raghav who terrorised Bombay in the 1960s.',c:'"Serial killer meets a cop who might be worse than him. They are fascinated by each other. This is not a buddy film."'},
-{id:'bw61',ind:'BW',diff:'hard',era:'2000s',y:'2006',n:'Omkara',f:'Vishal Bhardwaj\'s second Shakespeare adaptation. The dialect is from western UP. Ajay Devgn studied it for months.',c:'"Othello but in UP gang politics and dialect. A sari replaces the handkerchief. Ends the same way."'},
-{id:'bw62',ind:'BW',diff:'hard',era:'2020s',y:'2023',n:'Animal',f:'Ranbir Kapoor gained 10 kg for this role. The film runs 3.5 hours. The ending sets up a sequel nobody agreed to.',c:'"Man loves his father. Father does not notice. Man escalates."'},
-{id:'bw63',ind:'BW',diff:'hard',era:'2010s',y:'2018',n:'Padmaavat',f:'Sanjay Leela Bhansali was attacked on set. The film was banned in four states before release.',c:'"King spends an entire war trying to see one woman\'s face. She has thoughts about this."'},
-{id:'bw64',ind:'BW',diff:'hard',era:'2000s',y:'2009',n:'Gulaal',f:'Anurag Kashyap shelved this film for four years due to political pressure. Piyush Mishra wrote the lyrics while on set.',c:'"Law student arrives in Rajasthan and is absorbed into a royalist political movement. Realises too late what he has joined."'},
-{id:'bw65',ind:'BW',diff:'hard',era:'2010s',y:'2013',n:'Ugly',f:'Anurag Kashyap\'s most underrated film. Every adult in the frame is failing the child. That is the point.',c:'"Child goes missing. Father, ex-husband, stepfather, and the cops all suspect each other. Nobody is looking for the child."'},
-{id:'bw66',ind:'BW',diff:'hard',era:'2000s',y:'2008',n:'A Wednesday',f:'Naseeruddin Shah and Anupam Kher. 104 minutes. No filler. Still the most efficient Bollywood thriller made.',c:'"Ordinary man calls the police commissioner with a bomb threat. His reasons are not what anyone expects."'},
-{id:'bw67',ind:'BW',diff:'hard',era:'2000s',y:'2004',n:'Maqbool',f:'Vishal Bhardwaj\'s first Shakespeare adaptation. The witches are corrupt cops who also predict the future. It works.',c:'"Macbeth but in the Mumbai underworld. The witches are corrupt cops. Everything else is identical."'},
-{id:'bw68',ind:'BW',diff:'hard',era:'2000s',y:'2005',n:'Hazaaron Khwaishein Aisi',f:'Sudhir Mishra\'s most personal film. The Emergency-era politics are accurate. The heartbreak is worse.',c:'"Three friends. Emergency-era India. One becomes a revolutionary. One becomes the establishment. One watches both and cannot choose."'},
-{id:'bw69',ind:'BW',diff:'hard',era:'2000s',y:'2006',n:'Dor',f:'Nagesh Kukunoor directed. Ayesha Takia and Gul Panag. Shot in Rajasthan and Himachal. Two women who should not meet, must.',c:'"Two women. One\'s husband sentenced to death for allegedly killing the other\'s. One must travel to get the other to forgive."'},
-{id:'bw70',ind:'BW',diff:'hard',era:'2010s',y:'2013',n:'Shahid',f:'True story of advocate Shahid Azmi, who was assassinated in 2010. Rajkummar Rao won the National Award.',c:'"Criminal lawyer defends the accused while becoming an accused himself. True story. The irony was not lost on him."'},
-{id:'bw71',ind:'BW',diff:'hard',era:'2010s',y:'2017',n:'Newton',f:'India\'s Oscar entry in 2017. A government clerk tries to conduct a fair election in a Naxal-controlled area. Systems resist.',c:'"Government clerk is sent to conduct an election in a conflict zone. He insists on doing it properly. Everyone finds this inconvenient."'},
-{id:'bw72',ind:'BW',diff:'hard',era:'2010s',y:'2012',n:'Paan Singh Tomar (Hard)',f:'Irrfan Khan\'s finest performance. A national athlete turned dacoit who never saw himself as a criminal.',c:'"Athlete wins national medals. Loses everything to bureaucracy. Takes to the ravines. Insists he is not a bandit. He is a baaghi."'},
-{id:'bw73',ind:'BW',diff:'hard',era:'2010s',y:'2017',n:'Mukkabaaz',f:'Anurag Kashyap\'s most personal film about caste, love, and boxing. The final match sequence runs 15 uncut minutes.',c:'"Boxer falls for his coach\'s niece. Coach is a powerful upper-caste man. Love and ambition both require the same sacrifice."'},
-{id:'bw74',ind:'BW',diff:'hard',era:'2010s',y:'2016',n:'Kapoor & Sons (Hard)',f:'Shakun Batra. The family secret is revealed slowly enough that the audience knows before the characters do.',c:'"Family reunion for a dying grandfather. Every member is hiding something. The grandfather is the only honest one."'},
-{id:'bw75',ind:'BW',diff:'hard',era:'2010s',y:'2015',n:'Masaan (Hard)',f:'Pankaj Tripathi\'s breakout role. Shot on a Rs 4 crore budget. Shown in the Cannes Un Certain Regard section.',c:'"Two strangers grieve separately in the same city. Their stories never meet. The river knows both of them."'},
-// ── TOLLYWOOD EASY ──
-{id:'tw01',ind:'TW',diff:'easy',era:'2000s',y:'2003',n:'Okkadu',f:'Relaunched Mahesh Babu as a mass hero. Remade in four languages. Bhumika Chawla became a star overnight.',c:'"Village rowdy falls for a city girl. Her family is horrified. He defeats everyone in his path. Then does it again."'},
-{id:'tw02',ind:'TW',diff:'easy',era:'2000s',y:'2006',n:'Pokiri',f:'Highest-grossing Telugu film of its time. Remade as Wanted in Hindi. Puri Jagannadh wrote and directed.',c:'"Undercover cop infiltrates a gang. Falls for the villain\'s sister. Has to arrest the family he has come to love."'},
-{id:'tw03',ind:'TW',diff:'easy',era:'2010s',y:'2011',n:'Dookudu',f:'Mahesh Babu + Trivikram dialogue = instant box office record. The one-liners became memes within hours.',c:'"Cop\'s estranged son meets his father by chance. Together they catch the villain the father never could. Then feelings happen."'},
-{id:'tw04',ind:'TW',diff:'easy',era:'2000s',y:'2005',n:'Athadu',f:'Trivikram Srinivas wrote this. Considered by many critics to be Mahesh Babu\'s finest performance.',c:'"Trained assassin takes on the identity of a harmless villager. Has to be gentle. Does not know how. Falls in love anyway."'},
-{id:'tw05',ind:'TW',diff:'easy',era:'2010s',y:'2015',n:'Baahubali: The Beginning',f:'Shot over five years. Highest-grossing Indian film of its time. The waterfall was entirely CGI.',c:'"Foundling raised by a waterfall tribe discovers he might be royalty. Climbs the waterfall to confirm. Correct."'},
-{id:'tw06',ind:'TW',diff:'easy',era:'2010s',y:'2017',n:'Baahubali: The Conclusion',f:'The answer to #KattapaKyunMara broke the Indian internet. The film made Rs 1800 crore worldwide.',c:'"The question everyone asked for two years is finally answered. The answer raises more questions."'},
-{id:'tw07',ind:'TW',diff:'easy',era:'2010s',y:'2017',n:'Arjun Reddy',f:'Shahid Kapoor remade this as Kabir Singh. Both films broke records. Both films started arguments.',c:'"Brilliant surgeon self-destructs over a breakup. Everyone watches. Nobody stops him. He is very good looking so this takes longer than it should."'},
-{id:'tw08',ind:'TW',diff:'easy',era:'2020s',y:'2022',n:'RRR',f:'S.S. Rajamouli. The Naatu Naatu dance sequence won the Oscar. It took three months to choreograph.',c:'"Two freedom fighters meet, become best friends, and discover they are on opposite sides. They dance about it."'},
-{id:'tw09',ind:'TW',diff:'easy',era:'2000s',y:'2009',n:'Magadheera',f:'First Telugu film to use motion capture. The horse sequences were entirely practical. The horse was very brave.',c:'"Warrior dies 400 years ago mid-love story. Reincarnates as a stuntman. The love story is still unfinished. He notices."'},
-{id:'tw10',ind:'TW',diff:'easy',era:'2020s',y:'2021',n:'Pushpa: The Rise',f:'Allu Arjun spent 6 months on the accent and mannerisms. The hand tilt became a national gesture.',c:'"Illegitimate son of a landlord becomes the most powerful red sandalwood smuggler in Andhra. Tilts his hand. Becomes a meme."'},
-{id:'tw11',ind:'TW',diff:'easy',era:'2010s',y:'2016',n:'Pelli Choopulu',f:'Won the National Award for Best Telugu Film. Made on a tiny budget. The food truck was real and operational.',c:'"Two people meet for an arranged marriage meeting. Both are trying to escape their families\' plans. They accidentally start a food truck."'},
-{id:'tw12',ind:'TW',diff:'easy',era:'2010s',y:'2017',n:'Fidaa',f:'Shot largely in and around Warangal. Sai Pallavi did not have a body double for a single scene.',c:'"NRI visits Telangana to find a bride. Finds one immediately. She is too much for him. He leaves. He comes back."'},
-{id:'tw13',ind:'TW',diff:'easy',era:'2010s',y:'2018',n:'Geetha Govindam',f:'Vijay Deverakonda and Rashmika Mandanna. The bus scene alone generated 40 million YouTube views.',c:'"Man accidentally compromises a girl\'s reputation on a bus. Spends the rest of the film apologising. She does not accept easily."'},
-{id:'tw14',ind:'TW',diff:'easy',era:'2020s',y:'2020',n:'Ala Vaikunthapurramuloo',f:'Allu Arjun starrer. Butta Bomma became the most streamed Telugu song of the year. Babies swapped is the oldest plot. Still works.',c:'"Babies swapped at birth. One grows up rich, one grows up poor. Rich father eventually notices something is off."'},
-{id:'tw15',ind:'TW',diff:'easy',era:'2000s',y:'2006',n:'Bommarillu',f:'Siddharth\'s career-defining role. The father-son dynamic was so accurately written that fathers complained.',c:'"Overprotected son rebels against controlling father. Falls for a free-spirited girl. Father is the actual obstacle. Father eventually gets it."'},
-{id:'tw16',ind:'TW',diff:'easy',era:'2000s',y:'2007',n:'Happy Days',f:'Sekhar Kammula\'s most loved film. No songs during the film. No villain. Just people. Telugu audiences were disoriented then devoted.',c:'"Group of engineering students navigate college. No villain. No item numbers. Just life. Telugu audiences were confused then loved it."'},
-{id:'tw17',ind:'TW',diff:'easy',era:'2010s',y:'2013',n:'Attarintiki Daredi',f:'Highest-grossing Telugu film of 2013. Pawan Kalyan\'s biggest commercial hit. Trivikram Srinivas dialogue.',c:'"Grandson goes undercover in his estranged grandfather\'s house to reunite the family. Grandfather has no idea. Very large house."'},
-{id:'tw18',ind:'TW',diff:'easy',era:'2010s',y:'2015',n:'Srimanthudu',f:'Mahesh Babu starrer. The adoption of a village as a CSR concept was modelled on real government schemes.',c:'"Billionaire\'s son adopts a poor village to prove himself. Village has problems. He solves them. Village is grateful. Father is proud."'},
-{id:'tw19',ind:'TW',diff:'easy',era:'2010s',y:'2018',n:'Bharat Ane Nenu',f:'Mahesh Babu played a Chief Minister who uses an app to receive public complaints. The app trended for a week.',c:'"Young man inherits the Chief Minister position. Has no political experience. Governs better than everyone before him. Politicians are annoyed."'},
-{id:'tw20',ind:'TW',diff:'easy',era:'2010s',y:'2015',n:'Temper',f:'Jr NTR\'s transformation from corrupt to principled cop was the most dramatic character arc of that year.',c:'"Corrupt cop is forced to confront his worst self after meeting a rape survivor. Becomes a good cop. The transformation is violent."'},
-{id:'tw21',ind:'TW',diff:'easy',era:'2000s',y:'2001',n:'Kushi',f:'Pawan Kalyan and Bhoomika Chawla. The hate-to-love formula executed at full Telugu mass-cinema volume.',c:'"Two people hate each other from the moment they meet. Stuck together by circumstance. Hate becomes something else. Surprise."'},
-{id:'tw22',ind:'TW',diff:'easy',era:'2010s',y:'2012',n:'Julayi',f:'Allu Arjun and Trivikram. The comedy sequences between Allu Arjun and Brahmanandam ran longer than the plot.',c:'"Lazy man accidentally gets recruited by both a con man and the cops. Plays both sides. Is surprisingly good at this."'},
-{id:'tw23',ind:'TW',diff:'easy',era:'2020s',y:'2021',n:'Uppena',f:'Panja Vaisshnav Tej\'s debut. The climax on the sea was shot in real waves. Nobody was insured for this.',c:'"Fisherman\'s son falls for a landlord\'s daughter. Landlord disagrees with his whole body. The sea is involved in the ending."'},
-{id:'tw24',ind:'TW',diff:'easy',era:'2020s',y:'2022',n:'Ante Sundaraniki',f:'Naveen Polishetty and Nazriya Fahadh. The lie they construct across two families escalates geometrically.',c:'"Hindu boy and Christian girl want to marry. Both families need elaborate convincing. They construct an increasingly complicated lie."'},
-{id:'tw25',ind:'TW',diff:'easy',era:'2010s',y:'2019',n:'Jersey',f:'Nani\'s career-best performance. Based on a true story. Shahid Kapoor remade it in Hindi. Neither version is easy to finish without crying.',c:'"Washed-up cricketer attempts a comeback at 36 to buy his son a jersey. Son does not need the jersey. Dad needs this."'},
-// ── TOLLYWOOD MEDIUM ──
-{id:'tw26',ind:'TW',diff:'medium',era:'2000s',y:'2001',n:'Nuvvu Naaku Nachavu',f:'Venkatesh and Bhoomika. One of the first Telugu supernatural comedies. Spawned an entire subgenre.',c:'"A ghost is in love with the hero. He is already engaged. She does not care. Very, very persistent ghost."'},
-{id:'tw27',ind:'TW',diff:'medium',era:'2000s',y:'2005',n:'Anukokunda Oka Roju',f:'Charmi\'s career-defining performance. The thriller structure was unprecedented in mainstream Telugu cinema at the time.',c:'"Woman wakes up in a stranger\'s house with no memory of the previous night. Retraces her steps. Each step is worse than the last."'},
-{id:'tw28',ind:'TW',diff:'medium',era:'2000s',y:'2006',n:'Vikramarkudu',f:'Ravi Teja in a double role. The real cop and the real villager had to be equally convincing. Only one succeeds.',c:'"Fierce cop is mistaken for a meek villager and vice versa. Cop has to be meek. Villager has to be fierce. Neither is suited to this."'},
-{id:'tw29',ind:'TW',diff:'medium',era:'2000s',y:'2009',n:'Kick',f:'Ravi Teja starrer. The adrenaline addiction concept was written before it was clinically defined in Telugu mass cinema.',c:'"Man is addicted to the feeling of doing something for the first time. This is a quirky trait until it becomes a superpower."'},
-{id:'tw30',ind:'TW',diff:'medium',era:'2010s',y:'2010',n:'Khaleja',f:'Mahesh Babu starrer. The village deity angle was taken completely seriously. The auto-driver did not want this responsibility.',c:'"Auto driver is prophesied to be a god by a village. He does not want to be a god. The village insists. He reluctantly becomes a god."'},
-{id:'tw31',ind:'TW',diff:'medium',era:'2010s',y:'2010',n:'Leader',f:'Rana Daggubati\'s debut. The political idealism felt naïve and then felt necessary. Both at the same time.',c:'"Young man accidentally becomes a politician. Turns out to be an honest one. The entire system tries to destroy him for this."'},
-{id:'tw32',ind:'TW',diff:'medium',era:'2010s',y:'2013',n:'Seethamma Vakitlo Sirimalle Chettu',f:'Mahesh Babu and Venkatesh together. The family drama ran longer than needed and nobody complained.',c:'"Two brothers love the same woman. One steps aside. The other doesn\'t know this for years. When he finds out, the film earns its runtime."'},
-{id:'tw33',ind:'TW',diff:'medium',era:'2010s',y:'2014',n:'1: Nenokkadine',f:'Mahesh Babu starrer. Sukumar directed. Visually the most ambitious Telugu film of that decade.',c:'"Rock star cannot tell what is real and what is a hallucination. Neither can the audience. This is intentional."'},
-{id:'tw34',ind:'TW',diff:'medium',era:'2010s',y:'2012',n:'Swamy Ra Ra',f:'Nikhil Siddhartha and Swathi. Low-budget heist comedy that punched far above its weight.',c:'"Small-time thief and a woman on the run are thrown together. Both are lying about everything. They fall in love anyway."'},
-{id:'tw35',ind:'TW',diff:'medium',era:'2010s',y:'2013',n:'Mirchi',f:'Prabhas before Baahubali. The flashback romance is considered one of the finest in Telugu cinema.',c:'"Man visits his ancestral village and inherits a decades-old enemy along with the property. Enemy was not listed in the will."'},
-{id:'tw36',ind:'TW',diff:'medium',era:'2010s',y:'2015',n:'S/O Satyamurthy',f:'Allu Arjun starrer. Trivikram wrote the father character as a specific critique of unchecked generosity.',c:'"Son of a generous man inherits his father\'s generosity and also his father\'s debts. Must repay both. Somehow does."'},
-{id:'tw37',ind:'TW',diff:'medium',era:'2010s',y:'2016',n:'Premam (Telugu)',f:'Remake of the Malayalam original. Vijay Deverakonda in a breakout supporting role. Three love stories, one man.',c:'"Man falls in love three times across different decades of his life. Each time he is a different person. Third time it works."'},
-{id:'tw38',ind:'TW',diff:'medium',era:'2010s',y:'2017',n:'Duvvada Jagannadham',f:'Allu Arjun played a brahmin priest with absolute commitment. The dual identity gag sustained an entire film.',c:'"Devout brahmin priest is secretly a contract killer. Has to keep these two identities separate. At a wedding. Challenging."'},
-{id:'tw39',ind:'TW',diff:'medium',era:'2010s',y:'2019',n:'Maharshi',f:'Mahesh Babu starrer. The NRI-returns-and-fixes-farming plot was earnest in a way Telugu blockbusters rarely allow.',c:'"Successful NRI returns to his village after guilt catches up with him. Turns the village into a model farm. Guilt partially resolved."'},
-{id:'tw40',ind:'TW',diff:'medium',era:'2020s',y:'2020',n:'Colour Photo',f:'Suhas and Chandini Chowdary. The 1990s period detail was meticulously researched. The ending does not comfort.',c:'"Lower-caste boy falls for upper-caste girl in 1990s Andhra. His caste is discovered. The film does not look away from what happens next."'},
-{id:'tw41',ind:'TW',diff:'medium',era:'2020s',y:'2022',n:'Bheemla Nayak',f:'Pawan Kalyan and Rana Daggubati. Remake of Ayyappanum Koshiyum. Two men and their ego. That\'s the film.',c:'"Two men of equal stubbornness clash over ego and principle. Nobody backs down. The state suffers. The audience cheers."'},
-{id:'tw42',ind:'TW',diff:'medium',era:'2000s',y:'2002',n:'Manmadhudu',f:'Nagarjuna\'s biggest commercial hit. The anti-marriage argument is presented so convincingly that the reversal has to work harder.',c:'"Committed bachelor with a mission to stay single meets someone who dismantles every argument he has. He argues until he can\'t."'},
-{id:'tw43',ind:'TW',diff:'medium',era:'2000s',y:'2005',n:'Nuvvostanante Nenoddantana',f:'Siddharth and Trisha. The impossible task structure goes through three iterations. Each one escalates.',c:'"Man loves a girl whose family demands an impossible task. He does it. They add another task. He does that too."'},
-{id:'tw44',ind:'TW',diff:'medium',era:'2000s',y:'2005',n:'Munna',f:'Prabhas before the mega-stardom. The rowdy-with-a-heart role that built the template.',c:'"Small-time rowdy with a big heart navigates loyalty, love, and violence in equal measure. Survives mostly on instinct."'},
-{id:'tw45',ind:'TW',diff:'medium',era:'2000s',y:'2007',n:'Tulasi',f:'Venkatesh starrer. The criminal family versus romance tension was handled with more nuance than the genre usually allows.',c:'"Man raised in a criminal family tries to go straight for the woman he loves. Family has other plans. Violence has other plans."'},
-{id:'tw46',ind:'TW',diff:'medium',era:'2000s',y:'2008',n:'Parugu',f:'Allu Arjun and Sheela. The girl\'s rebellion is treated with more seriousness than the genre usually affords.',c:'"Girl runs away from home repeatedly. A man keeps being sent to bring her back. He does. She runs again. He starts to understand why."'},
-{id:'tw47',ind:'TW',diff:'medium',era:'2020s',y:'2021',n:'Mathu Vadalara',f:'Sri Simha and Satya. The crime comedy subgenre in Telugu needed exactly this film.',c:'"Two broke men accidentally stumble into a murder investigation while trying to recover their stolen money. They are not detectives. It shows."'},
-{id:'tw48',ind:'TW',diff:'medium',era:'2010s',y:'2016',n:'Babu Bangaram',f:'Venkatesh and Nayanthara. The rom-com formula executed at senior star level. The chemistry was real.',c:'"Easygoing man falls for a fierce woman. She does not want to fall for him. She falls anyway. He does not notice immediately."'},
-{id:'tw49',ind:'TW',diff:'medium',era:'2010s',y:'2014',n:'Manam',f:'Three generations of the Akkineni family acting together. Akkineni Nageswara Rao\'s final film. The meta dimension is overwhelming.',c:'"Three generations of one family are reincarnations of each other. They all meet. The family reunion is complicated."'},
-{id:'tw50',ind:'TW',diff:'medium',era:'2010s',y:'2011',n:'Mirapakay',f:'Ravi Teja and Richa Gangopadhyay. The hired-troublemaker-falls-in-love plot runs on pure mass energy.',c:'"Rowdy is hired to cause problems in a village. Falls for a girl there. Has to stop causing problems. His employer is unhappy."'},
-{id:'tw51',ind:'TW',diff:'medium',era:'2000s',y:'2008',n:'Jalsa',f:'Pawan Kalyan starrer. The family history reveal runs through two decades of backstory in one interval.',c:'"Man discovers his girlfriend\'s family has a complicated history with his family. History is putting it mildly."'},
-{id:'tw52',ind:'TW',diff:'medium',era:'2010s',y:'2017',n:'Shatamanam Bhavati',f:'Sharwanand starrer. The grandfather-grandson relationship became the benchmark for sentiment in Telugu commercial cinema.',c:'"Grandfather and grandson share a bond that skips a generation. Grandfather\'s final wish launches the grandson\'s life. Quietly devastating."'},
-{id:'tw53',ind:'TW',diff:'medium',era:'2000s',y:'2007',n:'Desamuduru',f:'Allu Arjun\'s mass breakthrough. Puri Jagannadh direction. The action sequences were the most expensive in Telugu cinema at that point.',c:'"Journalist investigates a crime in a small town. Town does not want to be investigated. He investigates harder."'},
-{id:'tw54',ind:'TW',diff:'medium',era:'2010s',y:'2013',n:'Attarintiki Daredi (Medium)',f:'Already listed in Easy. This slot can be replaced with Brindavanam (2010) — hero goes undercover as a boyfriend.',c:'"Hero pretends to be someone\'s boyfriend to protect them. Meets the real family. Real feelings develop. The pretence becomes the problem."'},
-{id:'tw55',ind:'TW',diff:'medium',era:'2010s',y:'2022',n:'Ante Sundaraniki (Medium)',f:'Already in Easy. Replace with Rang De (2021) — a childhood animosity that becomes adult love.',c:'"Girl has hated a specific boy since childhood. Boy moves next door as an adult. She still hates him. He finds this encouraging."'},
-// ── TOLLYWOOD HARD ──
-{id:'tw56',ind:'TW',diff:'hard',era:'70s',y:'1978',n:'Maro Charithra',f:'K Balachander directed. Made Kamal Haasan a star in Telugu. The ending destroyed every audience that saw it.',c:'"Young couple elope because their families say no. They run as far as they can. They do not make it."'},
-{id:'tw57',ind:'TW',diff:'hard',era:'2010s',y:'2019',n:'Brochevarevarura',f:'Priyadarshi and Sree Vishnu. Made on a small budget. Kickstarted a wave of low-budget Telugu comedies.',c:'"Four friends try to cheat in their exams. One has a secret. Every plan fails more spectacularly than the last."'},
-{id:'tw58',ind:'TW',diff:'hard',era:'80s',y:'1980',n:'Sankarabharanam',f:'K Vishwanath directed. Won the National Award. The classical music sequences are performed live, not playback.',c:'"Classical musician takes in a woman shunned by society. Teaches her everything. Society disapproves of this too."'},
-{id:'tw59',ind:'TW',diff:'hard',era:'80s',y:'1983',n:'Sagara Sangamam',f:'Kamal Haasan lost 20 kg for this role. The classical dance sequences are considered the finest in Telugu cinema.',c:'"Brilliant classical dancer destroys himself with alcohol. His student surpasses him. He watches this happen from a distance."'},
-{id:'tw60',ind:'TW',diff:'hard',era:'80s',y:'1986',n:'Swathi Muthyam',f:'Kamal Haasan won the National Award. The film is still studied in psychology courses as a depiction of intellectual disability.',c:'"Intellectually disabled man lives with absolute purity and kindness. The world is not designed for him. He is the best person in it."'},
-{id:'tw61',ind:'TW',diff:'hard',era:'80s',y:'1989',n:'Siva',f:'Ram Gopal Varma\'s directorial debut. Nagarjuna. The chain fight became a reference point for action choreography.',c:'"Student takes on a criminal network that controls his college. This is treated as a reasonable response to ragging."'},
-{id:'tw62',ind:'TW',diff:'hard',era:'90s',y:'1991',n:'Kshana Kshanam',f:'Ram Gopal Varma direction. Sridevi and Venkatesh. The on-the-run comedy thriller was unprecedented in Telugu.',c:'"Woman accidentally witnesses a crime. Man accidentally gets blamed for a different crime. They run together. Neither trusts the other."'},
-{id:'tw63',ind:'TW',diff:'hard',era:'90s',y:'1993',n:'Gaayam',f:'Mani Ratnam produced. Jagapathi Babu\'s defining role. The political violence is unflinching.',c:'"Young man gets drawn into political violence without fully understanding what he is entering. By the time he understands, it is too late."'},
-{id:'tw64',ind:'TW',diff:'hard',era:'90s',y:'1992',n:'Antham',f:'Ram Gopal Varma direction. Nagarjuna. The whodunit structure was the most complex Telugu thriller of its decade.',c:'"A murder. A detective. A web of people with motive. The solution is not satisfying because reality rarely is."'},
-{id:'tw65',ind:'TW',diff:'hard',era:'90s',y:'1998',n:'Tholi Prema',f:'Pawan Kalyan\'s breakthrough. The persistence-as-romance framing aged differently than it was intended.',c:'"Boy loves girl. Pursues her for years. She says no repeatedly. He waits. The film thinks this is romantic."'},
-{id:'tw66',ind:'TW',diff:'hard',era:'2000s',y:'2003',n:'Tagore',f:'Chiranjeevi starrer. The corruption-fighting narrative ran three hours and felt necessary for every minute.',c:'"Principled man takes on a corrupt system single-handedly. The system is large. He is persistent. One of them has to give."'},
-{id:'tw67',ind:'TW',diff:'hard',era:'2000s',y:'2005',n:'Chatrapathi',f:'Prabhas and SS Rajamouli. The mother-son separation premise is executed at maximum melodrama. It earns it.',c:'"Mother and son separated during a boat accident. Son grows up on the wrong side of the border. Mother waits. Son fights his way back."'},
-{id:'tw68',ind:'TW',diff:'hard',era:'90s',y:'1995',n:'Gulabi',f:'JD Chakravarthy starrer. The spirit-seeking-justice subgenre begins here in Telugu cinema.',c:'"Woman is murdered. Her spirit cannot rest until justice is served. A man she trusts must serve it. He is reluctant."'},
-{id:'tw69',ind:'TW',diff:'hard',era:'90s',y:'1996',n:'Ninne Pelladatha',f:'Nagarjuna starrer. The disguise-based wooing strategy ran through multiple cities. She kept saying no. The film thought this was funny.',c:'"Man woos a woman across several cities using various disguises. She keeps rejecting him. He keeps changing the disguise."'},
-{id:'tw70',ind:'TW',diff:'hard',era:'2010s',y:'2014',n:'Rudramadevi',f:'Anushka Shetty played a queen raised as a prince. The historical accuracy was contested. The performance was not.',c:'"Queen raised as a prince must rule a kingdom while hiding her gender. The kingdom has opinions. She ignores them."'},
-{id:'tw71',ind:'TW',diff:'hard',era:'2020s',y:'2019',n:'Evaru',f:'Adivi Sesh and Regina Cassandra. The interrogation-room structure holds for the entire runtime. The twist recontextualises everything.',c:'"A man is found dead. A woman confesses. A cop interrogates her. Every version of the story changes what actually happened."'},
-{id:'tw72',ind:'TW',diff:'hard',era:'2020s',y:'2021',n:'Maestro',f:'Nithiin remake of Andhadhun. The ambiguity of the original was preserved. The blind man may or may not be blind. The audience cannot confirm.',c:'"Blind man\'s wife is having an affair. Husband may or may not know. May or may not be planning something. The ambiguity is the film."'},
-{id:'tw73',ind:'TW',diff:'hard',era:'2020s',y:'2022',n:'Virata Parvam',f:'Rana Daggubati and Sai Pallavi. The Naxalite movement backdrop is the most politically serious Telugu film in a decade.',c:'"Woman falls in love with a Naxalite through his poetry. Joins the movement to find him. The movement is not what she imagined."'},
-{id:'tw74',ind:'TW',diff:'hard',era:'2020s',y:'2023',n:'Dasara',f:'Nani\'s most ambitious film. The coal mine landscape is a character. The violence is earned not gratuitous.',c:'"Coal mine town. Two friends on opposite sides of a power struggle. The landscape is as brutal as the men who live in it."'},
-{id:'tw75',ind:'TW',diff:'hard',era:'2010s',y:'2019',n:'Jersey (Hard)',f:'Already in Easy. Replace with Nenu Local (2017) — auto driver falls for a girl, discovers her history, must choose.',c:'"Auto driver falls for a girl with a complicated past. Must decide what he is willing to accept. Takes longer than it should."'},
-];
-
-// ── STATE ──
-let mode='BW', selectedDiff='all', deck=[], idx=0, totalPts=0;
-let isFlipped=false, cardFlipTime=0, cardStartTime=0;
-let players=[], currentPlayerIdx=0;
-let feedbackPending=null, feedbackIsGeneral=false;
-const SID=SESSION_ID;
-
-// ── FILTERING ──
-function getFiltered(m,d){
-  return CARDS.filter(c=>{
-    const indOk = m==='ALL'?true:c.ind===m;
-    const diffOk = d==='all'?true:c.diff===d;
-    return indOk&&diffOk;
-  });
-}
-function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
-
-// ── SCREENS ──
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-
-// ── MODE SELECT ──
-function selectMode(m){
-  mode=m;
-  const labels={BW:'Bollywood deck',TW:'Tollywood deck',ALL:'Full mixed deck'};
-  document.getElementById('diff-sub').textContent=labels[m];
-  /* #11 fix: dn-medium → dn-med to match HTML id */
-  const diffIds={all:'dn-all',easy:'dn-easy',medium:'dn-med',hard:'dn-hard'};
-  ['all','easy','medium','hard'].forEach(d=>{
-    const n=getFiltered(m,d).length;
-    const el=document.getElementById(diffIds[d]);
-    if(el) el.textContent=n+' cards';
-  });
-  track('mode_selected',{mode:m});
-  show('difficulty');
-}
-
-// ── DIFFICULTY → MULTIPLAYER SETUP ──
-function setupMultiplayer(d){
-  selectedDiff=d;
-  renderPlayerList();
-  show('mp-setup');
-  track('diff_selected',{diff:d,mode});
-}
-
-// ── PLAYER MANAGEMENT ──
-const COLORS=[
-  {bg:'rgba(212,168,67,0.15)',color:'var(--gold)',text:'#d4a843'},
-  {bg:'rgba(185,28,28,0.15)',color:'var(--red2)',text:'#dc2626'},
-  {bg:'rgba(21,128,61,0.15)',color:'var(--green2)',text:'#16a34a'},
-  {bg:'rgba(99,102,241,0.15)',color:'#818cf8',text:'#818cf8'},
-];
-function addPlayer(){
-  if(players.length>=4){toast('Max 4 players');return;}
-  players.push({name:'',score:0,id:Date.now()});
-  renderPlayerList();
-}
-function removePlayer(i){players.splice(i,1);renderPlayerList();}
-function renderPlayerList(){
-  const el=document.getElementById('player-list');
-  const btn=document.getElementById('add-player-btn');
-  el.innerHTML=players.map((p,i)=>{
-    const c=COLORS[i%COLORS.length];
-    return `<div class="player-row">
-      <div class="player-avatar" style="background:${c.bg};color:${c.text}">${p.name?p.name.charAt(0).toUpperCase():(i+1)}</div>
-      <input class="player-input" placeholder="Player ${i+1} name" value="${p.name}"
-        oninput="players[${i}].name=this.value;updateAvatar(${i},this.value)"
-        style="border-color:${c.color}15">
-      <button class="player-remove" onclick="removePlayer(${i})">×</button>
-    </div>`;
-  }).join('');
-  btn.style.display=players.length>=4?'none':'block';
-}
-function updateAvatar(i,val){
-  const avatars=document.querySelectorAll('.player-avatar');
-  if(avatars[i]) avatars[i].textContent=val?val.charAt(0).toUpperCase():(i+1);
-}
-
-// ── START GAME ──
-function startGame(){
-  // Fill unnamed players
-  players=players.map((p,i)=>({...p,name:p.name||`Player ${i+1}`,score:0}));
-  if(players.length===0) players=[{name:'Solo',score:0,id:Date.now()}];
-  currentPlayerIdx=0;
-  deck=shuffle(getFiltered(mode,selectedDiff));
-  if(!deck.length){toast('No cards found!');return;}
-  idx=0;totalPts=0;isFlipped=false;
-  track('game_start',{mode,diff:selectedDiff,players:players.length,cards:deck.length});
-  renderGameTabs();
-  show('game');
-  loadCard();
-}
-
-function renderGameTabs(){
-  const tabs=document.getElementById('player-tabs');
-  if(players.length<=1){tabs.style.display='none';return;}
-  tabs.style.display='flex';
-  tabs.innerHTML=players.map((p,i)=>`
-    <div class="ptab${i===currentPlayerIdx?' active':''}" id="ptab-${i}">
-      ${p.name}<span class="ptab-score">${p.score}</span>
-    </div>`).join('');
-}
-
-function updateTabs(){
-  players.forEach((p,i)=>{
-    const t=document.getElementById(`ptab-${i}`);
-    if(!t)return;
-    t.className='ptab'+(i===currentPlayerIdx?' active':'');
-    t.innerHTML=`${p.name}<span class="ptab-score">${p.score}</span>`;
-  });
-}
-
-// ── LOAD CARD ──
-function loadCard(){
-  if(idx>=deck.length){endGame();return;}
-  const c=deck[idx];
-  isFlipped=false;
-  cardStartTime=Date.now();
-
-  // Fix: instantly reset flip (no animation) so next card's back isn't visible
-  const flipInner=document.getElementById('flip-inner');
-  flipInner.style.transition='none';
-  document.getElementById('flip-wrap').classList.remove('flipped');
-  // Force reflow then re-enable transition
-  flipInner.offsetHeight;
-  flipInner.style.transition='';
-  document.getElementById('score-zone').classList.remove('show');
-  document.getElementById('g-bar').style.width=Math.round(idx/deck.length*100)+'%';
-  document.getElementById('g-prog').textContent=(idx+1)+' / '+deck.length;
-  document.getElementById('g-pts').textContent=totalPts+' pts';
-
-  // Whose turn
-  const wt=document.getElementById('whose-turn');
-  const tn=document.getElementById('turn-name');
-  if(players.length>1){wt.style.display='block';tn.textContent=players[currentPlayerIdx].name;}
-  else{wt.style.display='none';}
-
-  // Front — set card background by industry
-  const isBW=c.ind==='BW';
-  const ff=document.getElementById('face-front');
-  if(isBW){ff.classList.remove('card-tw');}else{ff.classList.add('card-tw');}
-  document.getElementById('cf-accent').className='cf-accent '+(isBW?'cf-accent-bw':'cf-accent-tw');
-  // Back motif colors
-  ['tl','tr','bl','br'].forEach(pos=>{
-    const el=document.getElementById('back-motif-'+pos);
-    el.classList.remove('motif-bw','motif-tw');
-    el.classList.add(isBW?'motif-bw':'motif-tw');
-  });
-  const indEl=document.getElementById('cf-ind');
-  indEl.className='cf-ind '+(isBW?'cf-ind-bw':'cf-ind-tw');
-  indEl.textContent=isBW?'Bollywood':'Tollywood';
-  document.getElementById('cf-era').textContent=c.era+' · '+c.diff.charAt(0).toUpperCase()+c.diff.slice(1);
-  document.getElementById('cf-clue').textContent=c.c;
-
-  const pips=document.getElementById('cf-pips');
-  pips.innerHTML='';
-  const pipMap={easy:1,medium:2,hard:3};
-  for(let i=0;i<3;i++){
-    const p=document.createElement('div');
-    p.className='cf-pip'+(i<(pipMap[c.diff]||1)?' cf-pip-on-'+c.diff:'');
-    pips.appendChild(p);
-  }
-
-  // Back
-  const indLbl=document.getElementById('cb-ind-label');
-  indLbl.className='cb-ind-label '+(isBW?'cb-ind-label-bw':'cb-ind-label-tw');
-  indLbl.textContent=(isBW?'Bollywood':'Tollywood')+' · '+c.diff;
-  document.getElementById('cb-answer').textContent=c.n;
-  document.getElementById('cb-year').textContent=c.y;
-  document.getElementById('cb-fact').textContent=c.f;
-
-  track('card_view',{card:c.id,name:c.n,idx,player:players[currentPlayerIdx]?.name});
-}
-
-// ── FLIP ──
-function flipCard(){
-  if(isFlipped)return;
-  isFlipped=true;
-  const latency=Date.now()-cardStartTime;
-  cardFlipTime=Date.now();
-  document.getElementById('flip-wrap').classList.add('flipped');
-  setTimeout(()=>document.getElementById('score-zone').classList.add('show'),320);
-  track('card_flip',{card:deck[idx]?.id,latencyMs:latency});
-}
-
-// ── MARK ──
-function markCard(got){
-  const c=deck[idx];
-  const pts={easy:1,medium:2,hard:3}[c.diff]||1;
-  const decideMs=Date.now()-cardFlipTime;
-  if(got===true){
-    totalPts+=pts;
-    players[currentPlayerIdx].score+=pts;
-    updateTabs();
-  }
-  track('card_result',{card:c.id,name:c.n,diff:c.diff,result:got===true?'got':got===false?'miss':'skip',pts:got?pts:0,player:players[currentPlayerIdx]?.name,decideMs});
-
-  // Rotate player
-  if(players.length>1) currentPlayerIdx=(currentPlayerIdx+1)%players.length;
-  updateTabs();
-
-  // Feedback trigger: on every miss or every 4th card
-  if(got===false||(idx>0&&(idx+1)%4===0)){
-    feedbackPending=c;
-    openFeedback(c);
-  } else {
-    idx++;
-    setTimeout(loadCard,100);
-  }
-}
-
-// ── FEEDBACK ──
-function openFeedback(c){
-  feedbackIsGeneral=false;
-  document.getElementById('fb-title').textContent='How was this card?';
-  document.getElementById('fb-card-name').textContent=c?c.n+' ('+c.y+')':'';
-  // Restore card-specific tags
-  document.getElementById('fb-tags').innerHTML=`
-    <button class="fb-tag" data-v="too_easy" onclick="toggleTag(this)">Too easy</button>
-    <button class="fb-tag" data-v="too_hard" onclick="toggleTag(this)">Too hard</button>
-    <button class="fb-tag" data-v="clue_confusing" onclick="toggleTag(this)">Clue confusing</button>
-    <button class="fb-tag" data-v="clue_clever" onclick="toggleTag(this)">Clue is clever</button>
-    <button class="fb-tag" data-v="fact_great" onclick="toggleTag(this)">Fun fact is great</button>
-    <button class="fb-tag" data-v="wrong_info" onclick="toggleTag(this)">Something's wrong</button>`;
-  document.getElementById('fb-text').value='';
-  document.getElementById('fb-skip').textContent='Skip → next card';
-  document.getElementById('fb-overlay').classList.add('open');
-}
-function openFeedbackGeneral(){
-  feedbackIsGeneral=true;
-  feedbackPending=null;
-  document.getElementById('fb-title').textContent='Share your feedback';
-  document.getElementById('fb-card-name').textContent='Tell us what\'s working and what\'s not';
-  // Swap to general-purpose tags
-  document.getElementById('fb-tags').innerHTML=`
-    <button class="fb-tag" data-v="love_it" onclick="toggleTag(this)">Love it</button>
-    <button class="fb-tag" data-v="needs_work" onclick="toggleTag(this)">Needs work</button>
-    <button class="fb-tag" data-v="want_more_cards" onclick="toggleTag(this)">Want more cards</button>
-    <button class="fb-tag" data-v="great_for_parties" onclick="toggleTag(this)">Great for parties</button>
-    <button class="fb-tag" data-v="ui_issue" onclick="toggleTag(this)">UI issue</button>
-    <button class="fb-tag" data-v="bug" onclick="toggleTag(this)">Found a bug</button>`;
-  document.getElementById('fb-text').value='';
-  document.getElementById('fb-skip').textContent='Cancel';
-  document.getElementById('fb-overlay').classList.add('open');
-  track('feedback_opened',{type:'general'});
-}
-function closeFb(){
-  document.getElementById('fb-overlay').classList.remove('open');
-  if(!feedbackIsGeneral){idx++;setTimeout(loadCard,80);}
-  feedbackPending=null;
-}
-function closeFbOverlay(e){if(e.target===document.getElementById('fb-overlay'))closeFb();}
-function toggleTag(el){el.classList.toggle('sel');}
-async function submitFeedback(){
-  const tags=[...document.querySelectorAll('.fb-tag.sel')].map(t=>t.dataset.v);
-  const text=document.getElementById('fb-text').value.trim();
-  const data={
-    card_id:feedbackPending?.id||null,
-    card_name:feedbackPending?.n||null,
-    tags,text,
-    type:feedbackIsGeneral?'general':'card',
-    session_id:SID,
-  };
-  await saveToSupabase('feedback',data);
-  // Also store locally
-  const local=JSON.parse(localStorage.getItem('sp_feedback')||'[]');
-  local.push({...data,ts:new Date().toISOString()});
-  localStorage.setItem('sp_feedback',JSON.stringify(local));
-  track('feedback_submitted',{type:data.type,tags,hasText:!!text,text:text||null,card:data.card_id,cardName:data.card_name});
-  toast('Feedback saved. Shukriya!');
-  document.getElementById('fb-overlay').classList.remove('open');
-  if(!feedbackIsGeneral){idx++;setTimeout(loadCard,80);}
-  feedbackPending=null;
-}
-
-// ── SUGGEST ──
-function openSuggest(){
-  document.getElementById('suggest-movie').value='';
-  document.getElementById('suggest-industry').value='';
-  document.getElementById('suggest-overlay').classList.add('open');
-  track('suggest_opened');
-}
-function closeSuggest(){document.getElementById('suggest-overlay').classList.remove('open');}
-function closeSuggestOverlay(e){if(e.target===document.getElementById('suggest-overlay'))closeSuggest();}
-async function submitSuggestion(){
-  const movie=document.getElementById('suggest-movie').value.trim();
-  const industry=document.getElementById('suggest-industry').value.trim();
-  if(!movie){toast('Please enter a movie name');return;}
-  const data={movie,industry,session_id:SID};
-  await saveToSupabase('suggestions',data);
-  const local=JSON.parse(localStorage.getItem('sp_suggestions')||'[]');
-  local.push({...data,ts:new Date().toISOString()});
-  localStorage.setItem('sp_suggestions',JSON.stringify(local));
-  track('suggestion_submitted',{movie,industry});
-  toast('Added to the list! We\'ll write a terrible description.');
-  closeSuggest();
-}
-
-// ── END GAME ──
-function endGame(){
-  const total=deck.length;
-  const got=players.reduce((s,p)=>s+p.score,0);
-  const pct=got/total;
-  let title,sub,verdict;
-  if(pct===1){title='Perfect score.';sub=`${total}/${total} — we are concerned.`;verdict='"You have seen too many movies. Seek help."';}
-  else if(pct>=0.75){title='Solid. Very solid.';sub=`${got}/${total} — your family would be proud.`;verdict='"You clearly had a very specific childhood. Respect."';}
-  else if(pct>=0.5){title='Not bad at all.';sub=`${got}/${total} — above average desi trivia brain.`;verdict='"You know enough to participate in the argument. Chalo theek hai."';}
-  else if(pct>=0.3){title='Seen some. Missed some.';sub=`${got}/${total} — your movie knowledge has gaps.`;verdict='"Ek baar baith ke Pokiri dekh. Bas itna."';}
-  else{title='Yaar.';sub=`${got}/${total} — are you even desi?`;verdict='"Your parents are disappointed. Watch more movies. Immediately."';}
-
-  document.getElementById('r-title').textContent=title;
-  document.getElementById('r-sub').textContent=sub;
-  document.getElementById('r-verdict').textContent=verdict;
-  document.getElementById('r-correct').textContent=got;
-  document.getElementById('r-played').textContent=total;
-  document.getElementById('r-pts').textContent=totalPts;
-
-  // Leaderboard
-  const lb=document.getElementById('leaderboard');
-  if(players.length>1){
-    lb.style.display='block';
-    const sorted=[...players].sort((a,b)=>b.score-a.score);
-    document.getElementById('lb-rows').innerHTML=sorted.map((p,i)=>`
-      <div class="lb-row">
-        <div class="lb-rank${i===0?' gold-rank':''}">${i===0?'★':(i+1)}</div>
-        <div class="lb-name">${p.name}</div>
-        <div class="lb-pts">${p.score} pts</div>
-      </div>`).join('');
-  } else lb.style.display='none';
-
-  track('game_end',{correct:got,total,pts:totalPts,mode,diff:selectedDiff,players:players.length});
-  show('results');
-}
-
-function replayGame(){
-  players=players.map(p=>({...p,score:0}));
-  currentPlayerIdx=0;
-  deck=shuffle(deck);idx=0;totalPts=0;isFlipped=false;
-  track('replay');
-  renderGameTabs();
-  show('game');loadCard();
-}
-
-// ── SHARE ──
-function doShare(){
-  const got=players.reduce((s,p)=>s+p.score,0);
-  const txt=`I scored ${totalPts} pts on Seedha Plot!\n${got}/${deck.length} correct.\nTerrible plots. Real movies.\nbadbollywoodplots.com`;
-  if(navigator.share)navigator.share({title:'Bad Bollywood Plots',text:txt});
-  else navigator.clipboard?.writeText(txt).then(()=>toast('Copied to clipboard!'));
-  track('share',{pts:totalPts});
-}
-
-// ── TOAST ──
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2600);
-}
-
-// ── INIT ──
-// app_load now fires in posthog.init loaded callback to avoid race condition
-// Register SW for PWA
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-}
-</script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
