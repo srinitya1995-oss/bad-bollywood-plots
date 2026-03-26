@@ -304,11 +304,14 @@ function applyCard(card, wrap) {
   document.getElementById('g-pts').textContent = totalPts + ' pts';
 
   // Front face
-  const indLabel = card.ind === 'BW' ? 'Bollywood' : 'Tollywood';
+  const isBW = card.ind === 'BW';
+  const indLabel = isBW ? 'Bollywood' : 'Tollywood';
+  const front = document.getElementById('card-front');
+  front.classList.toggle('tw', !isBW);
   const cfInd = document.getElementById('cf-ind');
   cfInd.textContent = indLabel;
   cfInd.className = 'card-ind ' + card.ind.toLowerCase();
-  document.getElementById('cf-era').textContent = card.era;
+  document.getElementById('cf-era').textContent = card.era + ' \u00b7 ' + card.diff.charAt(0).toUpperCase() + card.diff.slice(1);
   document.getElementById('cf-clue').textContent = card.c;
 
   // Difficulty badge
@@ -321,7 +324,12 @@ function applyCard(card, wrap) {
   if (meta) meta.appendChild(badge);
 
   // Back face
-  document.getElementById('cb-ind').textContent = indLabel;
+  const back = document.getElementById('card-back');
+  back.classList.toggle('tw', !isBW);
+  const cbInd = document.getElementById('cb-ind');
+  cbInd.textContent = indLabel + ' \u00b7 ' + card.diff;
+  cbInd.classList.toggle('bw', isBW);
+  cbInd.classList.toggle('tw', !isBW);
   document.getElementById('cb-answer').textContent = card.n;
   document.getElementById('cb-year').textContent = card.y;
   document.getElementById('cb-fact').textContent = card.f;

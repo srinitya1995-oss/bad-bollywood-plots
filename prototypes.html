@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBP — Desi Ornamental Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --text-cream:#f2ede4;
+  --bg-dark:#0d0d0d;
+}
+body{font-family:'Outfit',sans-serif;background:#060606;color:#fff;min-height:100vh}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(6,6,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);padding:1rem 2rem;display:flex;align-items:center;gap:2rem}
+.nav h1{font-family:'Fraunces',serif;font-size:16px;font-weight:900}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.nav-tab.active{background:#d4a843;color:#1a0e00;border-color:#d4a843}
+
+.section{padding:2rem;display:none}
+.section.active{display:block}
+.section-header{text-align:center;margin-bottom:2rem}
+.section-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:900;margin-bottom:0.3rem}
+.section-header p{font-size:13px;color:rgba(255,255,255,0.3)}
+
+.concepts{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap}
+.pw{display:flex;flex-direction:column;align-items:center}
+.phone{width:375px;height:760px;border-radius:40px;border:2px solid rgba(255,255,255,0.08);overflow:hidden;flex-shrink:0}
+.pl{text-align:center;margin-top:0.75rem;font-family:'Fraunces',serif;font-size:14px;font-weight:900}
+.pd{text-align:center;margin-top:0.25rem;font-size:11px;color:rgba(255,255,255,0.3);max-width:340px}
+
+/* ═══════════════════════════════════════ */
+/* THE CARD — Juggernaut Editorial Style  */
+/* ═══════════════════════════════════════ */
+.bad-plot-card{
+  position:relative;
+  width:100%;max-width:340px;
+  min-height:380px;
+  border-radius:16px;
+  display:flex;justify-content:center;align-items:center;
+  padding:2.5rem;
+  overflow:hidden;
+  color:var(--text-cream);
+  text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* Ornamental corners */
+.desi-corner{
+  position:absolute;width:64px;height:64px;
+  opacity:0.9;fill:currentColor;
+}
+.top-left{top:12px;left:12px}
+.top-right{top:12px;right:12px;transform:scaleX(-1)}
+.bottom-left{bottom:12px;left:12px;transform:scaleY(-1)}
+.bottom-right{bottom:12px;right:12px;transform:scale(-1,-1)}
+
+.card-content{position:relative;z-index:2;width:100%}
+
+/* Themes */
+.theme-bollywood{background-color:#6a111a}
+.theme-bollywood .desi-corner{color:var(--text-cream)}
+
+.theme-tollywood{background-color:#0b3d2c}
+.theme-tollywood .desi-corner{color:#e0d5b5}
+
+.theme-mughal{background-color:#0d1a33}
+.theme-mughal .desi-corner{color:#d4a843}
+
+.theme-rajasthani{background-color:#1a0a2e}
+.theme-rajasthani .desi-corner{color:#d4a843}
+
+.theme-vintage{
+  background-color:#1a1512;
+  border:1px solid #3d2616;
+  box-shadow:inset 0 0 60px rgba(60,20,10,0.4),0 12px 30px rgba(0,0,0,0.6);
+  color:#d8c3a5;
+}
+.theme-vintage .desi-corner{color:#a84232;filter:drop-shadow(1px 1px 2px rgba(0,0,0,0.8))}
+
+/* Card text */
+.plot-label{
+  font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.15em;
+  opacity:0.35;margin-bottom:0.5rem;
+}
+.plot-text{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:20px;line-height:1.55;margin:0;
+}
+.plot-tag{
+  display:inline-block;margin-bottom:1rem;
+  font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.08em;
+  padding:4px 12px;border-radius:4px;
+}
+.theme-bollywood .plot-tag{background:rgba(255,255,255,0.12)}
+.theme-tollywood .plot-tag{background:rgba(255,255,255,0.1)}
+.theme-mughal .plot-tag{background:rgba(212,168,67,0.15);color:#d4a843}
+.theme-rajasthani .plot-tag{background:rgba(232,64,128,0.15);color:#f06090}
+.theme-vintage .plot-tag{background:rgba(168,66,50,0.2);color:#d8c3a5}
+
+.plot-tap{
+  font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.15em;
+  opacity:0.15;margin-top:1.25rem;
+}
+
+/* Card back */
+.card-back .plot-answer{font-family:'Fraunces',serif;font-size:26px;font-weight:900;line-height:1.1;margin-bottom:4px}
+.card-back .plot-year{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;opacity:0.35;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem}
+.card-back .plot-fact-label{font-family:'Outfit',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;margin-bottom:4px}
+.card-back .plot-fact{font-family:'Outfit',sans-serif;font-size:13px;line-height:1.6;opacity:0.6}
+
+.theme-bollywood .card-back{color:#0d0d0d;background:#f2ede4 !important}
+.theme-bollywood .card-back .desi-corner{color:#6a111a}
+.theme-bollywood .card-back .plot-fact-label{color:#6a111a;opacity:1}
+
+.theme-tollywood .card-back{color:#0d0d0d;background:#f2ede4 !important}
+.theme-tollywood .card-back .desi-corner{color:#0b3d2c}
+.theme-tollywood .card-back .plot-fact-label{color:#0b3d2c;opacity:1}
+
+/* ═══════════════════════════════════════ */
+/* GAME SCREEN WRAPPER                    */
+/* ═══════════════════════════════════════ */
+.game{height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.game.bg-red{background:#1a0808}
+.game.bg-green{background:#081a10}
+.game.bg-navy{background:#0a1628}
+.game.bg-teal{background:#041a1a}
+.game.bg-sepia{background:#0f0d0a}
+
+.g-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 1.25rem;flex-shrink:0}
+.g-back{background:none;border:none;color:rgba(242,237,228,0.3);font-size:14px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:600}
+.g-counter{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:var(--text-cream)}
+.g-counter span{opacity:0.15}
+.g-pts{font-size:14px;font-weight:700}
+.g-progress{height:3px;background:rgba(255,255,255,0.04);flex-shrink:0}
+.g-progress-fill{height:100%;width:30%}
+.g-stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.75rem 1rem}
+.g-actions{width:100%;max-width:340px;margin-top:0.75rem;display:flex;gap:10px}
+.g-btn{flex:1;padding:1rem;border-radius:12px;border:none;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-transform:uppercase}
+.g-btn.got{background:rgba(58,158,92,0.15);color:#4ade80;border:2px solid rgba(58,158,92,0.25)}
+.g-btn.miss{background:rgba(201,64,64,0.15);color:#f87171;border:2px solid rgba(201,64,64,0.25)}
+.g-skip{width:100%;max-width:340px;text-align:center;margin-top:4px;background:none;border:none;color:rgba(255,255,255,0.12);font-size:13px;cursor:pointer;padding:0.4rem}
+
+/* Progress colors */
+.gp-red{background:linear-gradient(90deg,#6a111a,#a02020)}
+.gp-green{background:linear-gradient(90deg,#0b3d2c,#16a34a)}
+.gp-gold{background:linear-gradient(90deg,#d4a843,#b8902e)}
+.gp-pink{background:linear-gradient(90deg,#e84080,#d4a843)}
+.gp-sepia{background:linear-gradient(90deg,#a84232,#d4a843)}
+
+/* Points colors */
+.pts-red{color:#e87070}
+.pts-green{color:#4ade80}
+.pts-gold{color:#d4a843}
+.pts-pink{color:#e84080}
+.pts-sepia{color:#a84232}
+
+/* HOME SCREEN */
+.home{height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.home.bg-red{background:#1a0808}
+.home.bg-navy{background:#0a1628}
+
+.h-top{padding:2rem 1.25rem 0}
+.h-badge{display:inline-block;padding:5px 14px;border-radius:4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.6rem}
+.h-title{font-family:'Fraunces',serif;font-size:52px;font-weight:900;line-height:0.92;color:var(--text-cream)}
+.h-title em{font-style:italic}
+.h-sub{font-size:15px;color:rgba(242,237,228,0.35);margin-top:0.5rem;line-height:1.5}
+.h-body{padding:0 1.25rem;flex:1;display:flex;flex-direction:column}
+.h-play{width:100%;padding:1.15rem;border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;cursor:pointer;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.03em}
+.h-decks{display:flex;flex-direction:column;gap:10px}
+.h-deck{display:flex;align-items:center;gap:14px;border-radius:12px;padding:1rem 1.1rem;position:relative}
+.h-deck::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
+.dk-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.dk-name{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--text-cream)}
+.dk-sub{font-size:13px;color:rgba(242,237,228,0.3);margin-top:2px}
+.dk-count{margin-left:auto;font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:rgba(242,237,228,0.06)}
+.h-footer{padding:0.75rem 1.25rem;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:rgba(242,237,228,0.2);margin-top:auto}
+.h-footer a{text-decoration:none;font-weight:700}
+
+/* Bollywood home */
+.home.bg-red .h-badge{background:rgba(106,17,26,0.5);border:1.5px solid rgba(106,17,26,0.8);color:#e87070}
+.home.bg-red .h-title em{color:#c94040}
+.home.bg-red .h-play{background:#6a111a;color:var(--text-cream);box-shadow:0 6px 24px rgba(106,17,26,0.4)}
+.home.bg-red .h-deck{background:rgba(106,17,26,0.12);border:1.5px solid rgba(106,17,26,0.2)}
+.home.bg-red .h-deck.bw::before{background:#6a111a}
+.home.bg-red .h-deck.tw::before{background:#0b3d2c}
+.home.bg-red .h-footer a{color:#e87070}
+
+/* Mughal home */
+.home.bg-navy .h-badge{background:rgba(212,168,67,0.12);border:1.5px solid rgba(212,168,67,0.25);color:#d4a843}
+.home.bg-navy .h-title em{color:#d4a843}
+.home.bg-navy .h-play{background:linear-gradient(135deg,#d4a843,#b8902e);color:#0a1628;box-shadow:0 6px 24px rgba(212,168,67,0.3)}
+.home.bg-navy .h-deck{background:rgba(212,168,67,0.04);border:1.5px solid rgba(212,168,67,0.1)}
+.home.bg-navy .h-deck.bw::before{background:#c94040}
+.home.bg-navy .h-deck.tw::before{background:#3a9e5c}
+.home.bg-navy .h-footer a{color:#d4a843}
+
+/* Home ornate divider area */
+.h-ornate{padding:0.4rem 1.25rem 0.6rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.h-ornate-line{flex:1;height:1px}
+.home.bg-red .h-ornate-line{background:linear-gradient(90deg,transparent,rgba(106,17,26,0.5),transparent)}
+.home.bg-navy .h-ornate-line{background:linear-gradient(90deg,transparent,rgba(212,168,67,0.3),transparent)}
+.h-ornate-motif{width:28px;height:28px;opacity:0.5}
+.home.bg-red .h-ornate-motif{color:#6a111a}
+.home.bg-navy .h-ornate-motif{color:#d4a843}
+
+</style>
+</head>
+<body>
+
+<!-- THE SVG MOTIF — one path, reused everywhere -->
+<svg style="display:none">
+  <symbol id="motif" viewBox="0 0 100 100">
+    <!-- === CENTRAL PALMETTE / LOTUS BUD — 45deg, pointing bottom-right === -->
+    <!-- Main central petal -->
+    <path fill="currentColor" d="M22,22 C28,16 38,14 48,20 C42,28 36,36 28,40 C20,36 16,28 22,22 Z"/>
+    <!-- Left petal of lotus -->
+    <path fill="currentColor" d="M16,26 C12,18 14,10 22,8 C24,14 22,22 18,28 Z"/>
+    <!-- Right petal of lotus -->
+    <path fill="currentColor" d="M26,16 C18,12 10,14 8,22 C14,24 22,22 28,18 Z"/>
+    <!-- Lotus center dot -->
+    <circle fill="currentColor" cx="22" cy="22" r="4"/>
+
+    <!-- === TOP VINE — curving along y=0 axis === -->
+    <!-- Thick vine stem along top -->
+    <path fill="currentColor" d="M38,12 C44,8 52,4 62,4 C68,4 74,6 78,10 C72,8 64,8 56,10 C50,12 44,14 38,14 Z"/>
+    <!-- Paisley leaf at end of top vine -->
+    <path fill="currentColor" d="M72,4 C82,2 92,6 94,16 C90,12 84,8 76,8 C72,8 68,10 66,14 C64,10 66,6 72,4 Z"/>
+    <!-- Small teardrop accent on top vine -->
+    <path fill="currentColor" d="M52,6 C56,2 62,2 64,6 C60,6 56,8 52,6 Z"/>
+
+    <!-- === LEFT VINE — curving along x=0 axis === -->
+    <!-- Thick vine stem along left -->
+    <path fill="currentColor" d="M12,38 C8,44 4,52 4,62 C4,68 6,74 10,78 C8,72 8,64 10,56 C12,50 14,44 14,38 Z"/>
+    <!-- Paisley leaf at end of left vine -->
+    <path fill="currentColor" d="M4,72 C2,82 6,92 16,94 C12,90 8,84 8,76 C8,72 10,68 14,66 C10,64 6,66 4,72 Z"/>
+    <!-- Small teardrop accent on left vine -->
+    <path fill="currentColor" d="M6,52 C2,56 2,62 6,64 C6,60 8,56 6,52 Z"/>
+
+    <!-- === SMALL ACCENT ELEMENTS === -->
+    <!-- Inner curl near lotus — top -->
+    <path fill="currentColor" d="M32,8 C36,6 40,8 38,12 C36,10 34,10 32,8 Z"/>
+    <!-- Inner curl near lotus — left -->
+    <path fill="currentColor" d="M8,32 C6,36 8,40 12,38 C10,36 10,34 8,32 Z"/>
+    <!-- Dot accents along vines -->
+    <circle fill="currentColor" cx="48" cy="8" r="2"/>
+    <circle fill="currentColor" cx="8" cy="48" r="2"/>
+    <circle fill="currentColor" cx="84" cy="10" r="2.5"/>
+    <circle fill="currentColor" cx="10" cy="84" r="2.5"/>
+  </symbol>
+</svg>
+
+<nav class="nav">
+  <h1>Desi Cards — Final</h1>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSec('home',this)">Home</button>
+    <button class="nav-tab" onclick="showSec('front',this)">Card Front</button>
+    <button class="nav-tab" onclick="showSec('back',this)">Card Back</button>
+    <button class="nav-tab" onclick="showSec('themes',this)">All Themes</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<section id="sec-home" class="section active">
+  <div class="section-header">
+    <h2>Home Screen</h2>
+    <p>Two palettes. Same Juggernaut-style motifs as divider accents.</p>
+  </div>
+  <div class="concepts">
+    <!-- Bollywood Red Home -->
+    <div class="pw">
+      <div class="phone"><div class="home bg-red">
+        <div class="h-top">
+          <div class="h-badge">The Desi Party Game</div>
+          <div class="h-title">Bad<br><em>Movie</em><br>Plots.</div>
+          <div class="h-sub">Terrible plots. Real movies.<br>Guess them if you dare.</div>
+        </div>
+        <div class="h-ornate">
+          <div class="h-ornate-line"></div>
+          <svg class="h-ornate-motif" viewBox="0 0 100 100"><use href="#motif"/></svg>
+          <svg class="h-ornate-motif" viewBox="0 0 100 100" style="transform:scaleX(-1)"><use href="#motif"/></svg>
+          <div class="h-ornate-line"></div>
+        </div>
+        <div class="h-body">
+          <button class="h-play">Start Playing →</button>
+          <div class="h-decks">
+            <div class="h-deck bw"><div class="dk-dot" style="background:#6a111a"></div><div><div class="dk-name">Bollywood</div><div class="dk-sub">Hindi films · 75 cards</div></div><div class="dk-count">75</div></div>
+            <div class="h-deck tw"><div class="dk-dot" style="background:#0b3d2c"></div><div><div class="dk-name">Tollywood</div><div class="dk-sub">Telugu films · 75 cards</div></div><div class="dk-count">75</div></div>
+          </div>
+        </div>
+        <div class="h-footer"><span>Made by <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" style="color:#e87070">@Srinitya</a></span><span style="color:rgba(242,237,228,0.3);cursor:pointer">Feedback</span></div>
+      </div></div>
+      <div class="pl" style="color:#c94040">Juggernaut Red</div>
+      <div class="pd">Deep red bg, cream motifs, Bollywood energy</div>
+    </div>
+
+    <!-- Mughal Navy Home -->
+    <div class="pw">
+      <div class="phone"><div class="home bg-navy">
+        <div class="h-top">
+          <div class="h-badge">The Desi Party Game</div>
+          <div class="h-title">Bad<br><em>Movie</em><br>Plots.</div>
+          <div class="h-sub">Terrible plots. Real movies.<br>Guess them if you dare.</div>
+        </div>
+        <div class="h-ornate">
+          <div class="h-ornate-line"></div>
+          <svg class="h-ornate-motif" viewBox="0 0 100 100"><use href="#motif"/></svg>
+          <svg class="h-ornate-motif" viewBox="0 0 100 100" style="transform:scaleX(-1)"><use href="#motif"/></svg>
+          <div class="h-ornate-line"></div>
+        </div>
+        <div class="h-body">
+          <button class="h-play">Start Playing →</button>
+          <div class="h-decks">
+            <div class="h-deck bw"><div class="dk-dot" style="background:#c94040"></div><div><div class="dk-name">Bollywood</div><div class="dk-sub">Hindi films · 75 cards</div></div><div class="dk-count">75</div></div>
+            <div class="h-deck tw"><div class="dk-dot" style="background:#3a9e5c"></div><div><div class="dk-name">Tollywood</div><div class="dk-sub">Telugu films · 75 cards</div></div><div class="dk-count">75</div></div>
+          </div>
+        </div>
+        <div class="h-footer"><span>Made by <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" style="color:#d4a843">@Srinitya</a></span><span style="color:rgba(242,237,228,0.3);cursor:pointer">Feedback</span></div>
+      </div></div>
+      <div class="pl" style="color:#d4a843">Royal Mughal</div>
+      <div class="pd">Navy bg, gold motifs + CTA, palace feel</div>
+    </div>
+  </div>
+</section>
+
+<!-- CARD FRONT -->
+<section id="sec-front" class="section">
+  <div class="section-header">
+    <h2>Card Front — The Clue</h2>
+    <p>Crisp solid SVG motifs in all 4 corners. Clean, bold, unmistakable.</p>
+  </div>
+  <div class="concepts">
+    <!-- Bollywood -->
+    <div class="pw">
+      <div class="phone"><div class="game bg-red">
+        <div class="g-bar"><button class="g-back">← Exit</button><div class="g-counter">3<span>/10</span></div><div class="g-pts pts-red">24 pts</div></div>
+        <div class="g-progress"><div class="g-progress-fill gp-red"></div></div>
+        <div class="g-stage">
+          <div class="bad-plot-card theme-bollywood">
+            <svg class="desi-corner top-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner top-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <div class="card-content">
+              <div class="plot-tag">Bollywood · 90s · Easy</div>
+              <div class="plot-label">Plot Clue</div>
+              <p class="plot-text">"Boy meets girl. Father says no. They go to Europe anyway. Entire Punjab gives permission eventually."</p>
+              <div class="plot-tap">↑ Tap to reveal ↑</div>
+            </div>
+          </div>
+          <div class="g-actions"><button class="g-btn got">Got it ✓</button><button class="g-btn miss">Missed ✗</button></div>
+          <button class="g-skip">Skip →</button>
+        </div>
+      </div></div>
+      <div class="pl" style="color:#c94040">Bollywood — Red</div>
+      <div class="pd">Deep Juggernaut red, cream corner motifs</div>
+    </div>
+
+    <!-- Tollywood -->
+    <div class="pw">
+      <div class="phone"><div class="game bg-green">
+        <div class="g-bar"><button class="g-back">← Exit</button><div class="g-counter">3<span>/10</span></div><div class="g-pts pts-green">24 pts</div></div>
+        <div class="g-progress"><div class="g-progress-fill gp-green"></div></div>
+        <div class="g-stage">
+          <div class="bad-plot-card theme-tollywood">
+            <svg class="desi-corner top-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner top-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <div class="card-content">
+              <div class="plot-tag">Tollywood · 2000s · Medium</div>
+              <div class="plot-label">Plot Clue</div>
+              <p class="plot-text">"Man discovers he has a twin. The twin is evil. They fight on a train. The good one wins. Obviously."</p>
+              <div class="plot-tap">↑ Tap to reveal ↑</div>
+            </div>
+          </div>
+          <div class="g-actions"><button class="g-btn got">Got it ✓</button><button class="g-btn miss">Missed ✗</button></div>
+          <button class="g-skip">Skip →</button>
+        </div>
+      </div></div>
+      <div class="pl" style="color:#3a9e5c">Tollywood — Green</div>
+      <div class="pd">Deep emerald, muted gold corner motifs</div>
+    </div>
+
+    <!-- Vintage -->
+    <div class="pw">
+      <div class="phone"><div class="game bg-sepia">
+        <div class="g-bar"><button class="g-back">← Exit</button><div class="g-counter">3<span>/10</span></div><div class="g-pts pts-sepia">24 pts</div></div>
+        <div class="g-progress"><div class="g-progress-fill gp-sepia"></div></div>
+        <div class="g-stage">
+          <div class="bad-plot-card theme-vintage">
+            <svg class="desi-corner top-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner top-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <div class="card-content">
+              <div class="plot-tag">Bollywood · 70s · Hard</div>
+              <div class="plot-label">Plot Clue</div>
+              <p class="plot-text">"An angry young man is angry. He stays angry for three hours. The bridge collapses."</p>
+              <div class="plot-tap">↑ Tap to reveal ↑</div>
+            </div>
+          </div>
+          <div class="g-actions"><button class="g-btn got">Got it ✓</button><button class="g-btn miss">Missed ✗</button></div>
+          <button class="g-skip">Skip →</button>
+        </div>
+      </div></div>
+      <div class="pl" style="color:#a84232">Vintage Oleograph</div>
+      <div class="pd">Warm sepia, vermilion motifs, inset shadow aging</div>
+    </div>
+  </div>
+</section>
+
+<!-- CARD BACK -->
+<section id="sec-back" class="section">
+  <div class="section-header">
+    <h2>Card Back — The Reveal</h2>
+    <p>Light card flip. Same motifs, inverted colors. Big answer text.</p>
+  </div>
+  <div class="concepts">
+    <!-- BW back -->
+    <div class="pw">
+      <div class="phone"><div class="game bg-red">
+        <div class="g-bar"><button class="g-back">← Exit</button><div class="g-counter">3<span>/10</span></div><div class="g-pts pts-red">24 pts</div></div>
+        <div class="g-progress"><div class="g-progress-fill gp-red"></div></div>
+        <div class="g-stage">
+          <div class="bad-plot-card theme-bollywood card-back" style="background:#f2ede4;color:#0d0d0d">
+            <svg class="desi-corner top-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner top-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <div class="card-content" style="text-align:left">
+              <div class="plot-tag" style="background:rgba(106,17,26,0.1);color:#6a111a">Bollywood</div>
+              <div class="plot-answer">Dilwale Dulhania Le Jayenge</div>
+              <div class="plot-year">1995 · 90s Classic</div>
+              <div class="plot-fact-label" style="color:#6a111a">Did you know</div>
+              <div class="plot-fact">Ran continuously at Maratha Mandir for over 25 years. The train that never left.</div>
+            </div>
+          </div>
+          <div class="g-actions"><button class="g-btn got">Got it ✓</button><button class="g-btn miss">Missed ✗</button></div>
+          <button class="g-skip">Skip →</button>
+        </div>
+      </div></div>
+      <div class="pl" style="color:#c94040">Bollywood — Back</div>
+      <div class="pd">Cream card, red motifs, 26px answer title</div>
+    </div>
+
+    <!-- TW back -->
+    <div class="pw">
+      <div class="phone"><div class="game bg-green">
+        <div class="g-bar"><button class="g-back">← Exit</button><div class="g-counter">3<span>/10</span></div><div class="g-pts pts-green">24 pts</div></div>
+        <div class="g-progress"><div class="g-progress-fill gp-green"></div></div>
+        <div class="g-stage">
+          <div class="bad-plot-card theme-tollywood card-back" style="background:#f2ede4;color:#0d0d0d">
+            <svg class="desi-corner top-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner top-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-left" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <svg class="desi-corner bottom-right" viewBox="0 0 100 100"><use href="#motif"/></svg>
+            <div class="card-content" style="text-align:left">
+              <div class="plot-tag" style="background:rgba(11,61,44,0.1);color:#0b3d2c">Tollywood</div>
+              <div class="plot-answer">Baahubali</div>
+              <div class="plot-year">2015 · 2010s Epic</div>
+              <div class="plot-fact-label" style="color:#0b3d2c">Did you know</div>
+              <div class="plot-fact">The waterfall scene took over a year to plan and used 2,500 extras.</div>
+            </div>
+          </div>
+          <div class="g-actions"><button class="g-btn got">Got it ✓</button><button class="g-btn miss">Missed ✗</button></div>
+          <button class="g-skip">Skip →</button>
+        </div>
+      </div></div>
+      <div class="pl" style="color:#3a9e5c">Tollywood — Back</div>
+      <div class="pd">Cream card, green motifs, clean reveal</div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL THEMES -->
+<section id="sec-themes" class="section">
+  <div class="section-header">
+    <h2>All 5 Card Themes</h2>
+    <p>Same SVG motif, different currentColor. Swap themes by changing one CSS class.</p>
+  </div>
+  <div class="concepts" style="gap:1.5rem">
+    <div class="pw">
+      <div class="bad-plot-card theme-bollywood" style="width:220px;min-height:280px;padding:1.75rem">
+        <svg class="desi-corner top-left" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner top-right" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;right:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-left" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-right" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;right:12px"><use href="#motif"/></svg>
+        <div class="card-content"><p class="plot-text" style="font-size:15px">"Father says no."</p></div>
+      </div>
+      <div class="pl" style="color:#c94040;font-size:11px">Bollywood</div>
+    </div>
+    <div class="pw">
+      <div class="bad-plot-card theme-tollywood" style="width:220px;min-height:280px;padding:1.75rem">
+        <svg class="desi-corner top-left" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner top-right" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;right:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-left" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-right" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;right:12px"><use href="#motif"/></svg>
+        <div class="card-content"><p class="plot-text" style="font-size:15px">"The good twin wins."</p></div>
+      </div>
+      <div class="pl" style="color:#3a9e5c;font-size:11px">Tollywood</div>
+    </div>
+    <div class="pw">
+      <div class="bad-plot-card theme-mughal" style="width:220px;min-height:280px;padding:1.75rem">
+        <svg class="desi-corner top-left" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner top-right" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;right:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-left" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-right" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;right:12px"><use href="#motif"/></svg>
+        <div class="card-content"><p class="plot-text" style="font-size:15px">"Palace intrigue."</p></div>
+      </div>
+      <div class="pl" style="color:#d4a843;font-size:11px">Mughal Navy</div>
+    </div>
+    <div class="pw">
+      <div class="bad-plot-card theme-rajasthani" style="width:220px;min-height:280px;padding:1.75rem">
+        <svg class="desi-corner top-left" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner top-right" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;right:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-left" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-right" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;right:12px"><use href="#motif"/></svg>
+        <div class="card-content"><p class="plot-text" style="font-size:15px">"Haveli colors."</p></div>
+      </div>
+      <div class="pl" style="color:#e84080;font-size:11px">Rajasthani</div>
+    </div>
+    <div class="pw">
+      <div class="bad-plot-card theme-vintage" style="width:220px;min-height:280px;padding:1.75rem">
+        <svg class="desi-corner top-left" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner top-right" viewBox="0 0 100 100" style="width:40px;height:40px;top:12px;right:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-left" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;left:12px"><use href="#motif"/></svg>
+        <svg class="desi-corner bottom-right" viewBox="0 0 100 100" style="width:40px;height:40px;bottom:12px;right:12px"><use href="#motif"/></svg>
+        <div class="card-content"><p class="plot-text" style="font-size:15px">"Aged parchment."</p></div>
+      </div>
+      <div class="pl" style="color:#a84232;font-size:11px">Vintage</div>
+    </div>
+  </div>
+</section>
+
+<script>
+function showSec(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
