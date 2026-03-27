@@ -13,6 +13,7 @@ let currentPlayerIdx = 0;
 let lives = 3;
 let streak = 0;
 let correctCount = 0;
+let sessionDealt = new Set(); // tracks card IDs dealt this session to prevent repeats
 let highScore = parseInt(localStorage.getItem('sp_highScore') || '0', 10);
 const SESSION_ID = (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
 
@@ -122,9 +123,22 @@ function markCardsSeen(cardIds) {
 
 function filterSeen(cards) {
   const seen = new Set(getSeenCards());
-  let filtered = cards.filter(c => !seen.has(c.id));
-  if (filtered.length < 12) {
+  // Exclude cross-session seen + current session dealt
+  let filtered = cards.filter(c => !seen.has(c.id) && !sessionDealt.has(c.id));
+
+  if (filtered.length < 4) {
+    // Not enough fresh cards — drop cross-session history but keep session dedup
+    filtered = cards.filter(c => !sessionDealt.has(c.id));
+    if (filtered.length >= 4) {
+      // Partial reset worked — clear localStorage so next session starts fresh
+      localStorage.removeItem('sp_seen');
+    }
+  }
+
+  if (filtered.length < 4) {
+    // Truly exhausted everything — full reset
     localStorage.removeItem('sp_seen');
+    sessionDealt.clear();
     filtered = cards;
   }
   return filtered;
@@ -135,11 +149,15 @@ function buildPartyDeck(ind) {
   const easy = shuffle(pool.filter(c => c.diff === 'easy')).slice(0, 4);
   const medium = shuffle(pool.filter(c => c.diff === 'medium')).slice(0, 4);
   const hard = shuffle(pool.filter(c => c.diff === 'hard')).slice(0, 4);
-  return [...easy, ...medium, ...hard];
+  const dealt = [...easy, ...medium, ...hard];
+  dealt.forEach(c => sessionDealt.add(c.id));
+  return dealt;
 }
 
 function buildEndlessDeck(ind) {
-  return shuffle(filterSeen(CARDS.filter(c => c.ind === ind)));
+  const dealt = shuffle(filterSeen(CARDS.filter(c => c.ind === ind)));
+  dealt.forEach(c => sessionDealt.add(c.id));
+  return dealt;
 }
 
 // ─── Player Management ───
@@ -212,6 +230,7 @@ function startGame() {
   });
 
   // Build deck
+  sessionDealt.clear(); // reset session tracker for new game
   deck = gameMode === 'party' ? buildPartyDeck(mode) : buildEndlessDeck(mode);
   idx = 0;
   totalPts = 0;
@@ -459,8 +478,8 @@ function offerContinue() {
 }
 
 function endGame() {
-  const seenIds = deck.slice(0, idx).map(c => c.id);
-  markCardsSeen(seenIds);
+  // Mark ALL cards dealt this session as seen (not just deck slice — sessionDealt is authoritative)
+  markCardsSeen([...sessionDealt]);
 
   const totalPlayed = idx;
   const pct = totalPlayed > 0 ? (correctCount / totalPlayed) * 100 : 0;
