@@ -15,10 +15,33 @@ let streak = 0;
 let correctCount = 0;
 let sessionDealt = new Set(); // tracks card IDs dealt this session to prevent repeats
 let highScore = parseInt(localStorage.getItem('sp_highScore') || '0', 10);
+let gameInProgress = false;
 const SESSION_ID = (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
 
 const PLAYER_COLORS = ['gold', 'red', 'green', 'indigo'];
 const POINT_MAP = { easy: 1, medium: 2, hard: 3 };
+
+// ─── Supabase ───
+// To activate: replace these with your Supabase project URL and anon key
+const SUPABASE_URL = 'https://wmfxkkgktmfsipiihsjq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtZnhra2drdG1mc2lwaWloc2pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzA2MTYsImV4cCI6MjA5MDA0NjYxNn0.eV3m6O_-Ti3cl8C2yq-Ffp7M2hdBj9qasEWSD3lnrTg';
+let supabase = null;
+
+function initSupabase() {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  try {
+    if (window.supabase?.createClient) {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+  } catch (_) { /* Supabase non-critical */ }
+}
+
+// Fire-and-forget Supabase insert — never blocks UI
+function dbInsert(table, data) {
+  if (!supabase) return;
+  try { supabase.from(table).insert(data).then(() => {}).catch(() => {}); }
+  catch (_) {}
+}
 
 // ─── Analytics ───
 let posthogReady = false;
@@ -149,7 +172,8 @@ function buildPartyDeck(ind) {
   const easy = shuffle(pool.filter(c => c.diff === 'easy')).slice(0, 4);
   const medium = shuffle(pool.filter(c => c.diff === 'medium')).slice(0, 4);
   const hard = shuffle(pool.filter(c => c.diff === 'hard')).slice(0, 4);
-  const dealt = [...easy, ...medium, ...hard];
+  // Shuffle the full deck so difficulty order is mixed, not always easy→medium→hard
+  const dealt = shuffle([...easy, ...medium, ...hard]);
   dealt.forEach(c => sessionDealt.add(c.id));
   return dealt;
 }
@@ -268,6 +292,7 @@ function startGame() {
   document.getElementById('g-pts').textContent = '0 pts';
 
   show('game');
+  gameInProgress = true;
   track('game_start', { mode, gameMode, playerCount: players.length });
   loadCard(true);
 }
@@ -477,7 +502,10 @@ function offerContinue() {
   };
 }
 
-function endGame() {
+function endGame(reason = 'completed') {
+  if (!gameInProgress) return; // prevent double-firing
+  gameInProgress = false;
+
   // Mark ALL cards dealt this session as seen (not just deck slice — sessionDealt is authoritative)
   markCardsSeen([...sessionDealt]);
 
@@ -523,7 +551,14 @@ function endGame() {
   }
 
   show('results');
-  track('game_end', { mode, gameMode, totalPts, correctCount, totalPlayed, pct: Math.round(pct) });
+  track('game_end', { mode, gameMode, totalPts, correctCount, totalPlayed, pct: Math.round(pct), reason });
+  dbInsert('sessions', {
+    session_id: SESSION_ID,
+    mode, game_mode: gameMode,
+    total_pts: totalPts, correct_count: correctCount,
+    total_played: totalPlayed, pct: Math.round(pct),
+    reason, player_count: players.length
+  });
 }
 
 function replayGame() {
@@ -567,7 +602,8 @@ function submitFeedback() {
     localStorage.setItem('sp_feedback', JSON.stringify(fb));
   } catch (_) {}
 
-  track('feedback_submit', entry);
+  track('feedback_submitted', entry);
+  dbInsert('feedback', { tags, text, session_id: SESSION_ID });
   toast('Thanks for your feedback!');
   closeSheet('fb-overlay');
   document.querySelectorAll('#fb-tags .fb-tag').forEach(t => t.setAttribute('aria-pressed', 'false'));
@@ -586,7 +622,8 @@ function submitSuggestion() {
     localStorage.setItem('sp_suggestions', JSON.stringify(suggestions));
   } catch (_) {}
 
-  track('suggestion_submit', entry);
+  track('suggestion_submitted', entry);
+  dbInsert('suggestions', { movie_name: movie, industry, session_id: SESSION_ID });
   toast('Thanks! We\'ll check it out.');
   closeSheet('suggest-overlay');
   document.getElementById('suggest-movie').value = '';
@@ -595,15 +632,19 @@ function submitSuggestion() {
 
 // ─── Event Binding ───
 function bindEvents() {
-  // Mode buttons
+  // Mode buttons (Bollywood / Tollywood)
   document.querySelectorAll('.mode-btn').forEach(btn => {
-    btn.addEventListener('click', () => selectMode(btn.dataset.mode));
+    btn.addEventListener('click', () => {
+      track('mode_selected', { mode: btn.dataset.mode });
+      selectMode(btn.dataset.mode);
+    });
   });
 
   // Toggle buttons (party / endless)
   document.querySelectorAll('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       gameMode = btn.dataset.gamemode;
+      track('diff_selected', { gameMode });
       document.querySelectorAll('.toggle-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.gamemode === gameMode);
         b.setAttribute('aria-pressed', String(b.dataset.gamemode === gameMode));
@@ -632,9 +673,10 @@ function bindEvents() {
   document.getElementById('btn-miss')?.addEventListener('click', () => markCard(false));
   document.getElementById('btn-skip')?.addEventListener('click', () => markCard(null));
 
-  // Game exit
+  // Game exit — also fires game_end so analytics always capture it
   document.getElementById('game-exit')?.addEventListener('click', () => {
     if (confirm('Exit this game? Progress will be lost.')) {
+      endGame('exit');
       show('home');
       track('game_exit', { idx, totalPts });
     }
@@ -646,7 +688,10 @@ function bindEvents() {
   // Results
   document.getElementById('btn-replay')?.addEventListener('click', replayGame);
   document.getElementById('btn-share')?.addEventListener('click', doShare);
-  document.getElementById('btn-feedback-end')?.addEventListener('click', () => openSheet('fb-overlay'));
+  document.getElementById('btn-feedback-end')?.addEventListener('click', () => {
+    track('feedback_opened', { source: 'results' });
+    openSheet('fb-overlay');
+  });
 
   // Feedback
   document.getElementById('fb-submit')?.addEventListener('click', submitFeedback);
@@ -656,10 +701,16 @@ function bindEvents() {
   });
 
   // Suggest
-  document.getElementById('suggest-btn')?.addEventListener('click', () => openSheet('suggest-overlay'));
+  document.getElementById('suggest-btn')?.addEventListener('click', () => {
+    track('suggest_opened');
+    openSheet('suggest-overlay');
+  });
   document.getElementById('suggest-submit')?.addEventListener('click', submitSuggestion);
   document.getElementById('suggest-cancel')?.addEventListener('click', () => closeSheet('suggest-overlay'));
-  document.getElementById('feedback-btn')?.addEventListener('click', () => openSheet('fb-overlay'));
+  document.getElementById('feedback-btn')?.addEventListener('click', () => {
+    track('feedback_opened');
+    openSheet('fb-overlay');
+  });
 
   // Sheet backdrop click to close
   document.querySelectorAll('.sheet-overlay').forEach(overlay => {
@@ -676,11 +727,55 @@ function bindEvents() {
   });
 }
 
+// ─── Abandon Detection ───
+// Smart abandon: tab switch starts a 30s timer; if user returns, cancel it.
+// Tab close / navigate away fires immediately (beforeunload).
+let abandonTimer = null;
+const ABANDON_TIMEOUT = 30000; // 30 seconds
+
+function fireAbandon() {
+  if (!gameInProgress) return;
+  const totalPlayed = idx;
+  const pct = totalPlayed > 0 ? (correctCount / totalPlayed) * 100 : 0;
+  gameInProgress = false;
+  markCardsSeen([...sessionDealt]);
+  track('game_end', { mode, gameMode, totalPts, correctCount, totalPlayed, pct: Math.round(pct), reason: 'abandon' });
+  dbInsert('sessions', {
+    session_id: SESSION_ID,
+    mode, game_mode: gameMode,
+    total_pts: totalPts, correct_count: correctCount,
+    total_played: totalPlayed, pct: Math.round(pct),
+    reason: 'abandon', player_count: players.length
+  });
+}
+
+function handleVisibilityChange() {
+  if (document.visibilityState === 'hidden') {
+    // User switched tabs / minimized — start countdown
+    if (gameInProgress) {
+      abandonTimer = setTimeout(fireAbandon, ABANDON_TIMEOUT);
+    }
+  } else {
+    // User came back — cancel abandon
+    if (abandonTimer) {
+      clearTimeout(abandonTimer);
+      abandonTimer = null;
+    }
+  }
+}
+
 // ─── Init ───
 async function init() {
   await loadCards();
   bindEvents();
   initAnalytics();
+  initSupabase();
+
+  // Catch tab close / navigation away — fire immediately
+  window.addEventListener('beforeunload', fireAbandon);
+  // Catch tab switch / app minimize — 30s grace period
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
