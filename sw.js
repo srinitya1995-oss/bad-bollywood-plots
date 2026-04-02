@@ -1,4 +1,4 @@
-const CACHE_NAME = 'badplots-v4';
+const CACHE_NAME = 'badplots-v6';
 const ASSETS = [
   '/',
   '/index.html',
