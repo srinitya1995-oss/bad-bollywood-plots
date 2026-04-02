@@ -632,22 +632,21 @@ function submitSuggestion() {
 
 // ─── Event Binding ───
 function bindEvents() {
-  // Mode buttons (Bollywood / Tollywood)
-  document.querySelectorAll('.mode-btn').forEach(btn => {
+  // Cinema buttons (Bollywood / Tollywood)
+  document.querySelectorAll('.cinema-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       track('mode_selected', { mode: btn.dataset.mode });
       selectMode(btn.dataset.mode);
     });
   });
 
-  // Toggle buttons (party / endless)
-  document.querySelectorAll('.toggle-btn').forEach(btn => {
+  // Mode cards (party / endless)
+  document.querySelectorAll('.mode-card').forEach(btn => {
     btn.addEventListener('click', () => {
       gameMode = btn.dataset.gamemode;
       track('diff_selected', { gameMode });
-      document.querySelectorAll('.toggle-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.gamemode === gameMode);
-        b.setAttribute('aria-pressed', String(b.dataset.gamemode === gameMode));
+      document.querySelectorAll('.mode-card').forEach(b => {
+        b.classList.toggle('selected', b.dataset.gamemode === gameMode);
       });
     });
   });

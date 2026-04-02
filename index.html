@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1a0a2e">
+  <meta name="theme-color" content="#140E0A">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Bad Plots">
@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/logo-favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
   <title>Bad Plots: The Desi Party Game</title>
 </head>
 <body>
@@ -24,34 +24,75 @@
 
 <!-- HOME -->
 <main id="home" class="screen active" aria-label="Home">
-  <header class="home-header">
-    <img src="assets/logo.svg" alt="Bad Plots" class="home-logo" width="240" height="80">
-    <p class="home-tagline">Terrible plots. Real movies.</p>
-  </header>
+  <div class="home-page">
+    <div class="color-strip"></div>
 
-  <nav class="home-modes" aria-label="Game modes">
-    <button class="mode-btn mode-btn-bw" data-mode="BW">
-      <span class="mode-name">Bollywood</span>
-      <span class="mode-sub">Hindi films</span>
-    </button>
-    <button class="mode-btn mode-btn-tw" data-mode="TW">
-      <span class="mode-name">Tollywood</span>
-      <span class="mode-sub">Telugu films</span>
-    </button>
-  </nav>
+    <!-- Background patches -->
+    <div class="patch patch-1">
+      <img src="inspiration/cf0f1be0a7f452456e708a7bf912f1fb.jpg" alt="" aria-hidden="true">
+    </div>
+    <div class="patch patch-2">
+      <img src="inspiration/4134f8b2d1f0d1e89f4cd858c21a2388.jpg" alt="" aria-hidden="true">
+    </div>
 
-  <div class="home-toggle">
-    <button class="toggle-btn active" data-gamemode="party" aria-pressed="true">Party</button>
-    <button class="toggle-btn" data-gamemode="endless" aria-pressed="false">Endless</button>
+    <div class="home-content">
+      <!-- Top bar -->
+      <div class="top-row">
+        <button class="top-link" id="suggest-btn">Suggest a Movie</button>
+        <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" target="_blank" rel="noopener" class="top-link">@Srinitya</a>
+      </div>
+
+      <!-- Hero -->
+      <div class="hero">
+        <h1 class="hero-title">
+          <span class="title-bad">Bad</span>
+          <span class="title-plots">Plots</span>
+        </h1>
+        <p class="hero-explain">
+          We describe Bollywood and Tollywood movies <strong>badly</strong>.
+          You guess which film it is. Simple, chaotic, and
+          best played with chai and friends.
+        </p>
+      </div>
+
+      <!-- Cinema choice -->
+      <div class="section-label">Pick Your Cinema</div>
+      <div class="cinema-row">
+        <button class="cinema-btn bw" data-mode="BW">
+          <div class="cinema-name">Bollywood</div>
+          <div class="cinema-sub">Hindi films</div>
+        </button>
+        <button class="cinema-btn tw" data-mode="TW">
+          <div class="cinema-name">Tollywood</div>
+          <div class="cinema-sub">Telugu films</div>
+        </button>
+      </div>
+
+      <!-- Mode -->
+      <div class="modes">
+        <div class="section-label">How Do You Want to Play?</div>
+        <div class="mode-cards">
+          <button class="mode-card party selected" data-gamemode="party">
+            <span class="mode-tag">Popular</span>
+            <div class="mode-card-name">Party</div>
+            <div class="mode-desc">12 cards, mixed difficulty. Perfect for game night with friends.</div>
+            <span class="mode-check">✓</span>
+          </button>
+          <button class="mode-card endless" data-gamemode="endless">
+            <div class="mode-card-name">Endless</div>
+            <div class="mode-desc">Keep going until you run out of lives. How far can you get?</div>
+            <span class="mode-check">✓</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+      <button class="footer-link" id="feedback-btn">Feedback</button>
+      <a href="#" class="footer-link">About</a>
+    </footer>
   </div>
-
-  <footer class="home-footer">
-    <button class="link-btn" id="suggest-btn">Suggest a movie</button>
-    <span class="footer-divider" aria-hidden="true">&middot;</span>
-    <button class="link-btn" id="feedback-btn">Feedback</button>
-    <span class="footer-divider" aria-hidden="true">&middot;</span>
-    <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" target="_blank" rel="noopener" class="footer-credit">@Srinitya</a>
-  </footer>
 </main>
 
 <!-- PLAYER SETUP (bottom sheet) -->

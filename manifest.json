@@ -4,8 +4,8 @@
   "description": "Terrible plots. Real movies. Guess Bollywood & Tollywood films from hilariously bad descriptions.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a0a2e",
-  "theme_color": "#1a0a2e",
+  "background_color": "#140E0A",
+  "theme_color": "#140E0A",
   "orientation": "portrait-primary",
   "icons": [
     { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
