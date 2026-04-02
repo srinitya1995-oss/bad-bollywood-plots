@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-function App() {
-  return <div>Seedha Plot v2</div>;
-}
+import { App } from './components/App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
