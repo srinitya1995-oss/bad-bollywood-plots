@@ -8,12 +8,15 @@ import { ResultsScreen } from './ResultsScreen';
 import { PlayerSetup } from './PlayerSetup';
 import { TurnInterstitial } from './TurnInterstitial';
 import { Toast } from './Toast';
+import { useAbandonDetection } from '../hooks/useAbandonDetection';
 import '../style.css';
 
 export function App() {
   const { state } = useGameState();
   const [ready, setReady] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
+
+  useAbandonDetection();
 
   useEffect(() => {
     const instance = getGameInstance();
