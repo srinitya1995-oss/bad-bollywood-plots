@@ -20,6 +20,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,json}'],
+        navigateFallback: '/index.html',
         runtimeCaching: [
           {
             urlPattern: /\.json$/,
