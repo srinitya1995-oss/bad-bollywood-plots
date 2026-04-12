@@ -14,8 +14,10 @@ export function TurnInterstitial() {
   return (
     <main className="turn-interstitial" aria-label={isContinue ? 'Continue or see results' : 'Turn change'}>
       <div className="turn-atmosphere" aria-hidden="true" />
+      {isContinue && <p className="turn-eyebrow">Interval</p>}
       <h2 className="turn-name">{isContinue ? `${scorer.totalPts} pts` : currentPlayer?.name ?? 'Your turn'}</h2>
-      <p className="turn-sub">{isContinue ? `${scorer.correctCount} of ${payload.idx} correct — keep going?` : 'Pass the phone!'}</p>
+      <p className="turn-sub">{isContinue ? `${scorer.correctCount} of ${payload.idx} correct` : 'Pass the phone!'}</p>
+      {isContinue && <p className="turn-tier">{payload.abilityTier} · Top {payload.abilityPercentile}%</p>}
       {!isContinue && scorer.players.length > 1 && (
         <div className="turn-standings">
           {[...scorer.players].sort((a, b) => b.score - a.score).map((p, i) => (
