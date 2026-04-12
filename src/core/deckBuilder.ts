@@ -28,7 +28,7 @@ export function buildPartyDeck(pool: Card[], sessionDealt: Set<string>, seen: st
   const easy = shuffle(available.filter((c) => c.diff === 'easy')).slice(0, 4);
   const medium = shuffle(available.filter((c) => c.diff === 'medium')).slice(0, 4);
   const hard = shuffle(available.filter((c) => c.diff === 'hard')).slice(0, 4);
-  const dealt = shuffle([...easy, ...medium, ...hard]);
+  const dealt = [...easy, ...medium, ...hard]; // ordered: easy→medium→hard for warmup curve
   for (const c of dealt) sessionDealt.add(c.id);
   return dealt;
 }
