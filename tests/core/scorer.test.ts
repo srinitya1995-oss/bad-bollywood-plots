@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createScorerState, scoreCard, getVerdict, getLeaderboard } from '../../src/core/scorer';
+import { createScorerState, scoreCard, getVerdict, getLeaderboard, VERDICT_TIERS } from '../../src/core/scorer';
 import type { Card, Player } from '../../src/core/types';
 
 function makeCard(diff: 'easy' | 'medium' | 'hard' = 'easy'): Card {
@@ -53,11 +53,28 @@ describe('scoreCard', () => {
 });
 
 describe('getVerdict', () => {
-  it('returns Legendary for 90%+', () => { expect(getVerdict(10, 10).title).toBe('Legendary!'); });
-  it('returns Impressive for 70-89%', () => { expect(getVerdict(8, 10).title).toBe('Impressive!'); });
-  it('returns Not bad for 50-69%', () => { expect(getVerdict(6, 10).title).toBe('Not bad!'); });
-  it('returns Keep trying for 25-49%', () => { expect(getVerdict(3, 10).title).toBe('Keep trying!'); });
-  it('returns Oof for <25%', () => { expect(getVerdict(1, 10).title).toBe('Oof.'); });
+  const titlesOf = (entries: readonly { title: string }[]) => entries.map(e => e.title);
+
+  it('returns a legendary verdict for 90%+', () => {
+    expect(titlesOf(VERDICT_TIERS.legendary)).toContain(getVerdict(10, 10).title);
+  });
+  it('returns an impressive verdict for 70-89%', () => {
+    expect(titlesOf(VERDICT_TIERS.impressive)).toContain(getVerdict(8, 10).title);
+  });
+  it('returns a not-bad verdict for 50-69%', () => {
+    expect(titlesOf(VERDICT_TIERS.notBad)).toContain(getVerdict(6, 10).title);
+  });
+  it('returns a keep-trying verdict for 25-49%', () => {
+    expect(titlesOf(VERDICT_TIERS.keepTrying)).toContain(getVerdict(3, 10).title);
+  });
+  it('returns an oof verdict for <25%', () => {
+    expect(titlesOf(VERDICT_TIERS.oof)).toContain(getVerdict(1, 10).title);
+  });
+  it('each tier has multiple variants for replayability', () => {
+    for (const tier of Object.values(VERDICT_TIERS)) {
+      expect(tier.length).toBeGreaterThanOrEqual(2);
+    }
+  });
 });
 
 describe('getLeaderboard', () => {
