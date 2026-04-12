@@ -117,7 +117,11 @@ class GameInstance {
       const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       this.deck = first ? [first] : [];
     } else {
-      this.deck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
+      // Party mode: start with 3 calibration cards (easy, medium, hard) then 9 adaptive
+      const seen = this.storage.getSeenCards();
+      const calibration = buildPartyDeck(pool, this.sessionDealt, seen).slice(0, 3); // 1 easy, 1 med, 1 hard
+      this.deck = calibration;
+      // Remaining 9 cards will be picked adaptively in markResult
     }
 
     this.fsm.transition('playing');
@@ -157,6 +161,13 @@ class GameInstance {
         this.endGame('completed');
         return;
       }
+    }
+
+    // Party mode: after calibration (3 cards), pick adaptive cards up to 12 total
+    if (this.gameMode === 'party' && this.idx >= this.deck.length && this.deck.length < 12) {
+      const pool = ContentLoader.getCardPool(this.cards, this.industry!);
+      const next = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
+      if (next) this.deck.push(next);
     }
 
     if (this.gameMode === 'party' && this.idx >= this.deck.length) {
