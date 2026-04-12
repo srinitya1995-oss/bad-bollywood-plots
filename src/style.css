@@ -66,7 +66,11 @@ body {
 
 /* ── SCREENS ── */
 .screen { display: none; flex-direction: column; height: 100vh; height: 100dvh; overflow-y: auto; overflow-x: hidden; }
-.screen.active { display: flex; }
+@keyframes screenFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.screen.active { display: flex; animation: screenFade 0.25s ease-out; }
 
 /* ── BUTTONS ── */
 .btn-primary {
@@ -351,6 +355,16 @@ body {
   letter-spacing: 0.04em;
   color: var(--paper-dim);
   margin: 8px 0 4px;
+  text-align: center;
+}
+
+.home-how {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cream);
+  opacity: 0.5;
+  margin: 6px 0 0;
   text-align: center;
 }
 
@@ -726,6 +740,21 @@ body {
   font-size: var(--text-lg); color: var(--cream); opacity: 0.7;
   margin-bottom: 1.5rem;
   animation: fadeUp 0.4s ease-out 0.2s both;
+}
+
+.turn-standings {
+  display: flex; flex-wrap: wrap; gap: 8px 16px;
+  justify-content: center; margin-bottom: 1rem;
+  animation: fadeUp 0.3s ease-out 0.3s both;
+}
+.turn-player {
+  font-size: var(--text-sm); color: var(--paper-dim);
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(42, 29, 20, 0.5);
+}
+.turn-player.current {
+  color: var(--gold); background: rgba(242, 167, 46, 0.15);
+  font-weight: 700;
 }
 
 /* Game screen atmosphere — warm stage lighting */

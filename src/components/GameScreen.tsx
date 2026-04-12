@@ -24,6 +24,7 @@ export function GameScreen() {
   const handleCorrect = useCallback(() => {
     // Streak check before marking (current streak will increment after mark)
     const willHaveStreak = scorer.streak + 1 >= 3;
+    navigator.vibrate?.(50);
     triggerFeedback('correct');
     setScoreFlash(true);
     setTimeout(() => setScoreFlash(false), 400);
@@ -35,6 +36,7 @@ export function GameScreen() {
   }, [actions, scorer.streak, triggerFeedback]);
 
   const handleMiss = useCallback(() => {
+    navigator.vibrate?.([30, 30, 30]);
     triggerFeedback('wrong');
     if (gameMode === 'endless') {
       setLivesPulse(true);
