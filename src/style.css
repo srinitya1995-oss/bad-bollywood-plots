@@ -694,6 +694,7 @@ body {
   height: clamp(320px, 55vh, 440px);
   perspective: 1200px; cursor: pointer;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  animation: cardEnter 0.3s ease-out;
 }
 
 .card-inner {

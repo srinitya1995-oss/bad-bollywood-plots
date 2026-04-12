@@ -42,7 +42,7 @@ export function GameScreen() {
         </div>
       )}
       <div className="card-stage">
-        <Card card={currentCard} isFlipped={isFlipped} onFlip={actions.flipCard} />
+        <Card key={currentCard.id} card={currentCard} isFlipped={isFlipped} onFlip={actions.flipCard} />
       </div>
       {isFlipped && (
         <div className="score-zone">
