@@ -71,6 +71,7 @@ export function HomeScreen() {
           </h1>
 
           <p className="home-tagline">Terrible plots. Real movies.</p>
+          <p className="home-how">Read the terrible plot → Guess the movie → Tap to reveal</p>
 
           {/* Ornamental bottom rule */}
           <div className="home-ornament-bottom" aria-hidden="true">
