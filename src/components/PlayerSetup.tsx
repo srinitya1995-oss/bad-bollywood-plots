@@ -21,10 +21,10 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
   };
 
   return (
-    <div className="sheet-overlay open" role="dialog" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+    <div className="sheet-overlay open" role="dialog" aria-modal="true" aria-labelledby="player-setup-title" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="sheet">
         <div className="sheet-handle" aria-hidden="true" />
-        <h2 className="sheet-title">Who's playing?</h2>
+        <h2 className="sheet-title" id="player-setup-title">Who's playing?</h2>
         <p className="sheet-sub">Add players or just tap Start for solo</p>
         <div className="player-list">
           {players.map((p, i) => (
@@ -35,7 +35,7 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
             </div>
           ))}
         </div>
-        {players.length < 4 && <button className="add-player-btn" onClick={addPlayer}>+ Add player</button>}
+        {players.length < 4 && <button className="add-player-btn" onClick={addPlayer} aria-label="Add another player">+ Add player</button>}
         <button className="btn-primary" onClick={handleStart}>Start game</button>
       </div>
     </div>

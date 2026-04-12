@@ -141,6 +141,8 @@ export function HomeScreen() {
           <button
             className={`home-friends-toggle${wantMultiplayer ? ' is-active' : ''}`}
             onClick={() => setWantMultiplayer(!wantMultiplayer)}
+            aria-pressed={wantMultiplayer}
+            aria-label="Play with friends"
           >
             {wantMultiplayer
               ? <><span className="home-friends-toggle__check">✓</span> Playing with friends</>

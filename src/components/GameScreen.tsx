@@ -61,8 +61,8 @@ export function GameScreen() {
         <button className="game-exit-btn" onClick={actions.exitGame}>
           <span aria-hidden="true">{'\u2190'}</span> Exit
         </button>
-        <div className="game-info"><span className="game-prog">{progress}</span></div>
-        <div className={`game-score${scoreFlash ? ' flash' : ''}`}>{scorer.totalPts} pts</div>
+        <div className="game-info"><span className="game-prog" aria-live="polite" aria-atomic="true">{progress}</span></div>
+        <div className={`game-score${scoreFlash ? ' flash' : ''}`} aria-live="polite" aria-atomic="true">{scorer.totalPts} pts</div>
       </header>
       {gameMode === 'party' && (
         <div className="prog-track" role="progressbar" aria-valuenow={Math.round(progressPct)} aria-valuemin={0} aria-valuemax={100}>

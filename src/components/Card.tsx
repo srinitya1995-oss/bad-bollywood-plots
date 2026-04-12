@@ -10,14 +10,18 @@ export function Card({ card, isFlipped, onFlip }: CardProps) {
   const isBW = card.ind === 'BW';
   const indLabel = isBW ? 'Bollywood' : 'Tollywood';
 
+  const ariaLabel = isFlipped
+    ? `${card.n} (${card.y}) — ${indLabel} ${card.diff}`
+    : `${indLabel} ${card.diff} card — tap to flip and reveal answer`;
+
   return (
     <div
       className={`card-wrap${isFlipped ? ' flipped' : ''}`}
       onClick={isFlipped ? undefined : onFlip}
       onKeyDown={(e) => { if (!isFlipped && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onFlip(); } }}
       role="button"
-      tabIndex={0}
-      aria-label="Tap to flip card and reveal answer"
+      tabIndex={isFlipped ? -1 : 0}
+      aria-label={ariaLabel}
     >
       <div className="card-inner">
         <div className={`card-face card-front${!isBW ? ' tw' : ''}`}>

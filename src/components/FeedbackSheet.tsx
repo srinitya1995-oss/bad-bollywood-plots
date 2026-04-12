@@ -24,15 +24,15 @@ export function FeedbackSheet({ onClose }: FeedbackSheetProps) {
   ];
 
   return (
-    <div className="sheet-overlay open" role="dialog" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+    <div className="sheet-overlay open" role="dialog" aria-modal="true" aria-labelledby="feedback-sheet-title" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="sheet">
         <div className="sheet-handle" aria-hidden="true" />
-        <h2 className="sheet-title">Share your feedback</h2>
+        <h2 className="sheet-title" id="feedback-sheet-title">Share your feedback</h2>
         <p className="sheet-sub">Tell us what's working and what's not</p>
         <div className="fb-tags">
           {tagOptions.map(t => <button key={t.value} className="fb-tag" aria-pressed={tags.has(t.value)} onClick={() => toggleTag(t.value)}>{t.label}</button>)}
         </div>
-        <textarea className="fb-textarea" placeholder="Anything else? (optional)" value={text} onChange={e => setText(e.target.value)} />
+        <textarea className="fb-textarea" placeholder="Anything else? (optional)" value={text} onChange={e => setText(e.target.value)} aria-label="Additional feedback" />
         <button className="btn-primary" onClick={handleSubmit}>Submit feedback</button>
         <button className="btn-skip" onClick={onClose}>Cancel</button>
       </div>

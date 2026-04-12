@@ -16,13 +16,13 @@ export function SuggestSheet({ onClose }: SuggestSheetProps) {
   };
 
   return (
-    <div className="sheet-overlay open" role="dialog" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+    <div className="sheet-overlay open" role="dialog" aria-modal="true" aria-labelledby="suggest-sheet-title" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="sheet">
         <div className="sheet-handle" aria-hidden="true" />
-        <h2 className="sheet-title">Suggest a movie</h2>
+        <h2 className="sheet-title" id="suggest-sheet-title">Suggest a movie</h2>
         <p className="sheet-sub">We'll write a terrible plot description for it</p>
-        <input className="form-input" placeholder="Movie name" value={movie} onChange={e => setMovie(e.target.value)} />
-        <select className="form-input" value={industry} onChange={e => setIndustry(e.target.value)}>
+        <input className="form-input" placeholder="Movie name" value={movie} onChange={e => setMovie(e.target.value)} aria-label="Movie name" />
+        <select className="form-input" value={industry} onChange={e => setIndustry(e.target.value)} aria-label="Industry">
           <option value="" disabled>Bollywood / Tollywood / Other</option>
           <option value="Bollywood">Bollywood</option>
           <option value="Tollywood">Tollywood</option>

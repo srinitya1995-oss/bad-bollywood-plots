@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { getGameInstance } from '../hooks/gameInstance';
 import { initPostHog, initAnalyticsSubscriber } from '../analytics/posthog';
@@ -15,8 +15,27 @@ export function App() {
   const { state } = useGameState();
   const [ready, setReady] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
+  const prevStateRef = useRef(state);
 
   useAbandonDetection();
+
+  // Focus management: move focus to the new screen's heading on state change
+  useEffect(() => {
+    if (prevStateRef.current !== state && ready) {
+      // Defer focus to after render
+      requestAnimationFrame(() => {
+        const main = document.querySelector('main.screen.active, .turn-interstitial');
+        if (main) {
+          const heading = main.querySelector('h1, h2') as HTMLElement | null;
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({ preventScroll: false });
+          }
+        }
+      });
+    }
+    prevStateRef.current = state;
+  }, [state, ready]);
 
   useEffect(() => {
     const instance = getGameInstance();

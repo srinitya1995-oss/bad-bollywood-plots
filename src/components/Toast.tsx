@@ -22,7 +22,7 @@ export function Toast() {
   }, [show]);
 
   return (
-    <div className={`toast${visible ? ' show' : ''}`} role="status" aria-live="polite">
+    <div className={`toast${visible ? ' show' : ''}`} role="status" aria-live="polite" aria-atomic="true">
       {message}
     </div>
   );
