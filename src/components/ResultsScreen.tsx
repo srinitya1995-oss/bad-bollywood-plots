@@ -20,22 +20,27 @@ export function ResultsScreen() {
   };
 
   return (
-    <main className="screen active" aria-label="Results">
+    <main className="screen active results-screen" aria-label="Results">
+      <div className="res-atmosphere" aria-hidden="true" />
       <header className="res-top">
         <p className="res-eyebrow">Game over</p>
         <h1 className="res-title">{verdict?.title ?? 'Done!'}</h1>
-        <p className="res-sub">{abilityTier} · Top {abilityPercentile}%</p>
-        <div className="res-stats">
-          <div className="res-stat"><span className="res-stat-n">{adaptive.ability}</span><span className="res-stat-l">Rating</span></div>
-          <div className="res-stat"><span className="res-stat-n">{scorer.correctCount}/{idx}</span><span className="res-stat-l">Correct</span></div>
-          <div className="res-stat"><span className="res-stat-n">{scorer.totalPts}</span><span className="res-stat-l">Points</span></div>
+        <p className="res-verdict-hero">{verdict?.verdict}</p>
+        <div className="res-tier">
+          <span className="res-tier-label">{abilityTier}</span>
+          <span className="res-tier-dot">{'\u00b7'}</span>
+          <span className="res-tier-pct">Top {abilityPercentile}%</span>
         </div>
         {gameMode === 'endless' && adaptive.ability > highScore && (
           <p className="res-highscore">New High Rating!</p>
         )}
       </header>
       <div className="res-body">
-        <blockquote className="res-verdict"><p className="res-verdict-text">{verdict?.verdict}</p></blockquote>
+        <div className="res-stats">
+          <div className="res-stat"><span className="res-stat-n">{adaptive.ability}</span><span className="res-stat-l">Rating</span></div>
+          <div className="res-stat"><span className="res-stat-n">{scorer.correctCount}/{idx}</span><span className="res-stat-l">Correct</span></div>
+          <div className="res-stat"><span className="res-stat-n">{scorer.totalPts}</span><span className="res-stat-l">Points</span></div>
+        </div>
         {leaderboard.length > 1 && (
           <div className="leaderboard">
             <h2 className="lb-title">Leaderboard</h2>

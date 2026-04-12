@@ -8,7 +8,7 @@ type FeedbackType = 'correct' | 'wrong' | null;
 export function GameScreen() {
   const { state, payload } = useGameState();
   const actions = useGameActions();
-  const { deck, idx, currentCard, scorer, gameMode, adaptive } = payload;
+  const { deck, idx, currentCard, scorer, gameMode } = payload;
   const [feedback, setFeedback] = useState<FeedbackType>(null);
   const [scoreFlash, setScoreFlash] = useState(false);
   const [showStreak, setShowStreak] = useState(false);
@@ -62,7 +62,7 @@ export function GameScreen() {
           <span aria-hidden="true">{'\u2190'}</span> Exit
         </button>
         <div className="game-info"><span className="game-prog" aria-live="polite" aria-atomic="true">{progress}</span></div>
-        <div className={`game-score${scoreFlash ? ' flash' : ''}`} aria-live="polite" aria-atomic="true">{adaptive.ability}</div>
+        <div className={`game-score${scoreFlash ? ' flash' : ''}`} aria-live="polite" aria-atomic="true">{scorer.totalPts} pts</div>
       </header>
       {gameMode === 'party' && (
         <div className="prog-track" role="progressbar" aria-valuenow={Math.round(progressPct)} aria-valuemin={0} aria-valuemax={100}>
