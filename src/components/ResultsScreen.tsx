@@ -7,7 +7,7 @@ import { toast } from './Toast';
 export function ResultsScreen() {
   const { payload } = useGameState();
   const actions = useGameActions();
-  const { scorer, verdict, leaderboard, gameMode, highScore, idx } = payload;
+  const { scorer, verdict, leaderboard, gameMode, highScore, idx, adaptive, abilityTier, abilityPercentile } = payload;
   const [showFeedback, setShowFeedback] = useState(false);
 
   const handleShare = () => {
@@ -24,12 +24,15 @@ export function ResultsScreen() {
       <header className="res-top">
         <p className="res-eyebrow">Game over</p>
         <h1 className="res-title">{verdict?.title ?? 'Done!'}</h1>
-        <p className="res-sub">{gameMode === 'endless' ? `High score: ${highScore} pts` : `${scorer.correctCount} of ${idx} correct`}</p>
+        <p className="res-sub">{abilityTier} · Top {abilityPercentile}%</p>
         <div className="res-stats">
-          <div className="res-stat"><span className="res-stat-n">{scorer.correctCount}</span><span className="res-stat-l">Correct</span></div>
-          <div className="res-stat"><span className="res-stat-n">{idx}</span><span className="res-stat-l">Played</span></div>
+          <div className="res-stat"><span className="res-stat-n">{adaptive.ability}</span><span className="res-stat-l">Rating</span></div>
+          <div className="res-stat"><span className="res-stat-n">{scorer.correctCount}/{idx}</span><span className="res-stat-l">Correct</span></div>
           <div className="res-stat"><span className="res-stat-n">{scorer.totalPts}</span><span className="res-stat-l">Points</span></div>
         </div>
+        {gameMode === 'endless' && adaptive.ability > highScore && (
+          <p className="res-highscore">New High Rating!</p>
+        )}
       </header>
       <div className="res-body">
         <blockquote className="res-verdict"><p className="res-verdict-text">{verdict?.verdict}</p></blockquote>

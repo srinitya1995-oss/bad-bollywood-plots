@@ -5,8 +5,9 @@ import { LocalStorageAdapter } from '../storage/localStorage';
 import { SupabaseAdapter } from '../storage/supabase';
 import type { StorageAdapter } from '../storage/interface';
 import type { Card, Industry, GameMode, Player } from '../core/types';
-import { buildPartyDeck, pickEndlessCard } from '../core/deckBuilder';
+import { buildPartyDeck } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
+import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? 'https://wmfxkkgktmfsipiihsjq.supabase.co';
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtZnhra2drdG1mc2lwaWloc2pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzA2MTYsImV4cCI6MjA5MDA0NjYxNn0.eV3m6O_-Ti3cl8C2yq-Ffp7M2hdBj9qasEWSD3lnrTg';
@@ -34,6 +35,9 @@ export interface GamePayload {
   highScore: number;
   verdict: { title: string; verdict: string } | null;
   leaderboard: Player[];
+  adaptive: AdaptiveState;
+  abilityTier: string;
+  abilityPercentile: number;
 }
 
 class GameInstance {
@@ -48,6 +52,7 @@ class GameInstance {
   private deck: Card[] = [];
   private idx = 0;
   private scorer: ScorerState = createScorerState([]);
+  private adaptive: AdaptiveState = createAdaptiveState();
   private sessionDealt = new Set<string>();
   readonly sessionId = crypto.randomUUID?.() ?? `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
 
@@ -79,6 +84,9 @@ class GameInstance {
       highScore: this.storage.getHighScore(),
       verdict: this.fsm.getState() === 'results' ? getVerdict(this.scorer.correctCount, this.idx) : null,
       leaderboard: getLeaderboard(this.scorer.players),
+      adaptive: this.adaptive,
+      abilityTier: getAbilityTier(this.adaptive.ability),
+      abilityPercentile: getAbilityPercentile(this.adaptive.ability),
     };
   }
 
@@ -102,10 +110,11 @@ class GameInstance {
     this.sessionDealt.clear();
     this.idx = 0;
     this.scorer = createScorerState(players, this.gameMode === 'endless' ? 3 : 0);
+    this.adaptive = createAdaptiveState();
 
     if (this.gameMode === 'endless') {
-      // Pick first card based on streak (0 at start = easy card)
-      const first = pickEndlessCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.scorer.streak);
+      // Adaptive: pick first card at starting ability (1100 → medium-ish)
+      const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       this.deck = first ? [first] : [];
     } else {
       this.deck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
@@ -127,24 +136,24 @@ class GameInstance {
     if (this.fsm.getState() !== 'flipped') return;
     const card = this.deck[this.idx];
     this.scorer = scoreCard(this.scorer, card, result);
+    this.adaptive = updateAbility(this.adaptive, card, result === 'correct');
     this.fsm.transition('scoring');
 
     const pts = result === 'correct' ? ({ easy: 1, medium: 2, hard: 3 }[card.diff] ?? 1) : 0;
-    this.bus.emit('score:updated', { result, pts, totalPts: this.scorer.totalPts });
+    this.bus.emit('score:updated', { result, pts, totalPts: this.scorer.totalPts, ability: this.adaptive.ability });
     this.idx++;
 
-    // In endless mode, pick the next card dynamically based on streak
+    // In endless mode, pick next card adaptively based on ability estimate
     if (this.gameMode === 'endless') {
       if (this.scorer.lives <= 0) {
         this.endGame('lives-exhausted');
         return;
       }
       const pool = ContentLoader.getCardPool(this.cards, this.industry!);
-      const next = pickEndlessCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.scorer.streak);
+      const next = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       if (next) {
         this.deck.push(next);
       } else {
-        // No cards left in the pool
         this.endGame('completed');
         return;
       }
@@ -188,8 +197,8 @@ class GameInstance {
     this.storage.markCardsSeen([...this.sessionDealt]);
     const totalPlayed = this.idx;
     const pct = totalPlayed > 0 ? Math.round((this.scorer.correctCount / totalPlayed) * 100) : 0;
-    if (this.gameMode === 'endless' && this.scorer.totalPts > this.storage.getHighScore()) {
-      this.storage.setHighScore(this.scorer.totalPts);
+    if (this.gameMode === 'endless' && this.adaptive.ability > this.storage.getHighScore()) {
+      this.storage.setHighScore(this.adaptive.ability);
     }
     this.bus.emit('game:ended', { reason, totalPts: this.scorer.totalPts, correctCount: this.scorer.correctCount, totalPlayed });
     this.storage.saveSession({
@@ -202,8 +211,17 @@ class GameInstance {
 
   getShareText(): string {
     const ind = this.industry === 'BW' ? 'Bollywood' : 'Tollywood';
-    const emoji = this.scorer.totalPts >= 30 ? '\u{1F525}' : this.scorer.totalPts >= 20 ? '\u{1F4AA}' : this.scorer.totalPts >= 10 ? '\u{1F3AC}' : '\u{1F605}';
-    return [`${emoji} ${this.scorer.totalPts} pts on Bad Plots!`, `${this.scorer.correctCount}/${this.idx} ${ind} movies guessed.`, '', 'Terrible plots. Real movies.', 'Think you can beat that?', 'badbollywoodplots.com'].join('\n');
+    const tier = getAbilityTier(this.adaptive.ability);
+    const pct = getAbilityPercentile(this.adaptive.ability);
+    const emoji = this.adaptive.ability >= 1500 ? '\u{1F525}' : this.adaptive.ability >= 1300 ? '\u{1F4AA}' : this.adaptive.ability >= 1100 ? '\u{1F3AC}' : '\u{1F605}';
+    return [
+      `${emoji} ${tier} (${this.adaptive.ability} rating)`,
+      `${this.scorer.correctCount}/${this.idx} ${ind} movies · Top ${pct}%`,
+      '',
+      'Terrible plots. Real movies.',
+      'Think you can beat that?',
+      'badbollywoodplots.com',
+    ].join('\n');
   }
 
   private emitCardLoaded(): void {
