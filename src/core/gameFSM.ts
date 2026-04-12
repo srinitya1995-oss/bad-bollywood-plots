@@ -5,10 +5,10 @@ const TRANSITIONS: Record<GameState, GameState[]> = {
   home: ['setup', 'playing'],
   setup: ['playing', 'home'],
   playing: ['flipped', 'home', 'results'],
-  flipped: ['scoring', 'results'],
-  scoring: ['playing', 'turnChange', 'continue', 'results'],
-  turnChange: ['playing', 'results'],
-  continue: ['playing', 'results'],
+  flipped: ['scoring', 'results', 'home'],
+  scoring: ['playing', 'turnChange', 'continue', 'results', 'home'],
+  turnChange: ['playing', 'results', 'home'],
+  continue: ['playing', 'results', 'home'],
   results: ['home', 'playing'],
 };
 

@@ -42,7 +42,7 @@ export function Card({ card, isFlipped, onFlip }: CardProps) {
             <h3 className="card-answer">{card.n}</h3>
             <span className="card-year">{card.y}</span>
             <hr className="card-divider" aria-hidden="true" />
-            <p className="card-fact-label">Did you know</p>
+            <p className={`card-fact-label${isBW ? ' bw' : ' tw'}`}>Did you know</p>
             <p className="card-fact">{card.f}</p>
           </div>
         </div>

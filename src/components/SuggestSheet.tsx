@@ -10,6 +10,8 @@ export function SuggestSheet({ onClose }: SuggestSheetProps) {
 
   const handleSubmit = () => {
     if (!movie.trim()) { toast('Please enter a movie name'); return; }
+    if (!industry) { toast('Please select Bollywood, Tollywood, or Other'); return; }
+    if (movie.trim().length > 200) { toast('Movie name is too long'); return; }
     getGameInstance().storage.saveSuggestion({ movie: movie.trim(), industry, timestamp: Date.now(), sessionId: getGameInstance().sessionId });
     toast("Thanks! We'll check it out.");
     onClose();

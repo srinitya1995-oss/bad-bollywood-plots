@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGameActions } from '../hooks/useGameActions';
 import type { Player } from '../core/types';
 
-const PLAYER_COLORS = ['gold', 'red', 'green', 'indigo'];
+const PLAYER_COLORS = ['#F2A72E', '#E85D3A', '#3EA87A', '#8B5CF6'];
 
 interface PlayerSetupProps { onClose: () => void; }
 
