@@ -29,7 +29,14 @@ export function App() {
 
   useEffect(() => { setShowSetup(state === 'setup'); }, [state]);
 
-  if (!ready) return null;
+  if (!ready) return (
+    <main className="screen active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ textAlign: 'center' }}>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '48px', color: 'var(--cream)', marginBottom: '0.5rem' }}>Bad Plots</h1>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'var(--cream)', opacity: 0.6 }}>Loading cards...</p>
+      </div>
+    </main>
+  );
 
   return (
     <>
