@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { useGameActions } from '../hooks/useGameActions';
+import { SuggestSheet } from './SuggestSheet';
+import { FeedbackSheet } from './FeedbackSheet';
 import type { GameMode } from '../core/types';
 
 export function HomeScreen() {
   const actions = useGameActions();
   const [gameMode, setGameMode] = useState<GameMode>('party');
+  const [showSuggest, setShowSuggest] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   const handleModeChange = (mode: GameMode) => {
     setGameMode(mode);
@@ -17,7 +21,7 @@ export function HomeScreen() {
         <div className="color-strip" />
         <div className="home-content">
           <div className="top-row">
-            <button className="top-link">Suggest a Movie</button>
+            <button className="top-link" onClick={() => setShowSuggest(true)}>Suggest a Movie</button>
             <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" target="_blank" rel="noopener" className="top-link">@Srinitya</a>
           </div>
           <div className="hero">
@@ -59,10 +63,11 @@ export function HomeScreen() {
           </div>
         </div>
         <footer className="home-footer">
-          <button className="footer-link">Feedback</button>
-          <a href="#" className="footer-link">About</a>
+          <button className="footer-link" onClick={() => setShowFeedback(true)}>Feedback</button>
         </footer>
       </div>
+      {showSuggest && <SuggestSheet onClose={() => setShowSuggest(false)} />}
+      {showFeedback && <FeedbackSheet onClose={() => setShowFeedback(false)} />}
     </main>
   );
 }

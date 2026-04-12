@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { useGameActions } from '../hooks/useGameActions';
+import { FeedbackSheet } from './FeedbackSheet';
 import { toast } from './Toast';
 
 export function ResultsScreen() {
   const { payload } = useGameState();
   const actions = useGameActions();
   const { scorer, verdict, leaderboard, gameMode, highScore, idx } = payload;
+  const [showFeedback, setShowFeedback] = useState(false);
 
   const handleShare = () => {
     const text = actions.getShareText();
@@ -45,9 +48,10 @@ export function ResultsScreen() {
         <div className="res-actions">
           <button className="btn-primary" onClick={actions.replay}>Play again</button>
           <button className="btn-secondary" onClick={handleShare}>Share score</button>
-          <button className="link-btn">How was that?</button>
+          <button className="link-btn" onClick={() => setShowFeedback(true)}>How was that?</button>
         </div>
       </div>
+      {showFeedback && <FeedbackSheet onClose={() => setShowFeedback(false)} />}
     </main>
   );
 }
