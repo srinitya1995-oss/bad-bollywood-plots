@@ -531,3 +531,78 @@ Start dev server, check that `/content/manifest.json` returns 4 packs, and `/con
 git add -A
 git commit -m "chore: integration verification for 4-language expansion"
 ```
+
+---
+
+### Task 8: Visual Verify (Seedha Loop Phase 4)
+
+**Files:** None — verification only. Uses `Skill: webapp-testing` + `Skill: click-test-playbook`.
+
+- [ ] **Step 1: Start dev server**
+
+```bash
+npx vite --port 5173
+```
+
+- [ ] **Step 2: Run Playwright screenshots**
+
+Screenshot at 375px mobile:
+- Home screen — verify 2x2 cinema grid shows all 4 languages
+- Home screen — verify Tamil + Malayalam show "Coming soon!" badge
+- Tap Hindi → game starts (verify card shows "Hindi" not "Bollywood")
+- Card front → verify industry badge says "Hindi" with correct color
+- Card back → verify industry label
+- Tap a coming-soon panel (Tamil) → verify Suggest sheet opens instead of game
+- Results screen → verify industry label
+
+- [ ] **Step 3: Read each screenshot with Read tool**
+
+Actually LOOK at every screenshot. Check:
+- 2x2 grid layout not broken on mobile
+- Colors correct (Hindi=flame, Telugu=emerald, Tamil=saffron-gold, Malayalam=blue)
+- Coming-soon panels visually distinct but not ugly
+- No text overflow or layout breaks
+
+- [ ] **Step 4: Fix any visual issues found**
+
+Back to Task 4 CSS if needed.
+
+---
+
+### Task 9: Visual QA Gate (Seedha Loop Phase 5)
+
+- [ ] **Step 1: Dispatch seedhaplot-visual-qa agent**
+
+Provide screenshots from Task 8. Agent scores against 7-dimension desi maximalist rubric.
+
+Focus screens: Home (the 2x2 grid is new), Game card front (new industry labels), Results.
+
+- [ ] **Step 2: Check scores**
+
+- Overall >= 7.0 required
+- No dimension below 5.0
+- If FAIL → fix → re-screenshot → re-score
+
+- [ ] **Step 3: Write scores to .project-state.md**
+
+---
+
+### Task 10: Quick Panel Review (Seedha Loop Phase 6)
+
+Standard tier change → quick panel (3 agents):
+
+- [ ] **Step 1: Dispatch Gen Z Collective**
+
+"Review the 4-language cinema grid. Does it feel culturally authentic? Are the colors right for each industry?"
+
+- [ ] **Step 2: Dispatch Gamedev Gaurav**
+
+"Does the coming-soon UX work? Does tapping Tamil open Suggest sheet feel natural or confusing?"
+
+- [ ] **Step 3: Dispatch Priya PM**
+
+"Does 4 languages help or hurt the first-time UX? Is the home screen too crowded now?"
+
+- [ ] **Step 4: Compile findings, fix P0s if any**
+
+- [ ] **Step 5: Update .project-state.md with panel report**

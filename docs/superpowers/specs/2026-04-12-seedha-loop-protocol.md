@@ -203,6 +203,24 @@ SCREENSHOT NEEDED: [screen IDs from the 16-state inventory]
 - `Skill: analytics-tracking` → PostHog validation (Shreya Stats)
 - `Skill: analytics-product` → funnels, cohorts (Shreya Stats)
 
+### Phase 6.5: STOP & CHECK — Architectural Review (Standard + Major)
+
+After panel agents deliver, STOP. Do not jump to fixing individual items.
+
+1. **Read ALL panel outputs fully** — not summaries, not skimming. Every agent's complete output.
+2. **Cross-reference:** What pattern appears across 3+ agents? Individual bugs are symptoms. Patterns are the disease.
+3. **Ask:** "Does any finding invalidate the spec, the plan, or an assumption I made in BUILD?"
+4. **Ask:** "Is there a gap in the system design that no single agent caught but the combination reveals?"
+5. **Ask:** "Am I about to fix 10 individual items when I should be fixing 1 architectural issue?"
+
+**If systemic issue found:** STOP. Do not fix individual items. Go back to Phase 2 (THINK) and redesign the approach. This may mean revising the spec.
+
+**If no systemic issue:** Proceed to Phase 7 (Science Gate) or Phase 8 (Write State).
+
+**Why this exists:** Session 2026-04-11/12 fixed 92 individual items without ever stepping back to ask "is the whole system right?" The dedup in Phase 6 catches overlapping bugs. Phase 6.5 catches overlapping ASSUMPTIONS.
+
+---
+
 ### Phase 7: SCIENCE GATE (Standard + Major, when game logic touched)
 
 **Owned by: Dr. Raghav (Sr. Principal Scientist)**
