@@ -1,6 +1,8 @@
 {
   "packs": [
-    { "id": "bw", "file": "packs/bw.json", "enabled": true },
-    { "id": "tw", "file": "packs/tw.json", "enabled": true }
+    { "id": "hi", "file": "packs/hi.json", "enabled": true },
+    { "id": "te", "file": "packs/te.json", "enabled": true },
+    { "id": "ta", "file": "packs/ta.json", "enabled": true },
+    { "id": "ml", "file": "packs/ml.json", "enabled": true }
   ]
 }
