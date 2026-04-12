@@ -189,8 +189,9 @@ class GameInstance {
 
   continueGame(): void {
     const pool = ContentLoader.getCardPool(this.cards, this.industry!);
-    const moreDeck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
-    this.deck.push(...moreDeck);
+    // Continue with adaptive cards at current ability (not static deck)
+    const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
+    if (first) this.deck.push(first);
     this.fsm.transition('playing');
     this.emitCardLoaded();
   }

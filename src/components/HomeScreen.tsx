@@ -36,9 +36,7 @@ export function HomeScreen() {
 
         {/* ── Top utility bar ── */}
         <div className="home-topbar">
-          <button className="home-toplink" onClick={() => setShowSuggest(true)}>
-            Suggest a Movie
-          </button>
+          <span className="home-toplink" aria-hidden="true">Bad Plots</span>
           <a
             href="https://www.linkedin.com/in/srinityaduppanapudisatya/"
             target="_blank"

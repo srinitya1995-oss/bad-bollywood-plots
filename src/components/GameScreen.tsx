@@ -80,9 +80,9 @@ export function GameScreen() {
       {scorer.players.length > 1 && (
         <div className="player-tabs" role="tablist" aria-label="Players">
           {scorer.players.map((p, i) => (
-            <button key={i} className={`player-tab${i === scorer.currentPlayerIdx ? ' active' : ''}`} role="tab" aria-selected={i === scorer.currentPlayerIdx}>
+            <div key={i} className={`player-tab${i === scorer.currentPlayerIdx ? ' active' : ''}`} role="tab" aria-selected={i === scorer.currentPlayerIdx}>
               {p.name || `P${i + 1}`}: {p.score}
-            </button>
+            </div>
           ))}
         </div>
       )}
