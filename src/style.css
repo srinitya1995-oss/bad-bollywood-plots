@@ -189,7 +189,8 @@ body {
    HOME — The Soul of the App
    ══════════════════════════════════════════ */
 
-#home {
+/* Home screen scrolls — target via .home-page parent */
+.screen:has(.home-page) {
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -857,7 +858,8 @@ body {
    RESULTS SCREEN
    ══════════════════════════════════════════ */
 
-#results { justify-content: flex-start; padding: 0; }
+/* Results screen layout — target via .res-top parent */
+.screen:has(.res-top) { justify-content: flex-start; padding: 0; }
 .res-top {
   padding: max(env(safe-area-inset-top), 1.5rem) 1.25rem 1.5rem;
   background: var(--bg-warm);
