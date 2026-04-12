@@ -1,4 +1,19 @@
-export type Industry = 'BW' | 'TW';
+export type Industry = 'HI' | 'TE' | 'TA' | 'ML';
+
+export interface IndustryMeta {
+  label: string;
+  lang: string;
+  color: string;
+  packId: string;
+  comingSoon: boolean;
+}
+
+export const INDUSTRY_META: Record<Industry, IndustryMeta> = {
+  HI: { label: 'Hindi Films', lang: 'Hindi', color: '--card-hi', packId: 'hi', comingSoon: false },
+  TE: { label: 'Telugu Films', lang: 'Telugu', color: '--card-te', packId: 'te', comingSoon: false },
+  TA: { label: 'Tamil Films', lang: 'Tamil', color: '--card-ta', packId: 'ta', comingSoon: true },
+  ML: { label: 'Malayalam Films', lang: 'Malayalam', color: '--card-ml', packId: 'ml', comingSoon: true },
+};
 export type GameMode = 'party' | 'endless';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type GameState =
