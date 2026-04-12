@@ -7,7 +7,7 @@ import type { Card as CardType } from '../../src/core/types';
 function makeCard(overrides: Partial<CardType> = {}): CardType {
   return {
     id: 'bw01',
-    ind: 'BW',
+    ind: 'HI',
     diff: 'medium',
     era: '90s',
     y: '1995',
@@ -25,13 +25,13 @@ describe('Card', () => {
     expect(findByText(tree.root, card.c)).toBeTruthy();
   });
 
-  it('renders industry badge as Bollywood for BW cards', () => {
-    const tree = create(<Card card={makeCard({ ind: 'BW' })} isFlipped={false} onFlip={() => {}} />);
+  it('renders industry badge as Bollywood for HI cards', () => {
+    const tree = create(<Card card={makeCard({ ind: 'HI' })} isFlipped={false} onFlip={() => {}} />);
     expect(findAllByText(tree.root, /Bollywood/).length).toBeGreaterThan(0);
   });
 
-  it('renders industry badge as Tollywood for TW cards', () => {
-    const tree = create(<Card card={makeCard({ ind: 'TW' })} isFlipped={false} onFlip={() => {}} />);
+  it('renders industry badge as Tollywood for TE cards', () => {
+    const tree = create(<Card card={makeCard({ ind: 'TE' })} isFlipped={false} onFlip={() => {}} />);
     expect(findAllByText(tree.root, /Tollywood/).length).toBeGreaterThan(0);
   });
 

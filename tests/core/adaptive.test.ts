@@ -10,7 +10,7 @@ import {
 import type { Card } from '../../src/core/types';
 
 const makeCard = (id: string, diff: 'easy' | 'medium' | 'hard'): Card => ({
-  id, ind: 'BW', diff, era: '2010s', y: '2015', n: 'Test Movie', f: 'Fun fact', c: 'A test clue',
+  id, ind: 'HI', diff, era: '2010s', y: '2015', n: 'Test Movie', f: 'Fun fact', c: 'A test clue',
 });
 
 describe('AdaptiveState', () => {

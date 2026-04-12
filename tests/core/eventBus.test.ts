@@ -6,9 +6,9 @@ describe('TypedEventBus', () => {
     const bus = new TypedEventBus();
     const handler = vi.fn();
     bus.on('game:started', handler);
-    bus.emit('game:started', { mode: 'BW', gameMode: 'party', playerCount: 2 });
+    bus.emit('game:started', { mode: 'HI', gameMode: 'party', playerCount: 2 });
     expect(handler).toHaveBeenCalledOnce();
-    expect(handler).toHaveBeenCalledWith({ mode: 'BW', gameMode: 'party', playerCount: 2 });
+    expect(handler).toHaveBeenCalledWith({ mode: 'HI', gameMode: 'party', playerCount: 2 });
   });
 
   it('does not call unsubscribed handlers', () => {

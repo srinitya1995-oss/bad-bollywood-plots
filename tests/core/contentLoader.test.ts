@@ -2,16 +2,16 @@ import { describe, it, expect, vi } from 'vitest';
 import { ContentLoader } from '../../src/core/contentLoader';
 
 const mockBwPack = {
-  id: 'bw', name: 'Bollywood', industry: 'BW' as const,
+  id: 'bw', name: 'Bollywood', industry: 'HI' as const,
   cards: [
-    { id: 'bw01', ind: 'BW' as const, diff: 'easy' as const, era: '90s', y: '1995', n: 'DDLJ', f: 'Fact', c: 'Clue' },
-    { id: 'bw02', ind: 'BW' as const, diff: 'hard' as const, era: '2000s', y: '2001', n: 'K3G', f: 'Fact', c: 'Clue' },
+    { id: 'bw01', ind: 'HI' as const, diff: 'easy' as const, era: '90s', y: '1995', n: 'DDLJ', f: 'Fact', c: 'Clue' },
+    { id: 'bw02', ind: 'HI' as const, diff: 'hard' as const, era: '2000s', y: '2001', n: 'K3G', f: 'Fact', c: 'Clue' },
   ],
 };
 const mockTwPack = {
-  id: 'tw', name: 'Tollywood', industry: 'TW' as const,
+  id: 'tw', name: 'Tollywood', industry: 'TE' as const,
   cards: [
-    { id: 'tw01', ind: 'TW' as const, diff: 'easy' as const, era: '2010s', y: '2015', n: 'Baahubali', f: 'Fact', c: 'Clue' },
+    { id: 'tw01', ind: 'TE' as const, diff: 'easy' as const, era: '2010s', y: '2015', n: 'Baahubali', f: 'Fact', c: 'Clue' },
   ],
 };
 const mockManifest = {
@@ -43,15 +43,15 @@ describe('ContentLoader', () => {
   it('getCardPool filters by industry', async () => {
     const { loader } = createLoader();
     const allCards = await loader.loadAllEnabled();
-    const bwPool = ContentLoader.getCardPool(allCards, 'BW');
+    const bwPool = ContentLoader.getCardPool(allCards, 'HI');
     expect(bwPool).toHaveLength(2);
-    expect(bwPool.every(c => c.ind === 'BW')).toBe(true);
+    expect(bwPool.every(c => c.ind === 'HI')).toBe(true);
   });
 
-  it('getCardPool returns correct count for TW', async () => {
+  it('getCardPool returns correct count for TE', async () => {
     const { loader } = createLoader();
     const allCards = await loader.loadAllEnabled();
-    const pool = ContentLoader.getCardPool(allCards, 'TW');
+    const pool = ContentLoader.getCardPool(allCards, 'TE');
     expect(pool).toHaveLength(1);
   });
 });

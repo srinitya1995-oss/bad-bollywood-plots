@@ -3,7 +3,7 @@ import { createScorerState, scoreCard, getVerdict, getLeaderboard, VERDICT_TIERS
 import type { Card, Player } from '../../src/core/types';
 
 function makeCard(diff: 'easy' | 'medium' | 'hard' = 'easy'): Card {
-  return { id: 'bw01', ind: 'BW', diff, era: '90s', y: '1995', n: 'Test', f: 'Fact', c: 'Clue' };
+  return { id: 'bw01', ind: 'HI', diff, era: '90s', y: '1995', n: 'Test', f: 'Fact', c: 'Clue' };
 }
 
 describe('scoreCard', () => {

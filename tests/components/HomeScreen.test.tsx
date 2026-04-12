@@ -69,7 +69,7 @@ describe('HomeScreen', () => {
     act(() => {
       bwBtn.props.onClick();
     });
-    expect(mockStartSoloGame).toHaveBeenCalledWith('BW');
+    expect(mockStartSoloGame).toHaveBeenCalledWith('HI');
     expect(mockSelectMode).not.toHaveBeenCalled();
   });
 
@@ -79,7 +79,7 @@ describe('HomeScreen', () => {
     act(() => {
       twBtn.props.onClick();
     });
-    expect(mockStartSoloGame).toHaveBeenCalledWith('TW');
+    expect(mockStartSoloGame).toHaveBeenCalledWith('TE');
   });
 
   it('switching to Endless mode calls setGameMode', () => {
@@ -115,7 +115,7 @@ describe('HomeScreen', () => {
     act(() => {
       bwBtn.props.onClick();
     });
-    expect(mockSelectMode).toHaveBeenCalledWith('BW');
+    expect(mockSelectMode).toHaveBeenCalledWith('HI');
     expect(mockStartSoloGame).not.toHaveBeenCalled();
   });
 

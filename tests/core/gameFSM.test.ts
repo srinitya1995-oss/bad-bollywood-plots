@@ -51,8 +51,8 @@ describe('GameFSM', () => {
 
   it('holds and returns payload', () => {
     const { fsm } = createFSM();
-    fsm.transition('setup', { industry: 'BW' });
-    expect(fsm.getPayload()).toEqual({ industry: 'BW' });
+    fsm.transition('setup', { industry: 'HI' });
+    expect(fsm.getPayload()).toEqual({ industry: 'HI' });
   });
 
   it('notifies subscribers on transition', () => {

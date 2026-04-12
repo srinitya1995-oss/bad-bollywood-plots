@@ -3,7 +3,7 @@ import { shuffle, filterSeen, buildPartyDeck, buildEndlessDeck, pickEndlessCard 
 import type { Card } from '../../src/core/types';
 
 function makeCard(id: string, diff: 'easy' | 'medium' | 'hard' = 'easy'): Card {
-  return { id, ind: 'BW', diff, era: '90s', y: '1995', n: `Movie ${id}`, f: 'Fact', c: 'Clue' };
+  return { id, ind: 'HI', diff, era: '90s', y: '1995', n: `Movie ${id}`, f: 'Fact', c: 'Clue' };
 }
 
 describe('shuffle', () => {
