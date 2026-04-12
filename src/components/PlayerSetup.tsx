@@ -31,7 +31,7 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
             <div key={i} className="player-row" style={{ '--player-color': PLAYER_COLORS[i] } as React.CSSProperties}>
               <span className="player-avatar" aria-hidden="true">P{i + 1}</span>
               <input className="player-input" type="text" placeholder={`Player ${i + 1}`} value={p.name} onChange={(e) => updateName(i, e.target.value)} aria-label={`Player ${i + 1} name`} />
-              <button className="player-remove" aria-label={`Remove player ${i + 1}`} onClick={() => removePlayer(i)}>{'\u00d7'}</button>
+              {players.length > 1 && <button className="player-remove" aria-label={`Remove player ${i + 1}`} onClick={() => removePlayer(i)}>{'\u00d7'}</button>}
             </div>
           ))}
         </div>
