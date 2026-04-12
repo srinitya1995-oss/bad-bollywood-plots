@@ -87,6 +87,12 @@ class GameInstance {
     this.fsm.transition('setup');
   }
 
+  /** Skip PlayerSetup for solo play — go directly from home to playing */
+  startSoloGame(industry: Industry): void {
+    this.industry = industry;
+    this.startGame([{ name: 'Player 1', score: 0 }]);
+  }
+
   setGameMode(mode: GameMode): void {
     this.gameMode = mode;
   }

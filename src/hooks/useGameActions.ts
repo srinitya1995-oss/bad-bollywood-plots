@@ -4,6 +4,7 @@ import type { Industry, GameMode, Player } from '../core/types';
 
 export interface GameActions {
   selectMode: (industry: Industry) => void;
+  startSoloGame: (industry: Industry) => void;
   setGameMode: (mode: GameMode) => void;
   startGame: (players: Player[]) => void;
   flipCard: () => void;
@@ -23,6 +24,7 @@ export function useGameActions(): GameActions {
     const g = getGameInstance();
     actionsRef.current = {
       selectMode: (industry) => g.selectMode(industry),
+      startSoloGame: (industry) => g.startSoloGame(industry),
       setGameMode: (mode) => g.setGameMode(mode),
       startGame: (players) => g.startGame(players),
       flipCard: () => g.flipCard(),

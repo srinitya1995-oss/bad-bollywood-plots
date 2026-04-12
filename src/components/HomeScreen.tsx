@@ -9,10 +9,19 @@ export function HomeScreen() {
   const [gameMode, setGameMode] = useState<GameMode>('party');
   const [showSuggest, setShowSuggest] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [wantMultiplayer, setWantMultiplayer] = useState(false);
 
   const handleModeChange = (mode: GameMode) => {
     setGameMode(mode);
     actions.setGameMode(mode);
+  };
+
+  const handleCinemaClick = (industry: 'BW' | 'TW') => {
+    if (wantMultiplayer) {
+      actions.selectMode(industry);
+    } else {
+      actions.startSoloGame(industry);
+    }
   };
 
   return (
@@ -36,15 +45,18 @@ export function HomeScreen() {
           </div>
           <div className="section-label">Pick Your Cinema</div>
           <div className="cinema-row">
-            <button className="cinema-btn bw" onClick={() => actions.selectMode('BW')}>
+            <button className="cinema-btn bw" onClick={() => handleCinemaClick('BW')}>
               <div className="cinema-name">Bollywood</div>
               <div className="cinema-sub">Hindi films</div>
             </button>
-            <button className="cinema-btn tw" onClick={() => actions.selectMode('TW')}>
+            <button className="cinema-btn tw" onClick={() => handleCinemaClick('TW')}>
               <div className="cinema-name">Tollywood</div>
               <div className="cinema-sub">Telugu films</div>
             </button>
           </div>
+          <button className="add-players-link" onClick={() => setWantMultiplayer(!wantMultiplayer)}>
+            {wantMultiplayer ? '\u2713 Playing with friends' : 'Play with friends?'}
+          </button>
           <div className="modes">
             <div className="section-label">How Do You Want to Play?</div>
             <div className="mode-cards">

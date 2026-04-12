@@ -122,6 +122,12 @@ describe('GameFSM', () => {
     expect(fsm.getState()).toBe('results');
   });
 
+  it('transitions home → playing (solo skip setup)', () => {
+    const { fsm } = createFSM();
+    fsm.transition('playing');
+    expect(fsm.getState()).toBe('playing');
+  });
+
   it('playing → home (exit)', () => {
     const { fsm } = createFSM();
     fsm.transition('setup'); fsm.transition('playing');
