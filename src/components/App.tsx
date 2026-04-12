@@ -22,7 +22,7 @@ export function App() {
     const instance = getGameInstance();
     instance.init().then(() => {
       initPostHog();
-      initAnalyticsSubscriber(instance.bus, '');
+      initAnalyticsSubscriber(instance.bus, instance.sessionId);
       setReady(true);
     });
   }, []);

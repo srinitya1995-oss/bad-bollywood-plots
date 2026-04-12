@@ -49,7 +49,7 @@ class GameInstance {
   private idx = 0;
   private scorer: ScorerState = createScorerState([]);
   private sessionDealt = new Set<string>();
-  private sessionId = crypto.randomUUID?.() ?? `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
+  readonly sessionId = crypto.randomUUID?.() ?? `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
 
   constructor() {
     this.fsm = new GameFSM(this.bus);

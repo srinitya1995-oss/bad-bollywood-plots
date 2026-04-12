@@ -10,7 +10,7 @@ export function SuggestSheet({ onClose }: SuggestSheetProps) {
 
   const handleSubmit = () => {
     if (!movie.trim()) { toast('Please enter a movie name'); return; }
-    getGameInstance().storage.saveSuggestion({ movie: movie.trim(), industry, timestamp: Date.now(), sessionId: '' });
+    getGameInstance().storage.saveSuggestion({ movie: movie.trim(), industry, timestamp: Date.now(), sessionId: getGameInstance().sessionId });
     toast("Thanks! We'll check it out.");
     onClose();
   };

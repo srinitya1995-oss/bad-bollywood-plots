@@ -12,7 +12,7 @@ export function FeedbackSheet({ onClose }: FeedbackSheetProps) {
 
   const handleSubmit = () => {
     if (tags.size === 0 && !text.trim()) { toast('Please select at least one tag or write something'); return; }
-    getGameInstance().storage.saveFeedback({ tags: [...tags], text: text.trim(), timestamp: Date.now(), sessionId: '' });
+    getGameInstance().storage.saveFeedback({ tags: [...tags], text: text.trim(), timestamp: Date.now(), sessionId: getGameInstance().sessionId });
     toast('Thanks for your feedback!');
     onClose();
   };
