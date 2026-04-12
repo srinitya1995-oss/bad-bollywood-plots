@@ -56,7 +56,8 @@ export function GameScreen() {
   ].filter(Boolean).join(' ');
 
   return (
-    <main className="screen active" aria-label="Game">
+    <main className="screen active game-screen" aria-label="Game">
+      <div className="game-atmosphere" aria-hidden="true" />
       <header className="game-bar">
         <button className="game-exit-btn" onClick={actions.exitGame}>
           <span aria-hidden="true">{'\u2190'}</span> Exit

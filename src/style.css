@@ -717,6 +717,17 @@ body {
 }
 .turn-sub { font-size: var(--text-base); color: var(--paper-dim); margin-bottom: 1rem; }
 
+/* Game screen atmosphere — warm stage lighting */
+.game-screen { position: relative; }
+.game-atmosphere {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 30% at 50% 90%, rgba(242, 167, 46, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 30%, rgba(232, 93, 58, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 40%, rgba(62, 168, 122, 0.03) 0%, transparent 60%);
+}
+.game-screen > *:not(.game-atmosphere) { position: relative; z-index: 1; }
+
 /* ══════════════════════════════════════════
    CARDS — The Heart of the Game
    ══════════════════════════════════════════ */
