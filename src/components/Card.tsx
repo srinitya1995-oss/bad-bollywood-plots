@@ -25,8 +25,7 @@ export function Card({ card, isFlipped, onFlip }: CardProps) {
           <div className="card-content">
             <div className="card-meta">
               <span className={`card-ind ${card.ind.toLowerCase()}`}>{indLabel}</span>
-              <span className="card-era">{card.era} {'\u00b7'} {card.diff.charAt(0).toUpperCase() + card.diff.slice(1)}</span>
-              <span className={`card-badge badge-${card.diff}`}>{card.diff}</span>
+              <span className={`card-badge badge-${card.diff}`}>{card.era} {'\u00b7'} {card.diff}</span>
             </div>
             <p className="card-clue">{card.c}</p>
             <span className="card-tap">Tap to reveal answer</span>
