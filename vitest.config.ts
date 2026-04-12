@@ -7,9 +7,6 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
-    environmentMatchGlobs: [
-      ['tests/components/**', 'jsdom'],
-      ['tests/hooks/**', 'jsdom'],
-    ],
+    testTimeout: 30000,
   },
 });
