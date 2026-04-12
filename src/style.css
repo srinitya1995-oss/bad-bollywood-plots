@@ -988,6 +988,12 @@ body {
   font-family: 'Playfair Display', serif; font-style: italic;
   font-size: var(--text-sm); color: var(--paper-dim); line-height: 1.6;
 }
+.res-highscore {
+  font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: var(--text-lg); color: var(--gold);
+  text-align: center; margin: 0.75rem 0;
+  animation: scoreFlash 0.6s ease-out;
+}
 .leaderboard { margin-bottom: 1.25rem; }
 .lb-title {
   font-size: var(--text-xs); font-weight: 700;
