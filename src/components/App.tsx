@@ -37,7 +37,7 @@ export function App() {
       {(state === 'playing' || state === 'flipped' || state === 'scoring') && <GameScreen />}
       {(state === 'turnChange' || state === 'continue') && <TurnInterstitial />}
       {state === 'results' && <ResultsScreen />}
-      {showSetup && <PlayerSetup onClose={() => setShowSetup(false)} />}
+      {showSetup && <PlayerSetup onClose={() => { setShowSetup(false); if (getGameInstance().fsm.getState() === 'setup') { getGameInstance().fsm.transition('home'); } }} />}
       <Toast />
     </>
   );
