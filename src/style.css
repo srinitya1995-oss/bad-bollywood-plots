@@ -728,10 +728,17 @@ body {
 .card-ind {
   font-size: var(--text-xs); font-weight: 700;
   padding: 4px 12px; border-radius: 4px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(245, 232, 212, 0.2);
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 .card-era { font-size: var(--text-xs); color: rgba(245, 232, 212, 0.8); font-weight: 500; }
+.card-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 2px 8px; border-radius: 3px; display: inline-block;
+}
+.badge-easy { background: rgba(62, 168, 122, 0.25); color: var(--card-tw); }
+.badge-medium { background: rgba(242, 167, 46, 0.25); color: var(--gold); }
+.badge-hard { background: rgba(232, 93, 58, 0.25); color: var(--card-bw); }
 .card-clue {
   font-family: 'Playfair Display', serif; font-style: italic;
   font-size: var(--text-xl); line-height: 1.5;
