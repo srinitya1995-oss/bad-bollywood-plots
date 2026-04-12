@@ -189,7 +189,7 @@ body {
    HOME — The Soul of the App
    ══════════════════════════════════════════ */
 
-/* Home screen scrolls — target via .home-page parent */
+/* Home screen scrolls */
 .screen:has(.home-page) {
   padding: 0;
   overflow-y: auto;
@@ -197,6 +197,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+/* ── Page shell ── */
 .home-page {
   position: relative;
   min-height: 100%;
@@ -205,104 +206,383 @@ body {
   max-width: 480px;
   margin: 0 auto;
   width: 100%;
+  /* Subtle paper grain — the digital version of aged poster paper */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
 }
 
-/* Paper grain texture overlay */
-.home-page::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
-
-/* Color strip — bold identity bar */
-.color-strip {
-  height: 6px;
-  background: linear-gradient(90deg, var(--flame), var(--saffron), var(--mauve), var(--emerald));
-  flex-shrink: 0;
-}
-
-/* Ambient glow — warm pools of color */
+/* Warm radial glow — like footlights on a stage */
 .home-page::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(232, 93, 58, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 85% 80%, rgba(62, 168, 122, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(242, 167, 46, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(232, 93, 58, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 15% 85%, rgba(62, 168, 122, 0.08) 0%, transparent 60%);
   z-index: 0;
   pointer-events: none;
 }
 
-/* Background patches — visible patchwork collage, not invisible thumbnails */
-.patch {
-  position: absolute;
-  z-index: 0;
+/* ── Atmospheric background patches ── */
+.home-bg-patches {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
   overflow: hidden;
 }
-.patch img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.5) brightness(0.5) sepia(0.15);
-  mix-blend-mode: lighten;
+
+/* Top-left arch — mirror-work dupatta energy */
+.home-patch--tl {
+  position: absolute;
+  top: -30px;
+  left: -40px;
+  width: 200px;
+  height: 260px;
+  background: var(--flame);
+  opacity: 0.06;
+  border-radius: 0 0 50% 50%;
+  transform: rotate(-12deg);
+  animation: patchFadeIn 1.2s ease-out 0.4s both;
 }
 
-/* Patch 1: Top-right — arch shape, showing textile detail */
-.patch-1 {
-  top: -15px;
-  right: -25px;
-  width: 180px;
-  height: 240px;
-  opacity: 0.12;
-  border-radius: 50% 50% 0 0;
-}
-.patch-1 img {
-  object-position: 40% 30%;
-  width: 220%;
-  height: 220%;
-}
-
-/* Patch 2: Bottom-left — circular crop, pattern fragment */
-.patch-2 {
-  bottom: 50px;
-  left: -35px;
+/* Bottom-right — emerald theatre curtain fragment */
+.home-patch--br {
+  position: absolute;
+  bottom: -20px;
+  right: -30px;
   width: 160px;
-  height: 160px;
-  opacity: 0.09;
-  clip-path: circle(45%);
-}
-.patch-2 img {
-  object-position: 55% 45%;
-  width: 300%;
-  height: 300%;
+  height: 200px;
+  background: var(--emerald);
+  opacity: 0.05;
+  clip-path: ellipse(55% 50% at 50% 50%);
+  animation: patchFadeIn 1.2s ease-out 0.6s both;
 }
 
-/* Content wrapper */
-.home-content {
+/* ── Top utility bar ── */
+.home-topbar {
   position: relative;
-  z-index: 5;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 16px 24px 0;
-}
-
-/* Top bar */
-.top-row {
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  padding: max(env(safe-area-inset-top, 12px), 12px) 20px 0;
+  animation: slideDown 0.4s ease-out both;
 }
-.top-link {
+.home-toplink {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.home-toplink:hover { color: var(--gold); }
+
+/* ── Logo block — the theatrical title card ── */
+.home-logo-block {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 8px 20px 0;
+  animation: titleDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.home-ornament-top,
+.home-ornament-bottom {
+  display: flex;
+  justify-content: center;
+  margin: 6px auto;
+}
+.home-ornament-top svg,
+.home-ornament-bottom svg {
+  width: min(280px, 80vw);
+  height: 18px;
+}
+
+/* The hero title — this must dominate the page */
+.home-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  margin: 4px 0;
+}
+
+/* BAD — outline stroke, cream. The word that creates anticipation. */
+.home-title__bad {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  font-size: clamp(72px, 22vw, 112px);
+  /* Outline text: transparent fill, cream stroke */
+  color: transparent;
+  -webkit-text-stroke: 2.5px var(--cream);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* PLOTS — solid gold fill. The payoff. */
+.home-title__plots {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(76px, 23vw, 118px);
+  color: var(--gold);
+  text-shadow:
+    0 0 40px rgba(242, 167, 46, 0.4),
+    0 2px 0 rgba(139, 82, 8, 0.6);
+  letter-spacing: -0.01em;
+}
+
+.home-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--paper-dim);
+  margin: 8px 0 4px;
+  text-align: center;
+}
+
+/* ── Cinema panels — theatre hall posters, not form buttons ── */
+.home-cinema {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 16px 20px 0;
+  animation: panelsRise 0.55s cubic-bezier(0.34, 1.2, 0.64, 1) 0.35s both;
+}
+
+.cinema-panel {
+  position: relative;
+  width: 100%;
+  min-height: 90px;
+  padding: 22px 24px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  /* Sharp corners — film poster precision, no decorative rounding */
+  border-radius: 3px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.cinema-panel:hover {
+  transform: translateY(-2px);
+}
+.cinema-panel:active {
+  transform: scale(0.98);
+}
+
+/* Bollywood — deep maroon with flame glow */
+.cinema-panel--bw {
+  background: #5C1A1A;
+  box-shadow:
+    0 4px 16px rgba(92, 26, 26, 0.5),
+    0 1px 0 rgba(232, 93, 58, 0.4) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+  border-left: 4px solid var(--flame);
+}
+.cinema-panel--bw:hover {
+  box-shadow:
+    0 8px 32px rgba(232, 93, 58, 0.35),
+    0 1px 0 rgba(232, 93, 58, 0.4) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+}
+
+/* Tollywood — deep forest green with emerald glow */
+.cinema-panel--tw {
+  background: #1A3D2B;
+  box-shadow:
+    0 4px 16px rgba(26, 61, 43, 0.5),
+    0 1px 0 rgba(62, 168, 122, 0.4) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+  border-left: 4px solid var(--emerald);
+}
+.cinema-panel--tw:hover {
+  box-shadow:
+    0 8px 32px rgba(62, 168, 122, 0.3),
+    0 1px 0 rgba(62, 168, 122, 0.4) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.3) inset;
+}
+
+/* Noise texture overlay on each panel — aged poster feel */
+.cinema-panel__texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  pointer-events: none;
+}
+
+.cinema-panel__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cinema-panel__industry {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+
+.cinema-panel__lang {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* Corner ornament SVGs */
+.cinema-panel__corner {
+  position: absolute;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+}
+.cinema-panel__corner--tl { top: 6px; left: 8px; }
+.cinema-panel__corner--br { bottom: 6px; right: 8px; }
+
+/* Arrow indicator — right edge */
+.cinema-panel::after {
+  content: '→';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--gold);
+  opacity: 0.7;
+  transition: opacity 0.18s, transform 0.18s;
+  z-index: 2;
+  font-family: 'DM Sans', sans-serif;
+}
+.cinema-panel:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(3px);
+}
+
+/* ── Options strip — friends + mode ── */
+.home-options {
+  position: relative;
+  z-index: 5;
+  padding: 16px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: fadeUp 0.45s ease-out 0.55s both;
+}
+
+/* Friends toggle — tertiary, but inviting */
+.home-friends-toggle {
+  background: none;
+  border: 1.5px solid var(--bg-surface);
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.home-friends-toggle:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.home-friends-toggle.is-active {
+  background: rgba(242, 167, 46, 0.1);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.home-friends-toggle__check {
+  font-weight: 700;
+}
+
+/* Mode pill — one tight toggle, not two competing cards */
+.home-mode-pill {
+  display: flex;
+  background: var(--bg-warm);
+  border: 2px solid var(--bg-surface);
+  border-radius: 6px;
+  padding: 3px;
+  gap: 2px;
+}
+.home-mode-pill__btn {
+  flex: 1;
+  padding: 9px 20px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  letter-spacing: 0.02em;
+}
+.home-mode-pill__btn.is-active {
+  background: var(--saffron);
+  color: var(--ink);
+}
+.home-mode-pill__btn:not(.is-active):hover {
+  color: var(--cream);
+}
+
+.home-mode-desc {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 260px;
+  margin: 0 auto;
+  min-height: 16px;
+}
+
+/* ── Home footer ── */
+.home-footer {
+  position: relative;
+  z-index: 5;
+  margin-top: auto;
+  padding: 20px 24px max(env(safe-area-inset-bottom), 20px);
+  border-top: 1px solid var(--bg-surface);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  animation: fadeIn 0.5s ease-out 0.7s both;
+}
+.home-footer__link {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -317,302 +597,56 @@ body {
   display: inline-flex;
   align-items: center;
 }
-.top-link:hover { color: var(--cream); }
-
-/* ── HERO — dramatic, not polite ── */
-.hero {
-  margin-bottom: 28px;
-  text-align: center;
-  position: relative;
-}
-.hero-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -0.03em;
-}
-.title-bad {
-  display: block;
-  font-size: clamp(60px, 18vw, 100px);
-  font-style: italic;
-  color: var(--flame);
-  text-shadow: 0 2px 30px rgba(232, 93, 58, 0.3);
-}
-.title-plots {
-  display: block;
-  font-size: clamp(60px, 18vw, 100px);
-  color: var(--cream);
-  text-shadow: 0 2px 30px rgba(245, 232, 212, 0.08);
-}
-.hero-explain {
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: var(--paper-dim);
-  margin-top: 16px;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.hero-explain strong {
-  color: var(--cream);
-  font-weight: 600;
+.home-footer__link:hover { color: var(--cream); }
+.home-footer__dot {
+  color: var(--bg-surface);
+  font-size: 16px;
+  line-height: 1;
+  user-select: none;
 }
 
-/* ── Section labels — hand-lettered energy ── */
-.section-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--paper-dim);
-  margin-bottom: 12px;
-  text-align: center;
+/* ── Home animations ── */
+@keyframes titleDrop {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-/* ── Cinema buttons — bold personality, not flat boxes ── */
-.cinema-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
+@keyframes panelsRise {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.add-players-link {
-  display: block;
-  margin: 0 auto 24px;
-  background: none;
-  border: none;
-  color: var(--gold);
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-.add-players-link:hover { opacity: 1; }
-.cinema-btn {
-  position: relative;
-  border: 3px solid;
-  background: transparent;
-  padding: 20px 14px;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.25s ease;
-  min-height: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  font-family: 'DM Sans', sans-serif;
-}
-
-/* Bollywood button — flame red */
-.cinema-btn.bw {
-  border-color: var(--flame);
-  color: var(--flame);
-  background: rgba(232, 93, 58, 0.06);
-}
-.cinema-btn.bw::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--flame);
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-.cinema-btn.bw:hover::before,
-.cinema-btn.bw:active::before { opacity: 1; }
-.cinema-btn.bw:hover,
-.cinema-btn.bw:active { color: var(--ink); }
-
-/* Tollywood button — emerald green */
-.cinema-btn.tw {
-  border-color: var(--emerald);
-  color: var(--emerald);
-  background: rgba(62, 168, 122, 0.06);
-}
-.cinema-btn.tw::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--emerald);
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-.cinema-btn.tw:hover::before,
-.cinema-btn.tw:active::before { opacity: 1; }
-.cinema-btn.tw:hover,
-.cinema-btn.tw:active { color: var(--ink); }
-
-.cinema-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 900;
-  font-size: 22px;
-  line-height: 1.1;
-  position: relative;
-  z-index: 1;
-}
-.cinema-sub {
-  font-size: 13px;
-  font-weight: 400;
-  margin-top: 4px;
-  opacity: 0.75;
-  position: relative;
-  z-index: 1;
-}
-
-/* ── Mode cards — warm and inviting, not dashboard tiles ── */
-.modes { margin-bottom: 20px; }
-.mode-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.mode-card {
-  border: none;
-  padding: 18px 14px;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.2s ease;
-  position: relative;
-  min-height: 110px;
-  font-family: 'DM Sans', sans-serif;
-  border-radius: var(--r-sm);
-}
-.mode-card.party {
-  background: var(--bg-warm);
-  border: 2px solid var(--bg-surface);
-  color: var(--cream);
-}
-.mode-card.party.selected {
-  border-color: var(--saffron);
-  background: rgba(242, 167, 46, 0.1);
-  box-shadow: 0 0 20px rgba(242, 167, 46, 0.12);
-}
-.mode-card.party:hover { border-color: var(--saffron); }
-.mode-card.endless {
-  background: var(--bg-warm);
-  border: 2px solid var(--bg-surface);
-  color: var(--cream);
-}
-.mode-card.endless.selected {
-  border-color: var(--mauve);
-  background: rgba(196, 122, 142, 0.1);
-  box-shadow: 0 0 20px rgba(196, 122, 142, 0.12);
-}
-.mode-card.endless:hover { border-color: var(--mauve); }
-.mode-card-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 700;
-  font-size: 17px;
-  margin-bottom: 6px;
-}
-.mode-card.party .mode-card-name { color: var(--saffron); }
-.mode-card.endless .mode-card-name { color: var(--mauve); }
-.mode-desc {
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--paper-dim);
-}
-.mode-tag {
-  position: absolute;
-  top: 10px; right: 10px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 3px;
-}
-.mode-card.party .mode-tag { background: var(--saffron); color: var(--ink); }
-.mode-check {
-  display: none;
-  position: absolute;
-  bottom: 10px; right: 12px;
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-}
-.mode-card.selected .mode-check { display: flex; }
-.mode-card.party .mode-check { background: var(--saffron); color: var(--ink); }
-.mode-card.endless .mode-check { background: var(--mauve); color: var(--ink); }
-
-/* ── Home footer — warm, grounded ── */
-.home-footer {
-  position: relative;
-  z-index: 5;
-  padding: 18px 24px max(env(safe-area-inset-bottom), 18px);
-  margin-top: auto;
-  border-top: 2px solid var(--bg-surface);
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-}
-.footer-link {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-muted);
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: color 0.2s;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-.footer-link:hover { color: var(--cream); }
-
-/* ── Home animations — staggered, organic ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-@keyframes breathe {
-  0%, 100% { opacity: 0.12; }
-  50% { opacity: 0.18; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.hero { animation: fadeUp 0.5s ease-out 0.1s both; }
-.cinema-row { animation: fadeUp 0.5s ease-out 0.25s both; }
-.modes { animation: fadeUp 0.5s ease-out 0.4s both; }
-.home-footer { animation: fadeIn 0.5s ease-out 0.55s both; }
-.patch-1 { animation: fadeIn 1s ease-out 0.3s both; }
-.patch-2 { animation: fadeIn 1s ease-out 0.5s both; }
+@keyframes patchFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 /* ── Tablet / Desktop ── */
 @media (min-width: 500px) {
-  .home-content { padding: 28px 36px 0; }
-  .top-row { margin-bottom: 40px; }
-  .hero { margin-bottom: 36px; }
-  .title-bad, .title-plots { font-size: clamp(80px, 20vw, 110px); }
-  .hero-explain { font-size: 16px; margin-top: 20px; max-width: 350px; }
-  .section-label { font-size: 11px; margin-bottom: 14px; }
-  .cinema-row { gap: 14px; margin-bottom: 32px; }
-  .cinema-btn { min-height: 95px; padding: 24px 20px; }
-  .cinema-name { font-size: 26px; }
-  .mode-cards { gap: 14px; }
-  .mode-card { min-height: 140px; padding: 24px 20px; }
-  .mode-card-name { font-size: 19px; }
-  .mode-desc { font-size: 14px; }
-  .patch-1 { width: 240px; height: 300px; }
-  .patch-2 { width: 200px; height: 200px; }
+  .home-logo-block { padding: 12px 28px 0; }
+  .home-title__bad { font-size: clamp(88px, 20vw, 120px); }
+  .home-title__plots { font-size: clamp(92px, 21vw, 126px); }
+  .home-cinema { margin: 20px 28px 0; }
+  .cinema-panel { min-height: 110px; padding: 26px 28px; }
+  .cinema-panel__industry { font-size: 34px; }
+  .home-options { padding: 20px 28px 0; }
 }
 
 /* ── Large desktop ── */
 @media (min-width: 768px) {
   .home-page { max-width: 540px; }
-  .title-bad, .title-plots { font-size: 110px; }
+  .home-title__bad { font-size: 120px; }
+  .home-title__plots { font-size: 126px; }
 }
 
 /* ══════════════════════════════════════════
@@ -980,6 +1014,8 @@ body {
   width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: var(--text-sm); font-weight: 700; flex-shrink: 0;
+  background: var(--player-color, var(--gold));
+  color: var(--ink);
 }
 .player-input {
   flex: 1; background: var(--bg-warm); border: 2px solid var(--bg-surface);
