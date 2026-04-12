@@ -12,9 +12,10 @@ export function TurnInterstitial() {
   const handleSeeResults = () => { getGameInstance().endGame('completed'); };
 
   return (
-    <main className="turn-interstitial" style={{ display: '' }} aria-label={isContinue ? 'Continue or see results' : 'Turn change'}>
+    <main className="turn-interstitial" aria-label={isContinue ? 'Continue or see results' : 'Turn change'}>
+      <div className="turn-atmosphere" aria-hidden="true" />
       <h2 className="turn-name">{isContinue ? `${scorer.totalPts} pts` : currentPlayer?.name ?? 'Your turn'}</h2>
-      <p className="turn-sub">{isContinue ? `${scorer.correctCount} of ${payload.idx} correct — keep going?` : 'Your turn'}</p>
+      <p className="turn-sub">{isContinue ? `${scorer.correctCount} of ${payload.idx} correct — keep going?` : 'Pass the phone!'}</p>
       <button className="btn-primary" onClick={isContinue ? actions.continueGame : actions.ready}>{isContinue ? 'Keep going' : 'Ready'}</button>
       {isContinue && <button className="btn-secondary" onClick={handleSeeResults}>See results</button>}
     </main>

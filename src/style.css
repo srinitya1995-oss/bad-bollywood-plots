@@ -709,13 +709,24 @@ body {
   position: absolute; inset: 0; z-index: 20;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   background: var(--bg); gap: 0.5rem; padding: 2rem;
+  overflow: hidden;
 }
+.turn-atmosphere {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(242, 167, 46, 0.08) 0%, transparent 70%);
+}
+.turn-interstitial > *:not(.turn-atmosphere) { position: relative; z-index: 1; }
 .turn-name {
-  font-family: 'Playfair Display', serif; font-size: var(--text-2xl); font-weight: 900;
+  font-family: 'Playfair Display', serif; font-size: clamp(32px, 10vw, 48px); font-weight: 900;
   color: var(--gold);
-  text-shadow: 0 2px 20px rgba(242, 167, 46, 0.25);
+  text-shadow: 0 2px 30px rgba(242, 167, 46, 0.35);
+  animation: titleDrop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
-.turn-sub { font-size: var(--text-base); color: var(--paper-dim); margin-bottom: 1rem; }
+.turn-sub {
+  font-size: var(--text-lg); color: var(--cream); opacity: 0.7;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.4s ease-out 0.2s both;
+}
 
 /* Game screen atmosphere — warm stage lighting */
 .game-screen { position: relative; }
