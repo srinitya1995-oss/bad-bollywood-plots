@@ -25,9 +25,11 @@ export function SuggestSheet({ onClose }: SuggestSheetProps) {
         <p className="sheet-sub">We'll write a terrible plot description for it</p>
         <input className="form-input" placeholder="Movie name" value={movie} onChange={e => setMovie(e.target.value)} aria-label="Movie name" />
         <select className="form-input" value={industry} onChange={e => setIndustry(e.target.value)} aria-label="Industry">
-          <option value="" disabled>Bollywood / Tollywood / Other</option>
-          <option value="Bollywood">Bollywood</option>
-          <option value="Tollywood">Tollywood</option>
+          <option value="" disabled>Select language</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Malayalam">Malayalam</option>
           <option value="Other">Other</option>
         </select>
         <p className="form-hint">We read every suggestion. If we add it, you'll be in the credits.</p>
