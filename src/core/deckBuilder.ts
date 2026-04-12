@@ -38,3 +38,34 @@ export function buildEndlessDeck(pool: Card[], sessionDealt: Set<string>, seen: 
   for (const c of dealt) sessionDealt.add(c.id);
   return dealt;
 }
+
+/**
+ * Pick a single card for endless mode based on current streak.
+ * Difficulty ramp: streak 0-2 = easy only, 3-5 = easy+medium, 6+ = all.
+ * Falls back to any available card if the target difficulty pool is exhausted.
+ */
+export function pickEndlessCard(
+  pool: Card[],
+  sessionDealt: Set<string>,
+  seen: string[],
+  streak: number,
+): Card | null {
+  const available = filterSeen(pool, seen, sessionDealt);
+  if (available.length === 0) return null;
+
+  let allowed: Card[];
+  if (streak >= 6) {
+    allowed = available; // all difficulties
+  } else if (streak >= 3) {
+    allowed = available.filter((c) => c.diff === 'easy' || c.diff === 'medium');
+  } else {
+    allowed = available.filter((c) => c.diff === 'easy');
+  }
+
+  // Fallback: if no cards in the target difficulty pool, use any available card
+  if (allowed.length === 0) allowed = available;
+
+  const pick = allowed[Math.floor(Math.random() * allowed.length)];
+  sessionDealt.add(pick.id);
+  return pick;
+}

@@ -5,7 +5,7 @@ import { LocalStorageAdapter } from '../storage/localStorage';
 import { SupabaseAdapter } from '../storage/supabase';
 import type { StorageAdapter } from '../storage/interface';
 import type { Card, Industry, GameMode, Player } from '../core/types';
-import { buildPartyDeck, buildEndlessDeck } from '../core/deckBuilder';
+import { buildPartyDeck, pickEndlessCard } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
 
 const SUPABASE_URL = 'https://wmfxkkgktmfsipiihsjq.supabase.co';
@@ -100,11 +100,17 @@ class GameInstance {
   startGame(players: Player[]): void {
     const pool = ContentLoader.getCardPool(this.cards, this.industry!);
     this.sessionDealt.clear();
-    this.deck = this.gameMode === 'party'
-      ? buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards())
-      : buildEndlessDeck(pool, this.sessionDealt, this.storage.getSeenCards());
     this.idx = 0;
     this.scorer = createScorerState(players, this.gameMode === 'endless' ? 3 : 0);
+
+    if (this.gameMode === 'endless') {
+      // Pick first card based on streak (0 at start = easy card)
+      const first = pickEndlessCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.scorer.streak);
+      this.deck = first ? [first] : [];
+    } else {
+      this.deck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
+    }
+
     this.fsm.transition('playing');
     this.bus.emit('game:started', { mode: this.industry!, gameMode: this.gameMode, playerCount: players.length });
     this.bus.emit('card:loaded', { cardId: this.deck[0]?.id ?? '', idx: 0, difficulty: this.deck[0]?.diff ?? 'easy' });
@@ -127,9 +133,24 @@ class GameInstance {
     this.bus.emit('score:updated', { result, pts, totalPts: this.scorer.totalPts });
     this.idx++;
 
-    if (this.gameMode === 'endless' && this.scorer.lives <= 0) {
-      this.endGame('lives-exhausted');
-    } else if (this.gameMode === 'party' && this.idx >= this.deck.length) {
+    // In endless mode, pick the next card dynamically based on streak
+    if (this.gameMode === 'endless') {
+      if (this.scorer.lives <= 0) {
+        this.endGame('lives-exhausted');
+        return;
+      }
+      const pool = ContentLoader.getCardPool(this.cards, this.industry!);
+      const next = pickEndlessCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.scorer.streak);
+      if (next) {
+        this.deck.push(next);
+      } else {
+        // No cards left in the pool
+        this.endGame('completed');
+        return;
+      }
+    }
+
+    if (this.gameMode === 'party' && this.idx >= this.deck.length) {
       this.fsm.transition('continue');
     } else if (this.scorer.players.length > 1) {
       this.scorer = { ...this.scorer, currentPlayerIdx: (this.scorer.currentPlayerIdx + 1) % this.scorer.players.length };

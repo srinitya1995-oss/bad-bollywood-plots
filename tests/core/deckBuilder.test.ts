@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { shuffle, filterSeen, buildPartyDeck, buildEndlessDeck } from '../../src/core/deckBuilder';
+import { shuffle, filterSeen, buildPartyDeck, buildEndlessDeck, pickEndlessCard } from '../../src/core/deckBuilder';
 import type { Card } from '../../src/core/types';
 
 function makeCard(id: string, diff: 'easy' | 'medium' | 'hard' = 'easy'): Card {
@@ -79,5 +79,58 @@ describe('buildEndlessDeck', () => {
     buildEndlessDeck(pool, sessionDealt, []);
     expect(sessionDealt.has('a')).toBe(true);
     expect(sessionDealt.has('b')).toBe(true);
+  });
+});
+
+describe('pickEndlessCard', () => {
+  const pool = [
+    ...Array.from({ length: 5 }, (_, i) => makeCard(`e${i}`, 'easy')),
+    ...Array.from({ length: 5 }, (_, i) => makeCard(`m${i}`, 'medium')),
+    ...Array.from({ length: 5 }, (_, i) => makeCard(`h${i}`, 'hard')),
+  ];
+
+  it('picks only easy cards at streak 0-2', () => {
+    for (let streak = 0; streak <= 2; streak++) {
+      const card = pickEndlessCard(pool, new Set(), [], streak);
+      expect(card).not.toBeNull();
+      expect(card!.diff).toBe('easy');
+    }
+  });
+
+  it('picks easy or medium cards at streak 3-5', () => {
+    for (let streak = 3; streak <= 5; streak++) {
+      const card = pickEndlessCard(pool, new Set(), [], streak);
+      expect(card).not.toBeNull();
+      expect(['easy', 'medium']).toContain(card!.diff);
+    }
+  });
+
+  it('can pick hard cards at streak 6+', () => {
+    // With only hard cards in pool, streak 6+ should still return a card
+    const hardOnly = Array.from({ length: 5 }, (_, i) => makeCard(`h${i}`, 'hard'));
+    const card = pickEndlessCard(hardOnly, new Set(), [], 6);
+    expect(card).not.toBeNull();
+    expect(card!.diff).toBe('hard');
+  });
+
+  it('falls back to any card when target difficulty pool is empty', () => {
+    const hardOnly = [makeCard('h1', 'hard')];
+    // streak 0 wants easy, but only hard available — should fallback
+    const card = pickEndlessCard(hardOnly, new Set(), [], 0);
+    expect(card).not.toBeNull();
+    expect(card!.diff).toBe('hard');
+  });
+
+  it('returns null when pool is completely exhausted', () => {
+    const small = [makeCard('a', 'easy')];
+    const card = pickEndlessCard(small, new Set(['a']), ['a'], 0);
+    expect(card).toBeNull();
+  });
+
+  it('tracks picked card in sessionDealt', () => {
+    const sessionDealt = new Set<string>();
+    const card = pickEndlessCard(pool, sessionDealt, [], 0);
+    expect(card).not.toBeNull();
+    expect(sessionDealt.has(card!.id)).toBe(true);
   });
 });
