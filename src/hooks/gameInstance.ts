@@ -5,6 +5,7 @@ import { LocalStorageAdapter } from '../storage/localStorage';
 import { SupabaseAdapter } from '../storage/supabase';
 import type { StorageAdapter } from '../storage/interface';
 import type { Card, Industry, GameMode, Player } from '../core/types';
+import { INDUSTRY_META } from '../core/types';
 import { buildPartyDeck } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
 import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
@@ -222,7 +223,7 @@ class GameInstance {
   }
 
   getShareText(): string {
-    const ind = this.industry === 'BW' ? 'Bollywood' : 'Tollywood';
+    const ind = this.industry ? INDUSTRY_META[this.industry].lang : 'Cinema';
     const tier = getAbilityTier(this.adaptive.ability);
     const pct = getAbilityPercentile(this.adaptive.ability);
     const emoji = this.adaptive.ability >= 1500 ? '\u{1F525}' : this.adaptive.ability >= 1300 ? '\u{1F4AA}' : this.adaptive.ability >= 1100 ? '\u{1F3AC}' : '\u{1F605}';

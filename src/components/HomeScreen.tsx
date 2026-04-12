@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGameActions } from '../hooks/useGameActions';
 import { SuggestSheet } from './SuggestSheet';
 import { FeedbackSheet } from './FeedbackSheet';
-import type { GameMode } from '../core/types';
+import { INDUSTRY_META, type Industry, type GameMode } from '../core/types';
 
 export function HomeScreen() {
   const actions = useGameActions();
@@ -16,7 +16,7 @@ export function HomeScreen() {
     actions.setGameMode(mode);
   };
 
-  const handleCinemaClick = (industry: 'BW' | 'TW') => {
+  const handleCinemaClick = (industry: Industry) => {
     if (wantMultiplayer) {
       actions.selectMode(industry);
     } else {
@@ -91,47 +91,21 @@ export function HomeScreen() {
 
         {/* ── Cinema panels ── */}
         <div className="home-cinema">
-          <button
-            className="cinema-panel cinema-panel--bw"
-            onClick={() => handleCinemaClick('BW')}
-            aria-label="Play Bollywood — Hindi films"
-          >
-            {/* Texture patch inside panel */}
-            <div className="cinema-panel__texture" aria-hidden="true" />
-            <div className="cinema-panel__content">
-              <span className="cinema-panel__industry">Bollywood</span>
-              <span className="cinema-panel__lang">Hindi films</span>
-            </div>
-            {/* Corner ornaments */}
-            <svg className="cinema-panel__corner cinema-panel__corner--tl" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M2,12 Q2,2 12,2 Q8,2 8,8 Q8,14 2,14z" fill="#D4A843" fillOpacity="0.5"/>
-              <circle cx="6" cy="6" r="1.5" fill="#D4A843" fillOpacity="0.7"/>
-            </svg>
-            <svg className="cinema-panel__corner cinema-panel__corner--br" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M22,12 Q22,22 12,22 Q16,22 16,16 Q16,10 22,10z" fill="#D4A843" fillOpacity="0.5"/>
-              <circle cx="18" cy="18" r="1.5" fill="#D4A843" fillOpacity="0.7"/>
-            </svg>
-          </button>
-
-          <button
-            className="cinema-panel cinema-panel--tw"
-            onClick={() => handleCinemaClick('TW')}
-            aria-label="Play Tollywood — Telugu films"
-          >
-            <div className="cinema-panel__texture" aria-hidden="true" />
-            <div className="cinema-panel__content">
-              <span className="cinema-panel__industry">Tollywood</span>
-              <span className="cinema-panel__lang">Telugu films</span>
-            </div>
-            <svg className="cinema-panel__corner cinema-panel__corner--tl" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M2,12 Q2,2 12,2 Q8,2 8,8 Q8,14 2,14z" fill="#D4A843" fillOpacity="0.5"/>
-              <circle cx="6" cy="6" r="1.5" fill="#D4A843" fillOpacity="0.7"/>
-            </svg>
-            <svg className="cinema-panel__corner cinema-panel__corner--br" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M22,12 Q22,22 12,22 Q16,22 16,16 Q16,10 22,10z" fill="#D4A843" fillOpacity="0.5"/>
-              <circle cx="18" cy="18" r="1.5" fill="#D4A843" fillOpacity="0.7"/>
-            </svg>
-          </button>
+          {(Object.entries(INDUSTRY_META) as [Industry, typeof INDUSTRY_META[Industry]][]).map(([code, meta]) => (
+            <button
+              key={code}
+              className={`cinema-panel cinema-panel--${meta.packId}${meta.comingSoon ? ' coming-soon' : ''}`}
+              onClick={() => meta.comingSoon ? setShowSuggest(true) : handleCinemaClick(code)}
+              aria-label={meta.comingSoon ? `${meta.label} — coming soon` : `Play ${meta.label}`}
+            >
+              <div className="cinema-panel__texture" aria-hidden="true" />
+              <div className="cinema-panel__content">
+                <span className="cinema-panel__industry">{meta.lang}</span>
+                <span className="cinema-panel__lang">{meta.label}</span>
+                {meta.comingSoon && <span className="cinema-panel__soon">Coming soon!</span>}
+              </div>
+            </button>
+          ))}
         </div>
 
         {/* ── Options strip ── */}
