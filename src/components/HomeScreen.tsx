@@ -8,8 +8,12 @@ export function HomeScreen() {
   const actions = useGameActions();
   const [gameMode, setGameMode] = useState<GameMode>('party');
   const [showSuggest, setShowSuggest] = useState(false);
+  const [suggestIndustry, setSuggestIndustry] = useState<string | undefined>(undefined);
   const [showFeedback, setShowFeedback] = useState(false);
   const [wantMultiplayer, setWantMultiplayer] = useState(false);
+
+  const activeIndustries = (Object.entries(INDUSTRY_META) as [Industry, typeof INDUSTRY_META[Industry]][]).filter(([, m]) => !m.comingSoon);
+  const comingSoonIndustries = (Object.entries(INDUSTRY_META) as [Industry, typeof INDUSTRY_META[Industry]][]).filter(([, m]) => m.comingSoon);
 
   const handleModeChange = (mode: GameMode) => {
     setGameMode(mode);
@@ -22,6 +26,16 @@ export function HomeScreen() {
     } else {
       actions.startSoloGame(industry);
     }
+  };
+
+  const handleComingSoonSuggest = (lang: string) => {
+    setSuggestIndustry(lang);
+    setShowSuggest(true);
+  };
+
+  const handleCloseSuggest = () => {
+    setShowSuggest(false);
+    setSuggestIndustry(undefined);
   };
 
   return (
@@ -89,24 +103,49 @@ export function HomeScreen() {
           </div>
         </div>
 
-        {/* ── Cinema panels ── */}
+        {/* ── Active cinema panels (full-width hero) ── */}
         <div className="home-cinema">
-          {(Object.entries(INDUSTRY_META) as [Industry, typeof INDUSTRY_META[Industry]][]).map(([code, meta]) => (
+          {activeIndustries.map(([code, meta]) => (
             <button
               key={code}
-              className={`cinema-panel cinema-panel--${meta.packId}${meta.comingSoon ? ' coming-soon' : ''}`}
-              onClick={() => meta.comingSoon ? setShowSuggest(true) : handleCinemaClick(code)}
-              aria-label={meta.comingSoon ? `${meta.label} — coming soon` : `Play ${meta.label}`}
+              className={`cinema-panel cinema-panel--${meta.packId}`}
+              onClick={() => handleCinemaClick(code)}
+              aria-label={`Play ${meta.label}`}
             >
               <div className="cinema-panel__texture" aria-hidden="true" />
               <div className="cinema-panel__content">
                 <span className="cinema-panel__industry">{meta.lang}</span>
                 <span className="cinema-panel__lang">{meta.label}</span>
-                {meta.comingSoon && <span className="cinema-panel__soon">Coming soon!</span>}
               </div>
             </button>
           ))}
         </div>
+
+        {/* ── Coming soon section (subordinate) ── */}
+        {comingSoonIndustries.length > 0 && (
+          <div className="home-coming-soon">
+            <p className="home-coming-soon__label">More languages coming</p>
+            <div className="home-coming-soon__row">
+              {comingSoonIndustries.map(([code, meta]) => (
+                <div key={code} className={`coming-soon-card coming-soon-card--${meta.packId}`}>
+                  <div className="coming-soon-card__header">
+                    <span className="coming-soon-card__dot" />
+                    <span className="coming-soon-card__lang">{meta.lang}</span>
+                  </div>
+                  <span className="coming-soon-card__status">Coming soon</span>
+                  <br />
+                  <button
+                    className="coming-soon-card__cta"
+                    onClick={() => handleComingSoonSuggest(meta.lang)}
+                    aria-label={`Suggest movies for ${meta.lang}`}
+                  >
+                    Suggest movies you want to see
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Options strip ── */}
         <div className="home-options">
@@ -150,7 +189,7 @@ export function HomeScreen() {
 
         {/* ── Footer ── */}
         <footer className="home-footer">
-          <button className="home-footer__link" onClick={() => setShowSuggest(true)}>
+          <button className="home-footer__link" onClick={() => { setSuggestIndustry(undefined); setShowSuggest(true); }}>
             Suggest a Movie
           </button>
           <span className="home-footer__dot" aria-hidden="true">·</span>
@@ -161,7 +200,7 @@ export function HomeScreen() {
 
       </div>
 
-      {showSuggest && <SuggestSheet onClose={() => setShowSuggest(false)} />}
+      {showSuggest && <SuggestSheet onClose={handleCloseSuggest} defaultIndustry={suggestIndustry} />}
       {showFeedback && <FeedbackSheet onClose={() => setShowFeedback(false)} />}
     </main>
   );

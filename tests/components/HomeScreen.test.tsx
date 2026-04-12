@@ -37,16 +37,16 @@ describe('HomeScreen', () => {
     expect(findByText(tree.root, 'PLOTS')).toBeTruthy();
   });
 
-  it('renders Bollywood cinema button', () => {
+  it('renders Hindi cinema button', () => {
     const tree = create(<HomeScreen />);
-    expect(findByAriaLabel(tree.root, 'Play Bollywood \u2014 Hindi films')).toBeTruthy();
-    expect(findByText(tree.root, 'Bollywood')).toBeTruthy();
+    expect(findByAriaLabel(tree.root, 'Play Hindi Films')).toBeTruthy();
+    expect(findByText(tree.root, 'Hindi')).toBeTruthy();
   });
 
-  it('renders Tollywood cinema button', () => {
+  it('renders Telugu cinema button', () => {
     const tree = create(<HomeScreen />);
-    expect(findByAriaLabel(tree.root, 'Play Tollywood \u2014 Telugu films')).toBeTruthy();
-    expect(findByText(tree.root, 'Tollywood')).toBeTruthy();
+    expect(findByAriaLabel(tree.root, 'Play Telugu Films')).toBeTruthy();
+    expect(findByText(tree.root, 'Telugu')).toBeTruthy();
   });
 
   it('renders Party and Endless mode buttons', () => {
@@ -65,7 +65,7 @@ describe('HomeScreen', () => {
 
   it('Bollywood button calls startSoloGame with BW by default (no multiplayer)', () => {
     const tree = create(<HomeScreen />);
-    const bwBtn = findByAriaLabel(tree.root, 'Play Bollywood \u2014 Hindi films');
+    const bwBtn = findByAriaLabel(tree.root, 'Play Hindi Films');
     act(() => {
       bwBtn.props.onClick();
     });
@@ -75,7 +75,7 @@ describe('HomeScreen', () => {
 
   it('Tollywood button calls startSoloGame with TW by default', () => {
     const tree = create(<HomeScreen />);
-    const twBtn = findByAriaLabel(tree.root, 'Play Tollywood \u2014 Telugu films');
+    const twBtn = findByAriaLabel(tree.root, 'Play Telugu Films');
     act(() => {
       twBtn.props.onClick();
     });
@@ -111,7 +111,7 @@ describe('HomeScreen', () => {
     act(() => {
       friendsBtn.props.onClick();
     });
-    const bwBtn = findByAriaLabel(tree.root, 'Play Bollywood \u2014 Hindi films');
+    const bwBtn = findByAriaLabel(tree.root, 'Play Hindi Films');
     act(() => {
       bwBtn.props.onClick();
     });

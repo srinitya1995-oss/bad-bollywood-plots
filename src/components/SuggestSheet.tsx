@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
 import { toast } from './Toast';
 
-interface SuggestSheetProps { onClose: () => void; }
+interface SuggestSheetProps { onClose: () => void; defaultIndustry?: string; }
 
-export function SuggestSheet({ onClose }: SuggestSheetProps) {
+export function SuggestSheet({ onClose, defaultIndustry }: SuggestSheetProps) {
   const [movie, setMovie] = useState('');
-  const [industry, setIndustry] = useState('');
+  const [industry, setIndustry] = useState(defaultIndustry ?? '');
 
   const handleSubmit = () => {
     if (!movie.trim()) { toast('Please enter a movie name'); return; }

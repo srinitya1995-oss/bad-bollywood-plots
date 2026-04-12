@@ -25,11 +25,11 @@ body {
   /* Industry aliases — canonical names */
   --card-hi: #E85D3A;
   --card-te: #3EA87A;
-  --card-ta: #C4A235;
+  --card-ta: #D4A43A;
   --card-ml: #2E86AB;
   --glow-hi: rgba(232, 93, 58, 0.35);
   --glow-te: rgba(62, 168, 122, 0.35);
-  --glow-ta: rgba(196, 162, 53, 0.35);
+  --glow-ta: rgba(212, 164, 58, 0.35);
   --glow-ml: rgba(46, 134, 171, 0.35);
   --cream: #F5E8D4;
   --paper-dim: #C8B89E;
@@ -382,7 +382,7 @@ body {
   position: relative;
   z-index: 5;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
   margin: 16px 20px 0;
   animation: panelsRise 0.55s cubic-bezier(0.34, 1.2, 0.64, 1) 0.35s both;
@@ -473,7 +473,7 @@ body {
     0 -1px 0 rgba(0, 0, 0, 0.3) inset;
 }
 .cinema-panel--ta {
-  background: #4A3A10;
+  background: #4A3510;
   border-left: 4px solid var(--card-ta);
 }
 .cinema-panel--ta:hover {
@@ -488,16 +488,91 @@ body {
 }
 
 /* Coming-soon panels — muted, not interactive */
-.cinema-panel.coming-soon { opacity: 0.7; position: relative; }
+.cinema-panel.coming-soon { opacity: 0.7; position: relative; cursor: default; }
 .cinema-panel.coming-soon::after {
   content: '';
   position: absolute; inset: 0;
   background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(245,232,212,0.03) 8px, rgba(245,232,212,0.03) 16px);
   border-radius: inherit; pointer-events: none;
 }
+.cinema-panel.coming-soon:hover { box-shadow: none; transform: none; }
+.cinema-panel.coming-soon:active { transform: none; }
 .cinema-panel__soon {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.1em; color: var(--gold); opacity: 0.8; margin-top: 4px;
+}
+
+/* Coming-soon section — subordinate to active panels */
+.home-coming-soon {
+  margin: 16px 20px 0;
+  animation: panelsRise 0.55s cubic-bezier(0.34, 1.2, 0.64, 1) 0.45s both;
+}
+.home-coming-soon__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.home-coming-soon__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.coming-soon-card {
+  position: relative;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.coming-soon-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.coming-soon-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.coming-soon-card--ta .coming-soon-card__dot { background: var(--card-ta); }
+.coming-soon-card--ml .coming-soon-card__dot { background: var(--card-ml); }
+.coming-soon-card__lang {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--cream);
+}
+.coming-soon-card__status {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  opacity: 0.7;
+}
+.coming-soon-card__cta {
+  display: inline;
+  background: none;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 139, 126, 0.4);
+  text-underline-offset: 2px;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 6px;
+  transition: color 0.15s ease;
+}
+.coming-soon-card__cta:hover {
+  color: var(--cream);
 }
 
 /* Noise texture overlay on each panel — aged poster feel */
