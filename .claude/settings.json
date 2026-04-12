@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "intercept",
+            "command": "echo 'REMINDER: Did you invoke a playbook (/ui-playbook, /fix-playbook, /plan-playbook) or superpowers skill before writing code? If not, STOP and invoke one first.'",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/srinityaduppanapudisatya/Desktop/seedhaplot && head -40 .project-state.md 2>/dev/null || echo 'No .project-state.md found — create one before starting work.'",
+            "timeout": 3000
+          }
+        ]
+      }
+    ]
+  }
+}
