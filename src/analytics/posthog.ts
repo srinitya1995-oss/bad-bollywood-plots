@@ -9,8 +9,8 @@ declare global {
   }
 }
 
-const POSTHOG_TOKEN = 'phc_im021jzJ6Lx5QSvJdSSeVb23IROC0Kpbrs75X2NOzTd';
-const POSTHOG_HOST = 'https://us.i.posthog.com';
+const POSTHOG_TOKEN = import.meta.env.VITE_POSTHOG_TOKEN ?? 'phc_im021jzJ6Lx5QSvJdSSeVb23IROC0Kpbrs75X2NOzTd';
+const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST ?? 'https://us.i.posthog.com';
 
 export function initPostHog(): void {
   try {
