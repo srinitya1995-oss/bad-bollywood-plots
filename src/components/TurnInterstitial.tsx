@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { useGameActions } from '../hooks/useGameActions';
 import { getGameInstance } from '../hooks/gameInstance';
@@ -13,6 +14,15 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
   const { readerIdx, lastResult } = payload;
   const players = payload.scorer.players;
   const isContinue = state === 'continue';
+  const isSolo = players.length <= 1;
+
+  useEffect(() => {
+    if (isSolo && state === 'turnChange') {
+      actions.ready();
+    }
+  }, [isSolo, state, actions]);
+
+  if (isSolo && state === 'turnChange') return null;
 
   const nextPlayer = players[readerIdx % players.length];
   const nextPlayerName = nextPlayer?.name ?? 'Player';
