@@ -24,10 +24,10 @@ export function HomeScreen() {
           <span>PLOTS</span>
         </h1>
         <p className="v8-home-tag">
-          The plot is bad on purpose. Guess the Bollywood movie.
+          We describe Bollywood movies badly. You guess which film it is.
         </p>
         <p className="v8-home-sub">
-          Play solo or pass the phone &middot; Tollywood &amp; more coming soon
+          Simple, chaotic, and best played with chai and friends.
         </p>
         <div className="v8-home-meta" aria-label="Game details">
           <span>5 CARDS</span>
@@ -40,28 +40,18 @@ export function HomeScreen() {
         </div>
       </div>
 
-      {/* Stamp */}
-      <div className="v8-home-stamp" aria-hidden="true">
-        OFFICIALLY<br />
-        <strong>BAD</strong><br />
-        SINCE 2026
-      </div>
-
-      {/* Resume pill */}
-      {canResume && (
-        <button
-          className="v8-home-resume"
-          onClick={() => {
-            // Restore game from sessionStorage handled by game instance
-            window.location.reload();
-          }}
-        >
-          Resume last game
-        </button>
-      )}
-
       {/* CTAs */}
       <div className="v8-home-ctas">
+        {canResume && (
+          <button
+            className="v8-home-resume"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Resume last game
+          </button>
+        )}
         <button
           className="v8-home-btn v8-home-btn--primary"
           onClick={() => actions.selectMode('HI')}
