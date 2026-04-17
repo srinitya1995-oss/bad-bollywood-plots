@@ -21,11 +21,11 @@ export function ResultsScreen() {
 
   return (
     <main className="screen active results-screen" aria-label="Results">
-      <div className="res-atmosphere" aria-hidden="true" />
-      <header className="res-top">
-        <p className="res-eyebrow">Game over</p>
+      {/* Verdict hero */}
+      <header className="res-hero">
+        <p className="res-eyebrow">Game Over</p>
         <h1 className="res-title">{verdict?.title ?? 'Done!'}</h1>
-        <p className="res-verdict-hero">{verdict?.verdict}</p>
+        <p className="res-subtitle">{verdict?.verdict}</p>
         <div className="res-tier">
           <span className="res-tier-label">{abilityTier}</span>
           <span className="res-tier-dot">{'\u00b7'}</span>
@@ -35,24 +35,39 @@ export function ResultsScreen() {
           <p className="res-highscore">New High Rating!</p>
         )}
       </header>
+
+      {/* Stats */}
       <div className="res-body">
         <div className="res-stats">
-          <div className="res-stat"><span className="res-stat-n">{adaptive.ability}</span><span className="res-stat-l">Rating</span></div>
-          <div className="res-stat"><span className="res-stat-n">{scorer.correctCount}/{idx}</span><span className="res-stat-l">Correct</span></div>
-          <div className="res-stat"><span className="res-stat-n">{scorer.totalPts}</span><span className="res-stat-l">Points</span></div>
+          <div className="res-stat">
+            <span className="res-stat-n res-stat-n--gold">{adaptive.ability}</span>
+            <span className="res-stat-l">Rating</span>
+          </div>
+          <div className="res-stat">
+            <span className="res-stat-n">{scorer.correctCount}/{idx}</span>
+            <span className="res-stat-l">Correct</span>
+          </div>
+          <div className="res-stat">
+            <span className="res-stat-n">{scorer.totalPts}</span>
+            <span className="res-stat-l">Points</span>
+          </div>
         </div>
+
+        {/* Leaderboard */}
         {leaderboard.length > 1 && (
           <div className="leaderboard">
             <h2 className="lb-title">Leaderboard</h2>
             {leaderboard.map((p, i) => (
               <div key={i} className="lb-row">
-                <span className="lb-rank">{i + 1}</span>
+                <span className={`lb-rank${i === 0 ? ' gold' : ''}`}>{i + 1}</span>
                 <span className="lb-name">{p.name}</span>
                 <span className="lb-score">{p.score} pts</span>
               </div>
             ))}
           </div>
         )}
+
+        {/* Actions */}
         <div className="res-actions">
           <button className="btn-primary" onClick={actions.replay}>Play again</button>
           <button className="btn-secondary" onClick={handleShare}>Share score</button>

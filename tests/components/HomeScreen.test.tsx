@@ -97,7 +97,7 @@ describe('HomeScreen', () => {
     act(() => {
       endlessBtn.props.onClick();
     });
-    expect(findByText(tree.root, 'Keep going until you run out of lives')).toBeTruthy();
+    expect(findByText(tree.root, 'Keep going until you drop')).toBeTruthy();
   });
 
   it('shows Party description by default', () => {
@@ -107,7 +107,7 @@ describe('HomeScreen', () => {
 
   it('with multiplayer enabled, cinema button calls selectMode instead of startSoloGame', () => {
     const tree = create(<HomeScreen />);
-    const friendsBtn = findByText(tree.root, '+ Play with friends?');
+    const friendsBtn = findByText(tree.root, '+ Add friends');
     act(() => {
       friendsBtn.props.onClick();
     });
@@ -121,6 +121,6 @@ describe('HomeScreen', () => {
 
   it('renders tagline', () => {
     const tree = create(<HomeScreen />);
-    expect(findByText(tree.root, 'Terrible plots. Real movies.')).toBeTruthy();
+    expect(findByText(tree.root, 'Guess the movie from the terrible plot')).toBeTruthy();
   });
 });

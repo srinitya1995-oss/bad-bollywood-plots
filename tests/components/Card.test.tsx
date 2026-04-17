@@ -25,14 +25,14 @@ describe('Card', () => {
     expect(findByText(tree.root, card.c)).toBeTruthy();
   });
 
-  it('renders industry badge as Bollywood for HI cards', () => {
+  it('renders industry badge as Hindi for HI cards', () => {
     const tree = create(<Card card={makeCard({ ind: 'HI' })} isFlipped={false} onFlip={() => {}} />);
-    expect(findAllByText(tree.root, /Bollywood/).length).toBeGreaterThan(0);
+    expect(findAllByText(tree.root, /Hindi/).length).toBeGreaterThan(0);
   });
 
-  it('renders industry badge as Tollywood for TE cards', () => {
+  it('renders industry badge as Telugu for TE cards', () => {
     const tree = create(<Card card={makeCard({ ind: 'TE' })} isFlipped={false} onFlip={() => {}} />);
-    expect(findAllByText(tree.root, /Tollywood/).length).toBeGreaterThan(0);
+    expect(findAllByText(tree.root, /Telugu/).length).toBeGreaterThan(0);
   });
 
   it('renders era and difficulty in badge', () => {
@@ -49,7 +49,7 @@ describe('Card', () => {
 
   it('shows "Tap to reveal answer" on unflipped card', () => {
     const tree = create(<Card card={makeCard()} isFlipped={false} onFlip={() => {}} />);
-    expect(findByText(tree.root, 'Tap to reveal answer')).toBeTruthy();
+    expect(findByText(tree.root, 'Tap to reveal')).toBeTruthy();
   });
 
   it('calls onFlip when clicked while unflipped', () => {
@@ -81,14 +81,14 @@ describe('Card', () => {
     const tree = create(<Card card={card} isFlipped={false} onFlip={() => {}} />);
     const button = findByRole(tree.root, 'button');
     expect(button.props.tabIndex).toBe(0);
-    expect(button.props['aria-label']).toBe('Bollywood medium card \u2014 tap to flip and reveal answer');
+    expect(button.props['aria-label']).toBe('Hindi medium card \u2014 tap to flip and reveal answer');
   });
 
   it('updates aria-label when flipped to show movie info', () => {
     const card = makeCard({ n: 'DDLJ', y: '1995', diff: 'medium' });
     const tree = create(<Card card={card} isFlipped={true} onFlip={() => {}} />);
     const button = findByRole(tree.root, 'button');
-    expect(button.props['aria-label']).toBe('DDLJ (1995) \u2014 Bollywood medium');
+    expect(button.props['aria-label']).toBe('DDLJ (1995) \u2014 Hindi medium');
     expect(button.props.tabIndex).toBe(-1);
   });
 

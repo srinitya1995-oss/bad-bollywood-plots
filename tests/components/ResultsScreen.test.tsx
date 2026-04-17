@@ -74,7 +74,7 @@ describe('ResultsScreen', () => {
 
   it('renders "Game over" eyebrow text', () => {
     const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Game over')).toBeTruthy();
+    expect(findByText(tree.root, 'Game Over')).toBeTruthy();
   });
 
   it('shows correct count stat', () => {
@@ -127,10 +127,10 @@ describe('ResultsScreen', () => {
     // abilityTier and percentile rendered as: {abilityTier} · Top {abilityPercentile}%
     // These are multiple children in a <p>, so search for the tier text node
     expect(findByText(tree.root, /Movie Buff/)).toBeTruthy();
-    // Percentile is part of a multi-child text: "Top " + "75" + "%"
+    // Percentile rendered in res-tier-pct: "Top 75%"
     const subNode = tree.root.find((n) =>
       typeof n.props.className === 'string' &&
-      n.props.className.includes('res-sub') &&
+      n.props.className.includes('res-tier-pct') &&
       n.children.some(c => String(c).includes('75'))
     );
     expect(subNode).toBeTruthy();

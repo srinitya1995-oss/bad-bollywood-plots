@@ -1,5 +1,5 @@
 import type { Card as CardType } from '../core/types';
-import { INDUSTRY_META } from '../core/types';
+import { INDUSTRY_META, POINT_MAP } from '../core/types';
 
 interface CardProps {
   card: CardType;
@@ -9,43 +9,54 @@ interface CardProps {
 
 export function Card({ card, isFlipped, onFlip }: CardProps) {
   const meta = INDUSTRY_META[card.ind];
-  const indLabel = meta.lang;
+  const indLabel = meta.lang.toUpperCase();
   const packId = meta.packId;
+  const pts = POINT_MAP[card.diff];
 
   const ariaLabel = isFlipped
-    ? `${card.n} (${card.y}) — ${indLabel} ${card.diff}`
-    : `${indLabel} ${card.diff} card — tap to flip and reveal answer`;
+    ? `${card.n} (${card.y}) ${meta.lang} ${card.diff} difficulty`
+    : `${meta.lang} ${card.diff} card, tap to flip and reveal answer`;
 
   return (
     <div
-      className={`card-wrap${isFlipped ? ' flipped' : ''}`}
+      className={`v6-card-wrap${isFlipped ? ' flipped' : ''}`}
       onClick={isFlipped ? undefined : onFlip}
-      onKeyDown={(e) => { if (!isFlipped && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onFlip(); } }}
+      onKeyDown={(e) => {
+        if (!isFlipped && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onFlip();
+        }
+      }}
       role="button"
       tabIndex={isFlipped ? -1 : 0}
       aria-label={ariaLabel}
     >
-      <div className="card-inner">
-        <div className={`card-face card-front ${packId}`}>
-          <div className="card-frame" aria-hidden="true" />
-          <div className="card-content">
-            <div className="card-meta">
-              <span className={`card-ind ${packId}`}>{indLabel}</span>
-              <span className={`card-badge badge-${card.diff}`}>{card.era} {'\u00b7'} {card.diff}</span>
+      <div className="v6-card-3d">
+        {/* FRONT — plot */}
+        <div className="v6-face v6-face-front">
+          <div className="v6-card v6-plot-card">
+            <div className="v6-top-row">
+              <span className={`v6-pill v6-pill-${packId}`}>{indLabel}</span>
+              <span className={`v6-pts-chip v6-diff-${card.diff}`}>+{pts}</span>
             </div>
-            <p className="card-clue">{card.c}</p>
-            <span className="card-tap">Tap to reveal answer</span>
+            <p className="v6-plot">{card.c}</p>
+            <div className="v6-hint-row"><span>TAP TO FLIP</span></div>
           </div>
         </div>
-        <div className={`card-face card-back ${packId}`}>
-          <div className="card-frame card-frame-back" aria-hidden="true" />
-          <div className="card-content">
-            <span className={`card-ind-back ${packId}`}>{indLabel} {'\u00b7'} {card.diff}</span>
-            <h3 className="card-answer">{card.n}</h3>
-            <span className="card-year">{card.y}</span>
-            <hr className="card-divider" aria-hidden="true" />
-            <p className={`card-fact-label ${packId}`}>Did you know</p>
-            <p className="card-fact">{card.f}</p>
+        {/* BACK — reveal */}
+        <div className="v6-face v6-face-back">
+          <div className="v6-card v6-reveal-card">
+            <div className="v6-top-row">
+              <span className={`v6-pill v6-pill-${packId}`}>{indLabel}</span>
+              <span className={`v6-pts-chip v6-diff-${card.diff}`}>+{pts}</span>
+            </div>
+            <h3 className="v6-movie">
+              {card.n}
+              <span className="v6-year">{card.y}</span>
+            </h3>
+            <div className="v6-divider" />
+            <div className="v6-fun-label">Fun fact</div>
+            <p className="v6-fun">{card.f}</p>
           </div>
         </div>
       </div>
