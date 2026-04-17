@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="6" fill="#1a0a2e"/>
-  <text x="16" y="22" text-anchor="middle"
-    font-family="'Playfair Display', Georgia, serif" font-weight="900"
-    font-size="16" fill="#d4a843">BP</text>
-  <circle cx="4" cy="16" r="1.5" fill="#d4a843" opacity="0.4"/>
-  <circle cx="28" cy="16" r="1.5" fill="#d4a843" opacity="0.4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#C8321C"/>
+  <text x="16" y="25" text-anchor="middle"
+    font-family="'Anton', 'Impact', sans-serif" font-weight="400"
+    font-size="24" fill="#F6EBD1">B</text>
 </svg>
