@@ -64,18 +64,20 @@ export function App() {
   }, [state]);
 
   if (!ready) return (
-    <main className="screen active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ textAlign: 'center' }}>
-        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '48px', color: 'var(--cream)', marginBottom: '0.5rem' }}>Bad Plots</h1>
+    <main className="screen active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--stage)' }}>
+      <div style={{ textAlign: 'center', padding: '0 24px' }}>
+        <h1 style={{ fontFamily: 'Anton, sans-serif', fontSize: '44px', lineHeight: 0.95, color: 'var(--paper)', letterSpacing: '0.02em', marginBottom: '18px', textShadow: '3px 3px 0 var(--tomato)' }}>
+          BAD BOLLYWOOD<br />PLOTS
+        </h1>
         {loadError ? (
           <button
             onClick={() => window.location.reload()}
-            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'var(--cream)', opacity: 0.8, background: 'none', border: '1px solid var(--cream)', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer' }}
+            style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '14px', letterSpacing: '0.12em', color: 'var(--ink)', background: 'var(--paper)', border: '3px solid var(--ink)', borderRadius: '999px', padding: '12px 22px 10px', cursor: 'pointer', boxShadow: '4px 4px 0 var(--tomato)' }}
           >
-            Could not load cards. Tap to retry.
+            COULDN'T LOAD. TAP TO RETRY.
           </button>
         ) : (
-          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'var(--cream)', opacity: 0.6 }}>Loading cards...</p>
+          <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '13px', letterSpacing: '0.3em', color: 'var(--gold-bright)', opacity: 0.8 }}>LOADING CARDS...</p>
         )}
       </div>
     </main>

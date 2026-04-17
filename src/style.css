@@ -1469,7 +1469,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: safe center;
   min-height: 100vh;
   min-height: 100dvh;
   padding: max(env(safe-area-inset-top, 20px), 20px) 24px max(env(safe-area-inset-bottom), 16px);
@@ -1500,7 +1500,7 @@ body {
 
 .v8-home-title {
   font-family: 'Anton', sans-serif;
-  font-size: 64px;
+  font-size: clamp(46px, 14vw, 64px);
   line-height: 0.88;
   letter-spacing: -0.01em;
   color: var(--v8-ink);
@@ -2297,7 +2297,7 @@ body {
   gap: 6px;
   opacity: 0;
 }
-.v8-card-stage.flipped .v8-picker { animation: v8PickerIn 0.45s 0.95s ease-out forwards; }
+.v8-card-stage.flipped .v8-picker { animation: v8PickerIn 0.35s 0.25s ease-out forwards; }
 @keyframes v8PickerIn { to { opacity: 1; } }
 
 .v8-picker-label {

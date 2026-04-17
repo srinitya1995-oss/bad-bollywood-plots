@@ -121,7 +121,7 @@ export function Card({
             </div>
           </div>
           <div className="v8-card-foot">
-            {readerName ? (
+            {readerName && !isSolo ? (
               <span className="v8-card-foot__cream">
                 READ BY: {readerName.toUpperCase()}
               </span>
@@ -180,7 +180,7 @@ export function Card({
             </div>
           )}
           <div className="v8-back-foot">
-            {readerName && (
+            {readerName && !isSolo && (
               <span>READ BY: {readerName.toUpperCase()}</span>
             )}
             <span className="v8-back-foot__pts">+{pts} PTS</span>

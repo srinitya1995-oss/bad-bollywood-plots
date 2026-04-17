@@ -18,7 +18,7 @@ interface GameScreenProps {
 export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   const { state, payload } = useGameState();
   const actions = useGameActions();
-  const { deck, idx, currentCard, readerIdx, scorer } = payload;
+  const { idx, currentCard, readerIdx, scorer } = payload;
   const [ptsFloat, setPtsFloat] = useState<{ value: number; key: number } | null>(null);
   const ptsKey = useRef(0);
 
@@ -77,7 +77,8 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   if (!currentCard) return null;
 
   const isFlipped = state === 'flipped';
-  const progress = `CARD ${idx + 1} / ${deck.length}`;
+  const roundLen = getGameInstance().getSettings().roundLen ?? 10;
+  const progress = `CARD ${idx + 1} / ${roundLen}`;
 
   return (
     <main className="screen active v8-game-screen" aria-label="Game">

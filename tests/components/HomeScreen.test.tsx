@@ -68,11 +68,11 @@ describe('HomeScreen', () => {
     expect(btn).toBeTruthy();
   });
 
-  it('renders Made by @Srinitya link', () => {
+  it('renders Made by @srinitya_satya link', () => {
     const tree = create(<HomeScreen />);
-    const link = findByText(tree.root, 'Made by @Srinitya');
+    const link = findByText(tree.root, 'Made by @srinitya_satya');
     expect(link).toBeTruthy();
-    expect(link.props.href).toBe('https://www.linkedin.com/in/srinityaduppanapudisatya/');
+    expect(link.props.href).toBe('https://www.instagram.com/srinitya_satya/');
   });
 
   it('renders resume pill when canResume is true', () => {
