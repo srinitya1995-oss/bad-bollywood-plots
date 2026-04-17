@@ -1400,14 +1400,19 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 4px solid var(--v8-ink);
   border-bottom: 4px solid var(--v8-ink);
   z-index: 12;
   box-shadow: 0 6px 0 rgba(20, 10, 5, 0.2);
   pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-14px);
+  animation: v8TopIn 0.5s 0.1s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
 }
+@keyframes v8TopIn { to { opacity: 1; transform: translateY(0); } }
 .v8-topband__title {
   font-family: 'Anton', sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: 0.015em;
   text-transform: uppercase;
   line-height: 0.95;
@@ -2023,7 +2028,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.62s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.62s cubic-bezier(0.5, 0.05, 0.2, 1.08);
   will-change: transform;
 }
 .v8-card-stage.flipped .v8-card-flip { transform: rotateY(180deg); }
@@ -2144,7 +2149,7 @@ body {
   background: var(--v8-ink);
   color: var(--gold-bright);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   flex-shrink: 0;
   border-top: 3px solid var(--v8-ink);
@@ -2568,20 +2573,23 @@ body {
 }
 
 .v8-inter-pass {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.28em;
+  font-family: 'Anton', sans-serif;
+  font-size: 50px;
+  line-height: 0.9;
+  letter-spacing: -0.005em;
   color: var(--paper);
   text-transform: uppercase;
+  text-shadow: 3px 3px 0 var(--tomato), 0 6px 22px rgba(0, 0, 0, 0.7);
 }
 
 .v8-inter-name {
   font-family: 'Anton', sans-serif;
-  font-size: 48px;
+  font-size: 78px;
   line-height: 0.88;
   color: var(--gold-bright);
   text-transform: uppercase;
   margin-top: 10px;
+  text-shadow: 4px 4px 0 var(--v8-ink), 0 10px 30px rgba(0, 0, 0, 0.75);
   letter-spacing: -0.01em;
   text-shadow: 4px 4px 0 var(--v8-ink), 0 10px 30px rgba(0, 0, 0, 0.75);
   animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -2667,9 +2675,9 @@ body {
   left: 0;
   right: 0;
   text-align: center;
-  color: var(--ink-soft);
+  color: var(--paper);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.3em;
   animation: v8InterPulse 1.8s ease-in-out infinite;
 }
