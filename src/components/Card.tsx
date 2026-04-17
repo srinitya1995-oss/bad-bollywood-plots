@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import type { Card as CardType, Player } from '../core/types';
 import { INDUSTRY_META, POINT_MAP } from '../core/types';
 import { useCardTextFit } from '../hooks/useCardTextFit';
@@ -43,7 +43,12 @@ export function Card({
   const packId = meta.packId;
   const pts = POINT_MAP[card.diff];
   const plotRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const fittedSize = useCardTextFit(card.c, plotRef);
+
+  useEffect(() => {
+    if (!isFlipped) stageRef.current?.focus({ preventScroll: true });
+  }, [isFlipped, card.id]);
 
   const isBW = packId === 'hi';
 
@@ -79,6 +84,7 @@ export function Card({
 
   return (
     <div
+      ref={stageRef}
       className={`v8-card-stage${isFlipped ? ' flipped' : ''}`}
       onClick={isFlipped ? undefined : onFlip}
       onKeyDown={(e) => {
@@ -180,10 +186,7 @@ export function Card({
             </div>
           )}
           <div className="v8-back-foot">
-            {readerName && !isSolo && (
-              <span>READ BY: {readerName.toUpperCase()}</span>
-            )}
-            <span className="v8-back-foot__pts">+{pts} PTS</span>
+            <span className="v8-back-foot__pts">WORTH +{pts}</span>
           </div>
         </div>
       </div>

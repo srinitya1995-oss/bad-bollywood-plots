@@ -1947,6 +1947,27 @@ body {
   background: rgba(26, 15, 6, 0.06);
 }
 
+/* Duplicate-name warning */
+.v8-setup-warning {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 16px) + 76px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: 440px;
+  padding: 10px 14px;
+  background: var(--tomato);
+  color: var(--paper);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-align: center;
+  border: 2px solid var(--v8-ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--v8-ink);
+  z-index: 109;
+}
+
 /* Bottom CTA bar */
 .v8-setup-cta {
   position: fixed;

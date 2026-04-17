@@ -35,6 +35,18 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
     }
   };
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleTap();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isContinue]);
+
   const handleSeeResults = (e: React.MouseEvent) => {
     e.stopPropagation();
     getGameInstance().endGame('completed');

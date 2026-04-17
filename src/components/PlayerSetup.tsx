@@ -80,16 +80,20 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
     dragOverIdx.current = null;
   }, []);
 
+  const filledNames = players.map((p, i) => (p.name.trim() || `Player ${i + 1}`).toLowerCase());
+  const hasDuplicates = mode === 'party' && new Set(filledNames).size !== filledNames.length;
+
   const handleStart = useCallback(() => {
+    if (hasDuplicates) return;
     const filled = players.map((p, i) => ({
       ...p,
       name: p.name.trim() || `Player ${i + 1}`,
     }));
     actions.startGame(filled);
     onClose();
-  }, [players, actions, onClose]);
+  }, [players, actions, onClose, hasDuplicates]);
 
-  const canStart = mode === 'solo' || players.length >= MIN_PLAYERS;
+  const canStart = (mode === 'solo' || players.length >= MIN_PLAYERS) && !hasDuplicates;
   const showAddButton = mode === 'party' && players.length < MAX_PLAYERS;
 
   return (
@@ -199,6 +203,11 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
       </div>
 
       {/* Bottom CTA */}
+      {hasDuplicates && (
+        <div className="v8-setup-warning" role="alert">
+          TWO PLAYERS CAN'T SHARE A NAME. MAKE THEM UNIQUE.
+        </div>
+      )}
       <div className="v8-setup-cta">
         <button className="v8-setup-back" onClick={onClose}>BACK</button>
         <button
