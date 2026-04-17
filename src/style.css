@@ -92,6 +92,7 @@ body {
   --tomato-bright: #E8412A;
   --gold-bright: #F5C457;
   --indigo: #2E2F5B;
+  --blue-pen: #1B3F8C;
   --stage: #14100a;
 }
 
@@ -1644,6 +1645,7 @@ body {
 .v8-home-btn--primary {
   background: var(--v8-ink);
   color: var(--gold-bright);
+  border-color: var(--gold-bright);
   box-shadow: 4px 5px 0 var(--tomato);
 }
 .v8-home-btn--primary:hover {
@@ -2939,6 +2941,7 @@ body {
   flex: 1.6;
   background: var(--v8-ink);
   color: var(--gold-bright);
+  border-color: var(--gold-bright);
   box-shadow: 4px 5px 0 var(--tomato);
 }
 .v8-results-btn--primary:hover { box-shadow: 4px 6px 0 var(--tomato); }

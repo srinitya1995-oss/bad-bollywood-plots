@@ -10,6 +10,7 @@
   --gold: #E9B23E;
   --gold-bright: #F5C457;
   --indigo: #2E2F5B;
+  --blue-pen: #1B3F8C;
   --emerald: #3EA87A;
   --stage: #14100a;
 }
@@ -185,7 +186,7 @@ body {
 .btn.primary {
   background: var(--ink);
   color: var(--gold-bright);
-  border-color: var(--ink);
+  border-color: var(--gold-bright);
   box-shadow: 4px 5px 0 var(--tomato);
 }
 .btn.primary:active { box-shadow: 2px 3px 0 var(--tomato); }
