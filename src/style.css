@@ -1581,13 +1581,23 @@ body {
 }
 
 /* CTAs */
+/* Cinema toggle label */
+.v8-home-cinema-label {
+  margin-top: 20px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--paper);
+  opacity: 0.65;
+  animation: fadeUp 0.35s ease-out both;
+}
 /* Cinema toggle (BW / TW) */
 .v8-home-cinema {
   display: flex;
   gap: 8px;
   width: 100%;
   max-width: 440px;
-  margin-top: 24px;
+  margin-top: 8px;
   animation: fadeUp 0.35s ease-out both;
 }
 .v8-home-cinema__btn {

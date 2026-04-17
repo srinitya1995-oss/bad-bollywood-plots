@@ -45,6 +45,7 @@ export function HomeScreen() {
       </div>
 
       {/* Cinema toggle */}
+      <div className="v8-home-cinema-label" aria-hidden="true">PICK YOUR CINEMA</div>
       <div className="v8-home-cinema" role="radiogroup" aria-label="Choose cinema">
         <button
           className={`v8-home-cinema__btn${cinema === 'HI' ? ' is-active' : ''}`}
