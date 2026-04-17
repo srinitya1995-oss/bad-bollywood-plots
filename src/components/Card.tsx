@@ -183,6 +183,17 @@ export function Card({
                   {isSolo ? 'NOPE \u{1F614}' : 'NOBODY'}
                 </button>
               </div>
+              <button
+                className="v8-skip-link"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNobody();
+                }}
+                type="button"
+                aria-label="Skip this card without scoring"
+              >
+                skip this card
+              </button>
             </div>
           )}
           <div className="v8-back-foot">

@@ -2388,6 +2388,26 @@ body {
   border-color: var(--paper);
 }
 
+.v8-skip-link {
+  margin-top: 6px;
+  background: transparent;
+  border: none;
+  color: rgba(246, 235, 209, 0.5);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  padding: 4px 8px;
+  touch-action: manipulation;
+}
+.v8-skip-link:hover,
+.v8-skip-link:focus {
+  color: var(--paper);
+  outline: none;
+}
+
 .v8-back-foot {
   position: absolute;
   bottom: 0;
