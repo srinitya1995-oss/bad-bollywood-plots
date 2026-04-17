@@ -111,12 +111,12 @@ export function HomeScreen() {
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
         <a
-          href="https://www.linkedin.com/in/srinityaduppanapudisatya/"
+          href="https://www.instagram.com/srinitya_satya/"
           target="_blank"
           rel="noopener"
           className="v8-home-footer__link"
         >
-          Made by @Srinitya
+          Made by @srinitya_satya
         </a>
       </footer>
 

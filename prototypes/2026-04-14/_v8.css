@@ -1,0 +1,213 @@
+/* Bad Desi Plots — v8 shared design system */
+:root {
+  --paper: #F6EBD1;
+  --paper-warm: #F9F0D9;
+  --ink: #1A0F06;
+  --ink-soft: rgba(26,15,6,0.6);
+  --ink-line: rgba(26,15,6,0.25);
+  --tomato: #C8321C;
+  --tomato-bright: #E8412A;
+  --gold: #E9B23E;
+  --gold-bright: #F5C457;
+  --indigo: #2E2F5B;
+  --emerald: #3EA87A;
+  --stage: #14100a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #1a1109;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  color: var(--ink);
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.phone {
+  width: 400px;
+  height: 860px;
+  border-radius: 44px;
+  background: var(--stage);
+  box-shadow: 0 36px 90px rgba(0,0,0,0.5), 0 0 0 8px #0a0503, 0 0 0 10px #1f1208;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+.notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 112px;
+  height: 26px;
+  background: #0a0503;
+  border-radius: 14px;
+  z-index: 50;
+}
+
+/* MOBILE: real phone. Drop the bezel, fill the viewport. */
+@media (max-width: 500px) {
+  html, body {
+    overflow: hidden;
+    height: 100%;
+    height: 100dvh;
+  }
+  body {
+    padding: 0;
+    background: var(--stage);
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .phone {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .notch { display: none; }
+}
+.bg { position: absolute; inset: 0; z-index: 0; }
+.bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  filter: saturate(1.08) contrast(1.02);
+}
+.wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20,16,8,0.5) 0%, rgba(20,16,8,0) 20%, rgba(20,16,8,0) 62%, rgba(20,16,8,0.7) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+.bulb-glow {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  height: 180px;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(34px 34px at 12% 30%, rgba(255,220,140,0.7), transparent 70%),
+    radial-gradient(34px 34px at 30% 20%, rgba(255,220,140,0.65), transparent 70%),
+    radial-gradient(34px 34px at 50% 32%, rgba(255,220,140,0.65), transparent 70%),
+    radial-gradient(34px 34px at 70% 22%, rgba(255,220,140,0.7), transparent 70%),
+    radial-gradient(34px 34px at 88% 34%, rgba(255,220,140,0.65), transparent 70%);
+  mix-blend-mode: screen;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Tomato top band */
+.topband {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+  padding: 12px 20px 10px;
+  background: var(--tomato);
+  color: var(--paper);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+  z-index: 12;
+  box-shadow: 0 6px 0 rgba(20,10,5,0.2);
+  opacity: 0;
+  transform: translateY(-14px);
+  animation: topIn 0.5s 0.1s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+}
+@keyframes topIn { to { opacity: 1; transform: translateY(0); } }
+.topband-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+.topband-title .t2 { color: var(--gold-bright); }
+.topband-right {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.topband-right .divider { width: 1px; height: 14px; background: rgba(246,235,209,0.35); }
+.topband-right .pts { color: var(--gold-bright); font-weight: 700; font-size: 15px; }
+.topband-right .iconbtn {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--paper);
+  text-decoration: none;
+  padding: 3px 8px;
+  border: 1px solid rgba(246,235,209,0.4);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+  font-family: 'Anton', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 20px 14px;
+  border-radius: 999px;
+  border: 3px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 4px 5px 0 var(--ink);
+  transition: transform 0.12s, box-shadow 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 3px 0 var(--ink);
+}
+.btn.primary {
+  background: var(--ink);
+  color: var(--gold-bright);
+  border-color: var(--ink);
+  box-shadow: 4px 5px 0 var(--tomato);
+}
+.btn.primary:active { box-shadow: 2px 3px 0 var(--tomato); }
+.btn.gold {
+  background: var(--gold-bright);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* Fade helpers */
+.fadein { opacity: 0; animation: fadeIn 0.55s ease-out forwards; }
+.fadein.d1 { animation-delay: 0.2s; }
+.fadein.d2 { animation-delay: 0.35s; }
+.fadein.d3 { animation-delay: 0.5s; }
+.fadein.d4 { animation-delay: 0.65s; }
+.fadein.d5 { animation-delay: 0.8s; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+.slideup { opacity: 0; transform: translateY(18px); animation: slideUp 0.55s ease-out forwards; }
+.slideup.d1 { animation-delay: 0.2s; }
+.slideup.d2 { animation-delay: 0.35s; }
+.slideup.d3 { animation-delay: 0.5s; }
+.slideup.d4 { animation-delay: 0.65s; }
+.slideup.d5 { animation-delay: 0.8s; }
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot v4 — Card Flipped (Reveal)</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .card { top: 186px; transform: translateX(-50%) rotate(1.2deg); }
+  .card-body {
+    padding: 22px 18px 18px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+  .reveal-kicker {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--magenta);
+  }
+  .reveal-movie {
+    font-family: 'Anton', sans-serif;
+    font-size: 56px;
+    letter-spacing: -0.015em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    color: var(--tomato);
+    text-shadow: 3px 3px 0 var(--ink);
+  }
+  .reveal-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+  .reveal-cast {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    line-height: 1.3;
+    margin-top: 8px;
+    padding: 0 6px;
+  }
+  /* peeks match card-front */
+  .peek-1 { top: 130px; left: -22px; width: 90px; height: 112px; transform: rotate(-11deg); box-shadow: 4px 4px 0 var(--ink); }
+  .peek-2 { top: 122px; right: -26px; width: 96px; height: 118px; transform: rotate(9deg); box-shadow: -4px 4px 0 var(--ink); }
+  /* pen verdict 2 */
+  .pen-verdict-2 {
+    top: 500px;
+    right: 18px;
+    transform: rotate(-6deg);
+    font-size: 24px;
+    max-width: 170px;
+    text-align: left;
+  }
+  .pen-arrow-2 {
+    top: 478px;
+    left: 30px;
+    font-size: 36px;
+    transform: rotate(-12deg);
+  }
+  .pen-underline {
+    position: absolute;
+    top: 260px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    width: 180px;
+    height: 14px;
+    border-bottom: 3px solid var(--blue-pen);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    opacity: 0.8;
+    z-index: 18;
+    pointer-events: none;
+  }
+  /* big stamp */
+  .stamp {
+    position: absolute;
+    top: 488px;
+    left: 30px;
+    transform: rotate(-14deg);
+    background: transparent;
+    color: var(--tomato);
+    border: 4px solid var(--tomato);
+    padding: 6px 12px 4px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    z-index: 19;
+    opacity: 0.85;
+    box-shadow: 0 0 0 2px var(--tomato);
+  }
+  .stamp .dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 14px;
+    display: block;
+    line-height: 0.9;
+    margin-top: 1px;
+    color: var(--tomato);
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="bg-image">
+      <img src="/inspiration/09369c26e6e98d17fbb503a26d68ee6f.jpg" alt="">
+    </div>
+    <div class="bg-wash"></div>
+
+    <div class="top-bar">
+      <span class="top-bar-title">SEEDHA PLOT<span class="top-bar-dev">सीधा</span></span>
+      <span class="top-bar-right">TURN 3 · <span class="pts">12 PTS</span></span>
+    </div>
+
+    <div class="peek peek-1">
+      <img src="/inspiration/48b5e4fe73f26cace03677976462e27e.jpg" alt="">
+    </div>
+    <div class="peek peek-2">
+      <img src="/inspiration/359e604f87f0053429424fe913fd6a74.jpg" alt="">
+    </div>
+
+    <div class="card">
+      <div class="card-mast">
+        <span class="card-mast-title">REVEALED</span>
+        <span class="card-mast-issue">CARD ०२४</span>
+      </div>
+      <div class="card-body">
+        <div class="reveal-kicker">THE MOVIE IS</div>
+        <div class="reveal-movie">BLACK</div>
+        <div class="reveal-year">२००५</div>
+        <div class="reveal-cast">AMITABH · RANI · SLB</div>
+      </div>
+      <div class="card-footer">
+        <span class="gold">BOLLYWOOD</span>
+        <span>2005</span>
+        <span class="gold">2 PTS</span>
+      </div>
+    </div>
+
+    <div class="pen-underline"></div>
+
+    <div class="stamp">
+      GOT IT!
+      <span class="dev">सही!</span>
+    </div>
+
+    <div class="pen pen-arrow-2">↗</div>
+    <div class="pen pen-verdict-2">best SRK-free<br>role of the year<br>— haan ya naa?</div>
+
+    <div class="cta-bar">
+      <button class="btn btn-secondary">MISSED IT</button>
+      <button class="btn btn-green">GOT IT +2</button>
+    </div>
+  </div>
+</body>
+</html>

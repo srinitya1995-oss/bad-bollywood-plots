@@ -1,0 +1,184 @@
+<h2>Cobalt Jewel — pick the flavor</h2>
+<p class="subtitle">All three are deep-night backgrounds with jewel-tone cards. The differences are <strong>BG temperature</strong>, <strong>BW card hue</strong>, and <strong>overall saturation</strong>. Click the one that feels closest. We'll polish from there.</p>
+
+<style>
+  .jewel-card { padding: 0; overflow: hidden; }
+  .jewel-stage {
+    padding: 24px 20px 20px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    font-family: Georgia, serif;
+  }
+  .jewel-title {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-align: center;
+  }
+  .jewel-tag {
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .jewel-cards-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .jewel-mini-card {
+    width: 88px;
+    height: 124px;
+    border-radius: 10px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 11px;
+    line-height: 1.2;
+    box-shadow: 0 8px 30px -6px var(--glow, rgba(0,0,0,0.5));
+  }
+  .jewel-mini-card .lang {
+    font-style: normal;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .jewel-mini-card .clue { font-size: 11px; }
+  .jewel-mini-card .tap {
+    font-style: normal;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .swatch-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .jewel-card .card-body { padding: 14px 16px 16px; }
+  .jewel-card .card-body h3 { margin: 0 0 4px 0; }
+  .jewel-card .card-body p { margin: 0; font-size: 13px; opacity: 0.7; }
+</style>
+
+<div class="cards">
+
+  <!-- C1 — Indigo Royal -->
+  <div class="card" data-choice="c1" onclick="toggleSelect(this)">
+    <div class="card-image jewel-card">
+      <div class="jewel-stage" style="background: #1F1748; color: #F2EDE4;">
+        <div class="jewel-title"><span style="color:#F2EDE4">BAD</span> <span style="color:#E0B341; font-style:italic;">PLOTS</span></div>
+        <div class="jewel-tag">guess the movie</div>
+        <div class="jewel-cards-row">
+          <div class="jewel-mini-card" style="background:#D81B60; color:#FFF5EA; --glow: rgba(216,27,96,0.45);">
+            <div class="lang">Bollywood</div>
+            <div class="clue">Three idiots, one engineering college...</div>
+            <div class="tap">Tap to reveal</div>
+          </div>
+          <div class="jewel-mini-card" style="background:#0F8C5C; color:#FFF5EA; --glow: rgba(15,140,92,0.45);">
+            <div class="lang">Tollywood</div>
+            <div class="clue">Man returns from US, falls for the bus girl...</div>
+            <div class="tap">Tap to reveal</div>
+          </div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#1F1748" title="BG #1F1748"></div>
+          <div class="swatch" style="background:#D81B60" title="BW #D81B60"></div>
+          <div class="swatch" style="background:#0F8C5C" title="TW #0F8C5C"></div>
+          <div class="swatch" style="background:#E0B341" title="Gold"></div>
+          <div class="swatch" style="background:#F2EDE4" title="Cream"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C1 — Indigo Royal</h3>
+      <p>Cool indigo BG, classic rose + emerald cards. The "royal palace at night" read. Most balanced, most readable.</p>
+    </div>
+  </div>
+
+  <!-- C2 — Aubergine Velvet -->
+  <div class="card" data-choice="c2" onclick="toggleSelect(this)">
+    <div class="card-image jewel-card">
+      <div class="jewel-stage" style="background: #2E1A3F; color: #F2EDE4;">
+        <div class="jewel-title"><span style="color:#F2EDE4">BAD</span> <span style="color:#F2A72E; font-style:italic;">PLOTS</span></div>
+        <div class="jewel-tag">guess the movie</div>
+        <div class="jewel-cards-row">
+          <div class="jewel-mini-card" style="background:#E91E63; color:#FFF5EA; --glow: rgba(233,30,99,0.5);">
+            <div class="lang">Bollywood</div>
+            <div class="clue">Three idiots, one engineering college...</div>
+            <div class="tap">Tap to reveal</div>
+          </div>
+          <div class="jewel-mini-card" style="background:#1F8C66; color:#FFF5EA; --glow: rgba(31,140,102,0.5);">
+            <div class="lang">Tollywood</div>
+            <div class="clue">Man returns from US, falls for the bus girl...</div>
+            <div class="tap">Tap to reveal</div>
+          </div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#2E1A3F"></div>
+          <div class="swatch" style="background:#E91E63"></div>
+          <div class="swatch" style="background:#1F8C66"></div>
+          <div class="swatch" style="background:#F2A72E"></div>
+          <div class="swatch" style="background:#F2EDE4"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C2 — Aubergine Velvet</h3>
+      <p>Warmer aubergine BG (more red than C1), hotter pink BW card. Closer to the magenta+green sticker collage on your mood board. Loud.</p>
+    </div>
+  </div>
+
+  <!-- C3 — Midnight Cinema -->
+  <div class="card" data-choice="c3" onclick="toggleSelect(this)">
+    <div class="card-image jewel-card">
+      <div class="jewel-stage" style="background: #0E1130; color: #F2EDE4;">
+        <div class="jewel-title"><span style="color:#F2EDE4">BAD</span> <span style="color:#FFD60A; font-style:italic;">PLOTS</span></div>
+        <div class="jewel-tag">guess the movie</div>
+        <div class="jewel-cards-row">
+          <div class="jewel-mini-card" style="background:#FF1A66; color:#FFF5EA; --glow: rgba(255,26,102,0.55);">
+            <div class="lang">Bollywood</div>
+            <div class="clue">Three idiots, one engineering college...</div>
+            <div class="tap">Tap to reveal</div>
+          </div>
+          <div class="jewel-mini-card" style="background:#0FA66B; color:#FFF5EA; --glow: rgba(15,166,107,0.55);">
+            <div class="lang">Tollywood</div>
+            <div class="clue">Man returns from US, falls for the bus girl...</div>
+            <div class="tap">Tap to reveal</div>
+          </div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#0E1130"></div>
+          <div class="swatch" style="background:#FF1A66"></div>
+          <div class="swatch" style="background:#0FA66B"></div>
+          <div class="swatch" style="background:#FFD60A"></div>
+          <div class="swatch" style="background:#F2EDE4"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C3 — Midnight Cinema</h3>
+      <p>Almost-black cobalt BG, neon-bright cards, chrome yellow gold. Highest contrast, most "single-screen theatre at night" energy. Boldest.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:32px">All three keep <strong>cream type</strong> and <strong>Playfair Display italic</strong> for the wordmark. Difference is just BG depth, card hue, and gold tone. Tell me which one you want me to mock up at full home-screen fidelity next.</p>

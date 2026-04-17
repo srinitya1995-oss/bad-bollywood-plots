@@ -1,0 +1,597 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@700;900&family=Bowlby+One&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. I · A PARTY GAME</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक १</span>
+    <span>FOUR FRIENDS MIN.</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Home — four layout grammars</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:680px;">
+    Same colors. Same fonts. Same content. Four different geometries — centered classical, left-aligned editorial, Swiss grid, and asymmetric cinematic. The validated cream+ink+tomato stack is locked; what's varying is how the elements arrange on the page.
+  </p>
+</div>
+
+<style>
+  :root {
+    --paper: #EBDEC1;
+    --paper-deep: #DCCBA4;
+    --ink: #1A0F08;
+    --ink-soft: #3D2814;
+    --tomato: #C8321A;
+    --tomato-deep: #8E1F0C;
+  }
+
+  .grammar-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .grammar-item { display: flex; flex-direction: column; align-items: center; }
+  .gphone {
+    width: 390px;
+    height: 800px;
+    border-radius: 38px;
+    background: var(--paper);
+    box-shadow:
+      0 0 0 8px #1a1a22,
+      0 0 0 9px #2a2a32,
+      0 36px 90px -22px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.15s ease;
+  }
+  .gphone:hover { transform: translateY(-4px); }
+  .gphone.selected { border-color: #FFD60A; box-shadow: 0 0 0 8px #1a1a22, 0 0 0 9px #2a2a32, 0 0 0 14px rgba(255,214,10,0.3), 0 36px 90px -22px rgba(0,0,0,0.7); }
+  .gphone::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(26,15,8,0.06) 0.6px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
+  }
+  .gphone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(26,15,8,0.18) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .gframe { position: relative; z-index: 2; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+  .glabel {
+    margin-top: 14px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+  }
+  .gsub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    max-width: 380px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* Universal masthead pattern */
+  .gm {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 8px 22px 6px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .gm .ank {
+    font-family: 'Yatra One', serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  /* ═══════ G1 — CENTERED CLASSICAL ═══════ */
+  .g1 .gframe { padding-top: 44px; }
+  .g1 .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 30px 22px;
+  }
+  .g1 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 19px;
+    color: var(--tomato);
+    margin: 0 0 4px;
+  }
+  .g1 .word {
+    font-family: 'Anton', sans-serif;
+    font-size: 110px;
+    line-height: 0.82;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .g1 .pull {
+    text-align: center;
+    margin: 14px 28px 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  .g1 .pull::before, .g1 .pull::after { content: "—"; color: var(--tomato); margin: 0 6px; font-style: normal; }
+  .g1 .stack {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 12px;
+  }
+  .g1 .mc {
+    position: absolute;
+    width: 200px; height: 270px;
+    border-radius: 5px;
+    padding: 16px 14px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 18px 36px -10px rgba(26,15,8,0.5);
+    border: 1px solid rgba(26,15,8,0.2);
+  }
+  .g1 .mc.bw { background: var(--ink); color: var(--paper); transform: rotate(-7deg) translate(-30px, 0); z-index: 1; }
+  .g1 .mc.tw { background: var(--paper); color: var(--ink); transform: rotate(5deg) translate(32px, 14px); z-index: 2; }
+  .g1 .mc .lbl { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 5px; opacity: 0.85; display: flex; justify-content: space-between; }
+  .g1 .mc .clue { flex: 1; display: flex; align-items: center; font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 18px; line-height: 1; text-transform: uppercase; padding: 12px 0 4px; }
+  .g1 .mc .tap { font-family: 'Khand', sans-serif; font-weight: 500; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; text-align: right; opacity: 0.65; }
+  .g1 .cta {
+    margin-top: 10px;
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 16px 38px 14px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 4px 4px 0 var(--tomato);
+    cursor: pointer;
+  }
+  .g1 .secondary {
+    margin-top: 12px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ═══════ G2 — LEFT-ALIGNED EDITORIAL ═══════ */
+  .g2 .gframe { padding-top: 44px; }
+  .g2 .body { flex: 1; padding: 24px 28px 20px; display: flex; flex-direction: column; }
+  .g2 .kicker {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--tomato);
+    margin-bottom: 10px;
+  }
+  .g2 .word {
+    font-family: 'Anton', sans-serif;
+    font-size: 96px;
+    line-height: 0.8;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .g2 .word .second { color: var(--tomato); display: block; }
+  .g2 .deck {
+    margin-top: 18px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.4;
+    border-top: 1px solid var(--ink);
+    padding-top: 12px;
+    max-width: 280px;
+  }
+  .g2 .deck strong { color: var(--tomato); font-style: normal; font-weight: 700; }
+  .g2 .meta-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(26,15,8,0.3);
+    border-bottom: 1px solid rgba(26,15,8,0.3);
+    padding: 12px 0;
+  }
+  .g2 .meta-grid div span { color: var(--tomato); display: block; font-weight: 700; }
+  .g2 .horiz-card {
+    margin-top: auto;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 6px 6px 0 var(--tomato);
+  }
+  .g2 .horiz-card .num {
+    font-family: 'Anton', sans-serif;
+    font-size: 50px;
+    line-height: 0.85;
+    color: var(--tomato);
+  }
+  .g2 .horiz-card .text {
+    flex: 1;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  .g2 .horiz-card .text strong { font-weight: 700; font-size: 15px; display: block; text-transform: uppercase; letter-spacing: 0.04em; }
+  .g2 .horiz-card .arrow {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    color: var(--tomato);
+  }
+
+  /* ═══════ G3 — SWISS GRID ═══════ */
+  .g3 .gframe { padding-top: 44px; }
+  .g3 .body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    border-top: 2px solid var(--ink);
+    margin: 0 22px 22px;
+  }
+  .g3 .cell { border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 12px; box-sizing: border-box; }
+  .g3 .cell.no-r { border-right: none; }
+  .g3 .cell.no-b { border-bottom: none; }
+  .g3 .cell.span2 { grid-column: span 2; }
+  .g3 .lbl-cell {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tomato);
+  }
+  .g3 .lbl-cell .v { color: var(--ink); display: block; font-size: 14px; margin-top: 2px; }
+  .g3 .word-cell {
+    font-family: 'Anton', sans-serif;
+    font-size: 78px;
+    line-height: 0.78;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    text-align: left;
+    padding: 16px 12px;
+  }
+  .g3 .word-cell .accent { color: var(--tomato); }
+  .g3 .card-cell {
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+  }
+  .g3 .card-cell .lbl {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tomato);
+    border-bottom: 1px solid var(--tomato);
+    padding-bottom: 4px;
+  }
+  .g3 .card-cell .clue {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .g3 .card-cell .tap {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    opacity: 0.7;
+    margin-top: 8px;
+  }
+  .g3 .card-cell.tw { background: var(--paper); color: var(--ink); }
+  .g3 .card-cell.tw .lbl { color: var(--tomato); border-color: var(--tomato); }
+  .g3 .cta-cell {
+    background: var(--tomato);
+    color: var(--paper);
+    text-align: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 18px 12px;
+    cursor: pointer;
+  }
+
+  /* ═══════ G4 — ASYMMETRIC CINEMATIC ═══════ */
+  .g4 .gframe { padding-top: 44px; }
+  .g4 .body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  .g4 .corner-num {
+    position: absolute;
+    top: 22px;
+    left: 26px;
+    font-family: 'Yatra One', serif;
+    font-size: 60px;
+    color: var(--tomato);
+    line-height: 0.85;
+  }
+  .g4 .corner-num small {
+    display: block;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .g4 .word {
+    position: absolute;
+    top: 28px;
+    right: 26px;
+    font-family: 'Anton', sans-serif;
+    font-size: 84px;
+    line-height: 0.78;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .g4 .word .accent { color: var(--tomato); display: block; }
+  .g4 .quote {
+    position: absolute;
+    top: 240px;
+    left: 26px;
+    width: 200px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--tomato);
+    padding: 6px 0 6px 12px;
+  }
+  .g4 .big-card {
+    position: absolute;
+    bottom: -40px;
+    right: -30px;
+    width: 280px;
+    height: 320px;
+    background: var(--ink);
+    color: var(--paper);
+    transform: rotate(-8deg);
+    padding: 22px 22px 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px -10px 0 var(--tomato), 0 30px 60px -16px rgba(0,0,0,0.6);
+  }
+  .g4 .big-card .lbl {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tomato);
+    border-bottom: 1px solid var(--tomato);
+    padding-bottom: 6px;
+  }
+  .g4 .big-card .clue {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    padding: 14px 0;
+  }
+  .g4 .big-card .tap {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    opacity: 0.7;
+  }
+  .g4 .cta-fixed {
+    position: absolute;
+    top: 380px;
+    left: 26px;
+    background: var(--tomato);
+    color: var(--paper);
+    border: none;
+    padding: 14px 26px 12px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 5px 5px 0 var(--ink);
+    cursor: pointer;
+  }
+  .g4 .footnote {
+    position: absolute;
+    bottom: 18px;
+    left: 26px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.5);
+    z-index: 3;
+  }
+</style>
+
+<div class="grammar-row">
+
+  <!-- ═══ G1 — CENTERED CLASSICAL ═══ -->
+  <div class="grammar-item">
+    <div class="gphone g1" data-choice="g1" onclick="this.classList.toggle('selected')">
+      <div class="gframe">
+        <div class="gm"><span>VOL. I · A PARTY GAME</span><span class="ank">अंक १</span><span>4 FRIENDS</span></div>
+        <div class="body">
+          <p class="devnag">बैड प्लॉट्स</p>
+          <h1 class="word">BAD<br>PLOTS</h1>
+          <p class="pull">An anthology of terrible movie descriptions, played at chai gatherings</p>
+          <div class="stack">
+            <div class="mc bw">
+              <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+              <div class="clue">Three engineers learn life isn't multiple choice</div>
+              <div class="tap">tap →</div>
+            </div>
+            <div class="mc tw">
+              <div class="lbl"><span>Tollywood</span><span>Hard</span></div>
+              <div class="clue">NRI returns. Bus girl. Father objects.</div>
+              <div class="tap">tap →</div>
+            </div>
+          </div>
+          <button class="cta">Deal me in</button>
+          <div class="secondary">+ play with friends · suggest a movie</div>
+        </div>
+      </div>
+    </div>
+    <div class="glabel">G1 · Centered Classical</div>
+    <div class="gsub">Symmetric. Wordmark above the cards. Closest to the original validated mockup. Most universal-poster.</div>
+  </div>
+
+  <!-- ═══ G2 — LEFT-ALIGNED EDITORIAL ═══ -->
+  <div class="grammar-item">
+    <div class="gphone g2" data-choice="g2" onclick="this.classList.toggle('selected')">
+      <div class="gframe">
+        <div class="gm"><span>VOL. I</span><span class="ank">अंक १</span><span>2026 EDITION</span></div>
+        <div class="body">
+          <div class="kicker">— A party game in one volume —</div>
+          <h1 class="word">BAD<span class="second">PLOTS</span></h1>
+          <p class="deck">An <strong>anthology</strong> of terrible movie descriptions, played at chai gatherings, Diwali parties, and the kind of houses with too many cushions.</p>
+          <div class="meta-grid">
+            <div><span>Players</span>2 to 8</div>
+            <div><span>Time</span>20 min</div>
+            <div><span>Difficulty</span>Adjustable</div>
+            <div><span>Mood</span>Loud</div>
+          </div>
+          <div class="horiz-card">
+            <div class="num">12</div>
+            <div class="text">
+              <strong>Cards per round</strong>
+              easy → medium → hard
+            </div>
+            <div class="arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="glabel">G2 · Left-Aligned Editorial</div>
+    <div class="gsub">Magazine page. Big left wordmark, deck paragraph, monospace meta grid, horizontal card-as-CTA. Reads like a feature spread.</div>
+  </div>
+
+  <!-- ═══ G3 — SWISS GRID ═══ -->
+  <div class="grammar-item">
+    <div class="gphone g3" data-choice="g3" onclick="this.classList.toggle('selected')">
+      <div class="gframe">
+        <div class="gm"><span>VOL. I · A PARTY GAME</span><span class="ank">अंक १</span><span>4 FRIENDS</span></div>
+        <div class="body">
+          <div class="cell lbl-cell">№<span class="v">001</span></div>
+          <div class="cell no-r lbl-cell">PLAY<span class="v">2-8</span></div>
+          <div class="cell span2 word-cell no-r">BAD<br><span class="accent">PLOTS</span></div>
+          <div class="cell card-cell">
+            <div>
+              <div class="lbl">Bollywood</div>
+              <div class="clue">Three engineers learn life isn't multiple choice</div>
+            </div>
+            <div class="tap">2009 · Med</div>
+          </div>
+          <div class="cell card-cell tw no-r">
+            <div>
+              <div class="lbl">Tollywood</div>
+              <div class="clue">NRI returns. Bus girl. Father objects.</div>
+            </div>
+            <div class="tap">2003 · Hard</div>
+          </div>
+          <div class="cell cta-cell span2 no-r no-b">DEAL ME IN ↓</div>
+        </div>
+      </div>
+    </div>
+    <div class="glabel">G3 · Swiss Grid</div>
+    <div class="gsub">Hard rules. Everything fits in cells. The Müller-Brockmann take. Most disciplined, most unusual for a game app.</div>
+  </div>
+
+  <!-- ═══ G4 — ASYMMETRIC CINEMATIC ═══ -->
+  <div class="grammar-item">
+    <div class="gphone g4" data-choice="g4" onclick="this.classList.toggle('selected')">
+      <div class="gframe">
+        <div class="gm"><span>VOL. I</span><span class="ank">अंक १</span><span>NIGHT EDITION</span></div>
+        <div class="body">
+          <div class="corner-num">अंक १<small>issue one</small></div>
+          <h1 class="word">BAD<span class="accent">PLOTS</span></h1>
+          <p class="quote">An anthology of terrible movie descriptions. Best played out loud, after dinner, with friends who argue about cinema.</p>
+          <button class="cta-fixed">Deal me in</button>
+          <div class="big-card">
+            <div class="lbl">Bollywood · Med</div>
+            <div class="clue">Three engineers learn life isn't multiple choice</div>
+            <div class="tap">tap to reveal →</div>
+          </div>
+          <div class="footnote">— suggest a movie · play with friends —</div>
+        </div>
+      </div>
+    </div>
+    <div class="glabel">G4 · Asymmetric Cinematic</div>
+    <div class="gsub">Big negative space. Wordmark in one corner, single rotated card oversized in the other. Cinematic, not symmetric. Closest to a film poster.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Click as many as you want. The card metaphors page is loaded too — flip back and forth between them at <strong>http://localhost:50142</strong>. Tell me which grammar to push to game + results, or which to mash with which card metaphor.
+</p>

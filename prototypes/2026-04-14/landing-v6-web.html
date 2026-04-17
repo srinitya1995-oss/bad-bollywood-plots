@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — landing v6 · web</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6EBD1;
+    --ink: #1A1208;
+    --ink-soft: rgba(26,18,8,0.55);
+    --ink-line: rgba(26,18,8,0.22);
+    --pen: #1B3F8C;
+    --tomato: #C8321C;
+    --stage: #14100a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* FULL-BLEED HERO BG */
+  .bg { position: fixed; inset: 0; z-index: -2; background: #2a1d10; }
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 85%;
+    filter: saturate(1.08) contrast(1.04);
+  }
+  .wash {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(40,24,8,0.35) 0%, rgba(40,24,8,0.00) 18%, rgba(20,14,6,0.00) 58%, rgba(10,6,2,0.55) 100%);
+    pointer-events: none;
+  }
+
+  /* Masthead bar */
+  .mast {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    z-index: 20;
+    background: linear-gradient(180deg, rgba(15,8,3,0.75) 0%, rgba(15,8,3,0.0) 100%);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+  .mast .word {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  .mast .nav {
+    display: flex;
+    gap: 36px;
+    opacity: 0.9;
+  }
+  .mast .score { color: #F7D05B; }
+
+  /* HERO CARD */
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 40px 88px;
+  }
+  .card {
+    width: min(620px, 92vw);
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 40px 56px 34px;
+    box-shadow: 0 48px 120px rgba(0,0,0,0.55), 0 0 0 1px rgba(26,18,8,0.15);
+    text-align: center;
+    position: relative;
+  }
+  .card-kicker {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(58px, 8vw, 92px);
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-top: 26px;
+  }
+  .card-title .amp {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 2.8vw, 36px);
+    line-height: 1;
+    color: var(--tomato);
+    margin-top: 12px;
+    letter-spacing: -0.01em;
+  }
+  .card-tag {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.38;
+    color: var(--ink);
+    margin: 26px auto 0;
+    max-width: 440px;
+  }
+  .card-rule {
+    height: 1px;
+    background: var(--ink-line);
+    margin: 24px 0 14px;
+  }
+  .card-pen {
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--pen);
+  }
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink-line);
+  }
+
+  /* Actions floating below card */
+  .actions {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 16px 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(246,235,209,0.4);
+    background: rgba(20,16,8,0.55);
+    color: var(--paper);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    min-width: 200px;
+  }
+  .btn.primary {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+    padding: 18px 48px;
+    font-size: 12px;
+    min-width: 240px;
+  }
+  .btn-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  /* Bottom meta chip */
+  .chip {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 0 26px;
+    text-align: center;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    background: linear-gradient(180deg, rgba(15,8,3,0.0) 0%, rgba(15,8,3,0.65) 100%);
+    z-index: 10;
+  }
+  .chip .pen {
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    font-weight: 500;
+    color: #F7D05B;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-left: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"><img src="/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg" alt=""></div>
+  <div class="wash"></div>
+
+  <header class="mast">
+    <div class="word">Bad Desi Plots</div>
+    <nav class="nav">
+      <span>How to play</span>
+      <span>The cards</span>
+      <span>About</span>
+    </nav>
+  </header>
+
+  <main class="stage">
+    <div>
+      <div class="card">
+        <div class="card-kicker">An Indian Party Game · Vol. I</div>
+        <div class="card-title">
+          Bad Desi Plots
+          <span class="amp">the terrible-plot round</span>
+        </div>
+        <div class="card-tag">
+          Read a plot so bad it should never have been greenlit. Guess the movie before the phone passes.
+        </div>
+        <div class="card-rule"></div>
+        <div class="card-pen">arrey yeh kaunsi picture hai??</div>
+        <div class="card-foot">
+          <span>2 to 8 players</span>
+          <span>Pass the phone</span>
+          <span>5 min rounds</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary">Start the round</button>
+        <div class="btn-row">
+          <button class="btn">How to play</button>
+          <button class="btn">Send to my phone</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="chip">
+    Best played on your phone, passed around a room <span class="pen">scan to play</span>
+  </div>
+</body>
+</html>

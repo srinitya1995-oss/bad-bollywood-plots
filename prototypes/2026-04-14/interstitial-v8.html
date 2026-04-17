@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — v8 pass the phone</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_v8.css">
+<style>
+  .inter {
+    position: absolute;
+    top: 180px;
+    left: 24px;
+    right: 24px;
+    text-align: center;
+    z-index: 10;
+  }
+  .inter-kicker {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.44em;
+    color: var(--gold-bright);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    margin-bottom: 14px;
+  }
+  .inter-pass {
+    font-family: 'Anton', sans-serif;
+    font-size: 54px;
+    line-height: 0.9;
+    color: var(--paper);
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0 var(--tomato), 0 6px 22px rgba(0,0,0,0.7);
+    letter-spacing: -0.005em;
+  }
+  .inter-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 84px;
+    line-height: 0.88;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-top: 10px;
+    letter-spacing: -0.01em;
+    text-shadow: 4px 4px 0 var(--ink), 0 10px 30px rgba(0,0,0,0.75);
+  }
+  .inter-turn {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 8px 18px;
+    background: var(--ink);
+    border: 2px solid var(--gold-bright);
+    color: var(--paper);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.24em;
+  }
+  .inter-turn .pts { color: var(--gold-bright); }
+
+  .tap {
+    position: absolute;
+    bottom: 48px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--paper);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    z-index: 20;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* Decorative stamp ornament */
+  .phone-stamp {
+    position: absolute;
+    top: 130px;
+    left: 26px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--paper);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-12deg);
+    z-index: 14;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 9px;
+    color: var(--paper);
+    letter-spacing: 0.14em;
+    text-align: center;
+    line-height: 1.1;
+    opacity: 0.8;
+  }
+  .badge {
+    position: absolute;
+    top: 120px;
+    right: 22px;
+    background: var(--gold-bright);
+    border: 2px solid var(--ink);
+    padding: 4px 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink);
+    transform: rotate(6deg);
+    z-index: 14;
+    box-shadow: 2px 3px 0 var(--ink);
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="bg"><img src="/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg" alt=""></div>
+    <div class="wash"></div>
+    <div class="bulb-glow"></div>
+
+    <div class="topband">
+      <div class="topband-title">Bad <span class="t2">Desi</span> Plots</div>
+      <div class="topband-right">
+        <span>Turn 3 / 12</span>
+        <span class="divider"></span>
+        <span class="pts">14 pts</span>
+      </div>
+    </div>
+
+    <div class="phone-stamp slideup d1">PASS<br>THE<br>PHONE</div>
+    <div class="badge slideup d2">+2 PTS LAST TURN</div>
+
+    <div class="inter">
+      <div class="inter-kicker slideup d1">Alright players…</div>
+      <div class="inter-pass slideup d2">Hand the phone to</div>
+      <div class="inter-name slideup d3">Priya</div>
+      <div class="inter-turn slideup d4">SHE READS THE NEXT PLOT · <span class="pts">2 PTS ON THE LINE</span></div>
+    </div>
+
+    <div class="tap">tap anywhere when ready</div>
+  </div>
+</body>
+</html>

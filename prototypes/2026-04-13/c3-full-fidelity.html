@@ -1,0 +1,527 @@
+<h2>C3 — Midnight Cinema, full fidelity</h2>
+<p class="subtitle">Real Playfair Display + DM Sans, real card glow, real proportions at 375px phone width. Home → Game → Results. Tell me what to fix, what to push further, what to cut.</p>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --c3-bg: #0E1130;
+    --c3-bg-deep: #060828;
+    --c3-bw: #FF1A66;
+    --c3-tw: #0FA66B;
+    --c3-gold: #FFD60A;
+    --c3-cream: #F2EDE4;
+    --c3-cream-dim: rgba(242, 237, 228, 0.62);
+    --c3-glow-bw: rgba(255, 26, 102, 0.55);
+    --c3-glow-tw: rgba(15, 166, 107, 0.55);
+  }
+
+  .phone-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .phone {
+    width: 375px;
+    height: 740px;
+    border-radius: 36px;
+    background: var(--c3-bg);
+    box-shadow:
+      0 0 0 8px #1a1a22,
+      0 0 0 9px #2a2a32,
+      0 30px 80px -20px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--c3-cream);
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  .phone-label {
+    text-align: center;
+    margin-top: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ───────── HOME ───────── */
+  .home {
+    padding: 56px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+    background: radial-gradient(ellipse at top, #1a1648 0%, var(--c3-bg) 60%);
+  }
+  .home-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    margin: 0;
+    text-align: center;
+  }
+  .home-title .bad { color: var(--c3-cream); }
+  .home-title .plots {
+    color: var(--c3-gold);
+    font-style: italic;
+    display: block;
+  }
+  .home-tag {
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c3-cream-dim);
+  }
+  .home-cinema {
+    width: 100%;
+    margin-top: 38px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .cinema-btn {
+    border: none;
+    border-radius: 18px;
+    padding: 22px 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    color: var(--c3-cream);
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 18px 40px -10px var(--btn-glow);
+  }
+  .cinema-btn .lang {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1;
+    display: block;
+  }
+  .cinema-btn .sub {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    display: block;
+    margin-top: 8px;
+  }
+  .bw-btn { background: var(--c3-bw); --btn-glow: var(--c3-glow-bw); }
+  .tw-btn { background: var(--c3-tw); --btn-glow: var(--c3-glow-tw); }
+
+  .home-mode {
+    margin-top: 28px;
+    display: inline-flex;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    padding: 4px;
+  }
+  .home-mode button {
+    border: none;
+    background: transparent;
+    color: var(--c3-cream-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .home-mode button.active {
+    background: var(--c3-gold);
+    color: #1a0f0a;
+    font-weight: 700;
+  }
+  .home-mode-desc {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--c3-cream-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .home-friends {
+    margin-top: 18px;
+    background: transparent;
+    border: 1px solid rgba(242,237,228,0.25);
+    color: var(--c3-cream);
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .home-coming {
+    margin-top: 22px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .coming-chip {
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(242,237,228,0.18);
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 10px;
+    color: var(--c3-cream-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .home-footer {
+    margin-top: auto;
+    font-size: 10px;
+    color: rgba(242,237,228,0.4);
+    letter-spacing: 0.06em;
+  }
+  .home-footer .dot { margin: 0 6px; }
+
+  /* ───────── GAME ───────── */
+  .game {
+    padding: 50px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    background: radial-gradient(ellipse at center, #16143a 0%, var(--c3-bg) 70%);
+  }
+  .game-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--c3-cream-dim);
+  }
+  .game-bar .exit {
+    background: transparent;
+    border: none;
+    color: var(--c3-cream-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+  .game-bar .progress { letter-spacing: 0.08em; }
+  .game-bar .score {
+    color: var(--c3-gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .progress-bar {
+    height: 2px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-bar > div {
+    width: 25%;
+    height: 100%;
+    background: var(--c3-gold);
+  }
+
+  .card-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 0;
+  }
+  .play-card {
+    width: 280px;
+    height: 380px;
+    background: var(--c3-bw);
+    border-radius: 22px;
+    box-shadow: 0 28px 70px -10px var(--c3-glow-bw), 0 0 0 1px rgba(255,255,255,0.06);
+    padding: 22px 22px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    color: var(--c3-cream);
+    position: relative;
+  }
+  .play-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .play-card-meta .ind {
+    font-weight: 700;
+  }
+  .play-card-meta .badge {
+    background: rgba(0,0,0,0.18);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-weight: 500;
+  }
+  .play-card-clue {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.3;
+    text-align: center;
+    padding: 8px 4px;
+  }
+  .play-card-tap {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  /* ───────── RESULTS ───────── */
+  .results {
+    padding: 50px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    background: radial-gradient(ellipse at top, #1c1750 0%, var(--c3-bg) 65%);
+  }
+  .res-eyebrow {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--c3-cream-dim);
+    margin: 10px 0 14px;
+  }
+  .res-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--c3-gold);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .res-subtitle {
+    text-align: center;
+    margin: 14px 22px 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--c3-cream-dim);
+    font-style: italic;
+  }
+  .res-tier {
+    margin: 18px auto 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,214,10,0.1);
+    border: 1px solid rgba(255,214,10,0.3);
+    color: var(--c3-gold);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    align-self: center;
+  }
+  .res-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .res-stat {
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 16px 8px 14px;
+    text-align: center;
+  }
+  .res-stat-n {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--c3-cream);
+    display: block;
+  }
+  .res-stat-n.gold { color: var(--c3-gold); }
+  .res-stat-l {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c3-cream-dim);
+    margin-top: 8px;
+    display: block;
+  }
+  .res-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .res-actions .primary {
+    background: var(--c3-bw);
+    color: var(--c3-cream);
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 14px 30px -10px var(--c3-glow-bw);
+  }
+  .res-actions .secondary {
+    background: transparent;
+    border: 1px solid rgba(242,237,228,0.25);
+    color: var(--c3-cream);
+    border-radius: 14px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .res-actions .link {
+    background: transparent;
+    border: none;
+    color: var(--c3-cream-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-top: 4px;
+    cursor: pointer;
+  }
+</style>
+
+<div class="phone-row">
+
+  <!-- ─────────── HOME ─────────── -->
+  <div>
+    <div class="phone">
+      <div class="home">
+        <h1 class="home-title">
+          <span class="bad">BAD</span>
+          <span class="plots">PLOTS</span>
+        </h1>
+        <p class="home-tag">guess the movie from the terrible plot</p>
+
+        <div class="home-cinema">
+          <button class="cinema-btn bw-btn">
+            <span class="lang">Bollywood</span>
+            <span class="sub">75 cards</span>
+          </button>
+          <button class="cinema-btn tw-btn">
+            <span class="lang">Tollywood</span>
+            <span class="sub">75 cards</span>
+          </button>
+        </div>
+
+        <div class="home-mode">
+          <button class="active">Party</button>
+          <button>Endless</button>
+        </div>
+        <p class="home-mode-desc">12 cards · mixed difficulty</p>
+
+        <button class="home-friends">+ Add friends</button>
+
+        <div class="home-coming">
+          <span class="coming-chip">Tamil · soon</span>
+          <span class="coming-chip">Malayalam · soon</span>
+        </div>
+
+        <div class="home-footer">Suggest a Movie<span class="dot">·</span>Feedback<span class="dot">·</span>@Srinitya</div>
+      </div>
+    </div>
+    <div class="phone-label">Home</div>
+  </div>
+
+  <!-- ─────────── GAME ─────────── -->
+  <div>
+    <div class="phone">
+      <div class="game">
+        <div class="game-bar">
+          <button class="exit">← Exit</button>
+          <span class="progress">3 / 12</span>
+          <span class="score">24 pts</span>
+        </div>
+        <div class="progress-bar"><div></div></div>
+
+        <div class="card-stage">
+          <div class="play-card">
+            <div class="play-card-meta">
+              <span class="ind">Bollywood</span>
+              <span class="badge">2010s · medium</span>
+            </div>
+            <div class="play-card-clue">
+              "Three engineering students learn that life isn't a multiple choice question. The professor disagrees. Loudly."
+            </div>
+            <div class="play-card-tap">Tap to reveal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-label">Game · card front</div>
+  </div>
+
+  <!-- ─────────── RESULTS ─────────── -->
+  <div>
+    <div class="phone">
+      <div class="results">
+        <p class="res-eyebrow">Game Over</p>
+        <h1 class="res-title">Too Much<br>Cinema</h1>
+        <p class="res-subtitle">You've seen too many movies. Seek help. Or watch a documentary.</p>
+        <div style="text-align:center;">
+          <span class="res-tier">★ Movie Buff · Top 12%</span>
+        </div>
+
+        <div class="res-stats">
+          <div class="res-stat">
+            <span class="res-stat-n gold">1247</span>
+            <span class="res-stat-l">Rating</span>
+          </div>
+          <div class="res-stat">
+            <span class="res-stat-n">8/12</span>
+            <span class="res-stat-l">Correct</span>
+          </div>
+          <div class="res-stat">
+            <span class="res-stat-n">24</span>
+            <span class="res-stat-l">Points</span>
+          </div>
+        </div>
+
+        <div class="res-actions">
+          <button class="primary">Play again</button>
+          <button class="secondary">Share score</button>
+          <button class="link">How was that?</button>
+        </div>
+      </div>
+    </div>
+    <div class="phone-label">Results</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:32px;text-align:center;">
+React to anything: the gold tone, the card glow, the rose hue, the wordmark, the spacing, the verdict copy. What fights for your attention? What's missing the soul?
+</p>

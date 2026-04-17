@@ -1,0 +1,469 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. VII · BREAKING THE PATTERN</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक ७</span>
+    <span>NO TOP/BOTTOM RULES</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Card lab — different compositions</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:700px;">
+    Four different compositional grammars. Corner stamp, vertical spine, top-heavy block, centered medallion. <strong>Zero top/bottom horizontal rules.</strong> Each card has personality without falling back on the same sandwich layout. No Devanagari on the cards. 3 colors max. Front + back paired.
+  </p>
+</div>
+
+<style>
+  .comp-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 40px;
+    align-items: center;
+  }
+  .comp-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 18px 22px;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .comp-row:hover { background: rgba(255,255,255,0.03); }
+  .comp-row.selected { border-color: #FFD60A; background: rgba(255,214,10,0.06); }
+  .comp-cards {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .comp-arrow {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    color: rgba(255,255,255,0.35);
+  }
+  .comp-label {
+    margin-top: 18px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+  }
+  .comp-sub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    max-width: 660px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .face-tag {
+    position: absolute;
+    top: -10px; left: 16px;
+    background: #1a1a22;
+    color: rgba(255,255,255,0.8);
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    z-index: 10;
+  }
+  .face {
+    width: 280px;
+    height: 400px;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 22px 50px -12px rgba(0,0,0,0.55);
+    overflow: hidden;
+  }
+
+  /* ════════ A · CORNER STAMP ════════ */
+  /* Composition: clue fills entire card edge-to-edge.
+     Meta is a circular stamp in the upper-right corner.
+     No horizontal rules. */
+  .ca {
+    background: #F1E8D2;
+    color: #1A0F08;
+    border: 1px solid rgba(26,15,8,0.2);
+    padding: 0;
+  }
+  .ca .stamp {
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid #C73821;
+    color: #C73821;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+    transform: rotate(-8deg);
+  }
+  .ca .stamp .big { font-family: 'Bungee', sans-serif; font-size: 13px; margin-top: 2px; }
+  .ca .clue {
+    position: absolute;
+    inset: 28px 28px 70px 28px;
+    display: flex;
+    align-items: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 38px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #1A0F08;
+    padding-right: 50px;
+  }
+  .ca .tap {
+    position: absolute;
+    bottom: 22px; left: 28px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C73821;
+  }
+  .ca.back .stamp { background: #C73821; color: #F1E8D2; border-color: #C73821; }
+  .ca.back .body { position: absolute; inset: 28px 28px 70px 28px; display: flex; flex-direction: column; justify-content: center; padding-right: 50px; }
+  .ca.back .body .title { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 56px; line-height: 0.85; color: #C73821; margin-bottom: 8px; text-transform: uppercase; }
+  .ca.back .body .year { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,15,8,0.55); margin-bottom: 12px; }
+  .ca.back .body .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; line-height: 1.45; color: rgba(26,15,8,0.78); }
+
+  /* ════════ B · VERTICAL SPINE ════════ */
+  /* Composition: meta is a vertical spine on the left edge.
+     Clue fills the rest of the card to the right of the spine. */
+  .cb {
+    background: #C73821;
+    color: #F5E8C8;
+    padding: 0;
+    display: flex;
+  }
+  .cb .spine {
+    width: 36px;
+    background: #1A0F08;
+    color: #F5E8C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cb .spine .label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .cb .spine .label .dot { color: #F5E8C8; }
+  .cb .body {
+    flex: 1;
+    padding: 30px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cb .clue {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 1.05;
+    color: #F5E8C8;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .cb .tap {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,232,200,0.6);
+    align-self: flex-end;
+  }
+  .cb.back { background: #8E1F0C; }
+  .cb.back .body .title { font-family: 'Anton', sans-serif; font-size: 64px; line-height: 0.85; color: #F5E8C8; text-transform: uppercase; letter-spacing: -0.02em; }
+  .cb.back .body .year { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #F2B500; margin-top: 10px; }
+  .cb.back .body .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; line-height: 1.45; color: rgba(245,232,200,0.85); margin-top: 14px; }
+  .cb.back .body { justify-content: center; }
+  .cb.back .body .clue-replacement { display: none; }
+
+  /* ════════ C · TOP HEAVY BLOCK ════════ */
+  /* Composition: top 70% is colored block holding the clue.
+     Bottom 30% is paper holding the meta + tap.
+     The COLOR break is the divider, not a rule. */
+  .cc {
+    background: #F1E8D2;
+    color: #1A0F08;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .cc .top-block {
+    background: #B85420;
+    color: #F1E8D2;
+    flex: 0 0 70%;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .cc .top-block .badge {
+    align-self: flex-start;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F1E8D2;
+    background: rgba(241,232,210,0.15);
+    padding: 4px 10px;
+  }
+  .cc .top-block .clue {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #F1E8D2;
+  }
+  .cc .bot-block {
+    flex: 1;
+    padding: 14px 24px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #F1E8D2;
+  }
+  .cc .bot-block .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #B85420;
+  }
+  .cc .bot-block .tap {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.55);
+    margin-top: 4px;
+  }
+  .cc.back .top-block { background: #1A0F08; }
+  .cc.back .top-block .badge { background: rgba(241,232,210,0.12); color: #F2B500; }
+  .cc.back .top-block .title { font-family: 'Anton', sans-serif; font-size: 60px; line-height: 0.85; text-transform: uppercase; letter-spacing: -0.02em; color: #F2B500; }
+  .cc.back .top-block .clue { display: none; }
+  .cc.back .bot-block { background: #F1E8D2; }
+  .cc.back .bot-block .meta { color: #B85420; }
+  .cc.back .bot-block .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 12px; line-height: 1.4; color: rgba(26,15,8,0.78); margin-top: 4px; }
+
+  /* ════════ D · CENTERED MEDALLION ════════ */
+  /* Composition: clue inside an oval/circle medallion centered on the card.
+     Decorative ground fills the rest. */
+  .cd {
+    background: #1F2E5C;
+    color: #F5E8C8;
+    padding: 0;
+    position: relative;
+  }
+  .cd::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
+  }
+  .cd .corner-tl {
+    position: absolute;
+    top: 16px; left: 18px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F2B500;
+  }
+  .cd .corner-br {
+    position: absolute;
+    bottom: 16px; right: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #F2B500;
+    opacity: 0.8;
+  }
+  .cd .medallion {
+    position: absolute;
+    inset: 60px 30px;
+    border: 1px solid #F2B500;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 30px;
+  }
+  .cd .medallion::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(242,181,0,0.4);
+    border-radius: 50%;
+  }
+  .cd .clue {
+    font-family: 'Yeseva One', serif;
+    font-size: 24px;
+    line-height: 1.1;
+    color: #F5E8C8;
+    position: relative;
+  }
+  .cd.back .medallion { border-color: #F2B500; }
+  .cd.back .body { position: absolute; inset: 60px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 30px; }
+  .cd.back .body .title { font-family: 'Yeseva One', serif; font-size: 38px; line-height: 0.95; color: #F2B500; letter-spacing: -0.01em; }
+  .cd.back .body .year { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #F5E8C8; opacity: 0.7; margin-top: 8px; }
+  .cd.back .body .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 12px; line-height: 1.4; color: rgba(245,232,200,0.85); margin-top: 12px; max-width: 200px; }
+  .cd.back .clue { display: none; }
+  .cd.back .medallion::before { display: none; }
+</style>
+
+<div class="comp-grid">
+
+  <!-- ═══ A · CORNER STAMP ═══ -->
+  <div class="comp-row" onclick="this.classList.toggle('selected')">
+    <div class="comp-cards">
+      <div class="face ca">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="stamp">Bollywood<div class="big">MED</div></div>
+        <div class="clue">Three engineers learn life isn't multiple choice</div>
+        <div class="tap">tap to reveal →</div>
+      </div>
+      <div class="comp-arrow">→</div>
+      <div class="face ca back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="stamp">Answer<div class="big">2009</div></div>
+        <div class="body">
+          <div class="title">3 Idiots</div>
+          <div class="year">Hirani · Bollywood</div>
+          <div class="fact">The "all is well" mantra outlived three sequels and one engineering syllabus.</div>
+        </div>
+      </div>
+    </div>
+    <div class="comp-label">A · Corner Stamp</div>
+    <div class="comp-sub">No top or bottom rules. Meta is a circular tilted stamp in the upper-right. Clue fills the body. Reads like an inspector-stamped document.</div>
+  </div>
+
+  <!-- ═══ B · VERTICAL SPINE ═══ -->
+  <div class="comp-row" onclick="this.classList.toggle('selected')">
+    <div class="comp-cards">
+      <div class="face cb">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="spine"><span class="label">Bollywood <span class="dot">●</span> 2009 <span class="dot">●</span> Med</span></div>
+        <div class="body">
+          <div class="clue">"Three engineers learn life is not a multiple choice question"</div>
+          <div class="tap">tap to reveal →</div>
+        </div>
+      </div>
+      <div class="comp-arrow">→</div>
+      <div class="face cb back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="spine"><span class="label">Answer <span class="dot">●</span> 2009 <span class="dot">●</span> Hirani</span></div>
+        <div class="body">
+          <div class="title">3 Idiots</div>
+          <div class="year">Bollywood · Med</div>
+          <div class="fact">The "all is well" mantra outlived three sequels and an engineering syllabus.</div>
+        </div>
+      </div>
+    </div>
+    <div class="comp-label">B · Vertical Spine</div>
+    <div class="comp-sub">Meta is a black vertical spine on the left edge with rotated text. The crimson body holds only the clue. Reads like a book or LP spine.</div>
+  </div>
+
+  <!-- ═══ C · TOP HEAVY BLOCK ═══ -->
+  <div class="comp-row" onclick="this.classList.toggle('selected')">
+    <div class="comp-cards">
+      <div class="face cc">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="top-block">
+          <div class="badge">Bollywood · Med</div>
+          <div class="clue">Three engineers learn life isn't multiple choice</div>
+        </div>
+        <div class="bot-block">
+          <div class="meta">№ 042 · 2009</div>
+          <div class="tap">tap to reveal →</div>
+        </div>
+      </div>
+      <div class="comp-arrow">→</div>
+      <div class="face cc back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="top-block">
+          <div class="badge">Answer · 2009</div>
+          <div class="title">3 Idiots</div>
+        </div>
+        <div class="bot-block">
+          <div class="meta">Hirani · Bollywood</div>
+          <div class="fact">The "all is well" mantra outlived three sequels and an engineering syllabus.</div>
+        </div>
+      </div>
+    </div>
+    <div class="comp-label">C · Top Heavy Block</div>
+    <div class="comp-sub">No rules at all. Top 70% is a sienna block (the clue lives here). Bottom 30% is cream paper (the meta lives here). The COLOR shift is the dividing line.</div>
+  </div>
+
+  <!-- ═══ D · CENTERED MEDALLION ═══ -->
+  <div class="comp-row" onclick="this.classList.toggle('selected')">
+    <div class="comp-cards">
+      <div class="face cd">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="corner-tl">Tollywood</div>
+        <div class="corner-br">Hard · 2006</div>
+        <div class="medallion">
+          <div class="clue">"NRI returns. Father objects. Bus girl waits."</div>
+        </div>
+      </div>
+      <div class="comp-arrow">→</div>
+      <div class="face cd back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="corner-tl">Answer</div>
+        <div class="corner-br">Bhaskar · 2006</div>
+        <div class="medallion">
+          <div class="body">
+            <div class="title">Bommarillu</div>
+            <div class="year">Tollywood · Hard</div>
+            <div class="fact">Siddharth's most-quoted speech is still played at South Indian engagement parties.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="comp-label">D · Centered Medallion</div>
+    <div class="comp-sub">Indigo ground with vignette. Meta floats in opposite corners (top-left + bottom-right). Clue lives inside a double-ringed gold oval. Reads like a coin or theatre programme medallion.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Four different compositional grammars, none using top/bottom rules. Tell me which one breaks the pattern in the right direction. Or tell me to push another grammar I haven't tried (full-bleed photo, off-axis diagonal, banner overlay, etc.).
+</p>

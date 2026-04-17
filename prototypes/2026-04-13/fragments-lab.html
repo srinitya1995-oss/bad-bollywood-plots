@@ -1,0 +1,703 @@
+<h2>Fragments lab — pick the parts</h2>
+<p class="subtitle">Same editorial universe, deconstructed. Click any fragment to flag it, or tell me in terminal which wordmark + which card style + which color triple + which button you want assembled. The point is to mix and match across A/B/C, not pick a finished mockup.</p>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@700;900&family=Bowlby+One&family=Caveat+Brush&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Khand:wght@500;700&family=Limelight&family=Rozha+One&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<style>
+  .lab-section {
+    margin-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 22px;
+  }
+  .lab-section h3 {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin: 0 0 14px;
+  }
+  .lab-section h3 .count {
+    color: rgba(255,255,255,0.3);
+    font-weight: 500;
+    margin-left: 6px;
+  }
+  .lab-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .frag {
+    background: #EBDEC1;
+    border-radius: 6px;
+    padding: 16px;
+    cursor: pointer;
+    position: relative;
+    color: #1A0F08;
+    transition: transform 0.12s ease;
+    border: 2px solid transparent;
+  }
+  .frag:hover { transform: translateY(-2px); }
+  .frag.selected {
+    border-color: #FFD60A;
+    box-shadow: 0 0 0 4px rgba(255,214,10,0.2);
+  }
+  .frag-label {
+    position: absolute;
+    top: -8px; left: 12px;
+    background: #1a1a22;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .frag-meta {
+    margin-top: 10px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.55);
+  }
+
+  /* ─────────── WORDMARK FRAGMENTS ─────────── */
+  .wm-frag {
+    width: 280px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .wm1 .word {
+    font-family: 'Anton', sans-serif;
+    font-size: 84px; line-height: 0.82;
+    color: #1A0F08;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .wm2 .word {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 56px; line-height: 0.86;
+    color: #C8321A;
+    text-transform: uppercase;
+  }
+  .wm2 .word .second {
+    color: #1A0F08;
+    display: block;
+    transform: rotate(-2deg);
+  }
+  .wm3 .word {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 70px; line-height: 0.86;
+    color: #1A0F08;
+  }
+  .wm3 .word .accent {
+    color: #C8321A;
+  }
+  .wm4 .word {
+    font-family: 'Anton', sans-serif;
+    font-size: 78px; line-height: 0.82;
+    color: #1A0F08;
+    text-transform: uppercase;
+  }
+  .wm4 .word .second {
+    color: #C8321A;
+    display: block;
+  }
+  .wm5 {
+    background: #EBDEC1;
+  }
+  .wm5 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 44px;
+    color: #1A0F08;
+    line-height: 1;
+  }
+  .wm5 .latin {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #C8321A;
+    margin-top: 12px;
+  }
+  .wm6 .word {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 84px; line-height: 0.78;
+    color: #1A0F08;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+  }
+  .wm7 .word {
+    font-family: 'Limelight', sans-serif;
+    font-size: 44px; line-height: 1;
+    color: #1A0F08;
+    letter-spacing: 0.04em;
+  }
+  .wm7 .by {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(26,15,8,0.6);
+    margin-top: 14px;
+  }
+  .wm8 .word {
+    font-family: 'Rozha One', serif;
+    font-size: 64px; line-height: 0.86;
+    color: #1A0F08;
+  }
+  .wm8 .word .accent {
+    color: #C8321A;
+    display: block;
+  }
+
+  /* ─────────── CARD FRAGMENTS ─────────── */
+  .card-frag {
+    width: 180px;
+    min-height: 240px;
+    padding: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .mini-card-render {
+    width: 160px;
+    height: 220px;
+    border-radius: 4px;
+    padding: 14px 12px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 28px -6px rgba(26,15,8,0.4);
+    border: 1px solid rgba(26,15,8,0.25);
+    margin: 0 auto;
+  }
+  .mini-card-render .lbl {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 5px;
+    opacity: 0.85;
+    display: flex;
+    justify-content: space-between;
+  }
+  .mini-card-render .clue {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+  }
+  .mini-card-render .tap {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    opacity: 0.6;
+  }
+
+  /* C1 — cream + ink + condensed sans */
+  .cf1 .mini-card-render { background: #F1E8D2; color: #1A0F08; }
+  .cf1 .clue { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 16px; line-height: 1; text-transform: uppercase; }
+
+  /* C2 — ink + cream + italic serif */
+  .cf2 .mini-card-render { background: #1A0F08; color: #F1E8D2; }
+  .cf2 .clue { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 14px; line-height: 1.25; }
+
+  /* C3 — cream + tomato border + sans */
+  .cf3 .mini-card-render {
+    background: #F1E8D2; color: #1A0F08;
+    border: 3px solid #C8321A;
+  }
+  .cf3 .lbl { color: #C8321A; border-color: #C8321A; opacity: 1; }
+  .cf3 .clue { font-family: 'Anton', sans-serif; font-size: 18px; line-height: 1; text-transform: uppercase; letter-spacing: -0.005em; }
+
+  /* C4 — tomato + cream + condensed */
+  .cf4 .mini-card-render { background: #C8321A; color: #F1E8D2; }
+  .cf4 .clue { font-family: 'Anton', sans-serif; font-size: 18px; line-height: 1; text-transform: uppercase; letter-spacing: -0.005em; }
+
+  /* C5 — pure massive type, no decoration */
+  .cf5 .mini-card-render { background: #F1E8D2; color: #1A0F08; padding: 16px 14px; }
+  .cf5 .lbl { display: none; }
+  .cf5 .tap { display: none; }
+  .cf5 .clue {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    align-items: flex-start;
+    padding-top: 0;
+  }
+  .cf5 .meta-bottom {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    border-top: 1px solid currentColor;
+    padding-top: 6px;
+  }
+
+  /* C6 — sepia card, gold leaf border */
+  .cf6 .mini-card-render {
+    background: #1F1208; color: #E8D8B5;
+    border: 1px solid #B8862A;
+  }
+  .cf6 .lbl { color: #B8862A; border-color: rgba(184,134,42,0.5); }
+  .cf6 .clue { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 14px; line-height: 1.2; }
+  .cf6 .tap { color: #B8862A; }
+
+  /* C7 — dashed border collage */
+  .cf7 .mini-card-render {
+    background: #FFFCEE; color: #1A0F08;
+    border: 2px dashed #1A0F08;
+    box-shadow: 5px 5px 0 #C8321A;
+  }
+  .cf7 .clue { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.01em; }
+
+  /* C8 — yellow newsprint card */
+  .cf8 .mini-card-render {
+    background: #F4E89A; color: #2A0808;
+    border: 2px solid #2A0808;
+    box-shadow: 4px 4px 0 #C8201A;
+  }
+  .cf8 .lbl { color: #C8201A; border-color: #C8201A; }
+  .cf8 .clue { font-family: 'Bowlby One', sans-serif; font-size: 13px; line-height: 1.05; text-transform: uppercase; }
+
+  /* ─────────── COLOR TRIPLES ─────────── */
+  .triple {
+    width: 200px;
+    height: 110px;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .triple .swatches { flex: 1; display: flex; }
+  .triple .sw { flex: 1; }
+  .triple .name {
+    background: #1a1a22;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 12px 8px;
+    text-align: center;
+  }
+  .triple .name small {
+    display: block;
+    font-weight: 500;
+    font-size: 8px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    text-transform: none;
+  }
+
+  /* ─────────── BUTTON FRAGMENTS ─────────── */
+  .btn-frag {
+    width: 220px;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-anton {
+    background: #1A0F08; color: #F1E8D2; border: none;
+    padding: 14px 30px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 4px 4px 0 #C8321A;
+    cursor: pointer;
+  }
+  .btn-bowlby {
+    background: #C8201A; color: #F4E89A; border: 3px solid #2A0808;
+    padding: 12px 24px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    box-shadow: 5px 5px 0 #2A0808;
+    cursor: pointer;
+    transform: rotate(-2deg);
+  }
+  .btn-italic {
+    background: transparent; color: #B8862A; border: 1px solid #B8862A;
+    padding: 14px 32px;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .btn-brush {
+    background: #FFE15A; color: #1A0F08; border: 2px solid #1A0F08;
+    padding: 10px 24px;
+    font-family: 'Caveat Brush', cursive;
+    font-size: 22px;
+    box-shadow: 4px 4px 0 #C8321A;
+    transform: rotate(-2deg);
+    cursor: pointer;
+  }
+  .btn-underline {
+    background: transparent; color: #1A0F08; border: none;
+    padding: 6px 8px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 22px;
+    border-bottom: 4px solid #C8321A;
+    cursor: pointer;
+  }
+  .btn-block {
+    background: #1A0F08; color: #F1E8D2; border: none;
+    padding: 16px 0;
+    width: 200px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-top: 3px double currentColor;
+    border-bottom: 3px double currentColor;
+  }
+
+  /* ─────────── DEVANAGARI FRAGMENTS ─────────── */
+  .dv-frag {
+    width: 220px;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .dv1 .yatra { font-family: 'Yatra One', serif; font-size: 18px; color: #C8321A; }
+  .dv1 .anton { font-family: 'Anton', sans-serif; font-size: 32px; line-height: 0.85; color: #1A0F08; text-transform: uppercase; }
+  .dv2 .yatra { font-family: 'Yatra One', serif; font-size: 56px; color: #1A0F08; line-height: 1; }
+  .dv2 .small { font-family: 'Khand', sans-serif; font-weight: 500; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(26,15,8,0.5); }
+  .dv3 { flex-direction: row; gap: 12px; }
+  .dv3 .anton { font-family: 'Anton', sans-serif; font-size: 38px; line-height: 0.85; color: #1A0F08; text-transform: uppercase; }
+  .dv3 .vert { writing-mode: vertical-rl; transform: rotate(180deg); font-family: 'Yatra One', serif; font-size: 14px; color: #C8321A; letter-spacing: 0.04em; }
+  .dv4 .ank { font-family: 'Yatra One', serif; font-size: 42px; color: #C8321A; }
+  .dv4 .lbl { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,15,8,0.5); }
+  .dv4 .word { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 0.85; text-transform: uppercase; color: #1A0F08; margin-top: 4px; }
+
+</style>
+
+<!-- ═══════ WORDMARKS ═══════ -->
+<div class="lab-section">
+  <h3>Wordmarks <span class="count">8 studies</span></h3>
+  <div class="lab-grid">
+
+    <div class="frag wm-frag wm1" data-choice="wm1" onclick="toggleSelect(this)">
+      <span class="frag-label">W1</span>
+      <div class="word">BAD<br>PLOTS</div>
+      <div class="frag-meta">Anton stacked · ink only</div>
+    </div>
+
+    <div class="frag wm-frag wm2" data-choice="wm2" onclick="toggleSelect(this)">
+      <span class="frag-label">W2</span>
+      <div class="word">BAD<span class="second">PLOTS!</span></div>
+      <div class="frag-meta">Bowlby scream · red + ink</div>
+    </div>
+
+    <div class="frag wm-frag wm3" data-choice="wm3" onclick="toggleSelect(this)">
+      <span class="frag-label">W3</span>
+      <div class="word">Bad<br><span class="accent">Plots</span></div>
+      <div class="frag-meta">DM Serif italic · ink + tomato</div>
+    </div>
+
+    <div class="frag wm-frag wm4" data-choice="wm4" onclick="toggleSelect(this)">
+      <span class="frag-label">W4</span>
+      <div class="word">BAD<span class="second">PLOTS</span></div>
+      <div class="frag-meta">Anton split · ink + tomato</div>
+    </div>
+
+    <div class="frag wm-frag wm5" data-choice="wm5" onclick="toggleSelect(this)">
+      <span class="frag-label">W5</span>
+      <div class="devnag">बैड प्लॉट्स</div>
+      <div class="latin">Bad Plots</div>
+      <div class="frag-meta">Devanagari-led · Yatra One</div>
+    </div>
+
+    <div class="frag wm-frag wm6" data-choice="wm6" onclick="toggleSelect(this)">
+      <span class="frag-label">W6</span>
+      <div class="word">BAD<br>PLOTS</div>
+      <div class="frag-meta">Big Shoulders 900 · squared</div>
+    </div>
+
+    <div class="frag wm-frag wm7" data-choice="wm7" onclick="toggleSelect(this)">
+      <span class="frag-label">W7</span>
+      <div class="word">BAD PLOTS</div>
+      <div class="by">— an anthology of terrible movies —</div>
+      <div class="frag-meta">Limelight art-deco · single line</div>
+    </div>
+
+    <div class="frag wm-frag wm8" data-choice="wm8" onclick="toggleSelect(this)">
+      <span class="frag-label">W8</span>
+      <div class="word">Bad<span class="accent">Plots</span></div>
+      <div class="frag-meta">Rozha One · Indian display serif</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ CARDS ═══════ -->
+<div class="lab-section">
+  <h3>Card fronts <span class="count">8 studies</span></h3>
+  <div class="lab-grid">
+
+    <div class="frag card-frag cf1" data-choice="cf1" onclick="toggleSelect(this)">
+      <span class="frag-label">C1</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">cream + Big Shoulders</div>
+    </div>
+
+    <div class="frag card-frag cf2" data-choice="cf2" onclick="toggleSelect(this)">
+      <span class="frag-label">C2</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not a multiple choice question</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">ink + Fraunces italic</div>
+    </div>
+
+    <div class="frag card-frag cf3" data-choice="cf3" onclick="toggleSelect(this)">
+      <span class="frag-label">C3</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">cream + tomato border + Anton</div>
+    </div>
+
+    <div class="frag card-frag cf4" data-choice="cf4" onclick="toggleSelect(this)">
+      <span class="frag-label">C4</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">tomato + Anton + cream type</div>
+    </div>
+
+    <div class="frag card-frag cf5" data-choice="cf5" onclick="toggleSelect(this)">
+      <span class="frag-label">C5</span>
+      <div class="mini-card-render">
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+        <div class="meta-bottom">Bollywood · 2009 · Med</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">type-only · no decoration</div>
+    </div>
+
+    <div class="frag card-frag cf6" data-choice="cf6" onclick="toggleSelect(this)">
+      <span class="frag-label">C6</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not a multiple choice question</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">sepia + DM Serif italic + gold leaf</div>
+    </div>
+
+    <div class="frag card-frag cf7" data-choice="cf7" onclick="toggleSelect(this)">
+      <span class="frag-label">C7</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">dashed border + Khand · sticker</div>
+    </div>
+
+    <div class="frag card-frag cf8" data-choice="cf8" onclick="toggleSelect(this)">
+      <span class="frag-label">C8</span>
+      <div class="mini-card-render">
+        <div class="lbl"><span>Bollywood</span><span>Med</span></div>
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+        <div class="tap">Tap to reveal →</div>
+      </div>
+      <div class="frag-meta" style="margin-top:8px;text-align:center">yellow newsprint + Bowlby</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ COLOR TRIPLES ═══════ -->
+<div class="lab-section">
+  <h3>Color triples <span class="count">7 studies</span></h3>
+  <div class="lab-grid">
+
+    <div class="frag triple" data-choice="t1" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T1</span>
+      <div class="swatches">
+        <div class="sw" style="background:#EBDEC1"></div>
+        <div class="sw" style="background:#1A0F08"></div>
+        <div class="sw" style="background:#C8321A"></div>
+      </div>
+      <div class="name">Editorial Cream<small>cream · ink · tomato (validated)</small></div>
+    </div>
+
+    <div class="frag triple" data-choice="t2" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T2</span>
+      <div class="swatches">
+        <div class="sw" style="background:#F4E89A"></div>
+        <div class="sw" style="background:#2A0808"></div>
+        <div class="sw" style="background:#C8201A"></div>
+      </div>
+      <div class="name">Yellow Press<small>newsprint · ink · pulp red</small></div>
+    </div>
+
+    <div class="frag triple" data-choice="t3" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T3</span>
+      <div class="swatches">
+        <div class="sw" style="background:#1F1208"></div>
+        <div class="sw" style="background:#E8D8B5"></div>
+        <div class="sw" style="background:#B8862A"></div>
+      </div>
+      <div class="name">Sepia Programme<small>dark sepia · ivory · gold leaf</small></div>
+    </div>
+
+    <div class="frag triple" data-choice="t4" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T4</span>
+      <div class="swatches">
+        <div class="sw" style="background:#F0E6CC"></div>
+        <div class="sw" style="background:#1A0F08"></div>
+        <div class="sw" style="background:#D81E5B"></div>
+        <div class="sw" style="background:#FFE15A"></div>
+      </div>
+      <div class="name">Sticker Bomb<small>oat · ink · hot rose · pop yellow</small></div>
+    </div>
+
+    <div class="frag triple" data-choice="t5" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T5</span>
+      <div class="swatches">
+        <div class="sw" style="background:#F2D5C8"></div>
+        <div class="sw" style="background:#1A0F08"></div>
+        <div class="sw" style="background:#C8321A"></div>
+      </div>
+      <div class="name">Rose Plaster<small>peach paper · ink · tomato</small></div>
+    </div>
+
+    <div class="frag triple" data-choice="t6" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T6</span>
+      <div class="swatches">
+        <div class="sw" style="background:#0E1A2E"></div>
+        <div class="sw" style="background:#F1E8D2"></div>
+        <div class="sw" style="background:#FFB300"></div>
+      </div>
+      <div class="name">Midnight Marquee<small>ink navy · cream · marquee gold</small></div>
+    </div>
+
+    <div class="frag triple" data-choice="t7" onclick="toggleSelect(this)" style="background:transparent;padding:0;color:#fff">
+      <span class="frag-label">T7</span>
+      <div class="swatches">
+        <div class="sw" style="background:#E8E0CC"></div>
+        <div class="sw" style="background:#3D2814"></div>
+        <div class="sw" style="background:#9B1B30"></div>
+      </div>
+      <div class="name">Old Library<small>linen · brown ink · oxblood</small></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ CTA BUTTONS ═══════ -->
+<div class="lab-section">
+  <h3>CTA buttons <span class="count">6 studies</span></h3>
+  <div class="lab-grid">
+
+    <div class="frag btn-frag" data-choice="b1" onclick="toggleSelect(this)">
+      <span class="frag-label">B1</span>
+      <button class="btn-anton">Deal Me In</button>
+    </div>
+    <div class="frag btn-frag" data-choice="b2" onclick="toggleSelect(this)">
+      <span class="frag-label">B2</span>
+      <button class="btn-bowlby">Deal Me In!</button>
+    </div>
+    <div class="frag btn-frag" data-choice="b3" onclick="toggleSelect(this)">
+      <span class="frag-label">B3</span>
+      <button class="btn-italic">Begin the Show</button>
+    </div>
+    <div class="frag btn-frag" data-choice="b4" onclick="toggleSelect(this)">
+      <span class="frag-label">B4</span>
+      <button class="btn-brush">deal me in →</button>
+    </div>
+    <div class="frag btn-frag" data-choice="b5" onclick="toggleSelect(this)">
+      <span class="frag-label">B5</span>
+      <button class="btn-underline">Deal me in</button>
+    </div>
+    <div class="frag btn-frag" data-choice="b6" onclick="toggleSelect(this)">
+      <span class="frag-label">B6</span>
+      <button class="btn-block">— Begin Vol. I —</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ DEVANAGARI ═══════ -->
+<div class="lab-section">
+  <h3>Devanagari treatments <span class="count">4 studies</span></h3>
+  <div class="lab-grid">
+
+    <div class="frag dv-frag dv1" data-choice="d1" onclick="toggleSelect(this)">
+      <span class="frag-label">D1</span>
+      <div class="yatra">बैड प्लॉट्स</div>
+      <div class="anton">BAD PLOTS</div>
+      <div class="frag-meta">tiny accent above wordmark</div>
+    </div>
+    <div class="frag dv-frag dv2" data-choice="d2" onclick="toggleSelect(this)">
+      <span class="frag-label">D2</span>
+      <div class="yatra">बैड प्लॉट्स</div>
+      <div class="small">a party game</div>
+      <div class="frag-meta">Devanagari IS the wordmark</div>
+    </div>
+    <div class="frag dv-frag dv3" data-choice="d3" onclick="toggleSelect(this)">
+      <span class="frag-label">D3</span>
+      <div class="vert">बैड प्लॉट्स</div>
+      <div class="anton">BAD<br>PLOTS</div>
+      <div class="frag-meta">vertical script as side rule</div>
+    </div>
+    <div class="frag dv-frag dv4" data-choice="d4" onclick="toggleSelect(this)">
+      <span class="frag-label">D4</span>
+      <div class="ank">अंक १</div>
+      <div class="lbl">issue one</div>
+      <div class="word">Bad Plots</div>
+      <div class="frag-meta">issue number as ornament</div>
+    </div>
+
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center">
+Tell me what you want assembled, e.g. <strong>"W4 + C5 + T2 + B2 + D1"</strong> and I'll mock the home + game + results in that exact combination. Or just point at the ones that catch your eye and I'll propose 2 assemblies.
+</p>

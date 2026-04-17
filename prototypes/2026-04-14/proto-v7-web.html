@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — v7 web prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6EBD1;
+    --paper-warm: #F9F0D9;
+    --ink: #1A1208;
+    --ink-soft: rgba(26,18,8,0.55);
+    --ink-line: rgba(26,18,8,0.22);
+    --tomato: #C8321C;
+    --gold: #E9B23E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+    background: #14100a;
+  }
+  .stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+  .bg { position: absolute; inset: 0; }
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 78%;
+    filter: saturate(0.98);
+  }
+  .wash {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1200px 800px at 50% 50%, rgba(20,16,8,0.12) 0%, rgba(20,16,8,0.55) 70%),
+      linear-gradient(180deg, rgba(20,16,8,0.55) 0%, rgba(20,16,8,0.02) 18%, rgba(20,16,8,0.02) 78%, rgba(20,16,8,0.6) 100%);
+    pointer-events: none;
+  }
+  /* extra fairy light garland */
+  .lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    pointer-events: none;
+    filter: drop-shadow(0 0 12px rgba(247,185,74,0.65)) drop-shadow(0 0 28px rgba(247,185,74,0.28));
+  }
+  .lights circle {
+    animation: bulbFlicker 3.4s ease-in-out infinite;
+  }
+  .lights circle:nth-child(2n) { animation-delay: -0.8s; }
+  .lights circle:nth-child(3n) { animation-delay: -1.6s; }
+  .lights circle:nth-child(4n) { animation-delay: -2.4s; }
+  @keyframes bulbFlicker {
+    0%, 100% { opacity: 0.95; }
+    50% { opacity: 0.55; }
+  }
+
+  .topbar {
+    position: absolute;
+    top: 42px;
+    left: 64px;
+    right: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    z-index: 15;
+    opacity: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    animation: fadeIn 0.6s 0.2s ease-out forwards;
+  }
+  @keyframes fadeIn { to { opacity: 0.92; } }
+  .topbar .wordmark {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+  }
+  .topbar .meta { display: flex; gap: 32px; }
+  .topbar .meta .score { color: var(--gold); }
+
+  .card-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 460px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    perspective: 1400px;
+    z-index: 20;
+    opacity: 0;
+    animation: cardSettle 0.85s 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.1) forwards;
+  }
+  @keyframes cardSettle {
+    from { opacity: 0; transform: translate(-50%, -40%) rotate(-2deg); }
+    to   { opacity: 1; transform: translate(-50%, -50%) rotate(-0.5deg); }
+  }
+  .card-stage.exit {
+    animation: cardExit 0.45s cubic-bezier(0.5, 0, 0.9, 0.5) forwards;
+  }
+  @keyframes cardExit {
+    to { opacity: 0; transform: translate(-180%, -50%) rotate(-10deg); }
+  }
+  .card-flip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.5, 0.05, 0.2, 1);
+  }
+  .card-stage.flipped .card-flip {
+    transform: rotateY(180deg);
+  }
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 26px 30px 24px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(26,18,8,0.18);
+    display: flex;
+    flex-direction: column;
+  }
+  .card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(155deg, #2A1810 0%, #1A0F06 100%);
+    color: var(--paper);
+    padding: 40px 36px 32px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .card-back::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(246,235,209,0.2);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  .card-wordmark {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink-line);
+    flex-shrink: 0;
+  }
+  .card-num {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .plot-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+  }
+  .card-plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.24;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    text-align: left;
+    width: 100%;
+  }
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink-line);
+    flex-shrink: 0;
+  }
+
+  .back-kicker {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: rgba(246,235,209,0.6);
+    margin-bottom: 22px;
+  }
+  .back-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1.02;
+    color: var(--paper);
+    margin-bottom: 12px;
+    letter-spacing: -0.015em;
+  }
+  .back-year {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .back-divider {
+    width: 44px;
+    height: 2px;
+    background: rgba(246,235,209,0.35);
+    margin: 0 auto 22px;
+  }
+  .back-cast {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.45;
+    color: rgba(246,235,209,0.85);
+    max-width: 320px;
+  }
+  .back-verdict {
+    position: absolute;
+    bottom: 26px;
+    left: 28px;
+    right: 28px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(246,235,209,0.5);
+    padding-top: 14px;
+    border-top: 1px solid rgba(246,235,209,0.2);
+  }
+  .back-verdict .pts { color: var(--gold); }
+
+  .actions {
+    position: absolute;
+    top: calc(50% + 300px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 30;
+    opacity: 0;
+    animation: fadeIn 0.6s 0.55s ease-out forwards;
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 17px 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(246,235,209,0.4);
+    background: rgba(20,16,8,0.55);
+    color: var(--paper);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn.primary {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+    padding: 17px 56px;
+  }
+
+  .pts-float {
+    position: absolute;
+    top: 80px;
+    right: 64px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    z-index: 40;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .pts-float.show { animation: ptsFloat 1.1s ease-out forwards; }
+  @keyframes ptsFloat {
+    0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+    15% { opacity: 1; transform: translateY(0) scale(1.1); }
+    30% { transform: translateY(-6px) scale(1); }
+    100% { opacity: 0; transform: translateY(-40px) scale(1); }
+  }
+
+  .keys {
+    position: absolute;
+    bottom: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 0.6s 0.7s ease-out forwards;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    display: flex;
+    gap: 28px;
+  }
+  .keys kbd {
+    font-size: 9px;
+    padding: 3px 8px;
+    border: 1px solid rgba(246,235,209,0.35);
+    border-radius: 4px;
+    background: rgba(20,16,8,0.45);
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="bg"><img src="/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg" alt=""></div>
+    <div class="wash"></div>
+
+    <svg class="lights" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="bulbW" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFE39A" stop-opacity="1"/>
+          <stop offset="55%" stop-color="#F7B94A" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#F7B94A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <path d="M-20,40 C160,130 320,20 480,84 C640,148 800,28 960,92 C1120,156 1280,34 1440,86 C1500,110 1540,74 1560,62"
+            stroke="#1a0f06" stroke-width="1.6" fill="none" opacity="0.8"/>
+      <g>
+        <circle cx="30"   cy="66"  r="10" fill="url(#bulbW)"/>
+        <circle cx="110"  cy="98"  r="10" fill="url(#bulbW)"/>
+        <circle cx="190"  cy="108" r="10" fill="url(#bulbW)"/>
+        <circle cx="270"  cy="88"  r="10" fill="url(#bulbW)"/>
+        <circle cx="350"  cy="62"  r="10" fill="url(#bulbW)"/>
+        <circle cx="430"  cy="78"  r="10" fill="url(#bulbW)"/>
+        <circle cx="510"  cy="108" r="10" fill="url(#bulbW)"/>
+        <circle cx="590"  cy="130" r="10" fill="url(#bulbW)"/>
+        <circle cx="670"  cy="122" r="10" fill="url(#bulbW)"/>
+        <circle cx="750"  cy="92"  r="10" fill="url(#bulbW)"/>
+        <circle cx="830"  cy="58"  r="10" fill="url(#bulbW)"/>
+        <circle cx="910"  cy="72"  r="10" fill="url(#bulbW)"/>
+        <circle cx="990"  cy="106" r="10" fill="url(#bulbW)"/>
+        <circle cx="1070" cy="134" r="10" fill="url(#bulbW)"/>
+        <circle cx="1150" cy="118" r="10" fill="url(#bulbW)"/>
+        <circle cx="1230" cy="78"  r="10" fill="url(#bulbW)"/>
+        <circle cx="1310" cy="50"  r="10" fill="url(#bulbW)"/>
+        <circle cx="1390" cy="72"  r="10" fill="url(#bulbW)"/>
+      </g>
+    </svg>
+
+    <div class="topbar">
+      <span class="wordmark">Bad Desi Plots</span>
+      <span class="meta">
+        <span id="turn">Turn 1 of 5</span>
+        <span class="score" id="score">0 pts</span>
+      </span>
+    </div>
+
+    <div class="card-stage" id="stage">
+      <div class="card-flip">
+        <div class="card-face card-front">
+          <div class="card-wordmark">Bad Desi Plots</div>
+          <div class="card-num">
+            <span id="num">No. 024</span>
+            <span id="genre">Bollywood · Medium</span>
+          </div>
+          <div class="plot-wrap">
+            <div class="card-plot" id="plot">
+              A grieving dancer trains a blind girl to sing in a Greek villa while his mother disapproves.
+            </div>
+          </div>
+          <div class="card-foot">
+            <span id="worth">Worth 2 pts</span>
+            <span>Pass the phone</span>
+          </div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-kicker">The Movie</div>
+          <div class="back-title" id="backTitle">Black</div>
+          <div class="back-year" id="backYear">2005 · Bollywood</div>
+          <div class="back-divider"></div>
+          <div class="back-cast" id="backCast">Amitabh Bachchan, Rani Mukerji. Directed by Sanjay Leela Bhansali.</div>
+          <div class="back-verdict">
+            <span>Next for new card</span>
+            <span class="pts" id="backPts">+2 pts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pts-float" id="ptsFloat">+2</div>
+
+    <div class="actions">
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn primary" id="flipBtn">Flip Card</button>
+    </div>
+
+    <div class="keys">
+      <span><kbd>Space</kbd>Flip / Next</span>
+      <span><kbd>S</kbd>Skip</span>
+    </div>
+  </div>
+<script>
+  const DECK = [
+    { num: 'No. 024', genre: 'Bollywood · Medium', worth: 'Worth 2 pts', pts: 2,
+      plot: 'A grieving dancer trains a blind girl to sing in a Greek villa while his mother disapproves.',
+      title: 'Black', year: '2005 · Bollywood',
+      cast: 'Amitabh Bachchan, Rani Mukerji. Directed by Sanjay Leela Bhansali.' },
+    { num: 'No. 007', genre: 'Bollywood · Easy', worth: 'Worth 1 pt', pts: 1,
+      plot: 'A man forgets he has a twin who is also a cop.',
+      title: 'Judwaa', year: '1997 · Bollywood',
+      cast: 'Salman Khan in a double role, Karisma Kapoor, Rambha.' },
+    { num: 'No. 061', genre: 'Tollywood · Hard', worth: 'Worth 3 pts', pts: 3,
+      plot: 'A buffalo herder with anger issues discovers he is the lost prince of a forgotten kingdom and destroys an entire empire for kidnapping his crush.',
+      title: 'Baahubali 2', year: '2017 · Tollywood',
+      cast: 'Prabhas, Anushka Shetty, Rana Daggubati. Directed by S. S. Rajamouli.' },
+    { num: 'No. 042', genre: 'Bollywood · Medium', worth: 'Worth 2 pts', pts: 2,
+      plot: 'A rich girl meets a poor boy on a Europe trip, her father disapproves, someone sings in a mustard field.',
+      title: 'Dilwale Dulhania Le Jayenge', year: '1995 · Bollywood',
+      cast: 'Shah Rukh Khan, Kajol, Amrish Puri. Directed by Aditya Chopra.' },
+    { num: 'No. 088', genre: 'Bollywood · Hard', worth: 'Worth 3 pts', pts: 3,
+      plot: 'Two childhood best friends grow up loving the same woman, one becomes a poet and dies, the other raises her child, and everyone cries in Switzerland.',
+      title: 'Kuch Kuch Hota Hai', year: '1998 · Bollywood',
+      cast: 'Shah Rukh Khan, Kajol, Rani Mukerji. Directed by Karan Johar.' }
+  ];
+
+  let idx = 0, score = 0, flipped = false, animating = false;
+  const stage = document.getElementById('stage');
+  const flipBtn = document.getElementById('flipBtn');
+  const skipBtn = document.getElementById('skipBtn');
+  const scoreEl = document.getElementById('score');
+  const turnEl = document.getElementById('turn');
+  const ptsFloat = document.getElementById('ptsFloat');
+
+  function render() {
+    const c = DECK[idx];
+    document.getElementById('num').textContent = c.num;
+    document.getElementById('genre').textContent = c.genre;
+    document.getElementById('plot').textContent = c.plot;
+    document.getElementById('worth').textContent = c.worth;
+    document.getElementById('backTitle').textContent = c.title;
+    document.getElementById('backYear').textContent = c.year;
+    document.getElementById('backCast').textContent = c.cast;
+    document.getElementById('backPts').textContent = '+' + c.pts + ' pts';
+    turnEl.textContent = 'Turn ' + (idx + 1) + ' of ' + DECK.length;
+    fitPlot();
+  }
+  function fitPlot() {
+    const el = document.getElementById('plot');
+    const wrap = el.parentElement;
+    let size = 30;
+    const minSize = 17;
+    el.style.fontSize = size + 'px';
+    while (el.scrollHeight > wrap.clientHeight && size > minSize) {
+      size -= 0.5; el.style.fontSize = size + 'px';
+    }
+  }
+  function flipCard() {
+    if (animating || flipped) return;
+    flipped = true;
+    stage.classList.add('flipped');
+    const c = DECK[idx];
+    score += c.pts;
+    ptsFloat.textContent = '+' + c.pts;
+    ptsFloat.classList.remove('show');
+    void ptsFloat.offsetWidth;
+    ptsFloat.classList.add('show');
+    setTimeout(() => { scoreEl.textContent = score + ' pts'; }, 300);
+    flipBtn.textContent = 'Next Card';
+  }
+  function nextCard() {
+    if (animating) return;
+    animating = true;
+    stage.classList.add('exit');
+    setTimeout(() => {
+      idx = (idx + 1) % DECK.length;
+      flipped = false;
+      stage.classList.remove('flipped');
+      stage.classList.remove('exit');
+      stage.style.animation = 'none';
+      void stage.offsetWidth;
+      stage.style.animation = '';
+      render();
+      flipBtn.textContent = 'Flip Card';
+      animating = false;
+    }, 450);
+  }
+  flipBtn.addEventListener('click', () => { if (flipped) nextCard(); else flipCard(); });
+  skipBtn.addEventListener('click', () => { if (!animating) nextCard(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); flipBtn.click(); }
+    if (e.key === 's' || e.key === 'S') skipBtn.click();
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+  else window.addEventListener('load', render);
+</script>
+</body>
+</html>

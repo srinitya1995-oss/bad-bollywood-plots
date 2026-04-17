@@ -70,10 +70,10 @@ export function Card({
     [onReport, card],
   );
 
-  // Picker: all players except the reader
+  const isSolo = players.length <= 1;
   const pickerPlayers = players
     .map((p, i) => ({ ...p, originalIdx: i }))
-    .filter((_, i) => i !== readerIdx);
+    .filter((_, i) => isSolo || i !== readerIdx);
 
   const readerName = players[readerIdx]?.name || '';
 
@@ -151,7 +151,7 @@ export function Card({
           </div>
           {pickerPlayers.length > 0 && (
             <div className="v8-picker">
-              <div className="v8-picker-label">WHO GUESSED IT?</div>
+              {isSolo && <div className="v8-picker-label">DID YOU GET IT?</div>}
               <div className="v8-picker-chips">
                 {pickerPlayers.map((p) => (
                   <button
@@ -163,7 +163,7 @@ export function Card({
                     }}
                     type="button"
                   >
-                    {p.name || `P${p.originalIdx + 1}`}
+                    {isSolo ? 'I GOT IT! \u{1F525}' : (p.name || `P${p.originalIdx + 1}`)}
                   </button>
                 ))}
                 <button
@@ -174,7 +174,7 @@ export function Card({
                   }}
                   type="button"
                 >
-                  NOBODY
+                  {isSolo ? 'NOPE \u{1F614}' : 'NOBODY'}
                 </button>
               </div>
             </div>

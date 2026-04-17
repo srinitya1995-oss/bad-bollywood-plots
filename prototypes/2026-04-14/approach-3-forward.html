@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — Approach 3: The Forward</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6ECD8;
+    --ink: #1A0F0A;
+    --tomato: #E85D3A;
+    --tomato-deep: #B83A1E;
+    --gold: #C9A55C;
+    --hot-pink: #EE4D88;
+    --blue-pen: #1B3F8C;
+    --chat-bg: #F6ECD8;
+    --bubble-in: #ffffff;
+    --bubble-out: #E85D3A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #1a0e08;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--paper);
+  }
+  .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(246,236,216,0.6);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .label strong { color: var(--tomato); font-weight: 700; letter-spacing: 0.1em; }
+  .phone {
+    width: 390px;
+    height: 844px;
+    border-radius: 44px;
+    background: var(--chat-bg);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 8px #0a0503, 0 0 0 10px #1f1208;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #0a0503;
+    border-radius: 14px;
+    z-index: 20;
+  }
+  /* status bar */
+  .statusbar {
+    padding: 14px 30px 0;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans';
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+  /* contact header */
+  .header {
+    margin-top: 18px;
+    padding: 10px 16px 14px;
+    background: var(--paper);
+    border-bottom: 1px solid rgba(26,15,10,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .back-arrow {
+    font-family: 'DM Sans';
+    font-size: 22px;
+    color: var(--tomato);
+    font-weight: 300;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background:
+      radial-gradient(ellipse 14px 18px at 50% 35%, #ffd4a8 0%, transparent 70%),
+      radial-gradient(circle at 50% 70%, #c44a2a 0%, #4a1a08 80%);
+    position: relative;
+    flex-shrink: 0;
+    border: 2px solid var(--gold);
+  }
+  .contact {
+    flex: 1;
+  }
+  .contact-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .contact-status {
+    font-family: 'DM Sans';
+    font-size: 11px;
+    color: rgba(26,15,10,0.55);
+    margin-top: 2px;
+    letter-spacing: 0.01em;
+  }
+  .contact-status .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #4caf50;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: 1px;
+  }
+
+  /* brand strip */
+  .brand-strip {
+    padding: 8px 16px;
+    background: var(--tomato);
+    color: var(--paper);
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--ink);
+  }
+  .brand-strip .sub {
+    font-family: 'DM Sans';
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    opacity: 0.85;
+    font-style: normal;
+  }
+  .brand-strip .devanagari {
+    font-size: 13px;
+    margin-right: 6px;
+  }
+
+  /* chat area */
+  .chat {
+    flex: 1;
+    padding: 14px 14px 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .day-divider {
+    text-align: center;
+    font-family: 'DM Sans';
+    font-size: 10px;
+    color: rgba(26,15,10,0.5);
+    margin: 4px 0;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .day-divider span {
+    background: var(--paper);
+    padding: 3px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(26,15,10,0.1);
+  }
+  .bubble-in, .bubble-out {
+    max-width: 82%;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-family: 'DM Sans';
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(60,30,10,0.08);
+    position: relative;
+  }
+  .bubble-in {
+    background: var(--bubble-in);
+    align-self: flex-start;
+    border-top-left-radius: 4px;
+  }
+  .bubble-out {
+    background: var(--tomato);
+    color: #fff;
+    align-self: flex-end;
+    border-top-right-radius: 4px;
+  }
+  .time {
+    font-family: 'DM Sans';
+    font-size: 9px;
+    color: rgba(26,15,10,0.45);
+    margin-top: 2px;
+    float: right;
+    margin-left: 8px;
+  }
+  .bubble-out .time {
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* a photo "forwarded" — scanned magazine page */
+  .scan-bubble {
+    max-width: 240px;
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--bubble-in);
+    align-self: flex-start;
+    border-top-left-radius: 4px;
+    box-shadow: 0 2px 6px rgba(60,30,10,0.15);
+  }
+  .scan {
+    width: 100%;
+    height: 300px;
+    background: var(--paper);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transform: rotate(-1deg);
+  }
+  .scan-inner {
+    position: absolute;
+    inset: 8px;
+    background:
+      radial-gradient(ellipse at 30% 15%, rgba(255,220,180,0.3) 0%, transparent 50%),
+      var(--paper);
+    padding: 10px 12px;
+  }
+  .scan-mast {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--tomato);
+    text-transform: uppercase;
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+  }
+  .scan-sub {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--ink);
+    font-family: 'DM Sans';
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .scan-photo {
+    margin-top: 8px;
+    height: 140px;
+    background:
+      radial-gradient(ellipse 90px 120px at 50% 35%, #ffd4a8 0%, rgba(255,212,168,0) 65%),
+      radial-gradient(ellipse 50px 70px at 50% 40%, #f5a670 0%, rgba(245,166,112,0) 70%),
+      radial-gradient(circle at 50% 75%, #6b1d0a 0%, #2a0b04 70%),
+      linear-gradient(180deg, #3a1508 0%, #1a0605 100%);
+    position: relative;
+    border-radius: 2px;
+  }
+  .scan-photo::after {
+    content: '[HRITHIK · 2001]';
+    position: absolute;
+    bottom: 4px;
+    left: 6px;
+    font-size: 6px;
+    letter-spacing: 0.2em;
+    color: rgba(246,236,216,0.5);
+    text-transform: uppercase;
+  }
+  .scan-kicker {
+    margin-top: 6px;
+    font-family: 'DM Sans';
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--hot-pink);
+  }
+  .scan-headline {
+    margin-top: 3px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 11px;
+    line-height: 1.22;
+    color: var(--ink);
+  }
+  /* flash glare on scan */
+  .scan::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 20%;
+    width: 60%;
+    height: 40%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .scan-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px 2px;
+    font-size: 9px;
+    color: rgba(26,15,10,0.55);
+    font-family: 'DM Sans';
+  }
+  .scan-meta .time { float: none; margin: 0; }
+
+  /* aunty caption bubble */
+  .aunty-bubble {
+    background: #fff;
+    max-width: 78%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    border-top-left-radius: 4px;
+    align-self: flex-start;
+    box-shadow: 0 1px 2px rgba(60,30,10,0.08);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--blue-pen);
+    line-height: 1;
+  }
+  .aunty-bubble .time {
+    font-family: 'DM Sans';
+    font-size: 9px;
+    color: rgba(26,15,10,0.4);
+    font-weight: 400;
+  }
+  /* input bar */
+  .input-bar {
+    padding: 12px 14px 22px;
+    background: var(--paper);
+    border-top: 1px solid rgba(26,15,10,0.08);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .input {
+    flex: 1;
+    background: #fff;
+    border-radius: 22px;
+    padding: 12px 18px;
+    font-family: 'DM Sans';
+    font-size: 14px;
+    color: rgba(26,15,10,0.45);
+    box-shadow: 0 1px 2px rgba(60,30,10,0.08);
+  }
+  .guess-btn {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 18px;
+    border-radius: 22px;
+    font-family: 'DM Sans';
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+  <div class="label"><strong>Approach 3 — The Forward</strong> · Kavita Aunty is DMing you scans with one-line captions</div>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="statusbar">
+      <span>9:47</span>
+      <span>● ● ● 98%</span>
+    </div>
+    <div class="header">
+      <span class="back-arrow">‹</span>
+      <div class="avatar"></div>
+      <div class="contact">
+        <div class="contact-name">Kavita Aunty</div>
+        <div class="contact-status"><span class="dot"></span>online · 24 cards sent</div>
+      </div>
+    </div>
+
+    <div class="brand-strip">
+      <span><span class="devanagari">अंक</span> SEEDHA PLOT</span>
+      <span class="sub">CARD 24 · BOLLYWOOD · MEDIUM</span>
+    </div>
+
+    <div class="chat">
+      <div class="day-divider"><span>TODAY · 9:42 PM</span></div>
+
+      <div class="bubble-in">
+        beta ek aur bhejti hoon, guess karo na
+        <span class="time">9:42 PM ✓✓</span>
+      </div>
+
+      <div class="scan-bubble">
+        <div class="scan">
+          <div class="scan-inner">
+            <div class="scan-mast">Filmy</div>
+            <div class="scan-sub">
+              <span>THE BAD PLOT ISSUE</span>
+              <span>०२४</span>
+            </div>
+            <div class="scan-photo"></div>
+            <div class="scan-kicker">THE PLOT</div>
+            <div class="scan-headline">A grieving dancer trains a blind girl to sing in a Greek villa. A chiffon saree is always flying.</div>
+          </div>
+        </div>
+        <div class="scan-meta">
+          <span>📎 scan_024.jpg</span>
+          <span class="time">9:43 PM ✓✓</span>
+        </div>
+      </div>
+
+      <div class="aunty-bubble">
+        arrey itna SAD kyun banaya?
+        <span class="time">9:43 PM ✓✓</span>
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <div class="input">type movie name...</div>
+      <div class="guess-btn">GUESS</div>
+    </div>
+  </div>
+</body>
+</html>

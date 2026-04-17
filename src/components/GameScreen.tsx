@@ -77,7 +77,7 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   if (!currentCard) return null;
 
   const isFlipped = state === 'flipped';
-  const progress = `CARD ${idx + 1} OF ${deck.length}`;
+  const progress = `CARD ${idx + 1} / ${deck.length}`;
 
   return (
     <main className="screen active v8-game-screen" aria-label="Game">

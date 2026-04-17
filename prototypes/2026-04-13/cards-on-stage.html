@@ -1,0 +1,526 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. VIII · IN CONTEXT</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक ८</span>
+    <span>CARD ON STAGE</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Cards in their stage</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:700px;">
+    Same four card compositions, but now floating on the actual game screen — cream paper stage with the masthead at the top and "Got it / Missed" scoring zone at the bottom. This is what the card looks like during play. Front + back paired in real phone frames.
+  </p>
+</div>
+
+<style>
+  :root {
+    --paper: #EBDEC1;
+    --paper-deep: #DCCBA4;
+    --ink: #1F0E08;
+    --ink-soft: #3D2814;
+    --tomato: #C73821;
+    --gold-leaf: #C4912F;
+  }
+
+  .stage-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin-top: 40px;
+    align-items: center;
+  }
+  .stage-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 22px 28px;
+    border-radius: 12px;
+    border: 3px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .stage-row:hover { background: rgba(255,255,255,0.03); }
+  .stage-row.selected { border-color: #FFD60A; background: rgba(255,214,10,0.06); }
+  .stage-phones { display: flex; gap: 28px; align-items: center; }
+  .stage-arrow { font-family: 'Anton', sans-serif; font-size: 40px; color: rgba(255,255,255,0.35); }
+  .stage-label {
+    margin-top: 22px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+  }
+  .stage-sub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    max-width: 720px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* Phone frame */
+  .phone {
+    width: 320px;
+    height: 660px;
+    border-radius: 36px;
+    background: var(--paper);
+    box-shadow:
+      0 0 0 7px #1a1a22,
+      0 0 0 8px #2a2a32,
+      0 32px 70px -20px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .phone::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(26,15,8,0.06) 0.6px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
+  }
+
+  /* Top game bar */
+  .gbar {
+    position: relative;
+    z-index: 2;
+    padding: 38px 22px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(26,15,8,0.25);
+    margin: 0 22px;
+  }
+  .gbar .exit { color: var(--ink-soft); }
+  .gbar .ank { font-family: 'Yatra One', serif; font-size: 12px; letter-spacing: 0.04em; text-transform: none; color: var(--tomato); }
+  .gbar .score { color: var(--tomato); font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 0; }
+
+  /* Progress line */
+  .gprog {
+    position: relative;
+    z-index: 2;
+    height: 2px;
+    background: rgba(26,15,8,0.12);
+    margin: 4px 22px 0;
+  }
+  .gprog > div { width: 25%; height: 100%; background: var(--tomato); }
+
+  /* Card stage center */
+  .gstage {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 0;
+  }
+
+  /* Bottom scoring zone */
+  .gbtns {
+    position: relative;
+    z-index: 2;
+    padding: 0 22px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gbtns .row {
+    display: flex;
+    gap: 8px;
+  }
+  .gbtns .row button {
+    flex: 1;
+    padding: 14px 0;
+    border: none;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .gbtns .got { background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--tomato); }
+  .gbtns .miss { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  .gbtns .skip {
+    background: transparent;
+    border: none;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.5);
+    text-align: center;
+    margin-top: 2px;
+  }
+  .gtap-only {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tomato);
+    padding-bottom: 30px;
+  }
+
+  /* ─────── Card sizing inside stage ─────── */
+  .card-wrap { width: 240px; height: 340px; position: relative; border-radius: 4px; overflow: hidden; }
+
+  /* ════════ A · CORNER STAMP ════════ */
+  .ca { background: #F1E8D2; color: #1A0F08; border: 1px solid rgba(26,15,8,0.2); box-shadow: 0 18px 40px -12px rgba(26,15,8,0.5); }
+  .ca .stamp {
+    position: absolute; top: 14px; right: 14px;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 2px solid #C73821;
+    color: #C73821;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1;
+    transform: rotate(-8deg);
+  }
+  .ca .stamp .big { font-family: 'Bungee', sans-serif; font-size: 11px; margin-top: 2px; }
+  .ca .clue {
+    position: absolute;
+    inset: 22px 22px 50px 22px;
+    display: flex;
+    align-items: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    padding-right: 40px;
+  }
+  .ca .tap {
+    position: absolute;
+    bottom: 16px; left: 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C73821;
+  }
+  .ca.back .stamp { background: #C73821; color: #F1E8D2; border-color: #C73821; }
+  .ca.back .body { position: absolute; inset: 22px 22px 50px 22px; display: flex; flex-direction: column; justify-content: center; padding-right: 40px; }
+  .ca.back .body .title { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 42px; line-height: 0.85; color: #C73821; text-transform: uppercase; }
+  .ca.back .body .year { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(26,15,8,0.55); margin-top: 6px; }
+  .ca.back .body .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; line-height: 1.45; color: rgba(26,15,8,0.78); margin-top: 10px; }
+  .ca.back .clue { display: none; }
+
+  /* ════════ B · VERTICAL SPINE ════════ */
+  .cb { background: #C73821; color: #F5E8C8; box-shadow: 0 18px 40px -12px rgba(0,0,0,0.5); display: flex; }
+  .cb .spine {
+    width: 32px;
+    background: #1A0F08;
+    color: #F5E8C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cb .spine .label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .cb .body { flex: 1; padding: 24px 22px 22px; display: flex; flex-direction: column; justify-content: space-between; }
+  .cb .clue { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 24px; line-height: 1.05; flex: 1; display: flex; align-items: center; }
+  .cb .tap { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,232,200,0.6); align-self: flex-end; }
+  .cb.back { background: #8E1F0C; }
+  .cb.back .body { justify-content: center; }
+  .cb.back .body .title { font-family: 'Anton', sans-serif; font-size: 50px; line-height: 0.85; color: #F5E8C8; text-transform: uppercase; letter-spacing: -0.02em; }
+  .cb.back .body .year { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #F2B500; margin-top: 8px; }
+  .cb.back .body .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; line-height: 1.45; color: rgba(245,232,200,0.85); margin-top: 12px; }
+  .cb.back .clue { display: none; }
+  .cb.back .body .tap { display: none; }
+
+  /* ════════ C · TOP HEAVY BLOCK ════════ */
+  .cc { background: #F1E8D2; color: #1A0F08; box-shadow: 0 18px 40px -12px rgba(26,15,8,0.5); display: flex; flex-direction: column; }
+  .cc .top-block {
+    background: #B85420;
+    color: #F1E8D2;
+    flex: 0 0 70%;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cc .top-block .badge {
+    align-self: flex-start;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: rgba(241,232,210,0.18);
+    padding: 4px 8px;
+  }
+  .cc .top-block .clue {
+    font-family: 'Anton', sans-serif;
+    font-size: 30px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .cc .bot-block {
+    flex: 1;
+    padding: 12px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cc .bot-block .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #B85420;
+  }
+  .cc .bot-block .tap {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.55);
+    margin-top: 4px;
+  }
+  .cc.back .top-block { background: #1A0F08; }
+  .cc.back .top-block .badge { background: rgba(242,181,0,0.15); color: #F2B500; }
+  .cc.back .top-block .title { font-family: 'Anton', sans-serif; font-size: 48px; line-height: 0.85; text-transform: uppercase; letter-spacing: -0.02em; color: #F2B500; }
+  .cc.back .top-block .clue { display: none; }
+  .cc.back .bot-block .meta { color: #B85420; }
+  .cc.back .bot-block .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; line-height: 1.4; color: rgba(26,15,8,0.78); margin-top: 4px; }
+
+  /* ════════ D · CENTERED MEDALLION ════════ */
+  .cd { background: #1F2E5C; color: #F5E8C8; box-shadow: 0 18px 40px -12px rgba(0,0,0,0.5); position: relative; }
+  .cd::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.4) 100%); pointer-events: none; }
+  .cd .corner-tl { position: absolute; top: 14px; left: 16px; font-family: 'Khand', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: #F2B500; }
+  .cd .corner-br { position: absolute; bottom: 14px; right: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #F2B500; opacity: 0.8; }
+  .cd .medallion { position: absolute; inset: 50px 24px; border: 1px solid #F2B500; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; }
+  .cd .medallion::before { content: ""; position: absolute; inset: 5px; border: 1px solid rgba(242,181,0,0.4); border-radius: 50%; }
+  .cd .clue { font-family: 'Yeseva One', serif; font-size: 20px; line-height: 1.1; position: relative; }
+  .cd.back .body { position: absolute; inset: 50px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; }
+  .cd.back .body .title { font-family: 'Yeseva One', serif; font-size: 32px; line-height: 0.95; color: #F2B500; }
+  .cd.back .body .year { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #F5E8C8; opacity: 0.7; margin-top: 6px; }
+  .cd.back .body .fact { font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; line-height: 1.4; color: rgba(245,232,200,0.85); margin-top: 10px; max-width: 170px; }
+  .cd.back .clue { display: none; }
+  .cd.back .medallion::before { display: none; }
+</style>
+
+<div class="stage-grid">
+
+  <!-- ═══ A · CORNER STAMP ═══ -->
+  <div class="stage-row" onclick="this.classList.toggle('selected')">
+    <div class="stage-phones">
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap ca">
+            <div class="stamp">Bollywood<div class="big">MED</div></div>
+            <div class="clue">Three engineers learn life isn't multiple choice</div>
+            <div class="tap">tap to reveal →</div>
+          </div>
+        </div>
+        <div class="gtap-only">tap card to reveal answer</div>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap ca back">
+            <div class="stamp">Answer<div class="big">2009</div></div>
+            <div class="body">
+              <div class="title">3 Idiots</div>
+              <div class="year">Hirani · Bollywood</div>
+              <div class="fact">The "all is well" mantra outlived three sequels and one engineering syllabus.</div>
+            </div>
+          </div>
+        </div>
+        <div class="gbtns">
+          <div class="row">
+            <button class="got">Got it</button>
+            <button class="miss">Missed</button>
+          </div>
+          <button class="skip">— skip card —</button>
+        </div>
+      </div>
+    </div>
+    <div class="stage-label">A · Corner Stamp</div>
+    <div class="stage-sub">Cream card on cream stage. Card edge defined by subtle border + drop shadow. Tomato circular stamp pulls the eye. Bollywood stamp goes red on the back to signal "answered".</div>
+  </div>
+
+  <!-- ═══ B · VERTICAL SPINE ═══ -->
+  <div class="stage-row" onclick="this.classList.toggle('selected')">
+    <div class="stage-phones">
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap cb">
+            <div class="spine"><span class="label">Bollywood ● 2009 ● Med</span></div>
+            <div class="body">
+              <div class="clue">"Three engineers learn life is not a multiple choice question"</div>
+              <div class="tap">tap to reveal →</div>
+            </div>
+          </div>
+        </div>
+        <div class="gtap-only">tap card to reveal answer</div>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap cb back">
+            <div class="spine"><span class="label">Answer ● 2009 ● Hirani</span></div>
+            <div class="body">
+              <div class="title">3 Idiots</div>
+              <div class="year">Bollywood · Med</div>
+              <div class="fact">The "all is well" mantra outlived three sequels and an engineering syllabus.</div>
+            </div>
+          </div>
+        </div>
+        <div class="gbtns">
+          <div class="row">
+            <button class="got">Got it</button>
+            <button class="miss">Missed</button>
+          </div>
+          <button class="skip">— skip card —</button>
+        </div>
+      </div>
+    </div>
+    <div class="stage-label">B · Vertical Spine</div>
+    <div class="stage-sub">Crimson card on cream stage — strong color contrast. Black spine on the left holds all metadata. Reads like a vinyl record sleeve sitting on a shop counter.</div>
+  </div>
+
+  <!-- ═══ C · TOP HEAVY BLOCK ═══ -->
+  <div class="stage-row" onclick="this.classList.toggle('selected')">
+    <div class="stage-phones">
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap cc">
+            <div class="top-block">
+              <div class="badge">Bollywood · Med</div>
+              <div class="clue">Three engineers learn life isn't multiple choice</div>
+            </div>
+            <div class="bot-block">
+              <div class="meta">№ 042 · 2009</div>
+              <div class="tap">tap to reveal →</div>
+            </div>
+          </div>
+        </div>
+        <div class="gtap-only">tap card to reveal answer</div>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap cc back">
+            <div class="top-block">
+              <div class="badge">Answer · 2009</div>
+              <div class="title">3 Idiots</div>
+            </div>
+            <div class="bot-block">
+              <div class="meta">Hirani · Bollywood</div>
+              <div class="fact">The "all is well" mantra outlived three sequels and an engineering syllabus.</div>
+            </div>
+          </div>
+        </div>
+        <div class="gbtns">
+          <div class="row">
+            <button class="got">Got it</button>
+            <button class="miss">Missed</button>
+          </div>
+          <button class="skip">— skip card —</button>
+        </div>
+      </div>
+    </div>
+    <div class="stage-label">C · Top Heavy Block</div>
+    <div class="stage-sub">Sienna top + cream bottom. Cream bottom matches the stage paper, so the card "merges" with the stage and only the colored top stands out. Flip to back: top goes ink black, signalling "answered".</div>
+  </div>
+
+  <!-- ═══ D · CENTERED MEDALLION ═══ -->
+  <div class="stage-row" onclick="this.classList.toggle('selected')">
+    <div class="stage-phones">
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap cd">
+            <div class="corner-tl">Tollywood</div>
+            <div class="corner-br">Hard · 2006</div>
+            <div class="medallion">
+              <div class="clue">"NRI returns. Father objects. Bus girl waits."</div>
+            </div>
+          </div>
+        </div>
+        <div class="gtap-only">tap card to reveal answer</div>
+      </div>
+      <div class="stage-arrow">→</div>
+      <div class="phone">
+        <div class="gbar"><span class="exit">← Exit</span><span class="ank">अंक १</span><span>3 / 12</span><span class="score">24</span></div>
+        <div class="gprog"><div></div></div>
+        <div class="gstage">
+          <div class="card-wrap cd back">
+            <div class="corner-tl">Answer</div>
+            <div class="corner-br">Bhaskar · 2006</div>
+            <div class="medallion">
+              <div class="body">
+                <div class="title">Bommarillu</div>
+                <div class="year">Tollywood · Hard</div>
+                <div class="fact">Siddharth's most-quoted speech is still played at South Indian engagement parties.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gbtns">
+          <div class="row">
+            <button class="got">Got it</button>
+            <button class="miss">Missed</button>
+          </div>
+          <button class="skip">— skip card —</button>
+        </div>
+      </div>
+    </div>
+    <div class="stage-label">D · Centered Medallion</div>
+    <div class="stage-sub">Indigo card on cream stage — cool counterpoint, max contrast. Card looks like a pressed coin or theatre programme dropped onto the page. The cream stage frames the indigo nicely.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Now you can see how the card sits on its stage — cream paper background, masthead with अंक १ at top, scoring buttons at bottom on the back face. Tell me which card+stage pair feels right.
+</p>
