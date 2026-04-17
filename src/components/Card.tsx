@@ -1,25 +1,85 @@
-import type { Card as CardType } from '../core/types';
+import { useRef, useCallback } from 'react';
+import type { Card as CardType, Player } from '../core/types';
 import { INDUSTRY_META, POINT_MAP } from '../core/types';
+import { useCardTextFit } from '../hooks/useCardTextFit';
 
 interface CardProps {
   card: CardType;
   isFlipped: boolean;
   onFlip: () => void;
+  /** All players in the game. */
+  players?: Player[];
+  /** Index of the current reader (excluded from picker). */
+  readerIdx?: number;
+  /** Called when a player picks (guessed correctly). */
+  onAwardPoints?: (playerIdx: number, card: CardType) => void;
+  /** Called when nobody guessed correctly. */
+  onAwardNobody?: (card: CardType) => void;
+  /** Called when user taps the report link. */
+  onReport?: (card: CardType) => void;
+  /** Card progress label, e.g. "CARD 3 OF 5" */
+  progressLabel?: string;
 }
 
-export function Card({ card, isFlipped, onFlip }: CardProps) {
+const DIFF_COLORS: Record<string, string> = {
+  easy: '#3EA87A',
+  medium: '#E9B23E',
+  hard: '#C8321C',
+};
+
+export function Card({
+  card,
+  isFlipped,
+  onFlip,
+  players = [],
+  readerIdx = 0,
+  onAwardPoints,
+  onAwardNobody,
+  onReport,
+  progressLabel,
+}: CardProps) {
   const meta = INDUSTRY_META[card.ind];
   const indLabel = meta.lang.toUpperCase();
   const packId = meta.packId;
   const pts = POINT_MAP[card.diff];
+  const plotRef = useRef<HTMLDivElement>(null);
+  const fittedSize = useCardTextFit(card.c, plotRef);
+
+  const isBW = packId === 'hi';
 
   const ariaLabel = isFlipped
-    ? `${card.n} (${card.y}) ${meta.lang} ${card.diff} difficulty`
-    : `${meta.lang} ${card.diff} card, tap to flip and reveal answer`;
+    ? `${card.n} (${card.y}) -- ${meta.lang} ${card.diff}`
+    : `${meta.lang} ${card.diff} card -- tap to flip and reveal answer`;
+
+  const handlePick = useCallback(
+    (playerIdx: number) => {
+      onAwardPoints?.(playerIdx, card);
+    },
+    [onAwardPoints, card],
+  );
+
+  const handleNobody = useCallback(() => {
+    onAwardNobody?.(card);
+  }, [onAwardNobody, card]);
+
+  const handleReport = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onReport?.(card);
+    },
+    [onReport, card],
+  );
+
+  // Picker: all players except the reader
+  const pickerPlayers = players
+    .map((p, i) => ({ ...p, originalIdx: i }))
+    .filter((_, i) => i !== readerIdx);
+
+  const readerName = players[readerIdx]?.name || '';
 
   return (
     <div
-      className={`v6-card-wrap${isFlipped ? ' flipped' : ''}`}
+      className={`v8-card-stage${isFlipped ? ' flipped' : ''}`}
       onClick={isFlipped ? undefined : onFlip}
       onKeyDown={(e) => {
         if (!isFlipped && (e.key === 'Enter' || e.key === ' ')) {
@@ -31,32 +91,100 @@ export function Card({ card, isFlipped, onFlip }: CardProps) {
       tabIndex={isFlipped ? -1 : 0}
       aria-label={ariaLabel}
     >
-      <div className="v6-card-3d">
-        {/* FRONT — plot */}
-        <div className="v6-face v6-face-front">
-          <div className="v6-card v6-plot-card">
-            <div className="v6-top-row">
-              <span className={`v6-pill v6-pill-${packId}`}>{indLabel}</span>
-              <span className={`v6-pts-chip v6-diff-${card.diff}`}>+{pts}</span>
+      <div className="v8-card-flip">
+        {/* FRONT */}
+        <div className="v8-card-face v8-card-front">
+          <div className="v8-card-mast">
+            <span className="v8-card-mast__title">The Plot</span>
+            {progressLabel && (
+              <span className="v8-card-mast__num">{progressLabel}</span>
+            )}
+          </div>
+          <div className="v8-card-meta">
+            <span className={`v8-chip v8-chip--${packId}`}>{indLabel}</span>
+            <span className="v8-card-diff">
+              <span
+                className="v8-card-diff__dot"
+                style={{ background: DIFF_COLORS[card.diff] }}
+              />
+              {card.diff.toUpperCase()} · {pts} PTS
+            </span>
+          </div>
+          <div className="v8-plot-wrap">
+            <div
+              ref={plotRef}
+              className="v8-card-plot"
+              style={{ fontSize: `${fittedSize}px` }}
+            >
+              {card.c}
             </div>
-            <p className="v6-plot">{card.c}</p>
-            <div className="v6-hint-row"><span>TAP TO FLIP</span></div>
+          </div>
+          <div className="v8-card-foot">
+            {readerName ? (
+              <span className="v8-card-foot__cream">
+                READ BY: {readerName.toUpperCase()}
+              </span>
+            ) : (
+              <span className="v8-card-foot__cream">TAP TO REVEAL</span>
+            )}
+            <span>TAP TO REVEAL</span>
           </div>
         </div>
-        {/* BACK — reveal */}
-        <div className="v6-face v6-face-back">
-          <div className="v6-card v6-reveal-card">
-            <div className="v6-top-row">
-              <span className={`v6-pill v6-pill-${packId}`}>{indLabel}</span>
-              <span className={`v6-pts-chip v6-diff-${card.diff}`}>+{pts}</span>
+
+        {/* BACK */}
+        <div
+          className={`v8-card-face v8-card-back v8-card-back--${isBW ? 'bw' : 'tw'}`}
+        >
+          <button
+            className="v8-report-link"
+            onClick={handleReport}
+            type="button"
+            aria-label="Report this card"
+          >
+            &#9873; REPORT
+          </button>
+          <div className="v8-back-inner">
+            <div className="v8-back-burst" aria-hidden="true" />
+            <div className="v8-back-kicker">THE ANSWER</div>
+            <div className="v8-back-title">{card.n}</div>
+            <div className="v8-back-year">{card.y}</div>
+            {card.f && <div className="v8-back-cast">{card.f}</div>}
+          </div>
+          {pickerPlayers.length > 0 && (
+            <div className="v8-picker">
+              <div className="v8-picker-label">WHO GUESSED IT?</div>
+              <div className="v8-picker-chips">
+                {pickerPlayers.map((p) => (
+                  <button
+                    key={p.originalIdx}
+                    className="v8-pchip"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePick(p.originalIdx);
+                    }}
+                    type="button"
+                  >
+                    {p.name || `P${p.originalIdx + 1}`}
+                  </button>
+                ))}
+                <button
+                  className="v8-pchip v8-pchip--nobody"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNobody();
+                  }}
+                  type="button"
+                >
+                  NOBODY
+                </button>
+              </div>
             </div>
-            <h3 className="v6-movie">
-              {card.n}
-              <span className="v6-year">{card.y}</span>
-            </h3>
-            <div className="v6-divider" />
-            <div className="v6-fun-label">Fun fact</div>
-            <p className="v6-fun">{card.f}</p>
+          )}
+          <div className="v8-back-foot">
+            {readerName && (
+              <span>READ BY: {readerName.toUpperCase()}</span>
+            )}
+            <span className="v8-back-foot__pts">+{pts} PTS</span>
           </div>
         </div>
       </div>

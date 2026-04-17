@@ -9,6 +9,7 @@ export interface GameEventMap {
   'card:scored': { cardId: string; winnerIdx: number; pts: number };
   'deck:exhausted': { mode: Industry };
   'player:turn-changed': { playerIdx: number; playerName: string };
+  'card:reported': { cardId: string };
   'fsm:transition': { from: GameState; to: GameState };
 }
 
