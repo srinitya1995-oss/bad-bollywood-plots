@@ -1,4 +1,4 @@
-import type { Card } from './types';
+import type { Card, DifficultyFilter, RoundLength } from './types';
 
 export function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -21,6 +21,51 @@ export function filterSeen(cards: Card[], seen: string[], sessionDealt: Set<stri
     filtered = cards;
   }
   return filtered;
+}
+
+/**
+ * Build a fixed-length round deck for v8 game modes.
+ * Filters by difficulty, excludes seen/sessionDealt cards, and relaxes
+ * constraints gracefully when not enough cards are available.
+ */
+export function buildFixedRoundDeck(
+  pool: Card[],
+  seen: Set<string>,
+  sessionDealt: Set<string>,
+  roundLen: RoundLength,
+  filter: DifficultyFilter,
+): Card[] {
+  // Step 1: apply difficulty filter
+  let candidates = filter === 'all' ? pool : pool.filter(c => c.diff === filter);
+
+  // Step 2: exclude seen and sessionDealt
+  let available = candidates.filter(c => !seen.has(c.id) && !sessionDealt.has(c.id));
+
+  // Relaxation: drop sessionDealt constraint
+  if (available.length < roundLen) {
+    available = candidates.filter(c => !seen.has(c.id));
+  }
+
+  // Relaxation: drop seen constraint
+  if (available.length < roundLen) {
+    available = candidates;
+  }
+
+  // Relaxation: drop difficulty filter
+  if (available.length < roundLen && filter !== 'all') {
+    available = pool.filter(c => !seen.has(c.id) && !sessionDealt.has(c.id));
+    if (available.length < roundLen) {
+      available = pool.filter(c => !seen.has(c.id));
+    }
+    if (available.length < roundLen) {
+      available = pool;
+    }
+  }
+
+  const shuffled = shuffle(available);
+  const dealt = shuffled.slice(0, roundLen);
+  for (const c of dealt) sessionDealt.add(c.id);
+  return dealt;
 }
 
 export function buildPartyDeck(pool: Card[], sessionDealt: Set<string>, seen: string[]): Card[] {

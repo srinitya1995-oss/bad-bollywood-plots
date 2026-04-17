@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createScorerState, scoreCard, getVerdict, getLeaderboard, VERDICT_TIERS } from '../../src/core/scorer';
+import { createScorerState, scoreCard, getVerdict, getLeaderboard, VERDICT_TIERS, awardPlayer } from '../../src/core/scorer';
 import type { Card, Player } from '../../src/core/types';
 
 function makeCard(diff: 'easy' | 'medium' | 'hard' = 'easy'): Card {
@@ -74,6 +74,45 @@ describe('getVerdict', () => {
     for (const tier of Object.values(VERDICT_TIERS)) {
       expect(tier.length).toBeGreaterThanOrEqual(2);
     }
+  });
+});
+
+describe('awardPlayer', () => {
+  it('returns a new array (immutable)', () => {
+    const original = [0, 0, 0];
+    const result = awardPlayer(original, 1, 5);
+    expect(result).not.toBe(original);
+    expect(original[1]).toBe(0); // original unchanged
+  });
+
+  it('adds points to the correct index', () => {
+    const result = awardPlayer([10, 20, 30], 1, 5);
+    expect(result).toEqual([10, 25, 30]);
+  });
+
+  it('handles index 0', () => {
+    const result = awardPlayer([0, 0], 0, 3);
+    expect(result).toEqual([3, 0]);
+  });
+
+  it('handles last index', () => {
+    const result = awardPlayer([0, 0, 0], 2, 7);
+    expect(result).toEqual([0, 0, 7]);
+  });
+
+  it('is safe for out-of-bounds positive index', () => {
+    const result = awardPlayer([10, 20], 5, 3);
+    expect(result).toEqual([10, 20]);
+  });
+
+  it('is safe for negative index', () => {
+    const result = awardPlayer([10, 20], -1, 3);
+    expect(result).toEqual([10, 20]);
+  });
+
+  it('works with zero points', () => {
+    const result = awardPlayer([5, 10], 0, 0);
+    expect(result).toEqual([5, 10]);
   });
 });
 

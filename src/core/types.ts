@@ -14,6 +14,8 @@ export const INDUSTRY_META: Record<Industry, IndustryMeta> = {
   TA: { label: 'Tamil Films', lang: 'Tamil', color: '--card-ta', packId: 'ta', comingSoon: true },
   ML: { label: 'Malayalam Films', lang: 'Malayalam', color: '--card-ml', packId: 'ml', comingSoon: true },
 };
+export type DifficultyFilter = 'all' | 'easy' | 'medium' | 'hard';
+export type RoundLength = 5 | 8 | 10 | 12;
 export type GameMode = 'party' | 'endless';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type GameState =
@@ -41,6 +43,7 @@ export interface Card {
 export interface Player {
   name: string;
   score: number;
+  id?: string;
 }
 
 export interface GameSession {

@@ -88,6 +88,18 @@ export function getVerdict(correctCount: number, totalPlayed: number): { title: 
   return pick(VERDICTS_0);
 }
 
+/**
+ * Return a NEW scores array with pts added at playerIdx.
+ * Safe for out-of-bounds: returns a copy unchanged if index is invalid.
+ */
+export function awardPlayer(scores: number[], playerIdx: number, pts: number): number[] {
+  const next = [...scores];
+  if (playerIdx >= 0 && playerIdx < next.length) {
+    next[playerIdx] += pts;
+  }
+  return next;
+}
+
 export function getLeaderboard(players: Player[]): Player[] {
   return [...players].sort((a, b) => b.score - a.score);
 }
