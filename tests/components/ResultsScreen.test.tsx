@@ -2,23 +2,17 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { create } from 'react-test-renderer';
 import { findByText, queryByText } from './test-utils';
 import { createScorerState } from '../../src/core/scorer';
-import { createAdaptiveState } from '../../src/core/adaptive';
 
 // Mutable payload for per-test customization
 const mockPayload = {
   scorer: {
-    ...createScorerState([{ name: 'Player 1', score: 15 }]),
+    ...createScorerState([{ name: 'Player 1', score: 0 }]),
     correctCount: 7,
     totalPts: 15,
   },
-  verdict: { title: 'Filmi Genius!', verdict: 'You really know your movies.' } as { title: string; verdict: string } | null,
   leaderboard: [{ name: 'Player 1', score: 15 }],
-  gameMode: 'party' as 'party' | 'endless',
-  highScore: 30,
   idx: 10,
-  adaptive: createAdaptiveState(),
-  abilityTier: 'Movie Buff',
-  abilityPercentile: 75,
+  scores: [15] as number[],
 };
 
 vi.mock('../../src/hooks/useGameState', () => ({
@@ -29,21 +23,13 @@ vi.mock('../../src/hooks/useGameState', () => ({
 }));
 
 const mockReplay = vi.fn();
-const mockGetShareText = vi.fn(() => 'Share text');
+const mockExitGame = vi.fn();
 
 vi.mock('../../src/hooks/useGameActions', () => ({
   useGameActions: () => ({
     replay: mockReplay,
-    getShareText: mockGetShareText,
+    exitGame: mockExitGame,
   }),
-}));
-
-vi.mock('../../src/components/FeedbackSheet', () => ({
-  FeedbackSheet: () => null,
-}));
-
-vi.mock('../../src/components/Toast', () => ({
-  toast: vi.fn(),
 }));
 
 import { ResultsScreen } from '../../src/components/ResultsScreen';
@@ -51,110 +37,102 @@ import { ResultsScreen } from '../../src/components/ResultsScreen';
 describe('ResultsScreen', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // Reset payload to defaults
+    // Reset payload to single-player defaults
     mockPayload.scorer = {
-      ...createScorerState([{ name: 'Player 1', score: 15 }]),
+      ...createScorerState([{ name: 'Player 1', score: 0 }]),
       correctCount: 7,
       totalPts: 15,
     };
     mockPayload.idx = 10;
-    mockPayload.verdict = { title: 'Filmi Genius!', verdict: 'You really know your movies.' };
-    mockPayload.gameMode = 'party';
-    mockPayload.highScore = 30;
     mockPayload.leaderboard = [{ name: 'Player 1', score: 15 }];
-    mockPayload.adaptive = createAdaptiveState();
-    mockPayload.abilityTier = 'Movie Buff';
-    mockPayload.abilityPercentile = 75;
+    mockPayload.scores = [15];
   });
 
-  it('renders the verdict title', () => {
+  it('renders "FINAL VERDICT" header', () => {
     const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Filmi Genius!')).toBeTruthy();
+    expect(findByText(tree.root, 'FINAL VERDICT')).toBeTruthy();
   });
 
-  it('renders "Game over" eyebrow text', () => {
+  it('renders "Final Verdict" in the panel masthead', () => {
     const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Game Over')).toBeTruthy();
+    expect(findByText(tree.root, 'Final Verdict')).toBeTruthy();
   });
 
-  it('shows correct count stat', () => {
+  it('renders player scores in the leaderboard', () => {
+    mockPayload.scorer = {
+      ...createScorerState([
+        { name: 'Alice', score: 0 },
+        { name: 'Bob', score: 0 },
+      ]),
+      correctCount: 5,
+      totalPts: 10,
+    };
+    mockPayload.scores = [20, 12];
+    mockPayload.leaderboard = [
+      { name: 'Alice', score: 20 },
+      { name: 'Bob', score: 12 },
+    ];
+
     const tree = create(<ResultsScreen />);
-    // The stat label
+    expect(findByText(tree.root, 'Alice')).toBeTruthy();
+    expect(findByText(tree.root, 'Bob')).toBeTruthy();
+    expect(findByText(tree.root, '20 pts')).toBeTruthy();
+    expect(findByText(tree.root, '12 pts')).toBeTruthy();
+  });
+
+  it('renders PLAY AGAIN button', () => {
+    const tree = create(<ResultsScreen />);
+    expect(findByText(tree.root, 'PLAY AGAIN')).toBeTruthy();
+  });
+
+  it('renders HOME button', () => {
+    const tree = create(<ResultsScreen />);
+    expect(findByText(tree.root, 'HOME')).toBeTruthy();
+  });
+
+  it('shows winner section for multiplayer', () => {
+    mockPayload.scorer = {
+      ...createScorerState([
+        { name: 'Priya', score: 0 },
+        { name: 'Raj', score: 0 },
+      ]),
+      correctCount: 5,
+      totalPts: 10,
+    };
+    mockPayload.scores = [25, 18];
+
+    const tree = create(<ResultsScreen />);
+    expect(findByText(tree.root, 'Priya')).toBeTruthy();
+    expect(findByText(tree.root, 'MOVIE BUFF')).toBeTruthy();
+  });
+
+  it('shows solo stats for single player', () => {
+    const tree = create(<ResultsScreen />);
     expect(findByText(tree.root, 'Correct')).toBeTruthy();
-    // correctCount and idx rendered as: {scorer.correctCount}/{idx} (multiple children in span)
-    const statNode = tree.root.find((n) =>
-      typeof n.props.className === 'string' &&
-      n.props.className.includes('res-stat-n') &&
-      n.children.some(c => String(c) === String(mockPayload.scorer.correctCount))
-    );
-    expect(statNode).toBeTruthy();
-  });
-
-  it('shows rating stat from adaptive', () => {
-    const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, '1100')).toBeTruthy();
-    expect(findByText(tree.root, 'Rating')).toBeTruthy();
-  });
-
-  it('shows points stat', () => {
-    const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, '15')).toBeTruthy();
     expect(findByText(tree.root, 'Points')).toBeTruthy();
   });
 
-  it('renders Share score button', () => {
+  it('does not show winner section for single player', () => {
     const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Share score')).toBeTruthy();
+    expect(queryByText(tree.root, 'MOVIE BUFF')).toBeNull();
   });
 
-  it('renders Play again button', () => {
+  it('renders a random desi film quote', () => {
     const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Play again')).toBeTruthy();
-  });
-
-  it('renders "How was that?" feedback button', () => {
-    const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'How was that?')).toBeTruthy();
-  });
-
-  it('renders verdict blockquote text', () => {
-    const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'You really know your movies.')).toBeTruthy();
-  });
-
-  it('shows ability tier and percentile', () => {
-    const tree = create(<ResultsScreen />);
-    // abilityTier and percentile rendered as: {abilityTier} · Top {abilityPercentile}%
-    // These are multiple children in a <p>, so search for the tier text node
-    expect(findByText(tree.root, /Movie Buff/)).toBeTruthy();
-    // Percentile rendered in res-tier-pct: "Top 75%"
-    const subNode = tree.root.find((n) =>
-      typeof n.props.className === 'string' &&
-      n.props.className.includes('res-tier-pct') &&
-      n.children.some(c => String(c).includes('75'))
+    // The quote is wrapped in quotes and rendered in a <p> element
+    const quoteNode = tree.root.find(
+      (n) =>
+        typeof n.props.className === 'string' &&
+        n.props.className.includes('v8-results-quote'),
     );
-    expect(subNode).toBeTruthy();
+    expect(quoteNode).toBeTruthy();
+    // The quote text should be non-empty and wrapped in double quotes
+    const text = quoteNode.children[0];
+    expect(typeof text === 'string' && text.startsWith('"') && text.endsWith('"')).toBe(true);
   });
 
-  it('falls back to "Done!" when verdict is null', () => {
-    mockPayload.verdict = null;
+  it('shows plots played count', () => {
     const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Done!')).toBeTruthy();
-  });
-
-  it('does not render leaderboard for single player', () => {
-    const tree = create(<ResultsScreen />);
-    expect(queryByText(tree.root, 'Leaderboard')).toBeNull();
-  });
-
-  it('renders leaderboard when there are multiple players', () => {
-    mockPayload.leaderboard = [
-      { name: 'Alice', score: 20 },
-      { name: 'Bob', score: 15 },
-    ];
-    const tree = create(<ResultsScreen />);
-    expect(findByText(tree.root, 'Leaderboard')).toBeTruthy();
-    expect(findByText(tree.root, 'Alice')).toBeTruthy();
-    expect(findByText(tree.root, 'Bob')).toBeTruthy();
+    expect(findByText(tree.root, '10 Plots Played')).toBeTruthy();
   });
 });
