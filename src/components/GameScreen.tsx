@@ -3,15 +3,27 @@ import { useGameState } from '../hooks/useGameState';
 import { useGameActions } from '../hooks/useGameActions';
 import { getGameInstance } from '../hooks/gameInstance';
 import { Card } from './Card';
+import { MenuPopover } from './MenuPopover';
+import { EndRoundSheet } from './EndRoundSheet';
+import { ReportSheet } from './ReportSheet';
 import type { Card as CardType } from '../core/types';
 import { POINT_MAP } from '../core/types';
 
-export function GameScreen() {
+interface GameScreenProps {
+  menuOpen?: boolean;
+  onMenuClose?: () => void;
+}
+
+export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   const { state, payload } = useGameState();
   const actions = useGameActions();
   const { deck, idx, currentCard, readerIdx, scorer } = payload;
   const [ptsFloat, setPtsFloat] = useState<{ value: number; key: number } | null>(null);
   const ptsKey = useRef(0);
+
+  const [endRoundOpen, setEndRoundOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportCardId, setReportCardId] = useState('');
 
   const showPtsFloat = useCallback((pts: number) => {
     ptsKey.current += 1;
@@ -41,10 +53,21 @@ export function GameScreen() {
     [actions],
   );
 
-  const handleReport = useCallback((_card: CardType) => {
-    // Report functionality: could open a sheet or log to analytics
+  const handleReport = useCallback((card: CardType) => {
+    setReportCardId(card.id);
+    setReportOpen(true);
     const g = getGameInstance();
-    g.bus.emit('card:reported', { cardId: _card.id });
+    g.bus.emit('card:reported', { cardId: card.id });
+  }, []);
+
+  const handleEndRound = useCallback(() => {
+    const g = getGameInstance();
+    g.endGame('abandon');
+  }, []);
+
+  const handleBackHome = useCallback(() => {
+    const g = getGameInstance();
+    g.exitGame();
   }, []);
 
   if (!currentCard) return null;
@@ -78,6 +101,25 @@ export function GameScreen() {
           </div>
         )}
       </div>
+
+      <MenuPopover
+        open={menuOpen}
+        onClose={() => onMenuClose?.()}
+        onEndRound={() => setEndRoundOpen(true)}
+        onBackHome={handleBackHome}
+      />
+
+      <EndRoundSheet
+        open={endRoundOpen}
+        onKeepPlaying={() => setEndRoundOpen(false)}
+        onEndRound={() => { setEndRoundOpen(false); handleEndRound(); }}
+      />
+
+      <ReportSheet
+        open={reportOpen}
+        cardId={reportCardId}
+        onClose={() => setReportOpen(false)}
+      />
     </main>
   );
 }

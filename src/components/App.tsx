@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { getGameInstance } from '../hooks/gameInstance';
 import { initPostHog, initAnalyticsSubscriber } from '../analytics/posthog';
@@ -17,7 +17,9 @@ export function App() {
   const { state } = useGameState();
   const [ready, setReady] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const prevStateRef = useRef(state);
+  const toggleMenu = useCallback(() => setMenuOpen(prev => !prev), []);
 
   useAbandonDetection();
 
@@ -50,6 +52,13 @@ export function App() {
 
   useEffect(() => { setShowSetup(state === 'setup'); }, [state]);
 
+  // Close menu when leaving game screens
+  useEffect(() => {
+    if (state !== 'playing' && state !== 'flipped' && state !== 'scoring') {
+      setMenuOpen(false);
+    }
+  }, [state]);
+
   if (!ready) return (
     <main className="screen active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ textAlign: 'center' }}>
@@ -62,9 +71,9 @@ export function App() {
   return (
     <>
       <BgLayer />
-      <TopBand />
+      <TopBand onMenuClick={toggleMenu} />
       {state === 'home' && <HomeScreen />}
-      {(state === 'playing' || state === 'flipped' || state === 'scoring') && <GameScreen />}
+      {(state === 'playing' || state === 'flipped' || state === 'scoring') && <GameScreen menuOpen={menuOpen} onMenuClose={() => setMenuOpen(false)} />}
       {(state === 'turnChange' || state === 'continue') && <TurnInterstitial />}
       {state === 'results' && <ResultsScreen />}
       {showSetup && <PlayerSetup onClose={() => { setShowSetup(false); if (getGameInstance().fsm.getState() === 'setup') { getGameInstance().fsm.transition('home'); } }} />}
