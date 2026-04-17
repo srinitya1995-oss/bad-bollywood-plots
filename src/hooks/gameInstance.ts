@@ -4,8 +4,8 @@ import { ContentLoader } from '../core/contentLoader';
 import { LocalStorageAdapter } from '../storage/localStorage';
 import { SupabaseAdapter } from '../storage/supabase';
 import type { StorageAdapter } from '../storage/interface';
-import type { Card, Industry, GameMode, Player } from '../core/types';
-import { INDUSTRY_META } from '../core/types';
+import type { Card, Industry, GameMode, Player, DifficultyFilter, RoundLength } from '../core/types';
+import { INDUSTRY_META, POINT_MAP } from '../core/types';
 import { buildPartyDeck } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
 import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
@@ -24,6 +24,30 @@ function initSupabaseClient(): unknown {
   return null;
 }
 
+export interface LastResult {
+  card: Card;
+  winnerIdx: number;
+  correct: boolean;
+}
+
+export interface GameSettings {
+  sound?: boolean;
+  difficultyFilter?: DifficultyFilter;
+  roundLen?: RoundLength;
+}
+
+const SESSION_STORAGE_KEY = 'badDesiPlots.v8';
+const SETTINGS_STORAGE_KEY = 'sp_settings';
+
+export interface SessionSnapshot {
+  players: Player[];
+  scores: number[];
+  cardIdx: number;
+  readerIdx: number;
+  lastResult: LastResult | null;
+  sessionId: string;
+}
+
 export interface GamePayload {
   industry: Industry | null;
   gameMode: GameMode;
@@ -39,6 +63,9 @@ export interface GamePayload {
   adaptive: AdaptiveState;
   abilityTier: string;
   abilityPercentile: number;
+  readerIdx: number;
+  lastResult: LastResult | null;
+  scores: number[];
 }
 
 class GameInstance {
@@ -55,6 +82,10 @@ class GameInstance {
   private scorer: ScorerState = createScorerState([]);
   private adaptive: AdaptiveState = createAdaptiveState();
   private sessionDealt = new Set<string>();
+  private _readerIdx = 0;
+  private _lastResult: LastResult | null = null;
+  private _scores: number[] = [];
+  private _settings: GameSettings = {};
   readonly sessionId = crypto.randomUUID?.() ?? `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
 
   constructor() {
@@ -65,6 +96,17 @@ class GameInstance {
     this.contentLoader = new ContentLoader(async (url: string) => {
       const res = await fetch(url);
       return res.json();
+    });
+
+    // Load persisted settings from localStorage
+    try {
+      const saved = window.localStorage.getItem(SETTINGS_STORAGE_KEY);
+      if (saved) this._settings = JSON.parse(saved) as GameSettings;
+    } catch { /* non-critical */ }
+
+    // Persist session snapshot on every FSM transition
+    this.bus.on('fsm:transition', () => {
+      this.persistSession();
     });
   }
 
@@ -88,6 +130,9 @@ class GameInstance {
       adaptive: this.adaptive,
       abilityTier: getAbilityTier(this.adaptive.ability),
       abilityPercentile: getAbilityPercentile(this.adaptive.ability),
+      readerIdx: this._readerIdx,
+      lastResult: this._lastResult,
+      scores: [...this._scores],
     };
   }
 
@@ -112,6 +157,9 @@ class GameInstance {
     this.idx = 0;
     this.scorer = createScorerState(players, this.gameMode === 'endless' ? 3 : 0);
     this.adaptive = createAdaptiveState();
+    this._readerIdx = 0;
+    this._lastResult = null;
+    this._scores = players.map(() => 0);
 
     if (this.gameMode === 'endless') {
       // Adaptive: pick first card at starting ability (1100 → medium-ish)
@@ -235,6 +283,67 @@ class GameInstance {
       'Think you can beat that?',
       'badbollywoodplots.com',
     ].join('\n');
+  }
+
+  /** Award points to the player at winnerIdx. Updates internal scores array. */
+  awardPoints(winnerIdx: number, card: Card): void {
+    const pts = POINT_MAP[card.diff] ?? 1;
+    if (winnerIdx >= 0 && winnerIdx < this._scores.length) {
+      this._scores[winnerIdx] += pts;
+    }
+    this._lastResult = { card, winnerIdx, correct: true };
+    this.bus.emit('card:scored', { cardId: card.id, winnerIdx, pts });
+  }
+
+  /** Nobody guessed correctly. */
+  awardNobody(card: Card): void {
+    this._lastResult = { card, winnerIdx: -1, correct: false };
+  }
+
+  /** Advance the reader to the next player. Call after each turn. */
+  advanceReader(): void {
+    const playerCount = this.scorer.players.length;
+    if (playerCount > 0) {
+      this._readerIdx = (this._readerIdx + 1) % playerCount;
+    }
+  }
+
+  /** Current reader index (rotates 0 -> 1 -> ... -> 0). */
+  get readerIdx(): number {
+    return this._readerIdx;
+  }
+
+  /** Last round result. */
+  get lastResult(): LastResult | null {
+    return this._lastResult;
+  }
+
+  /** Store settings for the next startGame call. Persists to localStorage. */
+  setSettings(settings: { sound?: boolean; difficultyFilter?: DifficultyFilter; roundLen?: RoundLength }): void {
+    this._settings = { ...this._settings, ...settings };
+    try {
+      window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(this._settings));
+    } catch { /* storage full or unavailable */ }
+  }
+
+  /** Get current settings. */
+  getSettings(): GameSettings {
+    return { ...this._settings };
+  }
+
+  /** Write current game state snapshot to sessionStorage for resume capability. */
+  private persistSession(): void {
+    try {
+      const snapshot: SessionSnapshot = {
+        players: this.scorer.players,
+        scores: [...this._scores],
+        cardIdx: this.idx,
+        readerIdx: this._readerIdx,
+        lastResult: this._lastResult,
+        sessionId: this.sessionId,
+      };
+      sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(snapshot));
+    } catch { /* sessionStorage unavailable or full */ }
   }
 
   private emitCardLoaded(): void {

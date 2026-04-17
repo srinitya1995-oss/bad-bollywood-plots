@@ -6,6 +6,7 @@ export interface GameEventMap {
   'card:loaded': { cardId: string; idx: number; difficulty: Difficulty };
   'card:flipped': { cardId: string; idx: number };
   'score:updated': { result: 'correct' | 'miss' | 'skip'; pts: number; totalPts: number; ability: number };
+  'card:scored': { cardId: string; winnerIdx: number; pts: number };
   'deck:exhausted': { mode: Industry };
   'player:turn-changed': { playerIdx: number; playerName: string };
   'fsm:transition': { from: GameState; to: GameState };
