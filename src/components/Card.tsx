@@ -105,6 +105,7 @@ export function Card({
             <span className="v8-card-diff">
               <span
                 className="v8-card-diff__dot"
+                aria-hidden="true"
                 style={{ background: DIFF_COLORS[card.diff] }}
               />
               {card.diff.toUpperCase()} · {pts} PTS
@@ -124,9 +125,7 @@ export function Card({
               <span className="v8-card-foot__cream">
                 READ BY: {readerName.toUpperCase()}
               </span>
-            ) : (
-              <span className="v8-card-foot__cream">TAP TO REVEAL</span>
-            )}
+            ) : null}
             <span>TAP TO REVEAL</span>
           </div>
         </div>

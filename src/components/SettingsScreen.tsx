@@ -20,10 +20,8 @@ export function SettingsScreen({ onClose }: SettingsScreenProps) {
   const saved = g.getSettings();
   const [difficulty, setDifficulty] = useState<DifficultyFilter>(saved.difficultyFilter ?? 'all');
   const [roundLen, setRoundLen] = useState<RoundLength>(saved.roundLen ?? 10);
-  const [sound, setSound] = useState(saved.sound ?? true);
-
   const handleDone = () => {
-    g.setSettings({ difficultyFilter: difficulty, roundLen, sound });
+    g.setSettings({ difficultyFilter: difficulty, roundLen });
     onClose();
   };
 
@@ -42,22 +40,6 @@ export function SettingsScreen({ onClose }: SettingsScreenProps) {
         </div>
 
         <div className="v8-settings-body">
-          {/* Sound */}
-          <div className="v8-settings-row">
-            <div className="v8-settings-label">
-              <h3>Sound</h3>
-              <p>Card flip and win jingles</p>
-            </div>
-            <button
-              className="v8-settings-toggle"
-              role="switch"
-              aria-checked={sound}
-              onClick={() => setSound(!sound)}
-            >
-              <span className="v8-settings-toggle__dot" />
-            </button>
-          </div>
-
           {/* Difficulty */}
           <div className="v8-settings-row v8-settings-row--col">
             <div className="v8-settings-label">

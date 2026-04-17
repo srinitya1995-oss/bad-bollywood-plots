@@ -100,8 +100,9 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
             key={ptsFloat.key}
             className="v8-pts-float v8-pts-float--show"
             aria-live="polite"
+            aria-atomic="true"
           >
-            +{ptsFloat.value}
+            +{ptsFloat.value} points
           </div>
         )}
       </div>

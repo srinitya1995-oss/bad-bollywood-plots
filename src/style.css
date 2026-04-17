@@ -1458,7 +1458,7 @@ body {
   border-radius: 3px;
   padding: 3px 10px;
   cursor: pointer;
-  min-height: 32px;
+  min-height: 44px;
   min-width: 44px;
   transition: background 120ms ease;
 }
@@ -1914,8 +1914,8 @@ body {
   padding: 2px 10px;
   border-radius: 3px;
   cursor: pointer;
-  min-width: 32px;
-  min-height: 32px;
+  min-width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2314,6 +2314,7 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 8px 12px 6px;
+  min-height: 44px;
   border: 2px solid var(--paper);
   background: rgba(246, 235, 209, 0.08);
   color: var(--paper);
@@ -2745,6 +2746,16 @@ body {
   font-size: 12px;
   letter-spacing: 0.18em;
   color: var(--gold-bright);
+}
+.v8-results-verdict {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--v8-ink);
+  opacity: 0.85;
+  padding: 0 20px 12px;
+  text-align: center;
+  font-style: italic;
 }
 
 /* Winner section (multiplayer) */

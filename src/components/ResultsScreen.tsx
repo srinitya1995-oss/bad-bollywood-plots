@@ -25,11 +25,10 @@ function pickRandomQuote(): string {
 export function ResultsScreen() {
   const { payload } = useGameState();
   const actions = useGameActions();
-  const { scorer, idx, scores } = payload;
+  const { scorer, idx, scores, verdict } = payload;
 
   const isMultiplayer = scorer.players.length > 1;
 
-  // Sort players by score descending for display
   const sortedPlayers = useMemo(() => {
     return scorer.players
       .map((p, i) => ({ name: p.name, score: scores[i] ?? 0, idx: i }))
@@ -47,27 +46,28 @@ export function ResultsScreen() {
       aria-label="Results"
       style={{ background: 'var(--stage)' }}
     >
-      {/* FINAL VERDICT header */}
-      <h2 className="v8-results-header">FINAL VERDICT</h2>
+      <h1 className="v8-results-header">FINAL VERDICT</h1>
 
-      {/* Verdict panel */}
       <div className="v8-results-panel">
-        {/* Panel masthead */}
         <div className="v8-results-mast">
-          <span className="v8-results-mast__title">Final Verdict</span>
+          <span className="v8-results-mast__title">
+            {verdict?.title ?? 'Final Verdict'}
+          </span>
           <span className="v8-results-mast__sub">{`${idx} Plots Played`}</span>
         </div>
 
-        {/* Winner section (multiplayer) */}
+        {verdict && (
+          <p className="v8-results-verdict">{verdict.verdict}</p>
+        )}
+
         {isMultiplayer && winner && (
           <div className="v8-results-winner">
-            <div className="v8-results-winner__crown">{'\u2605'} Top Guesser {'\u2605'}</div>
+            <h2 className="v8-results-winner__crown">{'\u2605'} Top Guesser {'\u2605'}</h2>
             <div className="v8-results-winner__name">{winner.name}</div>
             <div className="v8-results-winner__title">MOVIE BUFF</div>
           </div>
         )}
 
-        {/* Solo stats */}
         {!isMultiplayer && (
           <div className="v8-results-solo">
             <div className="v8-results-solo__stat">
@@ -83,7 +83,6 @@ export function ResultsScreen() {
           </div>
         )}
 
-        {/* Leaderboard */}
         <div className="v8-results-board">
           <div className="v8-results-board__label">The Line-Up</div>
           {sortedPlayers.map((p, i) => (
@@ -101,10 +100,8 @@ export function ResultsScreen() {
         </div>
       </div>
 
-      {/* Random desi quote */}
       <p className="v8-results-quote">{`"${quote}"`}</p>
 
-      {/* CTAs */}
       <div className="v8-results-ctas">
         <button
           className="v8-results-btn v8-results-btn--primary"

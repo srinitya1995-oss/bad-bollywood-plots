@@ -67,15 +67,14 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
       className="v8-inter"
       aria-label={isContinue ? 'Continue or see results' : 'Turn change'}
       onClick={handleTap}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === ' ' || e.key === 'Enter') {
-          e.preventDefault();
-          handleTap();
-        }
-      }}
     >
+      <button
+        className="sr-only"
+        onClick={handleTap}
+        aria-label={isContinue ? 'Continue playing' : 'Tap to continue'}
+      >
+        Continue
+      </button>
       {/* Feedback pill from last round */}
       {feedbackNode}
 
