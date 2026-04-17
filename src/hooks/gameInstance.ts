@@ -11,7 +11,7 @@ import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerSt
 import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? 'https://wmfxkkgktmfsipiihsjq.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtZnhra2drdG1mc2lwaWloc2pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzA2MTYsImV4cCI6MjA5MDA0NjYxNn0.eV3m6O_-Ti3cl8C2yq-Ffp7M2hdBj9qasEWSD3lnrTg';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? '';
 
 function initSupabaseClient(): unknown {
   try {
@@ -188,6 +188,7 @@ class GameInstance {
   markResult(result: 'correct' | 'miss' | 'skip'): void {
     if (this.fsm.getState() !== 'flipped') return;
     const card = this.deck[this.idx];
+    if (!card) return;
     this.scorer = scoreCard(this.scorer, card, result);
     this.adaptive = updateAbility(this.adaptive, card, result === 'correct');
     this.fsm.transition('scoring');

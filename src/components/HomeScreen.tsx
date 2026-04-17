@@ -30,13 +30,11 @@ export function HomeScreen() {
           Simple, chaotic, and best played with chai and friends.
         </p>
         <div className="v8-home-meta" aria-label="Game details">
-          <span>5 CARDS</span>
-          <span className="v8-home-meta__dot" aria-hidden="true" />
-          <span>6 MIN ROUNDS</span>
-          <span className="v8-home-meta__dot" aria-hidden="true" />
           <span>SOLO</span>
           <span className="v8-home-meta__dot" aria-hidden="true" />
           <span>PARTY</span>
+          <span className="v8-home-meta__dot" aria-hidden="true" />
+          <span>NO SETUP</span>
         </div>
       </div>
 

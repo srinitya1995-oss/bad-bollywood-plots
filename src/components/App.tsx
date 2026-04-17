@@ -41,12 +41,16 @@ export function App() {
     prevStateRef.current = state;
   }, [state, ready]);
 
+  const [loadError, setLoadError] = useState(false);
+
   useEffect(() => {
     const instance = getGameInstance();
     instance.init().then(() => {
       initPostHog();
       initAnalyticsSubscriber(instance.bus, instance.sessionId);
       setReady(true);
+    }).catch(() => {
+      setLoadError(true);
     });
   }, []);
 
@@ -63,7 +67,16 @@ export function App() {
     <main className="screen active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '48px', color: 'var(--cream)', marginBottom: '0.5rem' }}>Bad Plots</h1>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'var(--cream)', opacity: 0.6 }}>Loading cards...</p>
+        {loadError ? (
+          <button
+            onClick={() => window.location.reload()}
+            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'var(--cream)', opacity: 0.8, background: 'none', border: '1px solid var(--cream)', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer' }}
+          >
+            Could not load cards. Tap to retry.
+          </button>
+        ) : (
+          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'var(--cream)', opacity: 0.6 }}>Loading cards...</p>
+        )}
       </div>
     </main>
   );
