@@ -20,8 +20,9 @@ export function SettingsScreen({ onClose }: SettingsScreenProps) {
   const saved = g.getSettings();
   const [difficulty, setDifficulty] = useState<DifficultyFilter>(saved.difficultyFilter ?? 'all');
   const [roundLen, setRoundLen] = useState<RoundLength>(saved.roundLen ?? 10);
+  const [sound, setSound] = useState<boolean>(saved.sound ?? true);
   const handleDone = () => {
-    g.setSettings({ difficultyFilter: difficulty, roundLen });
+    g.setSettings({ difficultyFilter: difficulty, roundLen, sound });
     onClose();
   };
 
@@ -80,6 +81,24 @@ export function SettingsScreen({ onClose }: SettingsScreenProps) {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Sound */}
+          <div className="v8-settings-row">
+            <div className="v8-settings-label">
+              <h3>Sound</h3>
+              <p>Flips, wins, and whooshes</p>
+            </div>
+            <button
+              className={`v8-settings-switch${sound ? ' is-on' : ''}`}
+              role="switch"
+              aria-checked={sound}
+              aria-label="Toggle sound"
+              onClick={() => setSound((s) => !s)}
+            >
+              <span className="v8-settings-switch__knob" aria-hidden="true" />
+              <span className="sr-only">{sound ? 'On' : 'Off'}</span>
+            </button>
           </div>
         </div>
 

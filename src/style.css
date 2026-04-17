@@ -3612,6 +3612,39 @@ body {
   align-items: stretch;
 }
 
+/* Toggle switch */
+.v8-settings-switch {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 2px solid var(--v8-ink);
+  border-radius: 999px;
+  background: var(--paper-warm);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.18s ease;
+}
+.v8-settings-switch__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--v8-ink);
+  transition: transform 0.18s cubic-bezier(0.2, 1, 0.3, 1), background 0.18s ease;
+}
+.v8-settings-switch.is-on { background: var(--tomato); }
+.v8-settings-switch.is-on .v8-settings-switch__knob {
+  transform: translateX(22px);
+  background: var(--gold-bright);
+}
+.v8-settings-switch:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 2px;
+}
+
 .v8-settings-label h3 {
   font-family: 'Anton', sans-serif;
   font-size: 16px;
