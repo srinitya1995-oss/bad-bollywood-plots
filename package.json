@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "generate": "node scripts/generate.js"
+    "generate": "node scripts/generate.js",
+    "check-features": "node scripts/check-features.cjs"
   },
   "dependencies": {
     "@babel/runtime": "^7.29.2",
