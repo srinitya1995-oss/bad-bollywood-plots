@@ -6,6 +6,7 @@ import { Card } from './Card';
 import { MenuPopover } from './MenuPopover';
 import { EndRoundSheet } from './EndRoundSheet';
 import { ReportSheet } from './ReportSheet';
+import { HowToScreen } from './HowToScreen';
 import type { Card as CardType } from '../core/types';
 import { POINT_MAP } from '../core/types';
 
@@ -24,6 +25,7 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   const [endRoundOpen, setEndRoundOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportCardId, setReportCardId] = useState('');
+  const [howToOpen, setHowToOpen] = useState(false);
 
   const showPtsFloat = useCallback((pts: number) => {
     ptsKey.current += 1;
@@ -34,9 +36,11 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   const handleAwardPoints = useCallback(
     (playerIdx: number, card: CardType) => {
       const g = getGameInstance();
+      const basePts = POINT_MAP[card.diff] ?? 1;
+      const streak = g.getPayload().scorer.streak;
+      const bonus = streak >= 7 ? 3 : streak >= 5 ? 2 : streak >= 3 ? 1 : 0;
       g.awardPoints(playerIdx, card);
-      showPtsFloat(POINT_MAP[card.diff]);
-      // Advance to next card
+      showPtsFloat(basePts + bonus);
       g.advanceReader();
       actions.markCorrect();
     },
@@ -107,6 +111,7 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
         onClose={() => onMenuClose?.()}
         onEndRound={() => setEndRoundOpen(true)}
         onBackHome={handleBackHome}
+        onHowTo={() => setHowToOpen(true)}
       />
 
       <EndRoundSheet
@@ -120,6 +125,8 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
         cardId={reportCardId}
         onClose={() => setReportOpen(false)}
       />
+
+      {howToOpen && <HowToScreen onClose={() => setHowToOpen(false)} />}
     </main>
   );
 }

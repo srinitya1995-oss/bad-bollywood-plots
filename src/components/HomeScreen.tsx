@@ -3,12 +3,18 @@ import { useGameActions } from '../hooks/useGameActions';
 import { useResumeSession } from '../hooks/useResumeSession';
 import { SuggestSheet } from './SuggestSheet';
 import { FeedbackSheet } from './FeedbackSheet';
+import { HowToScreen } from './HowToScreen';
+import { SettingsScreen } from './SettingsScreen';
+import type { Industry } from '../core/types';
 
 export function HomeScreen() {
   const actions = useGameActions();
   const { canResume } = useResumeSession();
   const [showSuggest, setShowSuggest] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showHowTo, setShowHowTo] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [cinema, setCinema] = useState<Industry>('HI');
 
   return (
     <main className="screen active v8-home" aria-label="Home">
@@ -38,6 +44,26 @@ export function HomeScreen() {
         </div>
       </div>
 
+      {/* Cinema toggle */}
+      <div className="v8-home-cinema" role="radiogroup" aria-label="Choose cinema">
+        <button
+          className={`v8-home-cinema__btn${cinema === 'HI' ? ' is-active' : ''}`}
+          role="radio"
+          aria-checked={cinema === 'HI'}
+          onClick={() => setCinema('HI')}
+        >
+          BOLLYWOOD
+        </button>
+        <button
+          className={`v8-home-cinema__btn${cinema === 'TE' ? ' is-active' : ''}`}
+          role="radio"
+          aria-checked={cinema === 'TE'}
+          onClick={() => setCinema('TE')}
+        >
+          TOLLYWOOD
+        </button>
+      </div>
+
       {/* CTAs */}
       <div className="v8-home-ctas">
         {canResume && (
@@ -52,14 +78,14 @@ export function HomeScreen() {
         )}
         <button
           className="v8-home-btn v8-home-btn--primary"
-          onClick={() => actions.selectMode('HI')}
+          onClick={() => actions.selectMode(cinema)}
           aria-label="Pass and Play"
         >
           PASS &amp; PLAY
         </button>
         <button
           className="v8-home-btn v8-home-btn--secondary"
-          onClick={() => actions.startSoloGame('HI')}
+          onClick={() => actions.startSoloGame(cinema)}
           aria-label="Solo"
         >
           SOLO
@@ -68,12 +94,20 @@ export function HomeScreen() {
 
       {/* Footer */}
       <footer className="v8-home-footer">
+        <button className="v8-home-footer__link" onClick={() => setShowHowTo(true)}>
+          How to Play
+        </button>
+        <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
         <button className="v8-home-footer__link" onClick={() => setShowSuggest(true)}>
           Suggest a Movie
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
         <button className="v8-home-footer__link" onClick={() => setShowFeedback(true)}>
           Feedback
+        </button>
+        <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
+        <button className="v8-home-footer__link" onClick={() => setShowSettings(true)}>
+          Settings
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
         <a
@@ -86,8 +120,10 @@ export function HomeScreen() {
         </a>
       </footer>
 
+      {showHowTo && <HowToScreen onClose={() => setShowHowTo(false)} />}
       {showSuggest && <SuggestSheet onClose={() => setShowSuggest(false)} />}
       {showFeedback && <FeedbackSheet onClose={() => setShowFeedback(false)} />}
+      {showSettings && <SettingsScreen onClose={() => setShowSettings(false)} />}
     </main>
   );
 }

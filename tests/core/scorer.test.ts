@@ -13,7 +13,6 @@ describe('scoreCard', () => {
     expect(next.totalPts).toBe(2);
     expect(next.correctCount).toBe(1);
     expect(next.streak).toBe(1);
-    expect(next.players[0].score).toBe(2);
   });
 
   it('resets streak on miss', () => {
@@ -44,10 +43,11 @@ describe('scoreCard', () => {
     expect(scoreCard(state, makeCard('hard'), 'correct').totalPts).toBe(3);
   });
 
-  it('scores to current player in multiplayer', () => {
+  it('tracks aggregate stats in multiplayer without touching per-player scores', () => {
     const state = createScorerState([{ name: 'P1', score: 0 }, { name: 'P2', score: 0 }]);
     const next = scoreCard(state, makeCard('hard'), 'correct');
-    expect(next.players[0].score).toBe(3);
+    expect(next.totalPts).toBe(3);
+    expect(next.players[0].score).toBe(0);
     expect(next.players[1].score).toBe(0);
   });
 });

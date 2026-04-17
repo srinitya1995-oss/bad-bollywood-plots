@@ -32,6 +32,14 @@ vi.mock('../../src/components/FeedbackSheet', () => ({
   FeedbackSheet: () => null,
 }));
 
+vi.mock('../../src/components/HowToScreen', () => ({
+  HowToScreen: () => null,
+}));
+
+vi.mock('../../src/components/SettingsScreen', () => ({
+  SettingsScreen: () => null,
+}));
+
 // Import component AFTER mocks are set up
 import { HomeScreen } from '../../src/components/HomeScreen';
 

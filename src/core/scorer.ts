@@ -23,7 +23,6 @@ export function scoreCard(state: ScorerState, card: Card, result: 'correct' | 'm
     next.streak += 1;
     const bonus = next.streak >= 7 ? 3 : next.streak >= 5 ? 2 : next.streak >= 3 ? 1 : 0;
     next.totalPts += pts + bonus;
-    next.players[state.currentPlayerIdx].score += pts + bonus;
   } else if (result === 'miss') {
     next.streak = 0;
     if (state.lives > 0) next.lives = state.lives - 1;

@@ -286,14 +286,17 @@ class GameInstance {
     ].join('\n');
   }
 
-  /** Award points to the player at winnerIdx. Updates internal scores array. */
+  /** Award points to the player at winnerIdx. Includes streak bonus. */
   awardPoints(winnerIdx: number, card: Card): void {
-    const pts = POINT_MAP[card.diff] ?? 1;
+    const basePts = POINT_MAP[card.diff] ?? 1;
+    const streak = this.scorer.streak;
+    const bonus = streak >= 7 ? 3 : streak >= 5 ? 2 : streak >= 3 ? 1 : 0;
+    const totalPts = basePts + bonus;
     if (winnerIdx >= 0 && winnerIdx < this._scores.length) {
-      this._scores[winnerIdx] += pts;
+      this._scores[winnerIdx] += totalPts;
     }
     this._lastResult = { card, winnerIdx, correct: true };
-    this.bus.emit('card:scored', { cardId: card.id, winnerIdx, pts });
+    this.bus.emit('card:scored', { cardId: card.id, winnerIdx, pts: totalPts });
   }
 
   /** Nobody guessed correctly. */

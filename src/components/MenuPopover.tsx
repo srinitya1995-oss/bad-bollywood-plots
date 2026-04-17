@@ -6,9 +6,10 @@ interface MenuPopoverProps {
   onClose: () => void;
   onEndRound: () => void;
   onBackHome: () => void;
+  onHowTo?: () => void;
 }
 
-export function MenuPopover({ open, onClose, onEndRound, onBackHome }: MenuPopoverProps) {
+export function MenuPopover({ open, onClose, onEndRound, onBackHome, onHowTo }: MenuPopoverProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [soundOn, setSoundOn] = useState(() => getGameInstance().getSettings().sound ?? true);
 
@@ -47,6 +48,11 @@ export function MenuPopover({ open, onClose, onEndRound, onBackHome }: MenuPopov
         Sound
         <span className="v8-menu-item__side">{soundOn ? 'On' : 'Off'}</span>
       </button>
+      {onHowTo && (
+        <button className="v8-menu-item" role="menuitem" onClick={() => { onClose(); onHowTo(); }}>
+          How to Play
+        </button>
+      )}
       <button className="v8-menu-item v8-menu-item--danger" role="menuitem" onClick={() => { onClose(); onEndRound(); }}>
         End round
         <span className="v8-menu-item__side">See final scores</span>

@@ -1583,13 +1583,47 @@ body {
 }
 
 /* CTAs */
+/* Cinema toggle (BW / TW) */
+.v8-home-cinema {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 24px;
+  animation: fadeUp 0.35s ease-out both;
+}
+.v8-home-cinema__btn {
+  flex: 1;
+  background: transparent;
+  border: 2px solid var(--paper);
+  border-radius: 4px;
+  padding: 10px 8px;
+  font-family: 'Anton', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  cursor: pointer;
+  text-align: center;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+  min-height: 44px;
+  opacity: 0.5;
+}
+.v8-home-cinema__btn.is-active {
+  background: var(--paper);
+  color: var(--stage);
+  border-color: var(--paper);
+  opacity: 1;
+  box-shadow: 3px 3px 0 var(--tomato);
+}
+
 .v8-home-ctas {
   display: flex;
   flex-direction: column;
   gap: 12px;
   width: 100%;
   max-width: 440px;
-  margin-top: 28px;
+  margin-top: 16px;
   animation: fadeUp 0.4s ease-out 0.1s both;
 }
 

@@ -32,7 +32,7 @@ export function ResultsScreen() {
   // Sort players by score descending for display
   const sortedPlayers = useMemo(() => {
     return scorer.players
-      .map((p, i) => ({ name: p.name, score: scores[i] ?? p.score, idx: i }))
+      .map((p, i) => ({ name: p.name, score: scores[i] ?? 0, idx: i }))
       .sort((a, b) => b.score - a.score);
   }, [scorer.players, scores]);
 

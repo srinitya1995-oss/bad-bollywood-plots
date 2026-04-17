@@ -36,7 +36,7 @@ export function HowToScreen({ onClose }: HowToScreenProps) {
     >
       <div className="v8-howto-panel">
         <div className="v8-howto-mast">
-          <span className="v8-howto-mast__title">HOW TO PLAY</span>
+          <span className="v8-howto-mast__title" id="howto-title">HOW TO PLAY</span>
           <span className="v8-howto-mast__sub">2 MIN READ</span>
         </div>
 
