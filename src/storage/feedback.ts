@@ -55,7 +55,15 @@ function getClient(): SupabaseLikeClient | null {
   return cachedClient;
 }
 
+const writeTimestamps = new Map<string, number>();
+const THROTTLE_MS = 5_000;
+
 function fireAndForgetInsert(table: string, row: Record<string, unknown>): void {
+  const now = Date.now();
+  const lastWrite = writeTimestamps.get(table) ?? 0;
+  if (now - lastWrite < THROTTLE_MS) return;
+  writeTimestamps.set(table, now);
+
   const client = getClient();
   if (!client) return;
   try {
