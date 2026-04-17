@@ -8,6 +8,8 @@ import { ResultsScreen } from './ResultsScreen';
 import { PlayerSetup } from './PlayerSetup';
 import { TurnInterstitial } from './TurnInterstitial';
 import { Toast } from './Toast';
+import { BgLayer } from './BgLayer';
+import { TopBand } from './TopBand';
 import { useAbandonDetection } from '../hooks/useAbandonDetection';
 import '../style.css';
 
@@ -59,6 +61,8 @@ export function App() {
 
   return (
     <>
+      <BgLayer />
+      <TopBand />
       {state === 'home' && <HomeScreen />}
       {(state === 'playing' || state === 'flipped' || state === 'scoring') && <GameScreen />}
       {(state === 'turnChange' || state === 'continue') && <TurnInterstitial />}

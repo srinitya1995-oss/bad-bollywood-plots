@@ -1,145 +1,104 @@
 import { useState } from 'react';
 import { useGameActions } from '../hooks/useGameActions';
+import { useResumeSession } from '../hooks/useResumeSession';
 import { SuggestSheet } from './SuggestSheet';
 import { FeedbackSheet } from './FeedbackSheet';
-import { INDUSTRY_META, type Industry, type GameMode } from '../core/types';
 
 export function HomeScreen() {
   const actions = useGameActions();
-  const [gameMode, setGameMode] = useState<GameMode>('party');
+  const { canResume } = useResumeSession();
   const [showSuggest, setShowSuggest] = useState(false);
-  const [suggestIndustry, setSuggestIndustry] = useState<string | undefined>(undefined);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [wantMultiplayer, setWantMultiplayer] = useState(false);
-
-  const activeIndustries = (Object.entries(INDUSTRY_META) as [Industry, typeof INDUSTRY_META[Industry]][]).filter(([, m]) => !m.comingSoon);
-  const comingSoonIndustries = (Object.entries(INDUSTRY_META) as [Industry, typeof INDUSTRY_META[Industry]][]).filter(([, m]) => m.comingSoon);
-
-  const handleModeChange = (mode: GameMode) => {
-    setGameMode(mode);
-    actions.setGameMode(mode);
-  };
-
-  const handleCinemaClick = (industry: Industry) => {
-    if (wantMultiplayer) {
-      actions.selectMode(industry);
-    } else {
-      actions.startSoloGame(industry);
-    }
-  };
-
-  const handleComingSoonSuggest = (lang: string) => {
-    setSuggestIndustry(lang);
-    setShowSuggest(true);
-  };
-
-  const handleCloseSuggest = () => {
-    setShowSuggest(false);
-    setSuggestIndustry(undefined);
-  };
 
   return (
-    <main className="screen active" aria-label="Home">
-      <div className="home-page">
+    <main className="screen active v8-home" aria-label="Home">
 
-        {/* ── Title ── */}
-        <header className="home-hero">
-          <h1 className="home-title">
-            <span className="home-title__bad">BAD</span>
-            <span className="home-title__plots">PLOTS</span>
-          </h1>
-          <p className="home-tagline">Guess the movie from the terrible plot</p>
-        </header>
-
-        {/* ── Pick your cinema ── */}
-        <section className="home-cinema">
-          {activeIndustries.map(([code, meta]) => (
-            <button
-              key={code}
-              className={`cinema-btn cinema-btn--${meta.packId}`}
-              onClick={() => handleCinemaClick(code)}
-              aria-label={`Play ${meta.label}`}
-            >
-              <span className="cinema-btn__lang">{meta.lang}</span>
-              <span className="cinema-btn__sub">{meta.label}</span>
-            </button>
-          ))}
-        </section>
-
-        {/* ── Mode + options ── */}
-        <section className="home-options">
-          <div className="home-mode-pill" role="group" aria-label="Game mode">
-            <button
-              className={`mode-pill__btn${gameMode === 'party' ? ' is-active' : ''}`}
-              onClick={() => handleModeChange('party')}
-              aria-pressed={gameMode === 'party'}
-            >
-              Party
-            </button>
-            <button
-              className={`mode-pill__btn${gameMode === 'endless' ? ' is-active' : ''}`}
-              onClick={() => handleModeChange('endless')}
-              aria-pressed={gameMode === 'endless'}
-            >
-              Endless
-            </button>
-          </div>
-          <p className="home-mode-desc">
-            {gameMode === 'party'
-              ? '12 cards · mixed difficulty'
-              : 'Keep going until you drop'
-            }
-          </p>
-          <button
-            className={`home-friends-btn${wantMultiplayer ? ' is-active' : ''}`}
-            onClick={() => setWantMultiplayer(!wantMultiplayer)}
-            aria-pressed={wantMultiplayer}
-            aria-label="Play with friends"
-          >
-            {wantMultiplayer ? '✓ With friends' : '+ Add friends'}
-          </button>
-        </section>
-
-        {/* ── Coming soon ── */}
-        {comingSoonIndustries.length > 0 && (
-          <section className="home-coming">
-            {comingSoonIndustries.map(([code, meta]) => (
-              <button
-                key={code}
-                className="coming-chip"
-                onClick={() => handleComingSoonSuggest(meta.lang)}
-                aria-label={`Suggest movies for ${meta.lang}`}
-              >
-                <span className="coming-chip__lang">{meta.lang}</span>
-                <span className="coming-chip__label">Coming soon</span>
-              </button>
-            ))}
-          </section>
-        )}
-
-        {/* ── Footer ── */}
-        <footer className="home-footer">
-          <button className="home-footer__link" onClick={() => { setSuggestIndustry(undefined); setShowSuggest(true); }}>
-            Suggest a Movie
-          </button>
-          <span className="home-footer__dot" aria-hidden="true">·</span>
-          <button className="home-footer__link" onClick={() => setShowFeedback(true)}>
-            Feedback
-          </button>
-          <span className="home-footer__dot" aria-hidden="true">·</span>
-          <a
-            href="https://www.linkedin.com/in/srinityaduppanapudisatya/"
-            target="_blank"
-            rel="noopener"
-            className="home-footer__link"
-          >
-            @Srinitya
-          </a>
-        </footer>
-
+      {/* Hero card */}
+      <div className="v8-home-hero">
+        <p className="v8-home-kicker">THE DESI PARTY GAME</p>
+        <h1 className="v8-home-title">
+          <span>BAD</span>
+          <br />
+          <span className="v8-home-title__accent">BOLLYWOOD</span>
+          <br />
+          <span>PLOTS</span>
+        </h1>
+        <p className="v8-home-tag">
+          The plot is bad on purpose. Guess the Bollywood movie.
+        </p>
+        <p className="v8-home-sub">
+          Play solo or pass the phone &middot; Tollywood &amp; more coming soon
+        </p>
+        <div className="v8-home-meta" aria-label="Game details">
+          <span>5 CARDS</span>
+          <span className="v8-home-meta__dot" aria-hidden="true" />
+          <span>6 MIN ROUNDS</span>
+          <span className="v8-home-meta__dot" aria-hidden="true" />
+          <span>SOLO</span>
+          <span className="v8-home-meta__dot" aria-hidden="true" />
+          <span>PARTY</span>
+        </div>
       </div>
 
-      {showSuggest && <SuggestSheet onClose={handleCloseSuggest} defaultIndustry={suggestIndustry} />}
+      {/* Stamp */}
+      <div className="v8-home-stamp" aria-hidden="true">
+        OFFICIALLY<br />
+        <strong>BAD</strong><br />
+        SINCE 2026
+      </div>
+
+      {/* Resume pill */}
+      {canResume && (
+        <button
+          className="v8-home-resume"
+          onClick={() => {
+            // Restore game from sessionStorage handled by game instance
+            window.location.reload();
+          }}
+        >
+          Resume last game
+        </button>
+      )}
+
+      {/* CTAs */}
+      <div className="v8-home-ctas">
+        <button
+          className="v8-home-btn v8-home-btn--primary"
+          onClick={() => actions.selectMode('HI')}
+          aria-label="Pass and Play"
+        >
+          PASS &amp; PLAY
+        </button>
+        <button
+          className="v8-home-btn v8-home-btn--secondary"
+          onClick={() => actions.startSoloGame('HI')}
+          aria-label="Solo"
+        >
+          SOLO
+        </button>
+      </div>
+
+      {/* Footer */}
+      <footer className="v8-home-footer">
+        <button className="v8-home-footer__link" onClick={() => setShowSuggest(true)}>
+          Suggest a Movie
+        </button>
+        <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
+        <button className="v8-home-footer__link" onClick={() => setShowFeedback(true)}>
+          Feedback
+        </button>
+        <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
+        <a
+          href="https://www.linkedin.com/in/srinityaduppanapudisatya/"
+          target="_blank"
+          rel="noopener"
+          className="v8-home-footer__link"
+        >
+          Made by @Srinitya
+        </a>
+      </footer>
+
+      {showSuggest && <SuggestSheet onClose={() => setShowSuggest(false)} />}
       {showFeedback && <FeedbackSheet onClose={() => setShowFeedback(false)} />}
     </main>
   );

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { create, act } from 'react-test-renderer';
-import { findByText, findAllByText, findByAriaLabel, queryByText } from './test-utils';
+import { create } from 'react-test-renderer';
+import { findByText, queryByText, findByAriaLabel } from './test-utils';
 
 // Mock hooks BEFORE importing the component
 const mockStartSoloGame = vi.fn();
@@ -12,6 +12,15 @@ vi.mock('../../src/hooks/useGameActions', () => ({
     startSoloGame: mockStartSoloGame,
     selectMode: mockSelectMode,
     setGameMode: mockSetGameMode,
+  }),
+}));
+
+let mockCanResume = false;
+vi.mock('../../src/hooks/useResumeSession', () => ({
+  useResumeSession: () => ({
+    canResume: mockCanResume,
+    resumeData: null,
+    clearResume: vi.fn(),
   }),
 }));
 
@@ -29,98 +38,58 @@ import { HomeScreen } from '../../src/components/HomeScreen';
 describe('HomeScreen', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockCanResume = false;
   });
 
-  it('renders "BAD" and "PLOTS" title text', () => {
+  it('renders title "BAD BOLLYWOOD PLOTS"', () => {
     const tree = create(<HomeScreen />);
     expect(findByText(tree.root, 'BAD')).toBeTruthy();
+    expect(findByText(tree.root, 'BOLLYWOOD')).toBeTruthy();
     expect(findByText(tree.root, 'PLOTS')).toBeTruthy();
   });
 
-  it('renders Hindi cinema button', () => {
+  it('renders "PASS & PLAY" button', () => {
     const tree = create(<HomeScreen />);
-    expect(findByAriaLabel(tree.root, 'Play Hindi Films')).toBeTruthy();
-    expect(findByText(tree.root, 'Hindi')).toBeTruthy();
+    const btn = findByAriaLabel(tree.root, 'Pass and Play');
+    expect(btn).toBeTruthy();
   });
 
-  it('renders Telugu cinema button', () => {
+  it('renders "SOLO" button', () => {
     const tree = create(<HomeScreen />);
-    expect(findByAriaLabel(tree.root, 'Play Telugu Films')).toBeTruthy();
-    expect(findByText(tree.root, 'Telugu')).toBeTruthy();
+    const btn = findByAriaLabel(tree.root, 'Solo');
+    expect(btn).toBeTruthy();
   });
 
-  it('renders Party and Endless mode buttons', () => {
+  it('renders Made by @Srinitya link', () => {
     const tree = create(<HomeScreen />);
-    expect(findByText(tree.root, 'Party')).toBeTruthy();
-    expect(findByText(tree.root, 'Endless')).toBeTruthy();
+    const link = findByText(tree.root, 'Made by @Srinitya');
+    expect(link).toBeTruthy();
+    expect(link.props.href).toBe('https://www.linkedin.com/in/srinityaduppanapudisatya/');
   });
 
-  it('Party mode is active by default', () => {
+  it('renders resume pill when canResume is true', () => {
+    mockCanResume = true;
     const tree = create(<HomeScreen />);
-    const partyBtn = findByText(tree.root, 'Party');
-    expect(partyBtn.props['aria-pressed']).toBe(true);
-    const endlessBtn = findByText(tree.root, 'Endless');
-    expect(endlessBtn.props['aria-pressed']).toBe(false);
+    expect(findByText(tree.root, 'Resume last game')).toBeTruthy();
   });
 
-  it('Bollywood button calls startSoloGame with BW by default (no multiplayer)', () => {
+  it('does not render resume pill when canResume is false', () => {
+    mockCanResume = false;
     const tree = create(<HomeScreen />);
-    const bwBtn = findByAriaLabel(tree.root, 'Play Hindi Films');
-    act(() => {
-      bwBtn.props.onClick();
-    });
-    expect(mockStartSoloGame).toHaveBeenCalledWith('HI');
-    expect(mockSelectMode).not.toHaveBeenCalled();
+    expect(queryByText(tree.root, 'Resume last game')).toBeNull();
   });
 
-  it('Tollywood button calls startSoloGame with TW by default', () => {
+  it('PASS & PLAY button calls selectMode with HI', () => {
     const tree = create(<HomeScreen />);
-    const twBtn = findByAriaLabel(tree.root, 'Play Telugu Films');
-    act(() => {
-      twBtn.props.onClick();
-    });
-    expect(mockStartSoloGame).toHaveBeenCalledWith('TE');
-  });
-
-  it('switching to Endless mode calls setGameMode', () => {
-    const tree = create(<HomeScreen />);
-    const endlessBtn = findByText(tree.root, 'Endless');
-    act(() => {
-      endlessBtn.props.onClick();
-    });
-    expect(mockSetGameMode).toHaveBeenCalledWith('endless');
-  });
-
-  it('shows Endless description when Endless mode is selected', () => {
-    const tree = create(<HomeScreen />);
-    const endlessBtn = findByText(tree.root, 'Endless');
-    act(() => {
-      endlessBtn.props.onClick();
-    });
-    expect(findByText(tree.root, 'Keep going until you drop')).toBeTruthy();
-  });
-
-  it('shows Party description by default', () => {
-    const tree = create(<HomeScreen />);
-    expect(findByText(tree.root, /12 cards/)).toBeTruthy();
-  });
-
-  it('with multiplayer enabled, cinema button calls selectMode instead of startSoloGame', () => {
-    const tree = create(<HomeScreen />);
-    const friendsBtn = findByText(tree.root, '+ Add friends');
-    act(() => {
-      friendsBtn.props.onClick();
-    });
-    const bwBtn = findByAriaLabel(tree.root, 'Play Hindi Films');
-    act(() => {
-      bwBtn.props.onClick();
-    });
+    const btn = findByAriaLabel(tree.root, 'Pass and Play');
+    btn.props.onClick();
     expect(mockSelectMode).toHaveBeenCalledWith('HI');
-    expect(mockStartSoloGame).not.toHaveBeenCalled();
   });
 
-  it('renders tagline', () => {
+  it('SOLO button calls startSoloGame with HI', () => {
     const tree = create(<HomeScreen />);
-    expect(findByText(tree.root, 'Guess the movie from the terrible plot')).toBeTruthy();
+    const btn = findByAriaLabel(tree.root, 'Solo');
+    btn.props.onClick();
+    expect(mockStartSoloGame).toHaveBeenCalledWith('HI');
   });
 });
