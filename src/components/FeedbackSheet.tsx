@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
+import { track } from '../analytics/posthog';
 import { toast } from './Toast';
 
 interface FeedbackSheetProps { onClose: () => void; }
@@ -36,6 +37,7 @@ export function FeedbackSheet({ onClose }: FeedbackSheetProps) {
       timestamp: Date.now(),
       sessionId: getGameInstance().sessionId,
     });
+    track.feedbackSent({ messageLength: text.trim().length });
     toast('Thanks for the feedback!');
     onClose();
   };

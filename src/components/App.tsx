@@ -64,23 +64,32 @@ export function App() {
   }, [state]);
 
   if (!ready) return (
-    <main className="screen active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--stage)' }}>
-      <div style={{ textAlign: 'center', padding: '0 24px' }}>
-        <h1 style={{ fontFamily: 'Anton, sans-serif', fontSize: '44px', lineHeight: 0.95, color: 'var(--paper)', letterSpacing: '0.02em', marginBottom: '18px', textShadow: '3px 3px 0 var(--tomato)' }}>
-          BAD BOLLYWOOD<br />PLOTS
-        </h1>
-        {loadError ? (
-          <button
-            onClick={() => window.location.reload()}
-            style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '14px', letterSpacing: '0.12em', color: 'var(--ink)', background: 'var(--paper)', border: '3px solid var(--ink)', borderRadius: '999px', padding: '12px 22px 10px', cursor: 'pointer', boxShadow: '4px 4px 0 var(--tomato)' }}
-          >
-            COULDN'T LOAD. TAP TO RETRY.
-          </button>
-        ) : (
-          <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '13px', letterSpacing: '0.3em', color: 'var(--gold-bright)', opacity: 0.8 }}>LOADING CARDS...</p>
-        )}
-      </div>
-    </main>
+    <>
+      <BgLayer />
+      <main className="screen active v8-home" aria-label="Loading">
+        <div className="v8-home-hero">
+          <p className="v8-home-kicker">THE DESI PARTY GAME</p>
+          <h1 className="v8-home-title">
+            <span>BAD</span>
+            <br />
+            <span className="v8-home-title__accent">BOLLYWOOD</span>
+            <br />
+            <span>PLOTS</span>
+          </h1>
+          <p className="v8-home-sub" style={{ marginTop: 18, color: loadError ? 'var(--tomato)' : 'var(--v8-ink)', opacity: loadError ? 1 : 0.6 }}>
+            {loadError ? "COULDN'T LOAD. TAP TO RETRY." : 'LOADING CARDS...'}
+          </p>
+          {loadError && (
+            <button
+              onClick={() => window.location.reload()}
+              style={{ marginTop: 14, fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, letterSpacing: '0.2em', color: 'var(--v8-ink)', background: 'var(--gold-bright)', border: '2px solid var(--v8-ink)', borderRadius: 999, padding: '10px 20px', cursor: 'pointer' }}
+            >
+              RETRY
+            </button>
+          )}
+        </div>
+      </main>
+    </>
   );
 
   return (

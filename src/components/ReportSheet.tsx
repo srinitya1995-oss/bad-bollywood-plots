@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
+import { track } from '../analytics/posthog';
 import { toast } from './Toast';
 
 interface ReportSheetProps {
@@ -40,6 +41,7 @@ export function ReportSheet({ open, cardId, onClose }: ReportSheetProps) {
       sessionId: g.sessionId,
       timestamp: Date.now(),
     });
+    track.reportSent({ cardId, reason: selected });
     toast('Thanks, we will take a look.');
     setSelected(null);
     setDetails('');

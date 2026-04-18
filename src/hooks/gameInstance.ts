@@ -173,7 +173,7 @@ class GameInstance {
       // Remaining 9 cards will be picked adaptively in markResult
     }
 
-    this.fsm.transition('playing');
+    this.fsm.transition('turnChange');
     this.bus.emit('game:started', { mode: this.industry!, gameMode: this.gameMode, playerCount: players.length });
     this.bus.emit('card:loaded', { cardId: this.deck[0]?.id ?? '', idx: 0, difficulty: this.deck[0]?.diff ?? 'easy' });
   }

@@ -11,18 +11,19 @@ export interface TurnInterstitialProps {
 export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
   const { state, payload } = useGameState();
   const actions = useGameActions();
-  const { readerIdx, lastResult } = payload;
+  const { readerIdx, lastResult, idx } = payload;
   const players = payload.scorer.players;
   const isContinue = state === 'continue';
   const isSolo = players.length <= 1;
+  const isFirstCard = idx === 0 && !lastResult;
 
   useEffect(() => {
-    if (isSolo && state === 'turnChange') {
+    if (isSolo && state === 'turnChange' && !isFirstCard) {
       actions.ready();
     }
-  }, [isSolo, state, actions]);
+  }, [isSolo, state, actions, isFirstCard]);
 
-  if (isSolo && state === 'turnChange') return null;
+  if (isSolo && state === 'turnChange' && !isFirstCard) return null;
 
   const nextPlayer = players[readerIdx % players.length];
   const nextPlayerName = nextPlayer?.name ?? 'Player';
@@ -115,6 +116,18 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
             <div className="v8-inter-stat">
               {payload.scorer.correctCount} of {payload.idx} correct
             </div>
+          </>
+        ) : isSolo && isFirstCard ? (
+          <>
+            <div className="v8-inter-pass">SOLO MODE</div>
+            <div className="v8-inter-name" data-testid="player-name">READY?</div>
+            <div className="v8-inter-stat" style={{ marginTop: 12 }}>Guess in your head. Tap the card to flip.</div>
+          </>
+        ) : isFirstCard ? (
+          <>
+            <div className="v8-inter-pass">YOU&apos;RE UP FIRST</div>
+            <div className="v8-inter-name" data-testid="player-name">{nextPlayerName.toUpperCase()}</div>
+            <div className="v8-inter-stat" style={{ marginTop: 12 }}>Read the plot out loud. Others guess.</div>
           </>
         ) : (
           <>

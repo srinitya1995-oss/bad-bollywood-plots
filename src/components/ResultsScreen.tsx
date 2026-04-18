@@ -98,23 +98,23 @@ export function ResultsScreen() {
             </div>
           ))}
         </div>
-      </div>
 
-      <p className="v8-results-quote">{`"${quote}"`}</p>
+        <p className="v8-results-quote">{`"${quote}"`}</p>
 
-      <div className="v8-results-ctas">
-        <button
-          className="v8-results-btn v8-results-btn--primary"
-          onClick={actions.replay}
-        >
-          PLAY AGAIN
-        </button>
-        <button
-          className="v8-results-btn v8-results-btn--secondary"
-          onClick={actions.exitGame}
-        >
-          HOME
-        </button>
+        <div className="v8-results-ctas">
+          <button
+            className="v8-results-btn v8-results-btn--primary"
+            onClick={actions.replay}
+          >
+            PLAY AGAIN
+          </button>
+          <button
+            className="v8-results-btn v8-results-btn--secondary"
+            onClick={actions.exitGame}
+          >
+            HOME
+          </button>
+        </div>
       </div>
     </main>
   );

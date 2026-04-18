@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
+import { track } from '../analytics/posthog';
 import type { DifficultyFilter, RoundLength } from '../core/types';
 
 interface SettingsScreenProps {
@@ -22,7 +23,11 @@ export function SettingsScreen({ onClose }: SettingsScreenProps) {
   const [roundLen, setRoundLen] = useState<RoundLength>(saved.roundLen ?? 10);
   const [sound, setSound] = useState<boolean>(saved.sound ?? true);
   const handleDone = () => {
+    const prev = g.getSettings();
     g.setSettings({ difficultyFilter: difficulty, roundLen, sound });
+    if (prev.difficultyFilter !== difficulty) track.settingsChanged({ key: 'difficultyFilter', value: difficulty });
+    if (prev.roundLen !== roundLen) track.settingsChanged({ key: 'roundLen', value: roundLen });
+    if (prev.sound !== sound) track.settingsChanged({ key: 'sound', value: sound });
     onClose();
   };
 

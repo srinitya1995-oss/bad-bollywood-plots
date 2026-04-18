@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useGameActions } from '../hooks/useGameActions';
 import { useResumeSession } from '../hooks/useResumeSession';
+import { track } from '../analytics/posthog';
 import { SuggestSheet } from './SuggestSheet';
 import { FeedbackSheet } from './FeedbackSheet';
 import { HowToScreen } from './HowToScreen';
@@ -51,7 +52,7 @@ export function HomeScreen() {
           className={`v8-home-cinema__btn${cinema === 'HI' ? ' is-active' : ''}`}
           role="radio"
           aria-checked={cinema === 'HI'}
-          onClick={() => setCinema('HI')}
+          onClick={() => { window.posthog?.capture('cinema_pick', { cinema: 'HI' }); setCinema('HI'); }}
         >
           BOLLYWOOD
         </button>
@@ -59,7 +60,7 @@ export function HomeScreen() {
           className={`v8-home-cinema__btn${cinema === 'TE' ? ' is-active' : ''}`}
           role="radio"
           aria-checked={cinema === 'TE'}
-          onClick={() => setCinema('TE')}
+          onClick={() => { window.posthog?.capture('cinema_pick', { cinema: 'TE' }); setCinema('TE'); }}
         >
           TOLLYWOOD
         </button>
@@ -71,6 +72,7 @@ export function HomeScreen() {
           <button
             className="v8-home-resume"
             onClick={() => {
+              track.resumeUsed();
               window.location.reload();
             }}
           >
@@ -95,19 +97,19 @@ export function HomeScreen() {
 
       {/* Footer */}
       <footer className="v8-home-footer">
-        <button className="v8-home-footer__link" onClick={() => setShowHowTo(true)}>
+        <button className="v8-home-footer__link" onClick={() => { window.posthog?.capture('footer_open', { target: 'how_to' }); setShowHowTo(true); }}>
           How to Play
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
-        <button className="v8-home-footer__link" onClick={() => setShowSuggest(true)}>
+        <button className="v8-home-footer__link" onClick={() => { window.posthog?.capture('footer_open', { target: 'suggest' }); setShowSuggest(true); }}>
           Suggest a Movie
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
-        <button className="v8-home-footer__link" onClick={() => setShowFeedback(true)}>
+        <button className="v8-home-footer__link" onClick={() => { window.posthog?.capture('footer_open', { target: 'feedback' }); setShowFeedback(true); }}>
           Feedback
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
-        <button className="v8-home-footer__link" onClick={() => setShowSettings(true)}>
+        <button className="v8-home-footer__link" onClick={() => { window.posthog?.capture('footer_open', { target: 'settings' }); setShowSettings(true); }}>
           Settings
         </button>
         <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>

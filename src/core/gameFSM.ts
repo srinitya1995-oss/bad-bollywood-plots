@@ -2,8 +2,8 @@ import type { GameState } from './types';
 import type { TypedEventBus } from './eventBus';
 
 const TRANSITIONS: Record<GameState, GameState[]> = {
-  home: ['setup', 'playing'],
-  setup: ['playing', 'home'],
+  home: ['setup', 'playing', 'turnChange'],
+  setup: ['playing', 'turnChange', 'home'],
   playing: ['flipped', 'home', 'results'],
   flipped: ['scoring', 'results', 'home'],
   scoring: ['playing', 'turnChange', 'continue', 'results', 'home'],

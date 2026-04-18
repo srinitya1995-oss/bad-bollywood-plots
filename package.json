@@ -12,7 +12,9 @@
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "generate": "node scripts/generate.js",
-    "check-features": "node scripts/check-features.cjs"
+    "check-features": "node scripts/check-features.cjs",
+    "qa:mobile": "node scripts/mobile-screenshot.js",
+    "qa:overlaps": "node scripts/check-overlaps.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.29.2",

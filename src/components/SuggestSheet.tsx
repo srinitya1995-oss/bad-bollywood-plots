@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
+import { track } from '../analytics/posthog';
 import { toast } from './Toast';
 
 interface SuggestSheetProps { onClose: () => void; defaultIndustry?: string; }
@@ -13,6 +14,7 @@ export function SuggestSheet({ onClose, defaultIndustry }: SuggestSheetProps) {
     if (!industry) { toast('Please select a language'); return; }
     if (movie.trim().length > 200) { toast('Movie name is too long'); return; }
     getGameInstance().storage.saveSuggestion({ movie: movie.trim(), industry, timestamp: Date.now(), sessionId: getGameInstance().sessionId });
+    track.suggestSent({ title: movie.trim() });
     toast("Thanks! We'll check it out.");
     onClose();
   };
