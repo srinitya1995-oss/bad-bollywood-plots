@@ -49,6 +49,7 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
 
   const switchMode = useCallback((next: PlayMode) => {
     setMode(next);
+    try { window.posthog?.capture('setup_mode_switch', { mode: next }); } catch { /* non-critical */ }
     if (next === 'solo') {
       setPlayers([makePlayer()]);
     } else {

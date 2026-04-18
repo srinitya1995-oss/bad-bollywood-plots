@@ -36,15 +36,15 @@ export function MenuPopover({ open, onClose, onEndRound, onBackHome, onHowTo }: 
   return (
     <div className="v8-menu-popover" ref={ref} role="menu" aria-label="Game menu">
       {onHowTo && (
-        <button className="v8-menu-item" role="menuitem" onClick={() => { onClose(); onHowTo(); }}>
+        <button className="v8-menu-item" role="menuitem" onClick={() => { try { window.posthog?.capture('menu_item_click', { item: 'how_to' }); } catch { /* non-critical */ } onClose(); onHowTo(); }}>
           How to Play
         </button>
       )}
-      <button className="v8-menu-item v8-menu-item--danger" role="menuitem" onClick={() => { onClose(); onEndRound(); }}>
+      <button className="v8-menu-item v8-menu-item--danger" role="menuitem" onClick={() => { try { window.posthog?.capture('menu_item_click', { item: 'end_round' }); } catch { /* non-critical */ } onClose(); onEndRound(); }}>
         End round
         <span className="v8-menu-item__side">See final scores</span>
       </button>
-      <button className="v8-menu-item" role="menuitem" onClick={() => { onClose(); onBackHome(); }}>
+      <button className="v8-menu-item" role="menuitem" onClick={() => { try { window.posthog?.capture('menu_item_click', { item: 'back_home' }); } catch { /* non-critical */ } onClose(); onBackHome(); }}>
         Back home
         <span className="v8-menu-item__side">Abandon round</span>
       </button>

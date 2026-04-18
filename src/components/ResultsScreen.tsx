@@ -104,13 +104,13 @@ export function ResultsScreen() {
         <div className="v8-results-ctas">
           <button
             className="v8-results-btn v8-results-btn--primary"
-            onClick={actions.replay}
+            onClick={() => { window.posthog?.capture('results_cta', { cta: 'play_again' }); actions.replay(); }}
           >
             PLAY AGAIN
           </button>
           <button
             className="v8-results-btn v8-results-btn--secondary"
-            onClick={actions.exitGame}
+            onClick={() => { window.posthog?.capture('results_cta', { cta: 'home' }); actions.exitGame(); }}
           >
             HOME
           </button>
