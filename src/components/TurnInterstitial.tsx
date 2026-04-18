@@ -37,6 +37,7 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
   };
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
