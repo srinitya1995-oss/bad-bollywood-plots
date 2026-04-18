@@ -52,6 +52,11 @@ let currentSessionId: string | null = null;
 // ---------------------------------------------------------------
 
 export function initPostHog(): void {
+  if (!POSTHOG_TOKEN) {
+    // No token in this environment (local dev without .env values). Skip init
+    // so we don't spam the console with 400s from missing project credentials.
+    return;
+  }
   try {
     const script = document.createElement('script');
     script.type = 'text/javascript';

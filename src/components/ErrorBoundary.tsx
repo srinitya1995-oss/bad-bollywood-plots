@@ -1,9 +1,5 @@
 import { Component, type ReactNode } from 'react';
 
-declare global {
-  interface Window { posthog?: { capture: (e: string, p?: Record<string, unknown>) => void } }
-}
-
 interface Props { children: ReactNode; }
 interface State { hasError: boolean; }
 
