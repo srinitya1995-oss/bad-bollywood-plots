@@ -1417,7 +1417,30 @@ body {
   letter-spacing: 0.015em;
   text-transform: uppercase;
   line-height: 0.95;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
+.v8-topband__home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--paper);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--paper);
+}
+.v8-topband__title:hover { opacity: 0.85; }
+.v8-topband__title:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 .v8-topband__accent { color: var(--gold-bright); }
 .v8-topband__right {
   font-family: 'Bebas Neue', sans-serif;
@@ -1608,26 +1631,25 @@ body {
 .v8-home-cinema__btn {
   flex: 1;
   background: transparent;
-  border: 2px solid var(--paper);
+  border: 2px dashed rgba(245, 232, 212, 0.5);
   border-radius: 4px;
   padding: 10px 8px;
   font-family: 'Anton', sans-serif;
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--paper);
+  color: rgba(245, 232, 212, 0.55);
   cursor: pointer;
   text-align: center;
-  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease, transform 120ms ease;
   min-height: 44px;
-  opacity: 0.5;
 }
 .v8-home-cinema__btn.is-active {
-  background: var(--paper);
-  color: var(--stage);
-  border-color: var(--paper);
-  opacity: 1;
-  box-shadow: 3px 3px 0 var(--tomato);
+  background: var(--tomato);
+  color: var(--paper);
+  border: 2px solid var(--paper);
+  box-shadow: 4px 4px 0 var(--v8-ink);
+  transform: translate(-1px, -1px);
 }
 
 .v8-home-ctas {
@@ -2454,12 +2476,19 @@ body {
 
 .v8-game-progress {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: 0.32em;
   color: var(--gold-bright);
   text-align: center;
-  padding: 10px 0 6px;
+  padding: 14px 0 8px;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+@media (min-width: 768px) {
+  .v8-game-progress {
+    font-size: 22px;
+    letter-spacing: 0.38em;
+    padding: 20px 0 10px;
+  }
 }
 
 .v8-game-card-area {
@@ -2478,14 +2507,31 @@ body {
   position: absolute;
   top: 80px;
   right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
   font-family: 'Anton', sans-serif;
-  font-size: 28px;
-  color: var(--gold-bright);
-  text-shadow: 0 2px 0 var(--tomato-bright, #E8412A), 0 4px 16px rgba(0, 0, 0, 0.7);
   z-index: 40;
   pointer-events: none;
   opacity: 0;
   letter-spacing: 0.02em;
+}
+.v8-pts-float__base {
+  font-size: 28px;
+  color: var(--gold-bright);
+  text-shadow: 0 2px 0 var(--tomato-bright, #E8412A), 0 4px 16px rgba(0, 0, 0, 0.7);
+}
+.v8-pts-float__bonus {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  color: var(--tomato);
+  background: var(--paper);
+  padding: 3px 9px;
+  border: 2px solid var(--v8-ink);
+  border-radius: 999px;
+  box-shadow: 2px 3px 0 var(--v8-ink);
 }
 .v8-pts-float--show {
   animation: v8PtsFloat 1.2s ease-out forwards;
@@ -2810,6 +2856,11 @@ body {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 0.9;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .v8-results-mast__sub {
@@ -2817,6 +2868,9 @@ body {
   font-size: 12px;
   letter-spacing: 0.18em;
   color: var(--gold-bright);
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: 10px;
 }
 .v8-results-verdict {
   font-family: 'Fraunces', serif;
@@ -2870,8 +2924,9 @@ body {
 .v8-results-solo {
   display: flex;
   justify-content: center;
-  gap: 32px;
-  padding: 20px 22px 16px;
+  align-items: baseline;
+  gap: 44px;
+  padding: 24px 22px 22px;
   border-bottom: 2px dashed var(--ink-line);
 }
 
@@ -2908,14 +2963,15 @@ body {
   font-size: 11px;
   letter-spacing: 0.24em;
   color: var(--tomato);
+  text-align: center;
   margin-bottom: 8px;
 }
 
 .v8-results-row {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 8px;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 6px;
   border-bottom: 1px dashed var(--ink-line);
 }
 
@@ -2926,11 +2982,12 @@ body {
 }
 
 .v8-results-rank {
-  width: 24px;
+  flex-shrink: 0;
+  min-width: 20px;
   font-family: 'Anton', sans-serif;
   font-size: 20px;
   color: var(--v8-ink);
-  text-align: center;
+  text-align: left;
 }
 
 .v8-results-rank--first {

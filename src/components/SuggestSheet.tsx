@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
 import { track } from '../analytics/posthog';
+import { submitSuggestion, type SuggestIndustry } from '../storage/feedback';
 import { toast } from './Toast';
+
+const INDUSTRY_LABEL_TO_CODE: Record<string, SuggestIndustry> = {
+  Hindi: 'BW',
+  Telugu: 'TW',
+  Tamil: 'other',
+  Malayalam: 'other',
+  Other: 'other',
+};
 
 interface SuggestSheetProps { onClose: () => void; defaultIndustry?: string; }
 
@@ -13,7 +22,10 @@ export function SuggestSheet({ onClose, defaultIndustry }: SuggestSheetProps) {
     if (!movie.trim()) { toast('Please enter a movie name'); return; }
     if (!industry) { toast('Please select a language'); return; }
     if (movie.trim().length > 200) { toast('Movie name is too long'); return; }
+    // Local cache for offline resilience.
     getGameInstance().storage.saveSuggestion({ movie: movie.trim(), industry, timestamp: Date.now(), sessionId: getGameInstance().sessionId });
+    // Supabase write with correct column names (`movie_title`) and enum industry code.
+    submitSuggestion({ title: movie.trim(), industry: INDUSTRY_LABEL_TO_CODE[industry] ?? 'other' });
     track.suggestSent({ title: movie.trim() });
     toast("Thanks! We'll check it out.");
     onClose();

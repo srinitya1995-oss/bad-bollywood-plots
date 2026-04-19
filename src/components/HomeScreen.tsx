@@ -26,7 +26,7 @@ export function HomeScreen() {
         <h1 className="v8-home-title">
           <span>BAD</span>
           <br />
-          <span className="v8-home-title__accent">BOLLYWOOD</span>
+          <span className="v8-home-title__accent">DESI</span>
           <br />
           <span>PLOTS</span>
         </h1>

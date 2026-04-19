@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 import { useGameActions } from '../hooks/useGameActions';
+import { getGameInstance } from '../hooks/gameInstance';
 import type { Player } from '../core/types';
 
 type PlayMode = 'party' | 'solo';
@@ -7,6 +8,11 @@ type PlayMode = 'party' | 'solo';
 const MAX_PLAYERS = 8;
 const MIN_PLAYERS = 2;
 const NAME_MAX_LENGTH = 24;
+
+// Fallback names for empty slots — desi-party flavor instead of "Player 1".
+const DESI_FALLBACK_NAMES = [
+  'Chintu', 'Pinky', 'Bunty', 'Guddu', 'Sonu', 'Monu', 'Rinku', 'Bubbly',
+];
 
 function makePlayer(): Player {
   return { name: '', score: 0, id: crypto.randomUUID() };
@@ -22,8 +28,10 @@ interface PlayerSetupProps {
 
 export function PlayerSetup({ onClose }: PlayerSetupProps) {
   const actions = useGameActions();
-  const [mode, setMode] = useState<PlayMode>('party');
-  const [players, setPlayers] = useState<Player[]>(defaultPlayers);
+  const [mode, setMode] = useState<PlayMode>(() => getGameInstance().getSetupInitialMode());
+  const [players, setPlayers] = useState<Player[]>(() =>
+    getGameInstance().getSetupInitialMode() === 'solo' ? [makePlayer()] : defaultPlayers(),
+  );
   const dragIdx = useRef<number | null>(null);
   const dragOverIdx = useRef<number | null>(null);
 
@@ -88,7 +96,7 @@ export function PlayerSetup({ onClose }: PlayerSetupProps) {
     if (hasDuplicates) return;
     const filled = players.map((p, i) => ({
       ...p,
-      name: p.name.trim() || `Player ${i + 1}`,
+      name: p.name.trim() || DESI_FALLBACK_NAMES[i % DESI_FALLBACK_NAMES.length],
     }));
     actions.startGame(filled);
     onClose();

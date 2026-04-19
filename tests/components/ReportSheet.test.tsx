@@ -37,12 +37,12 @@ describe('ReportSheet', () => {
   it('renders all 7 report reasons', () => {
     const tree = create(<ReportSheet open={true} cardId="test-card" onClose={vi.fn()} />);
     const reasons = [
-      'Wrong answer shown',
-      'Plot is inaccurate',
-      'Card is offensive',
+      'Wrong or inaccurate',
+      'Typo',
+      'Spoiler',
+      'Offensive',
       'Too easy',
       'Too hard',
-      'Duplicate card',
       'Other',
     ];
     for (const reason of reasons) {
@@ -74,7 +74,7 @@ describe('ReportSheet', () => {
       event: 'card:report',
       props: expect.objectContaining({
         cardId: 'test-card',
-        reason: 'Too easy',
+        reason: 'too-easy',
       }),
     }));
     expect(onClose).toHaveBeenCalledOnce();

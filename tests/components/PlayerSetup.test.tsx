@@ -15,6 +15,13 @@ vi.mock('../../src/hooks/useGameActions', () => ({
   }),
 }));
 
+// PlayerSetup reads initial mode from the game instance at mount time.
+vi.mock('../../src/hooks/gameInstance', () => ({
+  getGameInstance: () => ({
+    getSetupInitialMode: () => 'party',
+  }),
+}));
+
 import { PlayerSetup } from '../../src/components/PlayerSetup';
 
 describe('PlayerSetup', () => {

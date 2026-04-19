@@ -83,21 +83,23 @@ export function ResultsScreen() {
           </div>
         )}
 
-        <div className="v8-results-board">
-          <div className="v8-results-board__label">The Line-Up</div>
-          {sortedPlayers.map((p, i) => (
-            <div
-              key={p.idx}
-              className={`v8-results-row${p.score === topScore && topScore > 0 ? ' v8-results-row--leader' : ''}`}
-            >
-              <span className={`v8-results-rank${i === 0 ? ' v8-results-rank--first' : ''}`}>
-                {i + 1}
-              </span>
-              <span className="v8-results-name">{p.name}</span>
-              <span className="v8-results-pts">{`${p.score} pts`}</span>
-            </div>
-          ))}
-        </div>
+        {sortedPlayers.length > 1 && (
+          <div className="v8-results-board">
+            <div className="v8-results-board__label">The Line-Up</div>
+            {sortedPlayers.map((p, i) => (
+              <div
+                key={p.idx}
+                className={`v8-results-row${p.score === topScore && topScore > 0 ? ' v8-results-row--leader' : ''}`}
+              >
+                <span className={`v8-results-rank${i === 0 ? ' v8-results-rank--first' : ''}`}>
+                  {i + 1}
+                </span>
+                <span className="v8-results-name">{p.name}</span>
+                <span className="v8-results-pts">{`${p.score} pts`}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
         <p className="v8-results-quote">{`"${quote}"`}</p>
 

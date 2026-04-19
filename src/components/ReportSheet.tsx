@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
 import { track } from '../analytics/posthog';
+import { submitReport, type ReportReason } from '../storage/feedback';
 import { toast } from './Toast';
 
 interface ReportSheetProps {
@@ -9,18 +10,20 @@ interface ReportSheetProps {
   onClose: () => void;
 }
 
-const REPORT_REASONS = [
-  'Wrong answer shown',
-  'Plot is inaccurate',
-  'Card is offensive',
-  'Too easy',
-  'Too hard',
-  'Duplicate card',
-  'Other',
+// Pair each display label with the enum code the `reports` table requires.
+// Codes must be unique — if two labels map to the same code the highlight gets shared.
+const REPORT_REASONS: ReadonlyArray<{ label: string; code: ReportReason }> = [
+  { label: 'Wrong or inaccurate', code: 'wrong' },
+  { label: 'Typo', code: 'typo' },
+  { label: 'Spoiler', code: 'spoiler' },
+  { label: 'Offensive', code: 'offensive' },
+  { label: 'Too easy', code: 'too-easy' },
+  { label: 'Too hard', code: 'too-hard' },
+  { label: 'Other', code: 'other' },
 ] as const;
 
 export function ReportSheet({ open, cardId, onClose }: ReportSheetProps) {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<ReportReason | null>(null);
   const [details, setDetails] = useState('');
 
   if (!open) return null;
@@ -41,6 +44,8 @@ export function ReportSheet({ open, cardId, onClose }: ReportSheetProps) {
       sessionId: g.sessionId,
       timestamp: Date.now(),
     });
+    // Persist to the `reports` Supabase table via the correct schema.
+    submitReport({ cardId, reason: selected });
     track.reportSent({ cardId, reason: selected });
     toast('Thanks, we will take a look.');
     setSelected(null);
@@ -64,14 +69,14 @@ export function ReportSheet({ open, cardId, onClose }: ReportSheetProps) {
         <p className="v8-report-sub">What is wrong with this card?</p>
 
         <div className="v8-report-tags">
-          {REPORT_REASONS.map((reason) => (
+          {REPORT_REASONS.map(({ label, code }) => (
             <button
-              key={reason}
-              className={`v8-report-tag${selected === reason ? ' is-active' : ''}`}
-              onClick={() => setSelected(selected === reason ? null : reason)}
-              aria-pressed={selected === reason}
+              key={label}
+              className={`v8-report-tag${selected === code ? ' is-active' : ''}`}
+              onClick={() => setSelected(selected === code ? null : code)}
+              aria-pressed={selected === code}
             >
-              {reason}
+              {label}
             </button>
           ))}
         </div>

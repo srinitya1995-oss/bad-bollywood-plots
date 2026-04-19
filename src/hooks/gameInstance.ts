@@ -136,15 +136,23 @@ class GameInstance {
     };
   }
 
+  private _setupInitialMode: 'party' | 'solo' = 'party';
+
   selectMode(industry: Industry): void {
     this.industry = industry;
+    this._setupInitialMode = 'party';
     this.fsm.transition('setup');
   }
 
-  /** Skip PlayerSetup for solo play — go directly from home to playing */
+  /** Open PlayerSetup pre-selected to solo so the user enters their own name. */
   startSoloGame(industry: Industry): void {
     this.industry = industry;
-    this.startGame([{ name: 'Player 1', score: 0 }]);
+    this._setupInitialMode = 'solo';
+    this.fsm.transition('setup');
+  }
+
+  getSetupInitialMode(): 'party' | 'solo' {
+    return this._setupInitialMode;
   }
 
   setGameMode(mode: GameMode): void {
@@ -166,9 +174,18 @@ class GameInstance {
       const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       this.deck = first ? [first] : [];
     } else {
-      // Party mode: start with 3 calibration cards (easy, medium, hard) then 9 adaptive
+      // Party mode: start with 3 calibration cards (one of each difficulty)
+      // then 9 adaptive cards appended via markResult.
       const seen = this.storage.getSeenCards();
-      const calibration = buildPartyDeck(pool, this.sessionDealt, seen).slice(0, 3); // 1 easy, 1 med, 1 hard
+      // Auto-reset seen list once ≥70% of pool is exhausted so players stop
+      // looping the same "already seen" tail.
+      if (seen.length >= Math.ceil(pool.length * 0.7)) {
+        this.storage.clearSeenCards();
+      }
+      // buildPartyDeck returns [easy×4, medium×4, hard×4] with each tier shuffled
+      // independently. Take the first of each tier to honor the 1/1/1 calibration promise.
+      const partyDeck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
+      const calibration = [partyDeck[0], partyDeck[4], partyDeck[8]].filter((c): c is typeof pool[0] => c != null);
       this.deck = calibration;
       // Remaining 9 cards will be picked adaptively in markResult
     }

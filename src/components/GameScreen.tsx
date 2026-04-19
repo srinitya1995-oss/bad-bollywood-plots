@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { useGameActions } from '../hooks/useGameActions';
 import { getGameInstance } from '../hooks/gameInstance';
@@ -19,30 +19,48 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   const { state, payload } = useGameState();
   const actions = useGameActions();
   const { idx, currentCard, readerIdx, scorer } = payload;
-  const [ptsFloat, setPtsFloat] = useState<{ value: number; key: number } | null>(null);
+  const [ptsFloat, setPtsFloat] = useState<{ base: number; bonus: number; key: number } | null>(null);
   const ptsKey = useRef(0);
+  const ptsTimer = useRef<number | null>(null);
 
   const [endRoundOpen, setEndRoundOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportCardId, setReportCardId] = useState('');
   const [howToOpen, setHowToOpen] = useState(false);
 
-  const showPtsFloat = useCallback((pts: number) => {
+  const showPtsFloat = useCallback((base: number, bonus: number) => {
+    if (ptsTimer.current != null) window.clearTimeout(ptsTimer.current);
     ptsKey.current += 1;
-    setPtsFloat({ value: pts, key: ptsKey.current });
-    setTimeout(() => setPtsFloat(null), 1300);
+    setPtsFloat({ base, bonus, key: ptsKey.current });
+    ptsTimer.current = window.setTimeout(() => {
+      setPtsFloat(null);
+      ptsTimer.current = null;
+    }, 1400);
   }, []);
+
+  useEffect(() => () => {
+    if (ptsTimer.current != null) window.clearTimeout(ptsTimer.current);
+  }, []);
+
+  // Clear the pts-float immediately on new card so the "+X PTS" from the previous round
+  // doesn't bleed into the freshly-loaded card's first paint.
+  useEffect(() => {
+    if (ptsTimer.current != null) window.clearTimeout(ptsTimer.current);
+    ptsTimer.current = null;
+    setPtsFloat(null);
+  }, [idx]);
 
   const handleAwardPoints = useCallback(
     (playerIdx: number, card: CardType) => {
       const g = getGameInstance();
+      // Increment streak FIRST so player award and scorer.totalPts use the same (post-increment) streak.
+      actions.markCorrect();
       const basePts = POINT_MAP[card.diff] ?? 1;
       const streak = g.getPayload().scorer.streak;
       const bonus = streak >= 7 ? 3 : streak >= 5 ? 2 : streak >= 3 ? 1 : 0;
       g.awardPoints(playerIdx, card);
-      showPtsFloat(basePts + bonus);
+      showPtsFloat(basePts, bonus);
       g.advanceReader();
-      actions.markCorrect();
     },
     [actions, showPtsFloat],
   );
@@ -74,6 +92,19 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
     g.exitGame();
   }, []);
 
+  const currentMode: 'solo' | 'party' = (scorer.players.length <= 1) ? 'solo' : 'party';
+  const handleSwitchMode = useCallback(() => {
+    const g = getGameInstance();
+    const industry = g.getPayload().industry ?? 'HI';
+    // Abandon the current round (don't show results) and route back through setup.
+    g.exitGame();
+    if (currentMode === 'solo') {
+      g.selectMode(industry); // party mode
+    } else {
+      g.startSoloGame(industry); // solo mode
+    }
+  }, [currentMode]);
+
   if (!currentCard) return null;
 
   const isFlipped = state === 'flipped';
@@ -103,7 +134,10 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
             aria-live="polite"
             aria-atomic="true"
           >
-            +{ptsFloat.value} points
+            <span className="v8-pts-float__base">+{ptsFloat.base} PTS</span>
+            {ptsFloat.bonus > 0 && (
+              <span className="v8-pts-float__bonus">{'\u{1F525}'} +{ptsFloat.bonus} STREAK</span>
+            )}
           </div>
         )}
       </div>
@@ -114,6 +148,8 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
         onEndRound={() => setEndRoundOpen(true)}
         onBackHome={handleBackHome}
         onHowTo={() => setHowToOpen(true)}
+        currentMode={currentMode}
+        onSwitchMode={handleSwitchMode}
       />
 
       <EndRoundSheet

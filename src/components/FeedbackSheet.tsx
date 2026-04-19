@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getGameInstance } from '../hooks/gameInstance';
 import { track } from '../analytics/posthog';
+import { submitFeedback } from '../storage/feedback';
 import { toast } from './Toast';
 
 interface FeedbackSheetProps { onClose: () => void; }
@@ -31,12 +32,18 @@ export function FeedbackSheet({ onClose }: FeedbackSheetProps) {
       toast('Pick at least one or write something');
       return;
     }
+    // Local cache for offline resilience.
     getGameInstance().storage.saveFeedback({
       tags: [...tags],
       text: text.trim(),
       timestamp: Date.now(),
       sessionId: getGameInstance().sessionId,
     });
+    // Supabase write — combines selected tags (as a bracketed prefix) with freeform text
+    // into the single `message` column that the prod schema expects.
+    const tagPrefix = tags.size > 0 ? `[${[...tags].join(', ')}] ` : '';
+    const message = (tagPrefix + text.trim()).trim();
+    if (message) submitFeedback({ message });
     track.feedbackSent({ messageLength: text.trim().length });
     toast('Thanks for the feedback!');
     onClose();

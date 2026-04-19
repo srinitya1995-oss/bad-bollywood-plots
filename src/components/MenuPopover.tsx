@@ -6,9 +6,12 @@ interface MenuPopoverProps {
   onEndRound: () => void;
   onBackHome: () => void;
   onHowTo?: () => void;
+  /** 'solo' or 'party'. Drives the "Switch to X" menu item. */
+  currentMode?: 'solo' | 'party';
+  onSwitchMode?: () => void;
 }
 
-export function MenuPopover({ open, onClose, onEndRound, onBackHome, onHowTo }: MenuPopoverProps) {
+export function MenuPopover({ open, onClose, onEndRound, onBackHome, onHowTo, currentMode, onSwitchMode }: MenuPopoverProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,6 +41,12 @@ export function MenuPopover({ open, onClose, onEndRound, onBackHome, onHowTo }: 
       {onHowTo && (
         <button className="v8-menu-item" role="menuitem" onClick={() => { try { window.posthog?.capture('menu_item_click', { item: 'how_to' }); } catch { /* non-critical */ } onClose(); onHowTo(); }}>
           How to Play
+        </button>
+      )}
+      {onSwitchMode && currentMode && (
+        <button className="v8-menu-item" role="menuitem" onClick={() => { try { window.posthog?.capture('menu_item_click', { item: 'switch_mode', from: currentMode }); } catch { /* non-critical */ } onClose(); onSwitchMode(); }}>
+          Switch to {currentMode === 'solo' ? 'Pass & Play' : 'Solo'}
+          <span className="v8-menu-item__side">Abandons this round</span>
         </button>
       )}
       <button className="v8-menu-item v8-menu-item--danger" role="menuitem" onClick={() => { try { window.posthog?.capture('menu_item_click', { item: 'end_round' }); } catch { /* non-critical */ } onClose(); onEndRound(); }}>
