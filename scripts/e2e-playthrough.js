@@ -37,20 +37,35 @@ await step('home-load', async () => {
 });
 
 // ==================== SOLO FLOW ====================
-await step('solo-click', async () => {
+// Solo now routes through PlayerSetup (mode pre-selected to 'solo')
+await step('solo-click-opens-setup', async () => {
   await p.click('[aria-label="Solo"]');
-  await p.waitForSelector('.v8-inter', { timeout: 8000 });
+  await p.waitForSelector('.v8-setup-panel', { timeout: 8000 });
 });
 
-await step('solo-intro-has-ready', async () => {
-  const body = await p.evaluate(() => document.body.innerText);
-  if (!/SOLO MODE/i.test(body)) throw new Error('no SOLO MODE text');
-  if (!/READY\?/i.test(body)) throw new Error('no READY? text');
+await step('solo-setup-has-one-input', async () => {
+  const inputs = await p.$$('.v8-setup-input');
+  if (inputs.length !== 1) throw new Error('solo setup should have 1 input, got ' + inputs.length);
 });
 
-await step('solo-tap-to-begin', async () => {
-  await p.click('.v8-inter');
-  await p.waitForSelector('.v8-card-stage', { timeout: 8000 });
+await step('solo-type-name', async () => {
+  const inputs = await p.$$('.v8-setup-input');
+  await inputs[0].click({ clickCount: 3 });
+  await inputs[0].type('Srinitya');
+});
+
+await step('solo-lets-go', async () => {
+  await p.click('.v8-setup-start');
+  await p.waitForSelector('.v8-inter, .v8-card-stage', { timeout: 8000 });
+});
+
+await step('solo-tap-to-begin-or-card', async () => {
+  // May land on interstitial or directly on card depending on solo routing
+  const hasInter = await p.$('.v8-inter');
+  if (hasInter) {
+    await p.click('.v8-inter');
+    await p.waitForSelector('.v8-card-stage', { timeout: 8000 });
+  }
 });
 
 await step('solo-flip-card', async () => {

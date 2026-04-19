@@ -37,22 +37,16 @@ export class SupabaseAdapter implements StorageAdapter {
     });
   }
 
+  // Supabase writes for feedback/suggestions/reports are handled by
+  // src/storage/feedback.ts which uses the correct prod column names
+  // (message / movie_title / reason enum). Here we only keep the
+  // localStorage fallback write for offline resilience.
   saveFeedback(entry: FeedbackEntry): void {
     this.fallback.saveFeedback(entry);
-    this.dbInsert('feedback', {
-      tags: entry.tags,
-      text: entry.text,
-      session_id: entry.sessionId,
-    });
   }
 
   saveSuggestion(entry: SuggestionEntry): void {
     this.fallback.saveSuggestion(entry);
-    this.dbInsert('suggestions', {
-      movie_name: entry.movie,
-      industry: entry.industry,
-      session_id: entry.sessionId,
-    });
   }
 
   private dbInsert(table: string, data: Record<string, unknown>): void {
