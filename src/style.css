@@ -2811,10 +2811,31 @@ body {
    ══════════════════════════════════════════ */
 
 .v8-results {
+  position: relative;
+  z-index: 5;
   background: var(--stage);
   align-items: center;
-  padding: max(env(safe-area-inset-top), 16px) 22px max(env(safe-area-inset-bottom), 24px);
+  justify-content: flex-start;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding:
+    calc(max(44px, env(safe-area-inset-top, 44px)) + 56px)
+    22px
+    max(env(safe-area-inset-bottom), 24px);
 }
+
+/* Results is the focal editorial surface — dim/blur the backdrop so the
+   paper panel reads clean on desktop instead of fighting the mehendi art. */
+body:has(.v8-results) .v8-bg img {
+  filter: brightness(0.2) saturate(0.5) blur(8px);
+}
+body:has(.v8-results) .v8-wash {
+  background: linear-gradient(180deg,
+    rgba(20, 10, 5, 0.85) 0%,
+    rgba(20, 10, 5, 0.75) 50%,
+    rgba(20, 10, 5, 0.9) 100%);
+}
+body:has(.v8-results) .v8-bulb-glow { opacity: 0.25; }
 
 .v8-results-header {
   font-family: 'Anton', sans-serif;

@@ -108,8 +108,11 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   if (!currentCard) return null;
 
   const isFlipped = state === 'flipped';
+  // Endless (solo) has no fixed round length — show "CARD N" only.
+  // Party caps at 12 via gameFSM, so the /N denominator only applies there.
+  const gameMode = getGameInstance().getPayload().gameMode;
   const roundLen = getGameInstance().getSettings().roundLen ?? 10;
-  const progress = `CARD ${idx + 1} / ${roundLen}`;
+  const progress = gameMode === 'endless' ? `CARD ${idx + 1}` : `CARD ${idx + 1} / ${roundLen}`;
 
   return (
     <main className="screen active v8-game-screen" aria-label="Game">
