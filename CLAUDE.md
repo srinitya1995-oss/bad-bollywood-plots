@@ -9,13 +9,23 @@
 Before writing a single line of code, ingest these files in order:
 
 1. `.project-state.md` — current sprint, blockers, what shipped last session
-2. `docs/full-redesign-prompt.md` — the canonical design spec
-3. `inspiration/` — 20 reference images defining the visual target
-4. `cards.json` — the card database (BW + TW entries with difficulty, era, plot descriptions)
-5. `src/style.css` — live design tokens (`:root` block is the source of truth)
-6. `src/core/types.ts` — canonical type definitions for Card, Player, GameSession, GameState FSM
+2. `docs/product-spec.md` — what we're building, for whom, why, roadmap
+3. `docs/design-spec.md` — v8 visual language, tokens, components, motion vocabulary
+4. `docs/system-architecture-spec.md` — FSM, event bus, storage, deployment
+5. `docs/engineering-spec.md` — conventions, gates, PR workflow, anti-patterns
+6. `docs/applied-scientist-spec.md` — analytics schema, metrics, experiments, content quality
+7. `inspiration/` — 20 reference images defining the visual target
+8. `cards.json` — the card database (BW + TW entries with difficulty, era, plot descriptions)
+9. `src/style.css` — live design tokens (`:root` block is the source of truth)
+10. `src/core/types.ts` — canonical type definitions for Card, Player, GameSession, GameState FSM
 
 If `.project-state.md` does not exist, create it from the git log and current file inventory before proceeding.
+
+### Companion docs (read as needed per task)
+- `docs/full-redesign-prompt.md` — design brief history (kept for reference; design-spec.md supersedes)
+- `docs/card-voice-rubric.md` — card content voice gate
+- `docs/prod-readiness-2026-04-17.md` — last pre-ship audit snapshot
+- `docs/phase1-new-cards-*.json` — staged card expansion batches (v2.2 pipeline)
 
 ---
 
@@ -499,6 +509,22 @@ echo "Prototypes: $(ls prototype-*.html | wc -l)"
 Record the counts in `.project-state.md` under `## Inventory`.
 
 **Last audited**: Not yet — run audit on next session start.
+
+---
+
+## 14. Canonical Spec Index
+
+Every substantive question about this product should land in one of these five docs. If a question doesn't fit, add a section to the closest one rather than creating a new doc.
+
+| Spec | Scope | Read when |
+|---|---|---|
+| `docs/product-spec.md` | Vision, audience, JTBD, roadmap, business model | You're asking what / for whom / why / when |
+| `docs/design-spec.md` | Visual tokens, typography, components, animation vocabulary, a11y | You're touching pixels, motion, or copy layout |
+| `docs/system-architecture-spec.md` | Stack, FSM, event bus, storage, PWA, deployment | You're adding or changing architecture |
+| `docs/engineering-spec.md` | Conventions, testing, gates, PR workflow, anti-patterns | You're writing code for any reason |
+| `docs/applied-scientist-spec.md` | Analytics schema, metrics, experiments, content quality loops | You're reading or acting on product data |
+
+Cross-links inside each doc point at the others. If you find a contradiction, the newer doc wins — but flag it in `.project-state.md` so it gets reconciled.
 
 ---
 
