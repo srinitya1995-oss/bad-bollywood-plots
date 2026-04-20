@@ -42,14 +42,6 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
     if (ptsTimer.current != null) window.clearTimeout(ptsTimer.current);
   }, []);
 
-  // Clear the pts-float immediately on new card so the "+X PTS" from the previous round
-  // doesn't bleed into the freshly-loaded card's first paint.
-  useEffect(() => {
-    if (ptsTimer.current != null) window.clearTimeout(ptsTimer.current);
-    ptsTimer.current = null;
-    setPtsFloat(null);
-  }, [idx]);
-
   const handleAwardPoints = useCallback(
     (playerIdx: number, card: CardType) => {
       const g = getGameInstance();
