@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
-Sitemap: https://www.badbollywoodplots.com/sitemap.xml
+Sitemap: https://baddesiplots.com/sitemap.xml

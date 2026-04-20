@@ -299,7 +299,7 @@ class GameInstance {
       '',
       'Terrible plots. Real movies.',
       'Think you can beat that?',
-      'badbollywoodplots.com',
+      'baddesiplots.com',
     ].join('\n');
   }
 
