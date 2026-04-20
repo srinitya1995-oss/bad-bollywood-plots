@@ -112,15 +112,6 @@ export function HomeScreen() {
         <button className="v8-home-footer__link" onClick={() => { window.posthog?.capture('footer_open', { target: 'settings' }); setShowSettings(true); }}>
           Settings
         </button>
-        <span className="v8-home-footer__dot" aria-hidden="true">&middot;</span>
-        <a
-          href="https://www.instagram.com/srinitya_satya/"
-          target="_blank"
-          rel="noopener"
-          className="v8-home-footer__link"
-        >
-          Made by @srinitya_satya
-        </a>
       </footer>
 
       {showHowTo && <HowToScreen onClose={() => setShowHowTo(false)} />}
