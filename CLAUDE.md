@@ -514,8 +514,9 @@ Record the counts in `.project-state.md` under `## Inventory`.
 
 ## 14. Canonical Spec Index
 
-Every substantive question about this product should land in one of these five docs. If a question doesn't fit, add a section to the closest one rather than creating a new doc.
+Every substantive question about this product should land in one of these eight docs. If a question doesn't fit, add a section to the closest one rather than creating a new doc.
 
+### Core specs
 | Spec | Scope | Read when |
 |---|---|---|
 | `docs/product-spec.md` | Vision, audience, JTBD, roadmap, business model | You're asking what / for whom / why / when |
@@ -523,6 +524,13 @@ Every substantive question about this product should land in one of these five d
 | `docs/system-architecture-spec.md` | Stack, FSM, event bus, storage, PWA, deployment | You're adding or changing architecture |
 | `docs/engineering-spec.md` | Conventions, testing, gates, PR workflow, anti-patterns | You're writing code for any reason |
 | `docs/applied-scientist-spec.md` | Analytics schema, metrics, experiments, content quality loops | You're reading or acting on product data |
+
+### Operational specs
+| Spec | Scope | Read when |
+|---|---|---|
+| `docs/growth-spec.md` | GTM, channels, viral loops, seed community, KPIs, pivot triggers | You're planning distribution or measuring growth |
+| `docs/content-editorial-spec.md` | Deck strategy, coverage roadmap, card lifecycle, voice evolution | You're scaling the catalog or adding a new industry |
+| `docs/legal-ip-spec.md` | Copyright + trademark + privacy posture, takedown playbook, risk inventory | You're responding to a legal inquiry or touching sensitive content |
 
 Cross-links inside each doc point at the others. If you find a contradiction, the newer doc wins — but flag it in `.project-state.md` so it gets reconciled.
 
