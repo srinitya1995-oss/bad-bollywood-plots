@@ -37,6 +37,7 @@ export function ResultsScreen() {
 
   const winner = isMultiplayer ? sortedPlayers[0] : null;
   const topScore = sortedPlayers[0]?.score ?? 0;
+  const soloName = !isMultiplayer ? (scorer.players[0]?.name?.trim() || 'You') : '';
 
   const quote = useMemo(() => pickRandomQuote(), []);
 
@@ -62,6 +63,11 @@ export function ResultsScreen() {
 
         {isMultiplayer && winner && (
           <div className="v8-results-winner">
+            <div className="v8-results-burst" aria-hidden="true">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <span key={i} className={`v8-results-burst__dot v8-results-burst__dot--${i}`} />
+              ))}
+            </div>
             <h2 className="v8-results-winner__crown">{'\u2605'} Top Guesser {'\u2605'}</h2>
             <div className="v8-results-winner__name">{winner.name}</div>
             <div className="v8-results-winner__title">MOVIE BUFF</div>
@@ -69,16 +75,24 @@ export function ResultsScreen() {
         )}
 
         {!isMultiplayer && (
-          <div className="v8-results-solo">
-            <div className="v8-results-solo__stat">
-              <span className="v8-results-solo__value">
-                {`${scorer.correctCount}/${idx}`}
-              </span>
-              <span className="v8-results-solo__label">Correct</span>
+          <div className="v8-results-solo-wrap">
+            <div className="v8-results-burst" aria-hidden="true">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <span key={i} className={`v8-results-burst__dot v8-results-burst__dot--${i}`} />
+              ))}
             </div>
-            <div className="v8-results-solo__stat">
-              <span className="v8-results-solo__value">{scorer.totalPts}</span>
-              <span className="v8-results-solo__label">Points</span>
+            <div className="v8-results-solo__name">{soloName}</div>
+            <div className="v8-results-solo">
+              <div className="v8-results-solo__stat">
+                <span className="v8-results-solo__value">
+                  {`${scorer.correctCount}/${idx}`}
+                </span>
+                <span className="v8-results-solo__label">Correct</span>
+              </div>
+              <div className="v8-results-solo__stat">
+                <span className="v8-results-solo__value">{scorer.totalPts}</span>
+                <span className="v8-results-solo__label">Points</span>
+              </div>
             </div>
           </div>
         )}
