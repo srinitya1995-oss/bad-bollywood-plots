@@ -1,0 +1,59 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/srinityaduppanapudisatya/Desktop/seedhaplot/.claude/hooks/block-em-dashes.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/srinityaduppanapudisatya/Desktop/seedhaplot/.claude/hooks/guard-dev-server.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/srinityaduppanapudisatya/Desktop/seedhaplot/.claude/hooks/screenshot-gate.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/srinityaduppanapudisatya/Desktop/seedhaplot/.claude/hooks/session-log.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/srinityaduppanapudisatya/Desktop/seedhaplot && { echo '=== .project-state.md (first 40) ==='; head -40 .project-state.md 2>/dev/null; echo ''; echo '=== Feature inventory (screens) ==='; grep -E '^## ' .feature-inventory.md 2>/dev/null | head -40; echo ''; echo '=== .session-log.md (last 15) ==='; tail -15 .session-log.md 2>/dev/null || echo '(no prior session log)'; }",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

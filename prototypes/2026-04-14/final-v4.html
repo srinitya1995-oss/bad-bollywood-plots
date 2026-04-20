@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot v4 — Final / Verdict</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .final-hero {
+    position: absolute;
+    top: 96px;
+    left: 0;
+    right: 0;
+    padding: 0 18px;
+    z-index: 15;
+    text-align: center;
+  }
+  .final-kicker {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-shadow: 2px 2px 0 var(--ink);
+    margin-bottom: 4px;
+  }
+  .final-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 48px;
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+    color: var(--tomato);
+    text-transform: uppercase;
+    text-shadow: 4px 4px 0 var(--ink);
+  }
+  .final-dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--cream);
+    text-shadow: 2px 2px 0 var(--ink);
+    margin-top: 6px;
+  }
+  /* big score card */
+  .score-card {
+    position: absolute;
+    top: 230px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1.8deg);
+    width: 300px;
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 8px 10px 0 var(--ink), 14px 18px 40px rgba(20,10,5,0.55);
+    z-index: 12;
+  }
+  .score-head {
+    padding: 9px 14px 7px;
+    background: var(--tomato);
+    color: var(--cream);
+    border-bottom: 4px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .score-head-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .score-head-right {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    background: var(--ink);
+    color: var(--gold);
+    padding: 3px 8px;
+  }
+  .score-body {
+    padding: 18px 18px 14px;
+    background: var(--cream);
+    text-align: center;
+  }
+  .score-number {
+    font-family: 'Anton', sans-serif;
+    font-size: 88px;
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    color: var(--tomato);
+    text-shadow: 4px 4px 0 var(--ink);
+  }
+  .score-total {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.22em;
+    color: var(--ink);
+    margin-top: 2px;
+    opacity: 0.7;
+  }
+  .score-stats {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-around;
+    gap: 6px;
+    border-top: 3px solid var(--ink);
+    padding-top: 10px;
+  }
+  .score-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.1em;
+  }
+  .score-stat .big {
+    display: block;
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    line-height: 0.9;
+  }
+  .score-stat .big.hit { color: var(--olive); }
+  .score-stat .big.miss { color: var(--magenta); }
+  .score-stat .big.skip { color: var(--indigo); }
+  .score-stat .lbl {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    margin-top: 2px;
+    opacity: 0.7;
+  }
+  .score-footer {
+    padding: 7px 14px;
+    background: var(--indigo);
+    color: var(--cream);
+    border-top: 4px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+  .score-footer .gold { color: var(--gold); }
+  /* aunty's verdict big blue pen */
+  .aunty-verdict {
+    position: absolute;
+    top: 584px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--blue-pen);
+    line-height: 0.98;
+    text-align: center;
+    width: 320px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    z-index: 18;
+  }
+  .aunty-verdict::before {
+    content: '"';
+    font-size: 60px;
+    line-height: 0.5;
+    vertical-align: -14px;
+    opacity: 0.55;
+    margin-right: 4px;
+  }
+  .aunty-verdict::after {
+    content: '"';
+    font-size: 60px;
+    line-height: 0.5;
+    vertical-align: -14px;
+    opacity: 0.55;
+    margin-left: 4px;
+  }
+  /* final CTA stack */
+  .final-cta {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 25;
+  }
+  .final-cta .btn { width: 100%; }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="bg-image">
+      <img src="/inspiration/09369c26e6e98d17fbb503a26d68ee6f.jpg" alt="">
+    </div>
+    <div class="bg-wash"></div>
+
+    <div class="final-hero">
+      <div class="final-kicker">GAME OVER</div>
+      <div class="final-title">THE<br>VERDICT</div>
+      <div class="final-dev">फैसला</div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-head">
+        <span class="score-head-title">SEEDHA PLOT</span>
+        <span class="score-head-right">DECENT BETA</span>
+      </div>
+      <div class="score-body">
+        <div class="score-number">२४</div>
+        <div class="score-total">OUT OF ३०</div>
+        <div class="score-stats">
+          <div class="score-stat"><span class="big hit">१२</span><span class="lbl">GOT IT</span></div>
+          <div class="score-stat"><span class="big miss">०४</span><span class="lbl">MISSED</span></div>
+          <div class="score-stat"><span class="big skip">०२</span><span class="lbl">SKIPPED</span></div>
+        </div>
+      </div>
+      <div class="score-footer">
+        <span class="gold">STREAK ४</span>
+        <span>14 MIN · 18 CARDS</span>
+      </div>
+    </div>
+
+    <div class="aunty-verdict">
+      itna bhi bura nahi tha<br>beta — next time chai<br>bana ke khelo!
+    </div>
+
+    <div class="final-cta">
+      <button class="btn btn-tomato" style="padding:16px 20px; font-size:18px;">PLAY AGAIN</button>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-secondary" style="flex:1;">NEW DECK</button>
+        <button class="btn btn-secondary" style="flex:1;">SHARE</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

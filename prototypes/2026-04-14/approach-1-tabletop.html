@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — Approach 1: The Tabletop</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6ECD8;
+    --paper-dim: #E6D7B6;
+    --marble: #E8DCC2;
+    --marble-vein: #C9B68D;
+    --ink: #1A0F0A;
+    --tomato: #E85D3A;
+    --tomato-deep: #B83A1E;
+    --gold: #C9A55C;
+    --hot-pink: #EE4D88;
+    --blue-pen: #1B3F8C;
+    --chai: #8B4A20;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #1a0e08;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--paper);
+  }
+  .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(246,236,216,0.6);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .label strong { color: var(--tomato); font-weight: 700; letter-spacing: 0.1em; }
+  .phone {
+    width: 390px;
+    height: 844px;
+    border-radius: 44px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 8px #0a0503, 0 0 0 10px #1f1208;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #0a0503;
+    border-radius: 14px;
+    z-index: 20;
+  }
+  /* marble tabletop */
+  .tabletop {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,240,210,0.6) 0%, transparent 40%),
+      radial-gradient(circle at 70% 80%, rgba(210,188,145,0.4) 0%, transparent 50%),
+      radial-gradient(circle at 20% 90%, rgba(180,150,100,0.3) 0%, transparent 35%),
+      linear-gradient(145deg, #F3E8CC 0%, #E5D6B0 50%, #D8C69A 100%);
+    overflow: hidden;
+  }
+  /* marble veins */
+  .tabletop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(125deg, transparent 40%, rgba(180,150,100,0.12) 41%, transparent 42%),
+      linear-gradient(62deg, transparent 30%, rgba(180,150,100,0.1) 31%, transparent 32.5%),
+      linear-gradient(30deg, transparent 55%, rgba(150,120,80,0.08) 56%, transparent 58%);
+    pointer-events: none;
+  }
+  /* a subtle paper grain overlay */
+  .tabletop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 40%, rgba(60,40,20,0.15) 100%);
+    pointer-events: none;
+  }
+
+  /* clipping base */
+  .clipping {
+    position: absolute;
+    background: var(--paper);
+    box-shadow:
+      0 1px 2px rgba(60,40,20,0.25),
+      0 8px 20px rgba(60,40,20,0.3),
+      0 20px 40px rgba(60,40,20,0.15);
+    padding: 12px;
+  }
+  /* torn edges via clip-path */
+  .torn-top { clip-path: polygon(0% 8%, 3% 4%, 8% 9%, 14% 5%, 20% 8%, 28% 3%, 35% 7%, 44% 4%, 52% 9%, 60% 5%, 68% 8%, 76% 4%, 84% 9%, 92% 5%, 100% 8%, 100% 100%, 0% 100%); }
+  .torn-bottom { clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 94% 96%, 88% 90%, 80% 95%, 72% 91%, 64% 96%, 56% 92%, 48% 97%, 40% 92%, 32% 96%, 24% 91%, 16% 95%, 8% 91%, 0% 94%); }
+  .torn-both { clip-path: polygon(0% 6%, 8% 2%, 16% 7%, 24% 3%, 32% 6%, 40% 2%, 48% 7%, 56% 3%, 64% 6%, 72% 3%, 80% 7%, 88% 3%, 96% 6%, 100% 4%, 100% 94%, 92% 97%, 84% 93%, 76% 96%, 68% 92%, 60% 97%, 52% 93%, 44% 96%, 36% 92%, 28% 97%, 20% 93%, 12% 96%, 4% 92%, 0% 95%); }
+
+  /* background clippings — smaller, rotated */
+  .clip-1 {
+    width: 180px;
+    height: 220px;
+    top: 40px;
+    left: -30px;
+    transform: rotate(-9deg);
+    z-index: 2;
+  }
+  .clip-1-photo {
+    width: 100%;
+    height: 140px;
+    background:
+      radial-gradient(ellipse 60px 80px at 50% 40%, #ffd4a8 0%, transparent 60%),
+      radial-gradient(circle at 50% 70%, #c84c2a 0%, #5a1a0a 80%);
+  }
+  .clip-1-caption {
+    margin-top: 6px;
+    font-family: 'Fraunces', serif;
+    font-size: 9px;
+    color: var(--ink);
+    font-style: italic;
+    line-height: 1.2;
+  }
+  .clip-1-mast {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 11px;
+    color: var(--tomato);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .clip-2 {
+    width: 160px;
+    height: 200px;
+    top: 80px;
+    right: -40px;
+    transform: rotate(7deg);
+    z-index: 2;
+  }
+  .clip-2-photo {
+    width: 100%;
+    height: 120px;
+    background:
+      radial-gradient(ellipse 50px 70px at 45% 35%, #ffccdd 0%, transparent 60%),
+      radial-gradient(circle at 50% 70%, #8a2a6b 0%, #3a0a2a 80%);
+  }
+  .clip-3 {
+    width: 140px;
+    height: 170px;
+    bottom: 80px;
+    right: 30px;
+    transform: rotate(-4deg);
+    z-index: 2;
+  }
+  .clip-3-photo {
+    width: 100%;
+    height: 110px;
+    background:
+      radial-gradient(ellipse 50px 60px at 50% 40%, #ffd8a8 0%, transparent 60%),
+      radial-gradient(circle at 50% 70%, #caa236 0%, #4a3a0a 85%);
+  }
+  .clip-4 {
+    width: 130px;
+    height: 160px;
+    bottom: 60px;
+    left: 20px;
+    transform: rotate(5deg);
+    z-index: 2;
+  }
+  .clip-4-photo {
+    width: 100%;
+    height: 100px;
+    background:
+      radial-gradient(ellipse 45px 55px at 50% 40%, #ffdab0 0%, transparent 60%),
+      radial-gradient(circle at 50% 70%, #8a3a1a 0%, #2a0a05 85%);
+  }
+
+  /* hero clipping in focus */
+  .hero {
+    width: 290px;
+    height: 390px;
+    top: 195px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    padding: 14px 16px;
+    z-index: 10;
+  }
+  .hero-mast {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--tomato);
+    text-transform: uppercase;
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+  }
+  .hero-sub {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--ink);
+    font-family: 'DM Sans';
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .hero-photo {
+    margin-top: 10px;
+    height: 180px;
+    background:
+      radial-gradient(ellipse 100px 140px at 50% 35%, #ffd4a8 0%, rgba(255,212,168,0) 65%),
+      radial-gradient(ellipse 60px 80px at 50% 40%, #f5a670 0%, rgba(245,166,112,0) 70%),
+      radial-gradient(circle at 50% 75%, #6b1d0a 0%, #2a0b04 70%),
+      linear-gradient(180deg, #3a1508 0%, #1a0605 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-photo::after {
+    content: '[AISHWARYA · 2002]';
+    position: absolute;
+    bottom: 6px;
+    left: 8px;
+    font-size: 7px;
+    letter-spacing: 0.22em;
+    color: rgba(246,236,216,0.55);
+    text-transform: uppercase;
+  }
+  .hero-kicker {
+    margin-top: 8px;
+    font-family: 'DM Sans';
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--hot-pink);
+  }
+  .hero-headline {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* blue pen annotation over the hero */
+  .pen {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--blue-pen);
+    line-height: 0.95;
+    z-index: 15;
+    pointer-events: none;
+  }
+  .pen-verdict {
+    top: 208px;
+    right: 24px;
+    transform: rotate(-7deg);
+    font-size: 26px;
+    max-width: 120px;
+    text-align: left;
+  }
+  .pen-arrow {
+    top: 260px;
+    right: 88px;
+    transform: rotate(-15deg);
+    font-size: 30px;
+  }
+  .pen-circle {
+    position: absolute;
+    top: 232px;
+    left: 108px;
+    width: 92px;
+    height: 90px;
+    border: 3px solid var(--blue-pen);
+    border-radius: 50%;
+    transform: rotate(-8deg);
+    opacity: 0.85;
+    z-index: 14;
+  }
+
+  /* PROPS */
+  .prop { position: absolute; z-index: 3; pointer-events: none; }
+  /* chai cup - side view */
+  .chai {
+    top: 22px;
+    right: 60px;
+    width: 80px;
+    height: 46px;
+    transform: rotate(8deg);
+  }
+  .chai-saucer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 14px;
+    background: radial-gradient(ellipse at center, #d8b56a 0%, #a67d30 80%);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(60,30,10,0.3);
+  }
+  .chai-cup {
+    position: absolute;
+    bottom: 10px;
+    left: 14px;
+    width: 52px;
+    height: 34px;
+    background: linear-gradient(180deg, #f0e0c0 0%, #d8b56a 100%);
+    border-radius: 0 0 26px 26px / 0 0 20px 20px;
+    box-shadow: inset 0 3px 6px rgba(60,30,10,0.3);
+  }
+  .chai-cup::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    right: 4px;
+    height: 6px;
+    background: radial-gradient(ellipse at center, #5a2a10 0%, #3a1a05 80%);
+    border-radius: 50%;
+  }
+  .chai-handle {
+    position: absolute;
+    right: 6px;
+    top: 12px;
+    width: 14px;
+    height: 16px;
+    border: 3px solid #d8b56a;
+    border-radius: 0 50% 50% 0;
+    border-left: none;
+  }
+  /* chai ring stain */
+  .chai-ring {
+    bottom: 250px;
+    left: 36px;
+    width: 58px;
+    height: 58px;
+    border: 4px solid rgba(139,74,32,0.35);
+    border-radius: 50%;
+    transform: rotate(20deg);
+    filter: blur(0.5px);
+  }
+  /* lipstick */
+  .lipstick {
+    bottom: 30px;
+    right: 58px;
+    width: 60px;
+    height: 16px;
+    transform: rotate(-35deg);
+  }
+  .lipstick-tube {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 16px;
+    background: linear-gradient(180deg, #C9A55C 0%, #7d6430 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(60,30,10,0.4);
+  }
+  .lipstick-bullet {
+    position: absolute;
+    left: 30px;
+    top: 2px;
+    width: 28px;
+    height: 12px;
+    background: linear-gradient(180deg, #E85D3A 0%, #a82a15 100%);
+    border-radius: 2px 6px 6px 2px;
+    box-shadow: 0 2px 4px rgba(60,30,10,0.4);
+  }
+  .lipstick-bullet::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10px;
+    height: 12px;
+    background: linear-gradient(160deg, #E85D3A 0%, #c84020 100%);
+    border-radius: 0 6px 6px 0;
+    transform: skewY(-15deg);
+  }
+  /* bindi */
+  .bindi {
+    top: 110px;
+    left: 40px;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at 35% 35%, #ff6050 0%, #c01020 60%, #600510 100%);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(60,10,10,0.4), 0 0 8px rgba(192,16,32,0.4);
+  }
+
+  /* instructions band */
+  .bottom-band {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+  }
+  .bottom-band .tap {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-family: 'DM Sans';
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0 6px 16px rgba(60,30,10,0.4);
+  }
+</style>
+</head>
+<body>
+  <div class="label"><strong>Approach 1 — The Tabletop</strong> · flatlay of her dressing table, pick up a clipping to play</div>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="tabletop">
+
+      <!-- background clippings -->
+      <div class="clipping clip-1 torn-both">
+        <div class="clip-1-mast">Filmy</div>
+        <div class="clip-1-photo"></div>
+        <div class="clip-1-caption">The King of Romance is at it again, running through airports for no reason...</div>
+      </div>
+      <div class="clipping clip-2 torn-bottom">
+        <div class="clip-2-photo"></div>
+      </div>
+      <div class="clipping clip-3 torn-top">
+        <div class="clip-3-photo"></div>
+      </div>
+      <div class="clipping clip-4 torn-both">
+        <div class="clip-4-photo"></div>
+      </div>
+
+      <!-- props -->
+      <div class="prop bindi"></div>
+      <div class="prop chai-ring"></div>
+      <div class="prop chai">
+        <div class="chai-saucer"></div>
+        <div class="chai-cup"></div>
+        <div class="chai-handle"></div>
+      </div>
+      <div class="prop lipstick">
+        <div class="lipstick-tube"></div>
+        <div class="lipstick-bullet"></div>
+      </div>
+
+      <!-- HERO clipping in focus -->
+      <div class="clipping hero torn-both">
+        <div class="hero-mast">Seedha Plot</div>
+        <div class="hero-sub">
+          <span>THE BAD PLOTS ANNUAL</span>
+          <span>CARD ०२४</span>
+        </div>
+        <div class="hero-photo"></div>
+        <div class="hero-kicker">THE PLOT, WRITTEN BY AUNTY</div>
+        <div class="hero-headline">A grieving dancer trains a blind girl to sing in a Greek villa. A chiffon saree is always flying.</div>
+      </div>
+
+      <!-- blue pen annotations -->
+      <div class="pen-circle"></div>
+      <div class="pen pen-verdict">arrey itna<br>SAD kyun<br>banaya?</div>
+      <div class="pen pen-arrow">↶</div>
+
+      <div class="bottom-band">
+        <span class="tap">TAP TO FLIP</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

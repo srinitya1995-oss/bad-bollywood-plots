@@ -1,0 +1,309 @@
+<h2>Editorial Magazine — total reset</h2>
+<p class="subtitle">Aged paper, condensed black headlines, Devanagari script as decoration, photographic cards. Like the front cover of a magazine you'd actually pick up at a chai stall. No pink, no green, no bouncy italic. Tell me where to push harder or where to pull back.</p>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@700;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Khand:wght@500;700&family=Yatra+One&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #EBDEC1;
+    --paper-deep: #DCCBA4;
+    --paper-edge: #C8B585;
+    --ink: #1A0F08;
+    --ink-soft: #3D2814;
+    --tomato: #C8321A;
+    --tomato-deep: #8E1F0C;
+    --gold-leaf: #B8862A;
+  }
+
+  .editorial-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .ed-phone {
+    width: 390px;
+    height: 800px;
+    border-radius: 40px;
+    background: var(--paper);
+    box-shadow:
+      0 0 0 8px #1a1a22,
+      0 0 0 9px #2a2a32,
+      0 40px 100px -20px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  /* Paper texture: cross-hatched dot grain */
+  .ed-phone::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(26,15,8,0.06) 1px, transparent 2px),
+      radial-gradient(circle at 70% 60%, rgba(26,15,8,0.05) 1px, transparent 2px),
+      radial-gradient(circle at 40% 80%, rgba(26,15,8,0.04) 1px, transparent 2px);
+    background-size: 14px 14px, 22px 22px, 18px 18px;
+    pointer-events: none;
+  }
+
+  .ed-phone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(26,15,8,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 0%, rgba(26,15,8,0.12) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .ed-content {
+    position: relative;
+    z-index: 2;
+    padding: 44px 32px 32px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Magazine masthead row */
+  .ed-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 8px 0 6px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .ed-masthead .issue {
+    font-family: 'Yatra One', serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  /* Devanagari subhead */
+  .ed-devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 18px;
+    text-align: center;
+    margin: 24px 0 4px;
+    color: var(--tomato);
+    letter-spacing: -0.01em;
+  }
+
+  /* Massive wordmark */
+  .ed-wordmark {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 108px;
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin: 4px 0 0;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .ed-wordmark .ampamp {
+    color: var(--tomato);
+    font-style: normal;
+    display: inline-block;
+    transform: translateY(-6px);
+  }
+
+  /* Pull quote subhead */
+  .ed-pullquote {
+    text-align: center;
+    margin: 14px 24px 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .ed-pullquote::before, .ed-pullquote::after {
+    content: "—";
+    color: var(--tomato);
+    margin: 0 6px;
+    font-style: normal;
+  }
+
+  /* Card stack — diagonal, like cards on a table */
+  .ed-cardstack {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 18px;
+  }
+  .ed-card {
+    position: absolute;
+    width: 220px;
+    height: 290px;
+    border-radius: 6px;
+    box-shadow:
+      0 1px 0 rgba(0,0,0,0.15),
+      0 18px 40px -12px rgba(26,15,8,0.45);
+    padding: 18px 16px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(26,15,8,0.18);
+  }
+
+  /* Bollywood card — black ink card, cream type */
+  .ed-card.bw {
+    background: var(--ink);
+    color: var(--paper);
+    transform: rotate(-7deg) translate(-32px, 0);
+    z-index: 1;
+  }
+  /* Tollywood card — cream paper card, ink type */
+  .ed-card.tw {
+    background: var(--paper);
+    color: var(--ink);
+    transform: rotate(5deg) translate(34px, 14px);
+    z-index: 2;
+  }
+
+  .ed-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 6px;
+    opacity: 0.9;
+  }
+  .ed-card-clue {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    padding: 14px 2px 4px;
+    text-transform: uppercase;
+  }
+  .ed-card-tap {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    opacity: 0.65;
+  }
+
+  /* Bottom action — newspaper-style */
+  .ed-action {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(26,15,8,0.4);
+  }
+  .ed-action-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 16px 38px 14px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--tomato);
+  }
+  .ed-action-secondary {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .ed-label {
+    text-align: center;
+    margin-top: 14px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+</style>
+
+<div class="editorial-row">
+  <div>
+    <div class="ed-phone">
+      <div class="ed-content">
+        <div class="ed-masthead">
+          <span>VOL. I · A PARTY GAME</span>
+          <span class="issue">अंक १</span>
+          <span>FOUR FRIENDS<br>MIN.</span>
+        </div>
+
+        <p class="ed-devnag">बैड प्लॉट्स</p>
+        <h1 class="ed-wordmark">BAD<br>PLOTS</h1>
+        <p class="ed-pullquote">An anthology of terrible movie descriptions, played at chai gatherings and Diwali parties</p>
+
+        <div class="ed-cardstack">
+          <div class="ed-card bw">
+            <div class="ed-card-meta">
+              <span>Bollywood</span>
+              <span>2009 · Med</span>
+            </div>
+            <div class="ed-card-clue">Three engineering boys learn life is not a multiple choice question</div>
+            <div class="ed-card-tap">Tap to reveal →</div>
+          </div>
+          <div class="ed-card tw">
+            <div class="ed-card-meta">
+              <span>Tollywood</span>
+              <span>2003 · Hard</span>
+            </div>
+            <div class="ed-card-clue">Returning NRI falls for the bus girl. Father objects. Loudly.</div>
+            <div class="ed-card-tap">Tap to reveal →</div>
+          </div>
+        </div>
+
+        <div class="ed-action">
+          <button class="ed-action-btn">Deal me in</button>
+          <span class="ed-action-secondary">Play with friends · Suggest a movie</span>
+        </div>
+      </div>
+    </div>
+    <div class="ed-label">Home · editorial reset</div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+This is one shot, one screen, going hard in a different direction. <strong>Anton</strong> for the wordmark, <strong>Big Shoulders Display Black</strong> for the card clue type, <strong>Yatra One</strong> for the Devanagari, <strong>Fraunces italic</strong> for the pull quote, <strong>Khand</strong> for tiny labels. Cream paper background with grain texture. Black ink + tomato accent — no pink, no green. Cards rotated like they're on a table.
+</p>
+<p class="subtitle" style="text-align:center;">
+React: closer? still wrong? what part wants more push?
+</p>

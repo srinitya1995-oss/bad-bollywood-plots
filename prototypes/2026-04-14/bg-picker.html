@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — Background Picker</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F4E8D0;
+    --cream-warm: #F8EFD8;
+    --ink: #141008;
+    --tomato: #C8321C;
+    --tomato-deep: #8A1F0E;
+    --gold: #E9B23E;
+    --magenta: #D42A6A;
+    --indigo: #2E2F5B;
+    --olive: #7B8449;
+    --blue-pen: #1B3F8C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #d8cbac;
+    min-height: 100vh;
+    padding: 30px 20px;
+    color: var(--ink);
+  }
+  header {
+    max-width: 1700px;
+    margin: 0 auto 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 10px;
+  }
+  header h1 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  header .meta {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .grid {
+    max-width: 1700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 22px;
+  }
+  @media (max-width: 1450px) { .grid { grid-template-columns: 1fr 1fr; max-width: 900px; } }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; max-width: 460px; } }
+  .slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .slot-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 800;
+  }
+  .slot-label strong {
+    color: var(--tomato);
+  }
+
+  .phone {
+    width: 390px;
+    height: 680px;
+    border-radius: 40px;
+    background: var(--cream-warm);
+    box-shadow: 0 30px 80px rgba(20,10,5,0.45), 0 0 0 8px #1a0f06, 0 0 0 10px #3a2410;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #1a0f06;
+    border-radius: 14px;
+    z-index: 40;
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+  }
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.95) brightness(0.85);
+  }
+  .wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,15,8,0.35) 0%, rgba(20,15,8,0) 22%, rgba(20,15,8,0) 72%, rgba(20,15,8,0.55) 100%);
+    pointer-events: none;
+  }
+  /* BG VARIANT A: Dhaba red hand-painted wall */
+  .bg-dhaba {
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 1px, transparent 1px, transparent 42px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 80px),
+      radial-gradient(circle at 30% 20%, #A83016 0%, #70180A 100%);
+  }
+  .bg-dhaba::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,200,120,0.18) 0%, transparent 25%),
+      radial-gradient(circle at 80% 85%, rgba(20,10,5,0.35) 0%, transparent 40%);
+  }
+  /* dhaba: a mustard stripe */
+  .bg-dhaba::after {
+    content: '';
+    position: absolute;
+    top: 32%;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: repeating-linear-gradient(45deg, var(--gold) 0px, var(--gold) 12px, var(--ink) 12px, var(--ink) 18px);
+    opacity: 0.45;
+  }
+
+  /* BG VARIANT B: Walnut wood table */
+  .bg-wood {
+    background:
+      repeating-linear-gradient(92deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 11px, rgba(0,0,0,0.1) 12px, rgba(0,0,0,0) 13px, rgba(0,0,0,0) 28px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.18) 0px, transparent 3px, transparent 160px),
+      repeating-linear-gradient(0deg, rgba(255,200,140,0.04) 0px, transparent 40px, transparent 120px),
+      linear-gradient(180deg, #5a3018 0%, #3a1c08 100%);
+  }
+  .bg-wood::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.35) 100%);
+  }
+
+  /* BG VARIANT C: Ink poster-black */
+  .bg-ink {
+    background:
+      radial-gradient(circle at 30% 15%, rgba(200,50,28,0.25) 0%, transparent 45%),
+      radial-gradient(circle at 75% 80%, rgba(233,178,62,0.2) 0%, transparent 45%),
+      linear-gradient(180deg, #1E1408 0%, #0A0502 100%);
+  }
+  .bg-ink::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(244,232,208,0.04) 1px, transparent 1.5px);
+    background-size: 6px 6px;
+  }
+
+  /* top bar */
+  .top-bar {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    padding: 9px 14px;
+    background: var(--tomato);
+    color: var(--cream);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 4px solid var(--ink);
+    border-bottom: 4px solid var(--ink);
+    z-index: 10;
+    box-shadow: 0 4px 0 rgba(20,10,5,0.3);
+  }
+  .top-bar-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+  .top-bar-dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 13px;
+    font-weight: 900;
+    margin-left: 6px;
+    color: var(--gold);
+  }
+  .top-bar-right {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+  .top-bar-right .pts { color: var(--gold); font-weight: 800; }
+
+  /* peek clippings */
+  .peek {
+    position: absolute;
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    padding: 3px;
+    z-index: 7;
+    overflow: hidden;
+  }
+  .peek img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .peek-1 { top: 112px; left: -22px; width: 86px; height: 108px; transform: rotate(-11deg); box-shadow: 4px 4px 0 var(--ink); }
+  .peek-2 { top: 106px; right: -24px; width: 92px; height: 112px; transform: rotate(9deg); box-shadow: -4px 4px 0 var(--ink); }
+
+  /* card */
+  .card {
+    position: absolute;
+    top: 172px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1.8deg);
+    width: 288px;
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 8px 10px 0 var(--ink), 14px 18px 40px rgba(20,10,5,0.55);
+    z-index: 12;
+  }
+  .card-mast {
+    padding: 8px 12px 6px;
+    background: var(--tomato);
+    color: var(--cream);
+    border-bottom: 4px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .card-mast-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+  .card-mast-issue {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    background: var(--ink);
+    padding: 3px 8px;
+    color: var(--gold);
+  }
+  .card-body {
+    padding: 22px 20px 18px;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: var(--cream);
+  }
+  .card-plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.22;
+    color: var(--ink);
+    text-align: center;
+  }
+  .card-plot .em {
+    color: var(--tomato);
+    font-weight: 700;
+    font-style: italic;
+  }
+  .card-pen {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 0.95;
+    color: var(--blue-pen);
+    text-align: center;
+    transform: rotate(-2deg);
+    padding: 4px 10px 0;
+    text-shadow: 0 0 1px rgba(27,63,140,0.3);
+    max-width: 240px;
+  }
+  .card-footer {
+    padding: 7px 12px;
+    background: var(--indigo);
+    color: var(--cream);
+    border-top: 4px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .card-footer .gold { color: var(--gold); }
+
+  /* pen */
+  .pen {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--blue-pen);
+    line-height: 0.92;
+    z-index: 18;
+    pointer-events: none;
+    text-shadow: 0 0 1px rgba(27,63,140,0.3);
+  }
+  .pen-verdict {
+    top: 178px;
+    right: 4px;
+    transform: rotate(-8deg);
+    font-size: 24px;
+    max-width: 110px;
+  }
+  .pen-circle {
+    position: absolute;
+    top: 152px;
+    right: 10px;
+    width: 130px;
+    height: 108px;
+    border: 3px solid var(--blue-pen);
+    border-radius: 50%;
+    transform: rotate(10deg);
+    opacity: 0.85;
+    z-index: 17;
+    pointer-events: none;
+  }
+  /* bottom buttons */
+  .cta {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 16px;
+    z-index: 25;
+  }
+  .btn {
+    font-family: 'Anton', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 3px solid var(--ink);
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 4px 4px 0 var(--tomato);
+  }
+  .btn-secondary {
+    background: var(--cream);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>background picker — same clean card</h1>
+    <span class="meta">pick one fast</span>
+  </header>
+  <div class="grid">
+
+    <!-- A · Dhaba red -->
+    <div class="slot">
+      <div class="slot-label"><strong>A</strong> · dhaba red (pure CSS)</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bg bg-dhaba"></div>
+        <div class="top-bar">
+          <span class="top-bar-title">BAD DESI PLOTS</span>
+          <span class="top-bar-right">TURN 3 · <span class="pts">12 PTS</span></span>
+        </div>
+        <div class="peek peek-1"><img src="/inspiration/48b5e4fe73f26cace03677976462e27e.jpg"></div>
+        <div class="peek peek-2"><img src="/inspiration/359e604f87f0053429424fe913fd6a74.jpg"></div>
+        <div class="card">
+          <div class="card-mast">
+            <span class="card-mast-title">THE PLOT</span>
+            <span class="card-mast-issue">CARD ०२४</span>
+          </div>
+          <div class="card-body">
+            <div class="card-plot">A grieving dancer trains a blind girl to sing in a <span class="em">Greek villa</span> while his mother disapproves.</div>
+          </div>
+          <div class="card-footer">
+            <span class="gold">BOLLYWOOD</span>
+            <span>MEDIUM</span>
+            <span class="gold">2 PTS</span>
+          </div>
+        </div>
+        <div class="pen-circle"></div>
+        <div class="pen pen-verdict">arrey itna<br>SAD kyun!</div>
+        <div class="cta">
+          <button class="btn btn-secondary">SKIP</button>
+          <button class="btn btn-primary">TAP TO FLIP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- B · Walnut wood -->
+    <div class="slot">
+      <div class="slot-label"><strong>B</strong> · walnut wood (pure CSS)</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bg bg-wood"></div>
+        <div class="top-bar">
+          <span class="top-bar-title">BAD DESI PLOTS</span>
+          <span class="top-bar-right">TURN 3 · <span class="pts">12 PTS</span></span>
+        </div>
+        <div class="peek peek-1"><img src="/inspiration/48b5e4fe73f26cace03677976462e27e.jpg"></div>
+        <div class="peek peek-2"><img src="/inspiration/359e604f87f0053429424fe913fd6a74.jpg"></div>
+        <div class="card">
+          <div class="card-mast">
+            <span class="card-mast-title">THE PLOT</span>
+            <span class="card-mast-issue">CARD ०२४</span>
+          </div>
+          <div class="card-body">
+            <div class="card-plot">A grieving dancer trains a blind girl to sing in a <span class="em">Greek villa</span> while his mother disapproves.</div>
+          </div>
+          <div class="card-footer">
+            <span class="gold">BOLLYWOOD</span>
+            <span>MEDIUM</span>
+            <span class="gold">2 PTS</span>
+          </div>
+        </div>
+        <div class="pen-circle"></div>
+        <div class="pen pen-verdict">arrey itna<br>SAD kyun!</div>
+        <div class="cta">
+          <button class="btn btn-secondary">SKIP</button>
+          <button class="btn btn-primary">TAP TO FLIP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- C · Ink poster-black -->
+    <div class="slot">
+      <div class="slot-label"><strong>C</strong> · ink poster black (pure CSS)</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bg bg-ink"></div>
+        <div class="top-bar">
+          <span class="top-bar-title">BAD DESI PLOTS</span>
+          <span class="top-bar-right">TURN 3 · <span class="pts">12 PTS</span></span>
+        </div>
+        <div class="peek peek-1"><img src="/inspiration/48b5e4fe73f26cace03677976462e27e.jpg"></div>
+        <div class="peek peek-2"><img src="/inspiration/359e604f87f0053429424fe913fd6a74.jpg"></div>
+        <div class="card">
+          <div class="card-mast">
+            <span class="card-mast-title">THE PLOT</span>
+            <span class="card-mast-issue">CARD ०२४</span>
+          </div>
+          <div class="card-body">
+            <div class="card-plot">A grieving dancer trains a blind girl to sing in a <span class="em">Greek villa</span> while his mother disapproves.</div>
+          </div>
+          <div class="card-footer">
+            <span class="gold">BOLLYWOOD</span>
+            <span>MEDIUM</span>
+            <span class="gold">2 PTS</span>
+          </div>
+        </div>
+        <div class="pen-circle"></div>
+        <div class="pen pen-verdict">arrey itna<br>SAD kyun!</div>
+        <div class="cta">
+          <button class="btn btn-secondary">SKIP</button>
+          <button class="btn btn-primary">TAP TO FLIP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- D · Rooftop boys sunset (image) -->
+    <div class="slot">
+      <div class="slot-label"><strong>D</strong> · rooftop boys sunset (image)</div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bg"><img src="/inspiration/359e604f87f0053429424fe913fd6a74.jpg"></div>
+        <div class="wash"></div>
+        <div class="top-bar">
+          <span class="top-bar-title">BAD DESI PLOTS</span>
+          <span class="top-bar-right">TURN 3 · <span class="pts">12 PTS</span></span>
+        </div>
+        <div class="peek peek-1"><img src="/inspiration/48b5e4fe73f26cace03677976462e27e.jpg"></div>
+        <div class="peek peek-2"><img src="/inspiration/09369c26e6e98d17fbb503a26d68ee6f.jpg"></div>
+        <div class="card">
+          <div class="card-mast">
+            <span class="card-mast-title">THE PLOT</span>
+            <span class="card-mast-issue">CARD ०२४</span>
+          </div>
+          <div class="card-body">
+            <div class="card-plot">A grieving dancer trains a blind girl to sing in a <span class="em">Greek villa</span> while his mother disapproves.</div>
+          </div>
+          <div class="card-footer">
+            <span class="gold">BOLLYWOOD</span>
+            <span>MEDIUM</span>
+            <span class="gold">2 PTS</span>
+          </div>
+        </div>
+        <div class="pen-circle"></div>
+        <div class="pen pen-verdict">arrey itna<br>SAD kyun!</div>
+        <div class="cta">
+          <button class="btn btn-secondary">SKIP</button>
+          <button class="btn btn-primary">TAP TO FLIP</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

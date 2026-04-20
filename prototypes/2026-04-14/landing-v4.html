@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot v4 — Landing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .landing-hero {
+    position: absolute;
+    top: 96px;
+    left: 0;
+    right: 0;
+    padding: 0 18px;
+    z-index: 15;
+    text-align: center;
+  }
+  .landing-kicker {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-shadow: 2px 2px 0 var(--ink);
+    margin-bottom: 4px;
+  }
+  .landing-mast {
+    font-family: 'Anton', sans-serif;
+    font-size: 104px;
+    line-height: 0.78;
+    letter-spacing: -0.03em;
+    color: var(--tomato);
+    text-transform: uppercase;
+    text-shadow: 5px 5px 0 var(--ink), 10px 10px 0 var(--gold);
+    margin: 2px 0 8px;
+  }
+  .landing-dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--cream);
+    text-shadow: 3px 3px 0 var(--ink);
+    margin-bottom: 10px;
+  }
+  .landing-tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--cream);
+    line-height: 1.3;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    padding: 0 20px;
+  }
+  /* preview card (tilted in middle) */
+  .preview-card {
+    position: absolute;
+    top: 370px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3.2deg);
+    width: 260px;
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 8px 10px 0 var(--ink), 14px 18px 40px rgba(20,10,5,0.6);
+    z-index: 14;
+  }
+  .preview-mast {
+    padding: 7px 12px 5px;
+    background: var(--tomato);
+    color: var(--cream);
+    border-bottom: 4px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .preview-mast-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 19px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+  .preview-mast-right {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+  }
+  .preview-body {
+    padding: 14px 14px 12px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.24;
+    color: var(--ink);
+    text-align: center;
+  }
+  .preview-footer {
+    padding: 5px 12px;
+    background: var(--indigo);
+    color: var(--cream);
+    border-top: 3px solid var(--ink);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    display: flex;
+    justify-content: space-between;
+  }
+  .preview-footer .gold { color: var(--gold); }
+  /* big play button */
+  .play-stack {
+    position: absolute;
+    bottom: 90px;
+    left: 0;
+    right: 0;
+    padding: 0 22px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .play-primary {
+    width: 100%;
+    background: var(--tomato);
+    color: var(--cream);
+    border: 4px solid var(--ink);
+    border-radius: 999px;
+    padding: 18px 20px;
+    font-family: 'Anton', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 6px 6px 0 var(--gold), 6px 6px 0 3px var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .play-primary .dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 18px;
+    color: var(--gold);
+  }
+  .play-secondary {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+  .play-secondary .btn {
+    flex: 1;
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+  /* footer meta */
+  .landing-foot {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--cream);
+    z-index: 20;
+    opacity: 0.8;
+  }
+  .landing-foot .dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    color: var(--gold);
+  }
+  /* blue pen above masthead */
+  .pen-mast {
+    position: absolute;
+    top: 82px;
+    right: 38px;
+    transform: rotate(14deg);
+    font-size: 22px;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--blue-pen);
+    line-height: 0.9;
+    z-index: 20;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="bg-image">
+      <img src="/inspiration/09369c26e6e98d17fbb503a26d68ee6f.jpg" alt="">
+    </div>
+    <div class="bg-wash"></div>
+
+    <div class="landing-hero">
+      <div class="landing-kicker">THE DESI PARTY GAME</div>
+      <div class="landing-mast">Seedha<br>Plot</div>
+      <div class="landing-dev">सीधा प्लॉट</div>
+      <div class="landing-tagline">Bad plots. Real movies.<br>Guess before the person next to you does.</div>
+    </div>
+
+    <div class="pen-mast">pass the<br>phone yaar!</div>
+
+    <div class="preview-card">
+      <div class="preview-mast">
+        <span class="preview-mast-title">SEEDHA PLOT</span>
+        <span class="preview-mast-right">CARD ००१</span>
+      </div>
+      <div class="preview-body">
+        A grieving dancer trains a blind girl to sing in a Greek villa.
+      </div>
+      <div class="preview-footer">
+        <span class="gold">THE PLOT</span>
+        <span>BW · MEDIUM · 2 PTS</span>
+      </div>
+    </div>
+
+    <div class="play-stack">
+      <button class="play-primary">
+        START PLAYING <span class="dev">खेलो</span>
+      </button>
+      <div class="play-secondary">
+        <button class="btn btn-secondary">PARTY MODE</button>
+        <button class="btn btn-secondary">SOLO</button>
+      </div>
+    </div>
+
+    <div class="landing-foot">150 CARDS <span class="dev">·</span> बॉलीवुड <span class="dev">+</span> TOLLYWOOD</div>
+  </div>
+</body>
+</html>

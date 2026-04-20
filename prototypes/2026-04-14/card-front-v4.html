@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot v4 — Card Front</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .card { top: 186px; }
+  .card-plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.22;
+    color: var(--ink);
+    text-align: center;
+    letter-spacing: -0.005em;
+  }
+  .card-plot .em {
+    color: var(--tomato);
+    font-weight: 700;
+    font-style: italic;
+  }
+  /* peeks */
+  .peek-1 { top: 130px; left: -22px; width: 90px; height: 112px; transform: rotate(-11deg); box-shadow: 4px 4px 0 var(--ink); }
+  .peek-2 { top: 122px; right: -26px; width: 96px; height: 118px; transform: rotate(9deg); box-shadow: -4px 4px 0 var(--ink); }
+  /* pen */
+  .pen-verdict {
+    top: 194px;
+    right: 4px;
+    transform: rotate(-8deg);
+    font-size: 26px;
+    max-width: 120px;
+  }
+  .pen-circle {
+    position: absolute;
+    top: 168px;
+    right: 12px;
+    width: 138px;
+    height: 116px;
+    border: 3px solid var(--blue-pen);
+    border-radius: 50%;
+    transform: rotate(10deg);
+    opacity: 0.85;
+    z-index: 17;
+    pointer-events: none;
+  }
+  .pen-arrow {
+    top: 300px;
+    left: 24px;
+    font-size: 32px;
+    transform: rotate(22deg);
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="bg-image">
+      <img src="/inspiration/09369c26e6e98d17fbb503a26d68ee6f.jpg" alt="">
+    </div>
+    <div class="bg-wash"></div>
+
+    <div class="top-bar">
+      <span class="top-bar-title">SEEDHA PLOT<span class="top-bar-dev">सीधा</span></span>
+      <span class="top-bar-right">TURN 3 · <span class="pts">12 PTS</span></span>
+    </div>
+
+    <div class="peek peek-1">
+      <img src="/inspiration/48b5e4fe73f26cace03677976462e27e.jpg" alt="">
+    </div>
+    <div class="peek peek-2">
+      <img src="/inspiration/359e604f87f0053429424fe913fd6a74.jpg" alt="">
+    </div>
+
+    <div class="card">
+      <div class="card-mast">
+        <span class="card-mast-title">THE PLOT</span>
+        <span class="card-mast-issue">CARD ०२४</span>
+      </div>
+      <div class="card-body">
+        <div class="card-plot">
+          A grieving dancer trains a blind girl to sing in a <span class="em">Greek villa</span> while his mother disapproves. A chiffon saree is always flying.
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="gold">BOLLYWOOD</span>
+        <span>MEDIUM</span>
+        <span class="gold">2 PTS</span>
+      </div>
+    </div>
+
+    <div class="pen-circle"></div>
+    <div class="pen pen-verdict">arrey itna<br>SAD kyun<br>banaya??</div>
+    <div class="pen pen-arrow">↶</div>
+
+    <div class="cta-bar">
+      <button class="btn btn-secondary">SKIP</button>
+      <button class="btn btn-primary">TAP TO FLIP</button>
+    </div>
+  </div>
+</body>
+</html>

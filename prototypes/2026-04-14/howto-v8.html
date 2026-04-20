@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — v8 how to play</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_v8.css">
+<style>
+  .panel {
+    position: absolute;
+    top: 128px;
+    left: 22px;
+    right: 22px;
+    bottom: 100px;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    box-shadow: 6px 8px 0 var(--ink), 0 28px 60px rgba(20,10,5,0.55);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+  }
+  .panel-mast {
+    padding: 10px 18px 9px;
+    background: var(--tomato);
+    color: var(--paper);
+    border-bottom: 3px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-shrink: 0;
+  }
+  .panel-mast-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .panel-mast-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--gold-bright);
+  }
+
+  .rules {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 20px 20px;
+  }
+  .rule {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--ink-line);
+  }
+  .rule:last-child { border-bottom: 0; }
+  .rule-num {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    background: var(--ink);
+    color: var(--gold-bright);
+    border: 2px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    box-shadow: 2px 3px 0 var(--tomato);
+  }
+  .rule-body h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .rule-body p {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.42;
+    color: var(--ink-soft);
+  }
+  .rule-body p strong { color: var(--tomato); font-weight: 600; }
+
+  .scorekey {
+    margin: 14px 0 4px;
+    padding: 12px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    box-shadow: 3px 4px 0 var(--tomato);
+  }
+  .scorekey .item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+  .scorekey .pts {
+    display: block;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    color: var(--gold-bright);
+    margin-top: 2px;
+  }
+
+  .cta {
+    position: absolute;
+    bottom: 28px;
+    left: 22px;
+    right: 22px;
+    z-index: 20;
+  }
+  .cta .btn { width: 100%; }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="bg"><img src="/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg" alt=""></div>
+    <div class="wash"></div>
+    <div class="bulb-glow"></div>
+
+    <div class="topband">
+      <div class="topband-title">Bad <span class="t2">Desi</span> Plots</div>
+      <div class="topband-right">
+        <span>How To</span>
+        <span class="divider"></span>
+        <span class="pts">Play</span>
+      </div>
+    </div>
+
+    <div class="panel slideup d1">
+      <div class="panel-mast">
+        <span class="panel-mast-title">The Rules</span>
+        <span class="panel-mast-sub">2 Min Read</span>
+      </div>
+
+      <div class="rules">
+        <div class="rule">
+          <div class="rule-num">1</div>
+          <div class="rule-body">
+            <h3>Read the bad plot</h3>
+            <p>Tap <strong>Flip</strong> to reveal a terribly summarized Bollywood or Tollywood movie. Read it out loud.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num">2</div>
+          <div class="rule-body">
+            <h3>Guess the movie</h3>
+            <p>First player to shout the correct movie name earns the points. No googling, no half-guesses, only confidence.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num">3</div>
+          <div class="rule-body">
+            <h3>Pass the phone</h3>
+            <p>When a plot is solved, hand the phone to the next player. They flip, you guess. Rotate until time's up.</p>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-num">4</div>
+          <div class="rule-body">
+            <h3>Skip freely</h3>
+            <p>Stuck? <strong>Skip</strong> loses you nothing except bragging rights. A round is 12 plots or six minutes, whichever hits first.</p>
+          </div>
+        </div>
+
+        <div class="scorekey">
+          <div class="item">EASY<span class="pts">1 PT</span></div>
+          <div class="item">MEDIUM<span class="pts">2 PTS</span></div>
+          <div class="item">HARD<span class="pts">3 PTS</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <button class="btn primary">Got It · Back</button>
+    </div>
+  </div>
+</body>
+</html>

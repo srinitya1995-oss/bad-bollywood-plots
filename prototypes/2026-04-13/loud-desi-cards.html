@@ -1,0 +1,627 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bowlby+One&family=Bungee&family=Bungee+Shade&family=Caveat+Brush&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Limelight&family=Permanent+Marker&family=Rozha+One&family=Special+Elite&family=Tiro+Devanagari+Hindi&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. III · LOUD EDITION</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक ३</span>
+    <span>SATURATION: MAX</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Card lab — loud desi cards</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:680px;">
+    Same desi metaphors. Cranked saturation. Hot pink. Emerald. Chrome yellow. Cobalt. Tomato. Color clashes everywhere — the way Bollywood posters from the 70s actually looked. The cream paper home stays calm; the cards stacked on it explode.
+  </p>
+</div>
+
+<style>
+  :root {
+    --hot-pink: #E91063;
+    --magenta: #C8198E;
+    --emerald: #0CA85A;
+    --emerald-dark: #07703C;
+    --chrome-yellow: #FFD60A;
+    --tropical-orange: #FF6B1A;
+    --cobalt: #1E3A9F;
+    --tomato: #E0341A;
+    --cream: #FFF5DC;
+    --ink: #1A0F08;
+    --gold: #B8862A;
+  }
+
+  .loud-grid { display: flex; flex-wrap: wrap; gap: 36px; justify-content: center; margin-top: 32px; }
+  .loud-item { display: flex; flex-direction: column; align-items: center; }
+  .loud-card {
+    width: 270px; height: 380px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    position: relative;
+    border: 3px solid transparent;
+    box-sizing: content-box;
+  }
+  .loud-card:hover { transform: translateY(-4px); }
+  .loud-card.selected { border-color: var(--chrome-yellow); box-shadow: 0 0 0 6px rgba(255,214,10,0.25); }
+  .loud-tag { margin-top: 14px; font-family: 'Khand', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.78); text-align: center; }
+  .loud-sub { margin-top: 4px; font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; color: rgba(255,255,255,0.5); max-width: 280px; text-align: center; line-height: 1.4; }
+
+  /* ═══════ L1 — HOT MATRIMONIAL ═══════ */
+  .l1 {
+    background: var(--hot-pink);
+    color: var(--cream);
+    padding: 16px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 4px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--chrome-yellow), 14px 14px 0 var(--ink);
+    transform: rotate(-2deg);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .l1 .top {
+    background: var(--chrome-yellow);
+    color: var(--ink);
+    margin: -16px -18px 8px;
+    padding: 6px 10px;
+    text-align: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-bottom: 4px dashed var(--ink);
+  }
+  .l1 .title {
+    font-family: 'Rozha One', serif;
+    font-size: 24px;
+    text-align: center;
+    line-height: 1;
+    color: var(--chrome-yellow);
+    text-shadow: 2px 2px 0 var(--ink);
+  }
+  .l1 .photo-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+  .l1 .photo {
+    width: 60px; height: 60px;
+    background: var(--emerald);
+    color: var(--cream);
+    border: 3px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .l1 .body { flex: 1; font-size: 9px; line-height: 1.35; }
+  .l1 .body strong { color: var(--chrome-yellow); }
+  .l1 .footer {
+    background: var(--ink);
+    color: var(--chrome-yellow);
+    margin: 6px -18px -14px;
+    padding: 5px 10px;
+    text-align: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ═══════ L2 — MEGA LOTTERY BUMPER ═══════ */
+  .l2 {
+    background: var(--chrome-yellow);
+    color: var(--ink);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 8px 8px 0 var(--magenta), 0 22px 50px -10px rgba(0,0,0,0.6);
+    border: 4px solid var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .l2 .top {
+    background: var(--magenta);
+    color: var(--chrome-yellow);
+    padding: 12px 14px 10px;
+    text-align: center;
+    border-bottom: 5px dashed var(--ink);
+  }
+  .l2 .top .super { font-family: 'Bowlby One', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .l2 .top .name { font-family: 'Bungee Shade', sans-serif; font-size: 30px; line-height: 1; margin-top: 2px; text-transform: uppercase; }
+  .l2 .mid { padding: 12px 16px 10px; text-align: center; background: var(--chrome-yellow); position: relative; }
+  .l2 .mid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 8px 8px, var(--emerald) 2px, transparent 3px),
+      radial-gradient(circle at 24px 16px, var(--cobalt) 1.5px, transparent 2px);
+    background-size: 32px 24px;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .l2 .draw { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--magenta); position: relative; }
+  .l2 .clue { font-family: 'Bungee', sans-serif; font-size: 18px; line-height: 1; text-transform: uppercase; margin: 8px 0; color: var(--ink); position: relative; }
+  .l2 .stars { color: var(--emerald); font-size: 14px; letter-spacing: 0.4em; margin: 4px 0; position: relative; }
+  .l2 .number { background: var(--ink); color: var(--chrome-yellow); display: inline-block; padding: 4px 14px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 14px; letter-spacing: 0.1em; margin-top: 6px; position: relative; }
+  .l2 .bottom { background: var(--emerald); color: var(--cream); padding: 7px 12px; font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; border-top: 5px dashed var(--ink); }
+
+  /* ═══════ L3 — AUTO-RICKSHAW LOUD ═══════ */
+  .l3 {
+    background: var(--chrome-yellow);
+    color: var(--ink);
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 8px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--hot-pink);
+    overflow: hidden;
+  }
+  .l3 .stripe-top { height: 14px; background: repeating-linear-gradient(90deg, var(--ink) 0 12px, var(--chrome-yellow) 12px 24px, var(--hot-pink) 24px 36px, var(--chrome-yellow) 36px 48px); }
+  .l3 .horn-row { display: flex; align-items: stretch; }
+  .l3 .horn-row .horn-side {
+    background: var(--ink);
+    color: var(--chrome-yellow);
+    padding: 6px 8px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+  }
+  .l3 .horn-mid {
+    flex: 1;
+    text-align: center;
+    background: var(--hot-pink);
+    color: var(--cream);
+    padding: 6px 4px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .l3 .icons { text-align: center; font-size: 16px; padding: 6px 0; background: var(--chrome-yellow); color: var(--emerald); letter-spacing: 0.3em; }
+  .l3 .devnag {
+    background: var(--cobalt);
+    color: var(--chrome-yellow);
+    font-family: 'Yatra One', serif;
+    font-size: 22px;
+    text-align: center;
+    line-height: 1;
+    padding: 8px 10px 10px;
+  }
+  .l3 .clue {
+    flex: 1;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 22px;
+    line-height: 1.05;
+    text-align: center;
+    color: var(--ink);
+    padding: 14px 10px;
+    background: var(--chrome-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-1deg);
+  }
+  .l3 .stripe-bot { height: 14px; background: repeating-linear-gradient(90deg, var(--ink) 0 12px, var(--emerald) 12px 24px, var(--chrome-yellow) 24px 36px, var(--emerald) 36px 48px); }
+
+  /* ═══════ L4 — TROPICAL FROOTI ═══════ */
+  .l4 {
+    background: linear-gradient(180deg, var(--tropical-orange) 0%, #B83A12 100%);
+    color: var(--cream);
+    padding: 0;
+    overflow: hidden;
+    border: 5px solid var(--emerald);
+    box-shadow: 8px 8px 0 var(--magenta), 0 22px 50px -10px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+  }
+  .l4 .top-arc {
+    background: var(--emerald);
+    color: var(--chrome-yellow);
+    padding: 12px 14px 14px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  }
+  .l4 .top-arc .name {
+    font-family: 'Bungee Shade', sans-serif;
+    font-size: 30px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .l4 .top-arc .tag {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    margin-top: 4px;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+  .l4 .splash {
+    background: var(--magenta);
+    color: var(--chrome-yellow);
+    margin: 14px 16px 0;
+    padding: 10px 10px 8px;
+    text-align: center;
+    transform: rotate(-3deg);
+    border: 3px solid var(--chrome-yellow);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .l4 .splash .star { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .l4 .splash .pulp { font-family: 'Bungee', sans-serif; font-size: 22px; line-height: 1; text-transform: uppercase; }
+  .l4 .clue {
+    flex: 1;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    text-shadow: 2px 2px 0 var(--ink);
+  }
+  .l4 .meta { background: var(--chrome-yellow); color: var(--emerald-dark); padding: 7px 12px; font-family: 'Bungee', sans-serif; font-size: 9px; letter-spacing: 0.14em; text-align: center; text-transform: uppercase; }
+
+  /* ═══════ L5 — MEHNDI SANGEET ═══════ */
+  .l5 {
+    background: var(--hot-pink);
+    color: var(--cream);
+    padding: 18px 18px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 6px double var(--chrome-yellow);
+    box-shadow: 8px 8px 0 var(--emerald), 0 18px 40px -10px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .l5::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 2px solid var(--chrome-yellow);
+    pointer-events: none;
+  }
+  .l5 .corners {
+    position: absolute; top: 14px; left: 14px; right: 14px;
+    display: flex; justify-content: space-between;
+    color: var(--chrome-yellow);
+    font-size: 18px;
+  }
+  .l5 .inner { position: relative; z-index: 2; padding: 16px 8px 8px; text-align: center; flex: 1; display: flex; flex-direction: column; }
+  .l5 .pre { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--chrome-yellow); }
+  .l5 .om { color: var(--chrome-yellow); font-size: 16px; margin: 4px 0; }
+  .l5 .devnag { font-family: 'Tiro Devanagari Hindi', serif; font-size: 22px; color: var(--chrome-yellow); margin-bottom: 4px; line-height: 1; }
+  .l5 .request { font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; line-height: 1.4; color: var(--cream); }
+  .l5 .union { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 26px; line-height: 1; color: var(--chrome-yellow); margin: 8px 0; text-shadow: 2px 2px 0 var(--ink); }
+  .l5 .clue { font-family: 'Yeseva One', serif; font-size: 13px; line-height: 1.25; flex: 1; display: flex; align-items: center; justify-content: center; padding: 6px 0; color: var(--cream); }
+  .l5 .when { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--chrome-yellow); border-top: 1px solid var(--chrome-yellow); padding-top: 6px; }
+
+  /* ═══════ L6 — PAINTED HOARDING MAX ═══════ */
+  .l6 {
+    background: linear-gradient(180deg, var(--tomato) 0%, #8E1F0C 100%);
+    color: var(--chrome-yellow);
+    padding: 14px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 8px solid var(--chrome-yellow);
+    box-shadow: 8px 8px 0 var(--cobalt), 0 22px 44px -10px rgba(0,0,0,0.6);
+    overflow: hidden;
+    position: relative;
+  }
+  .l6::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(255,214,10,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .l6 .above { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; color: var(--cream); position: relative; }
+  .l6 .stars { text-align: center; color: var(--chrome-yellow); font-size: 14px; margin: 4px 0 6px; letter-spacing: 0.5em; position: relative; }
+  .l6 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 36px;
+    text-align: center;
+    color: var(--cream);
+    line-height: 1;
+    text-shadow: 3px 3px 0 var(--ink), 5px 5px 0 var(--emerald);
+    position: relative;
+  }
+  .l6 .english { font-family: 'Limelight', sans-serif; font-size: 14px; text-align: center; color: var(--chrome-yellow); letter-spacing: 0.04em; margin-top: 4px; text-transform: uppercase; position: relative; }
+  .l6 .clue { flex: 1; font-family: 'Yeseva One', serif; font-size: 18px; line-height: 1.05; text-align: center; color: var(--cream); padding: 10px 4px; display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 0 var(--ink); position: relative; }
+  .l6 .footer { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; color: var(--chrome-yellow); border-top: 2px solid var(--chrome-yellow); padding-top: 6px; position: relative; }
+
+  /* ═══════ L7 — BOLLYWOOD QUEEN AUTHENTIC ═══════ */
+  .l7 {
+    background: var(--cream);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 22px 50px -10px rgba(0,0,0,0.5);
+    border: 12px solid;
+    border-image: repeating-linear-gradient(45deg, var(--hot-pink) 0 10px, var(--cream) 10px 20px, var(--emerald) 20px 30px, var(--cream) 30px 40px) 12;
+    display: flex;
+    flex-direction: column;
+  }
+  .l7 .inner-frame {
+    background: var(--cream);
+    flex: 1;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--hot-pink);
+    margin: 4px;
+  }
+  .l7 .head {
+    font-family: 'Yatra One', serif;
+    font-size: 28px;
+    text-align: center;
+    color: var(--hot-pink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .l7 .sub-en {
+    font-family: 'Limelight', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: var(--emerald);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 4px;
+  }
+  .l7 .photo {
+    background: linear-gradient(135deg, var(--hot-pink), var(--magenta));
+    color: var(--chrome-yellow);
+    height: 80px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-align: center;
+    border: 2px solid var(--ink);
+  }
+  .l7 .clue {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--ink);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0;
+  }
+  .l7 .badge {
+    background: var(--emerald);
+    color: var(--chrome-yellow);
+    text-align: center;
+    padding: 4px 10px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    align-self: center;
+    transform: rotate(-2deg);
+    border: 1px solid var(--ink);
+  }
+  .l7 .meta {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--hot-pink);
+    text-align: center;
+    border-top: 1px solid var(--hot-pink);
+    padding-top: 4px;
+    margin-top: 6px;
+  }
+
+  /* ═══════ L8 — PAAN PACKET ═══════ */
+  .l8 {
+    background: var(--emerald);
+    color: var(--cream);
+    padding: 0;
+    overflow: hidden;
+    border: 5px solid var(--chrome-yellow);
+    box-shadow: 8px 8px 0 var(--hot-pink), 0 22px 50px -10px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .l8::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 24px, rgba(255,214,10,0.05) 24px 25px);
+    pointer-events: none;
+  }
+  .l8 .top {
+    background: var(--chrome-yellow);
+    color: var(--ink);
+    text-align: center;
+    padding: 10px 12px 8px;
+    border-bottom: 3px solid var(--ink);
+  }
+  .l8 .top .super { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot-pink); }
+  .l8 .top .name { font-family: 'Bungee Shade', sans-serif; font-size: 26px; line-height: 1; margin-top: 2px; text-transform: uppercase; color: var(--ink); }
+  .l8 .star-row { background: var(--hot-pink); color: var(--chrome-yellow); padding: 4px 10px; text-align: center; font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; border-bottom: 2px solid var(--ink); }
+  .l8 .clue {
+    flex: 1;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 14px 14px;
+    color: var(--chrome-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 2px 2px 0 var(--ink);
+    position: relative;
+  }
+  .l8 .seal {
+    background: var(--ink);
+    color: var(--chrome-yellow);
+    padding: 6px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+    border-top: 2px dashed var(--chrome-yellow);
+  }
+</style>
+
+<div class="loud-grid">
+
+  <!-- L1 — HOT MATRIMONIAL -->
+  <div class="loud-item">
+    <div class="loud-card l1" data-choice="l1" onclick="this.classList.toggle('selected')">
+      <div class="top">★ Sunday Times Matrimonial ★</div>
+      <div class="title">Wanted: A Suitable Guess</div>
+      <div class="photo-row">
+        <div class="photo">★</div>
+        <div class="body">
+          <strong>BOLLYWOOD</strong>, 2009, medium build, engineering background, brooding, looking for viewer who appreciates rooftop song sequences. <strong>Caste no bar.</strong>
+        </div>
+      </div>
+      <div class="footer">Box № 042 · Reply within</div>
+    </div>
+    <div class="loud-tag">L1 · Hot Matrimonial</div>
+    <div class="loud-sub">Hot pink + chrome yellow + emerald + ink. Same matrimonial concept but the page is on fire.</div>
+  </div>
+
+  <!-- L2 — MEGA LOTTERY -->
+  <div class="loud-item">
+    <div class="loud-card l2" data-choice="l2" onclick="this.classList.toggle('selected')">
+      <div class="top">
+        <div class="super">★ Filmi Lucky Draw ★</div>
+        <div class="name">BAD PLOTS</div>
+      </div>
+      <div class="mid">
+        <div class="draw">— Bumper Round —</div>
+        <div class="clue">Three engineers vs one professor</div>
+        <div class="stars">★ ★ ★</div>
+        <div class="number">№ 0042-BW</div>
+      </div>
+      <div class="bottom">Scratch to reveal answer</div>
+    </div>
+    <div class="loud-tag">L2 · Mega Lottery</div>
+    <div class="loud-sub">Magenta hood + chrome yellow body + emerald base + Bungee Shade chrome type. Indian state lottery on steroids.</div>
+  </div>
+
+  <!-- L3 — AUTO-RICKSHAW LOUD -->
+  <div class="loud-item">
+    <div class="loud-card l3" data-choice="l3" onclick="this.classList.toggle('selected')">
+      <div class="stripe-top"></div>
+      <div class="horn-row">
+        <div class="horn-side">★</div>
+        <div class="horn-mid">Horn OK Please</div>
+        <div class="horn-side">★</div>
+      </div>
+      <div class="icons">♥ ✿ ☆ ✿ ♥</div>
+      <div class="devnag">बॉलीवुड</div>
+      <div class="clue">"Three engineer life is not MCQ!"</div>
+      <div class="stripe-bot"></div>
+    </div>
+    <div class="loud-tag">L3 · Loud Auto-Rickshaw</div>
+    <div class="loud-sub">Yellow + ink + hot pink + emerald + cobalt. Painted side panel with stripe borders, Bungee horn, Permanent Marker clue.</div>
+  </div>
+
+  <!-- L4 — TROPICAL FROOTI -->
+  <div class="loud-item">
+    <div class="loud-card l4" data-choice="l4" onclick="this.classList.toggle('selected')">
+      <div class="top-arc">
+        <div class="name">PLOTSY</div>
+        <div class="tag">— filmi flavour —</div>
+      </div>
+      <div class="splash">
+        <div class="star">★ NEW ★</div>
+        <div class="pulp">100% PULP</div>
+      </div>
+      <div class="clue">"Three engineers learn life isn't MCQ"</div>
+      <div class="meta">Bollywood · 2009 · Medium · Tap →</div>
+    </div>
+    <div class="loud-tag">L4 · Tropical Frooti</div>
+    <div class="loud-sub">Tropical orange + emerald + magenta splash + chrome yellow. Bungee Shade chrome type. Like an actual Indian fruit drink box.</div>
+  </div>
+
+  <!-- L5 — MEHNDI SANGEET -->
+  <div class="loud-item">
+    <div class="loud-card l5" data-choice="l5" onclick="this.classList.toggle('selected')">
+      <div class="corners"><span>❀</span><span>❀</span></div>
+      <div class="inner">
+        <div class="pre">— with the blessings of —</div>
+        <div class="om">卐 · ॐ · 卐</div>
+        <div class="devnag">शुभ विवाह</div>
+        <div class="request">Mr &amp; Mrs Cinema cordially request your presence at the union of</div>
+        <div class="union">Bollywood<br>&amp; Tollywood</div>
+        <div class="clue">"Three engineers vs one professor"</div>
+        <div class="when">2009 · Medium · RSVP</div>
+      </div>
+    </div>
+    <div class="loud-tag">L5 · Mehndi Sangeet</div>
+    <div class="loud-sub">Hot pink ground, chrome yellow double rule, gold "union of Bollywood & Tollywood". Wedding card mehndi color clash.</div>
+  </div>
+
+  <!-- L6 — HOARDING MAX -->
+  <div class="loud-item">
+    <div class="loud-card l6" data-choice="l6" onclick="this.classList.toggle('selected')">
+      <div class="above">★ Now Showing ★ Sold Out ★</div>
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <div class="devnag">तीन इडियट</div>
+      <div class="english">Bollywood Cinema</div>
+      <div class="clue">"Three engineers learn life isn't MCQ"</div>
+      <div class="footer">★ A Filmi Spectacle ★ 2009 ★</div>
+    </div>
+    <div class="loud-tag">L6 · Painted Hoarding Max</div>
+    <div class="loud-sub">Tomato + chrome yellow border + cobalt drop shadow + emerald script shadow. The painted single-screen poster cranked.</div>
+  </div>
+
+  <!-- L7 — BOLLYWOOD QUEEN AUTHENTIC -->
+  <div class="loud-item">
+    <div class="loud-card l7" data-choice="l7" onclick="this.classList.toggle('selected')">
+      <div class="inner-frame">
+        <div class="head">बॉलीवुड क्वीन</div>
+        <div class="sub-en">Bollywood Queen</div>
+        <div class="photo">PORTRAIT<br>SLOT</div>
+        <div class="clue">"Three engineers vs one professor"</div>
+        <div class="badge">★ Filmfare Pick ★</div>
+        <div class="meta">2009 · Medium</div>
+      </div>
+    </div>
+    <div class="loud-tag">L7 · Bollywood Queen</div>
+    <div class="loud-sub">Pink/cream/green checker border (the actual mood board image), Devanagari title in hot pink, magenta photo slot, emerald badge.</div>
+  </div>
+
+  <!-- L8 — PAAN PACKET -->
+  <div class="loud-item">
+    <div class="loud-card l8" data-choice="l8" onclick="this.classList.toggle('selected')">
+      <div class="top">
+        <div class="super">★ Bombay Special ★</div>
+        <div class="name">PLOTS PAAN</div>
+      </div>
+      <div class="star-row">★ Filmi Flavour ★ Premium Plots ★</div>
+      <div class="clue">"Three engineers vs one professor"</div>
+      <div class="seal">042 · BW · MED · ESTD 2009</div>
+    </div>
+    <div class="loud-tag">L8 · Paan Packet</div>
+    <div class="loud-sub">Emerald base + chrome yellow border + hot pink ribbon + Bungee Shade chrome type. Vintage paan masala packet from a Mumbai shop.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Tell me which colors are doing it. If still drab, swing harder — I can push to neon magenta, chrome silver, electric blue, anything. Or tell me to pick the LOUDEST 3 and crank them another 30%.
+</p>

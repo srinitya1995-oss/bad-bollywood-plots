@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — Approach 1 (v2): The Tabletop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F4E8D0;
+    --ink: #141008;
+    --tomato: #C8321C;
+    --gold: #E9B23E;
+    --magenta: #D42A6A;
+    --indigo: #2E2F5B;
+    --olive: #7B8449;
+    --blue-pen: #1B3F8C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #f0e5cc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    border-radius: 44px;
+    background: var(--cream);
+    box-shadow: 0 40px 100px rgba(20,10,5,0.35), 0 0 0 8px #1a0f06, 0 0 0 10px #3a2410;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #1a0f06;
+    border-radius: 14px;
+    z-index: 30;
+  }
+  /* tabletop background — real illustration */
+  .tabletop-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .tabletop-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  /* semi-transparent darkening so hero card pops */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 55%, rgba(20,15,8,0) 0%, rgba(20,15,8,0) 45%, rgba(20,15,8,0.45) 100%);
+    pointer-events: none;
+  }
+  /* top status bar */
+  .topband {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 14px;
+    background: var(--tomato);
+    color: var(--cream);
+    border-top: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    z-index: 10;
+  }
+  .topband-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .topband-dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .topband-right {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+  }
+  /* HERO clipping */
+  .hero {
+    position: absolute;
+    top: 170px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2.5deg);
+    width: 300px;
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 8px 10px 0 var(--ink), 12px 14px 30px rgba(20,10,5,0.4);
+    z-index: 12;
+    padding: 0;
+  }
+  .hero-mast {
+    padding: 8px 12px 6px;
+    background: var(--tomato);
+    color: var(--cream);
+    border-bottom: 4px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .hero-mast-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+  .hero-mast-right {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+  .hero-photo {
+    height: 220px;
+    overflow: hidden;
+    border-bottom: 4px solid var(--ink);
+    position: relative;
+    background: #F28B28;
+  }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+  .hero-photo .band {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--indigo);
+    color: var(--cream);
+    padding: 4px 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    display: flex;
+    justify-content: space-between;
+    border-top: 3px solid var(--ink);
+  }
+  .hero-body {
+    padding: 10px 14px 12px;
+  }
+  .hero-kicker {
+    font-family: 'DM Sans';
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 4px;
+  }
+  .hero-plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.22;
+    color: var(--ink);
+  }
+  /* pen annotations */
+  .pen {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: var(--blue-pen);
+    line-height: 0.95;
+    z-index: 18;
+    pointer-events: none;
+    text-shadow: 0 0 1px rgba(27,63,140,0.3);
+  }
+  .pen-verdict {
+    top: 196px;
+    right: 6px;
+    transform: rotate(-8deg);
+    font-size: 28px;
+    max-width: 130px;
+    text-align: left;
+  }
+  .pen-circle {
+    position: absolute;
+    top: 162px;
+    right: 10px;
+    width: 150px;
+    height: 130px;
+    border: 3px solid var(--blue-pen);
+    border-radius: 50%;
+    transform: rotate(12deg);
+    opacity: 0.85;
+    z-index: 17;
+  }
+  .pen-arrow {
+    top: 320px;
+    left: 22px;
+    font-size: 32px;
+    transform: rotate(20deg);
+  }
+  /* peek clipping 1 */
+  .peek-1 {
+    position: absolute;
+    top: 100px;
+    left: -30px;
+    width: 120px;
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: rotate(-12deg);
+    z-index: 8;
+    padding: 4px;
+  }
+  .peek-1-mast {
+    font-family: 'Anton', sans-serif;
+    font-size: 12px;
+    color: var(--tomato);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .peek-1-photo {
+    width: 100%;
+    height: 80px;
+    background: var(--magenta);
+    margin-top: 2px;
+    overflow: hidden;
+  }
+  .peek-1-photo img { width: 100%; height: 100%; object-fit: cover; }
+  /* peek clipping 2 */
+  .peek-2 {
+    position: absolute;
+    top: 110px;
+    right: -40px;
+    width: 130px;
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    box-shadow: -4px 4px 0 var(--ink);
+    transform: rotate(9deg);
+    z-index: 7;
+    padding: 4px;
+  }
+  .peek-2-photo {
+    width: 100%;
+    height: 90px;
+    background: var(--olive);
+    overflow: hidden;
+  }
+  .peek-2-photo img { width: 100%; height: 100%; object-fit: cover; }
+  /* bottom tap */
+  .bottom-band {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 25;
+  }
+  .tap {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    box-shadow: 3px 3px 0 var(--gold);
+    border: 3px solid var(--gold);
+  }
+  /* a score marker */
+  .score {
+    position: absolute;
+    top: 116px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-6deg);
+    background: var(--gold);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 4px 10px;
+    font-family: 'Anton', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0 var(--ink);
+    z-index: 11;
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="tabletop-bg">
+      <img src="/inspiration/4134f8b2d1f0d1e89f4cd858c21a2388.jpg" alt="tabletop">
+    </div>
+    <div class="vignette"></div>
+
+    <div class="topband">
+      <span class="topband-title">SEEDHA PLOT</span>
+      <span class="topband-dev">सीधा प्लॉट</span>
+      <span class="topband-right">TURN 3 · 12 PTS</span>
+    </div>
+
+    <div class="peek-1">
+      <div class="peek-1-mast">FILMY</div>
+      <div class="peek-1-photo"><img src="/inspiration/03e303e1cf83df7e1f98f7aff235588e.jpg" alt=""></div>
+    </div>
+    <div class="peek-2">
+      <div class="peek-2-photo"><img src="/inspiration/54eff2434fbbe5fa48e62c77fcfd2a68.jpg" alt=""></div>
+    </div>
+
+    <div class="score">BOLLYWOOD · MEDIUM</div>
+
+    <div class="hero">
+      <div class="hero-mast">
+        <span class="hero-mast-title">Seedha Plot</span>
+        <span class="hero-mast-right">CARD ०२४</span>
+      </div>
+      <div class="hero-photo">
+        <img src="/inspiration/0286f0d45cf13b64d19d2052673cf4c0.jpg" alt="">
+        <div class="band">
+          <span>THE PLOT</span>
+          <span>GUESS THE FILM</span>
+        </div>
+      </div>
+      <div class="hero-body">
+        <div class="hero-kicker">AS TOLD BY KAVITA AUNTY</div>
+        <div class="hero-plot">A grieving dancer trains a blind girl to sing in a Greek villa. A chiffon saree is always flying.</div>
+      </div>
+    </div>
+
+    <div class="pen-circle"></div>
+    <div class="pen pen-verdict">arrey itna<br>SAD kyun<br>banaya??</div>
+    <div class="pen pen-arrow">↶</div>
+
+    <div class="bottom-band">
+      <span class="tap">TAP TO FLIP</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<h2>Four editorial flavors</h2>
+<p class="subtitle">All four live in the editorial universe you just validated — paper backgrounds, condensed display type, Devanagari script, ink + one accent. The differences are <strong>BG temperature</strong>, <strong>type personality</strong>, <strong>layout grammar</strong>, and <strong>cultural reference</strong>. Click the one closest to right; we'll polish from there.</p>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@700;900&family=Bowlby+One&family=Caveat+Brush&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Khand:wght@500;700&family=Limelight&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<style>
+  .flav-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+    margin-top: 28px;
+  }
+  .flav-wrap { display: flex; flex-direction: column; }
+  .flav-phone {
+    width: 320px;
+    height: 640px;
+    border-radius: 30px;
+    box-shadow:
+      0 0 0 7px #1a1a22,
+      0 0 0 8px #2a2a32,
+      0 30px 70px -18px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+  }
+  .flav-content {
+    position: relative;
+    z-index: 2;
+    padding: 36px 26px 26px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .flav-label {
+    text-align: center;
+    margin-top: 14px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.62);
+  }
+  .flav-sublabel {
+    text-align: center;
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    max-width: 280px;
+  }
+
+  /* Universal helpers */
+  .meta-rule {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 0;
+  }
+
+  /* ─────────────────────────────────────── */
+  /* FLAVOR 1 — TABLOID PRESS                */
+  /* yellow newsprint, halftone, red ink     */
+  /* ─────────────────────────────────────── */
+  .flav-tabloid {
+    background: #F4E89A;
+  }
+  .flav-tabloid::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(180,80,30,0.18) 0.8px, transparent 1px);
+    background-size: 4px 4px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .flav-tabloid .flav-content { color: #2A0808; font-family: 'Khand', sans-serif; }
+  .flav-tabloid .meta-rule { color: #C8201A; border-top: 3px double #C8201A; border-bottom: 3px double #C8201A; padding: 5px 0; }
+  .flav-tabloid .scream {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 70px;
+    line-height: 0.82;
+    text-align: center;
+    margin: 18px 0 0;
+    color: #C8201A;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .flav-tabloid .scream .second { color: #2A0808; display: block; transform: rotate(-2deg); }
+  .flav-tabloid .star {
+    text-align: center;
+    margin: 10px 0;
+    font-family: 'Yatra One', serif;
+    font-size: 16px;
+    color: #C8201A;
+    transform: rotate(-3deg);
+    display: block;
+  }
+  .flav-tabloid .pull {
+    background: #2A0808;
+    color: #F4E89A;
+    padding: 8px 12px;
+    text-align: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 8px -8px;
+    transform: rotate(-1deg);
+  }
+  .flav-tabloid .cards-area {
+    flex: 1; display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .flav-tabloid .mini-card {
+    position: absolute; width: 130px; height: 165px;
+    background: white; border: 2px solid #2A0808;
+    box-shadow: 5px 5px 0 #C8201A;
+    padding: 12px 10px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    line-height: 1.05;
+    color: #2A0808;
+    text-transform: uppercase;
+  }
+  .flav-tabloid .mini-card.bw { transform: rotate(-6deg) translate(-25px, 0); }
+  .flav-tabloid .mini-card.tw { transform: rotate(5deg) translate(28px, 12px); background: #C8201A; color: #F4E89A; box-shadow: 5px 5px 0 #2A0808; }
+  .flav-tabloid .mini-card .lbl { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.14em; opacity: 0.7; margin-bottom: 6px; }
+  .flav-tabloid .btn {
+    margin-top: auto;
+    background: #C8201A; color: #F4E89A; border: 3px solid #2A0808;
+    padding: 14px 24px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-shadow: 6px 6px 0 #2A0808;
+    cursor: pointer;
+    align-self: center;
+    transform: rotate(-2deg);
+  }
+
+  /* ─────────────────────────────────────── */
+  /* FLAVOR 2 — SEPIA PROGRAMME              */
+  /* dark sepia + ivory + gold leaf, theatre */
+  /* ─────────────────────────────────────── */
+  .flav-sepia {
+    background: #1F1208;
+  }
+  .flav-sepia::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(184,134,42,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.4) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .flav-sepia .flav-content { color: #E8D8B5; }
+  .flav-sepia .meta-rule { color: #B8862A; border-top: 1px solid #B8862A; border-bottom: 1px solid #B8862A; }
+  .flav-sepia .programme-label {
+    text-align: center; margin: 22px 0 4px;
+    font-family: 'Yatra One', serif;
+    font-size: 13px;
+    color: #B8862A;
+    letter-spacing: 0.04em;
+  }
+  .flav-sepia .word {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 78px;
+    line-height: 0.85;
+    text-align: center;
+    margin: 0;
+    color: #E8D8B5;
+  }
+  .flav-sepia .word .accent { color: #B8862A; }
+  .flav-sepia .by {
+    text-align: center;
+    margin: 14px 18px 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: rgba(232,216,181,0.65);
+    line-height: 1.4;
+  }
+  .flav-sepia .stars { text-align: center; color: #B8862A; margin: 14px 0; letter-spacing: 0.6em; font-size: 10px; }
+  .flav-sepia .cards-area { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+  .flav-sepia .mini-card {
+    position: absolute; width: 130px; height: 175px;
+    background: #E8D8B5;
+    color: #1F1208;
+    border: 1px solid #B8862A;
+    padding: 14px 10px 10px;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.6);
+    font-family: 'Fraunces', serif;
+  }
+  .flav-sepia .mini-card.bw { transform: rotate(-5deg) translate(-26px, 0); }
+  .flav-sepia .mini-card.tw { transform: rotate(4deg) translate(28px, 14px); background: #1F1208; color: #E8D8B5; border: 1px solid #B8862A; }
+  .flav-sepia .mini-card .lbl { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.8; border-bottom: 1px solid currentColor; padding-bottom: 4px; margin-bottom: 8px; }
+  .flav-sepia .mini-card .clue { font-style: italic; font-size: 11px; line-height: 1.25; }
+  .flav-sepia .btn {
+    margin-top: auto; align-self: center;
+    background: transparent;
+    color: #B8862A;
+    border: 1px solid #B8862A;
+    padding: 14px 32px;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+
+  /* ─────────────────────────────────────── */
+  /* FLAVOR 3 — STICKER BOMB COLLAGE         */
+  /* cream + cutouts + dashed + arrows + rose*/
+  /* ─────────────────────────────────────── */
+  .flav-sticker { background: #F0E6CC; }
+  .flav-sticker .flav-content { color: #1A0F08; }
+  .flav-sticker .meta-rule { color: #1A0F08; border-bottom: 2px dashed #D81E5B; padding-bottom: 8px; }
+  .flav-sticker .pin {
+    margin: 18px 0 6px; text-align: left;
+    font-family: 'Caveat Brush', cursive;
+    font-size: 22px; color: #D81E5B;
+    transform: rotate(-3deg);
+  }
+  .flav-sticker .word {
+    font-family: 'Anton', sans-serif;
+    font-size: 76px;
+    line-height: 0.82;
+    margin: 0;
+    color: #1A0F08;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .flav-sticker .word .first { display: block; }
+  .flav-sticker .word .second { display: block; color: #D81E5B; transform: translateX(20px); }
+  .flav-sticker .arrow {
+    font-family: 'Caveat Brush', cursive;
+    font-size: 14px;
+    color: #1A0F08;
+    margin-top: 8px;
+    transform: rotate(-2deg);
+  }
+  .flav-sticker .badge {
+    display: inline-block;
+    background: #FFE15A;
+    border: 1.5px solid #1A0F08;
+    padding: 4px 10px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transform: rotate(2deg);
+    margin-top: 6px;
+  }
+  .flav-sticker .cards-area { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+  .flav-sticker .sticker-card {
+    position: absolute;
+    width: 145px; height: 175px;
+    border: 2px dashed #1A0F08;
+    background: #FFFCEE;
+    padding: 12px 10px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.2;
+    color: #1A0F08;
+  }
+  .flav-sticker .sticker-card.bw { transform: rotate(-6deg) translate(-30px, -8px); background: #1A0F08; color: #F0E6CC; border: 2px dashed #D81E5B; }
+  .flav-sticker .sticker-card.tw { transform: rotate(4deg) translate(28px, 14px); background: #D81E5B; color: #FFFCEE; border: 2px dashed #FFE15A; }
+  .flav-sticker .sticker-card .lbl { font-weight: 700; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; margin-bottom: 6px; border-bottom: 1px dashed currentColor; padding-bottom: 4px; }
+  .flav-sticker .btn {
+    margin-top: auto; align-self: center;
+    background: #FFE15A; color: #1A0F08;
+    border: 2px solid #1A0F08;
+    padding: 12px 28px;
+    font-family: 'Caveat Brush', cursive;
+    font-size: 22px;
+    transform: rotate(-2deg);
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #D81E5B;
+  }
+
+  /* ─────────────────────────────────────── */
+  /* FLAVOR 4 — HAND-PAINTED HOARDING        */
+  /* terracotta + brush type + sienna + cream*/
+  /* ─────────────────────────────────────── */
+  .flav-hoarding { background: #B83A1F; }
+  .flav-hoarding::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,210,140,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(0,0,0,0.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .flav-hoarding .flav-content { color: #F4E0B8; }
+  .flav-hoarding .meta-rule { color: #F4E0B8; border-top: 2px solid #F4E0B8; border-bottom: 2px solid #F4E0B8; opacity: 0.85; }
+  .flav-hoarding .devnag {
+    text-align: center;
+    margin: 22px 0 0;
+    font-family: 'Yatra One', serif;
+    font-size: 22px;
+    color: #FFD27A;
+  }
+  .flav-hoarding .word {
+    font-family: 'Yeseva One', serif;
+    font-size: 64px;
+    line-height: 0.92;
+    text-align: center;
+    margin: 6px 0 0;
+    color: #F4E0B8;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .flav-hoarding .word .accent { color: #FFD27A; font-style: italic; display: block; }
+  .flav-hoarding .by {
+    text-align: center;
+    margin: 12px 16px 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: rgba(244,224,184,0.75);
+    line-height: 1.4;
+  }
+  .flav-hoarding .cards-area { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+  .flav-hoarding .mini-card {
+    position: absolute;
+    width: 130px; height: 170px;
+    background: #F4E0B8;
+    color: #2A0F04;
+    padding: 12px 10px 10px;
+    border: 6px double #2A0F04;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.5);
+    font-family: 'Yeseva One', serif;
+  }
+  .flav-hoarding .mini-card.bw { transform: rotate(-6deg) translate(-26px, 0); }
+  .flav-hoarding .mini-card.tw { transform: rotate(5deg) translate(28px, 14px); background: #2A0F04; color: #F4E0B8; border-color: #FFD27A; }
+  .flav-hoarding .mini-card .lbl { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; margin-bottom: 8px; }
+  .flav-hoarding .mini-card .clue { font-size: 12px; line-height: 1.2; font-style: italic; }
+  .flav-hoarding .btn {
+    margin-top: auto; align-self: center;
+    background: #FFD27A; color: #2A0F04;
+    border: 3px solid #2A0F04;
+    padding: 14px 30px;
+    font-family: 'Yeseva One', serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 #2A0F04;
+  }
+</style>
+
+<div class="cards" data-multiselect>
+
+  <!-- FLAVOR 1 — TABLOID PRESS -->
+  <div class="card" data-choice="tabloid" onclick="toggleSelect(this)" style="background:transparent;border:none;padding:0">
+    <div class="flav-wrap">
+      <div class="flav-phone flav-tabloid">
+        <div class="flav-content">
+          <div class="meta-rule"><span>Vol. 1</span><span>Filmi Stardust</span><span>Issue 1</span></div>
+          <h1 class="scream">BAD<span class="second">PLOTS!</span></h1>
+          <span class="star">★ official film magazine ★</span>
+          <div class="pull">12 plots. 4 friends. 1 winner.</div>
+          <div class="cards-area">
+            <div class="mini-card bw">
+              <div class="lbl">Bollywood</div>
+              Three idiots learn life isn't multiple choice
+            </div>
+            <div class="mini-card tw">
+              <div class="lbl">Tollywood</div>
+              NRI returns home, falls for the bus girl
+            </div>
+          </div>
+          <button class="btn">Deal Me In!</button>
+        </div>
+      </div>
+      <div class="flav-label">A · Tabloid Press</div>
+      <div class="flav-sublabel">1970s Filmi Stardust scandal sheet. Yellow newsprint, halftone dots, red ink, hand-set headline blocks. Loud and trashy in the best way.</div>
+    </div>
+  </div>
+
+  <!-- FLAVOR 2 — SEPIA PROGRAMME -->
+  <div class="card" data-choice="sepia" onclick="toggleSelect(this)" style="background:transparent;border:none;padding:0">
+    <div class="flav-wrap">
+      <div class="flav-phone flav-sepia">
+        <div class="flav-content">
+          <div class="meta-rule"><span>Anthology</span><span>—</span><span>Vol. I</span></div>
+          <p class="programme-label">— बैड प्लॉट्स —</p>
+          <h1 class="word">Bad<span class="accent">Plots</span></h1>
+          <p class="by">An anthology of terrible movie descriptions, played at chai gatherings &amp; Diwali parties</p>
+          <div class="stars">★ ★ ★</div>
+          <div class="cards-area">
+            <div class="mini-card bw">
+              <div class="lbl">Bollywood · 2009</div>
+              <div class="clue">Three engineers learn life isn't multiple choice</div>
+            </div>
+            <div class="mini-card tw">
+              <div class="lbl">Tollywood · 2003</div>
+              <div class="clue">NRI returns. Bus girl. Father objects loudly.</div>
+            </div>
+          </div>
+          <button class="btn">Begin the Show</button>
+        </div>
+      </div>
+      <div class="flav-label">B · Sepia Programme</div>
+      <div class="flav-sublabel">NEELAMBARI editorial energy. Dark sepia stage with ivory cards and gold leaf. Theatre pamphlet for a single-screen cinema. Sophisticated and grown.</div>
+    </div>
+  </div>
+
+  <!-- FLAVOR 3 — STICKER BOMB COLLAGE -->
+  <div class="card" data-choice="sticker" onclick="toggleSelect(this)" style="background:transparent;border:none;padding:0">
+    <div class="flav-wrap">
+      <div class="flav-phone flav-sticker">
+        <div class="flav-content">
+          <div class="meta-rule"><span>Issue · 01</span><span>अंक १</span><span>2-8 friends</span></div>
+          <p class="pin">guess the movie ✦</p>
+          <h1 class="word">
+            <span class="first">BAD</span>
+            <span class="second">PLOTS</span>
+          </h1>
+          <p class="arrow">↑ literally the worst</p>
+          <span class="badge">★ Now playing</span>
+          <div class="cards-area">
+            <div class="sticker-card bw">
+              <div class="lbl">Bollywood</div>
+              Three engineers learn life is not a multiple choice question
+            </div>
+            <div class="sticker-card tw">
+              <div class="lbl">Tollywood</div>
+              NRI returns. Falls for bus girl. Dad disagrees.
+            </div>
+          </div>
+          <button class="btn">deal me in →</button>
+        </div>
+      </div>
+      <div class="flav-label">C · Sticker Bomb</div>
+      <div class="flav-sublabel">"I HUNT MISOGYNY" cutout-collage energy. Dashed borders, brush-script call-outs, mixed type, hand-drawn arrows. Punk zine made on a copier.</div>
+    </div>
+  </div>
+
+  <!-- FLAVOR 4 — HAND-PAINTED HOARDING -->
+  <div class="card" data-choice="hoarding" onclick="toggleSelect(this)" style="background:transparent;border:none;padding:0">
+    <div class="flav-wrap">
+      <div class="flav-phone flav-hoarding">
+        <div class="flav-content">
+          <div class="meta-rule"><span>Vol. I</span><span>—</span><span>Anthology</span></div>
+          <p class="devnag">बैड प्लॉट्स</p>
+          <h1 class="word">Bad<span class="accent">Plots</span></h1>
+          <p class="by">An anthology of terrible movie descriptions, hand-painted at the chai stall</p>
+          <div class="cards-area">
+            <div class="mini-card bw">
+              <div class="lbl">Bollywood</div>
+              <div class="clue">Three engineers, one professor, infinite suffering</div>
+            </div>
+            <div class="mini-card tw">
+              <div class="lbl">Tollywood</div>
+              <div class="clue">NRI returns. Falls for bus girl.</div>
+            </div>
+          </div>
+          <button class="btn">Deal Me In</button>
+        </div>
+      </div>
+      <div class="flav-label">D · Hand-Painted Hoarding</div>
+      <div class="flav-sublabel">1970s painted film hoarding. Terracotta wall, double-rule borders, classical Yeseva One serifs. Sakhi Saheli portrait energy meets street poster.</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:32px;text-align:center;">
+Click one or more — multi-select is on. Tell me which feels right and we'll push it to full game + results screens.
+</p>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — Approach 2 (v2): The Cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700;800&family=Caveat:wght@600;700&family=Noto+Serif+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F4E8D0;
+    --cream-dim: #E8D9B5;
+    --ink: #141008;
+    --tomato: #C8321C;
+    --tomato-deep: #8A1F0E;
+    --gold: #E9B23E;
+    --magenta: #D42A6A;
+    --indigo: #2E2F5B;
+    --olive: #7B8449;
+    --teal: #3F7F7A;
+    --blue-pen: #1B3F8C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #f0e5cc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    color: var(--ink);
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    border-radius: 44px;
+    background: var(--cream);
+    box-shadow: 0 40px 100px rgba(20,10,5,0.35), 0 0 0 8px #1a0f06, 0 0 0 10px #3a2410;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #1a0f06;
+    border-radius: 14px;
+    z-index: 20;
+  }
+  .cover {
+    position: absolute;
+    inset: 0;
+    padding: 44px 0 0;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+  }
+  /* top bar */
+  .topbar {
+    padding: 8px 16px 6px;
+    background: var(--tomato);
+    color: var(--cream);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--ink);
+  }
+  .topbar-left {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+  }
+  .topbar-dev {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 16px;
+    font-weight: 900;
+  }
+  .topbar-right {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.9;
+  }
+  /* masthead */
+  .masthead-wrap {
+    padding: 14px 18px 10px;
+    background: var(--cream);
+    border-bottom: 4px solid var(--ink);
+    position: relative;
+  }
+  .masthead {
+    font-family: 'Anton', 'Bebas Neue', sans-serif;
+    font-size: 84px;
+    line-height: 0.82;
+    letter-spacing: -0.015em;
+    color: var(--tomato);
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0 var(--ink);
+  }
+  .masthead-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .masthead-row .issue {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3px 8px;
+  }
+  /* star photo area */
+  .star {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid var(--ink);
+    background: #F28B28; /* fallback orange from image */
+  }
+  .star img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+  /* magenta sidebar blurbs */
+  .blurb {
+    position: absolute;
+    background: var(--magenta);
+    color: var(--cream);
+    padding: 8px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.15;
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .blurb-1 {
+    top: 24px;
+    left: 14px;
+    max-width: 140px;
+    transform: rotate(-3deg);
+  }
+  .blurb-1 strong {
+    display: block;
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    color: var(--gold);
+    line-height: 0.95;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  .blurb-2 {
+    bottom: 140px;
+    left: 14px;
+    background: var(--gold);
+    color: var(--ink);
+    max-width: 130px;
+    transform: rotate(2deg);
+  }
+  /* kicker strip */
+  .kicker-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 118px;
+    background: var(--indigo);
+    color: var(--cream);
+    padding: 6px 14px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    display: flex;
+    justify-content: space-between;
+    border-top: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+  }
+  /* headline */
+  .headline-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--cream);
+    padding: 12px 16px 14px;
+    border-top: 2px solid var(--ink);
+  }
+  .headline-kicker {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 4px;
+  }
+  .headline {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  /* blue pen scrawl */
+  .scrawl {
+    position: absolute;
+    top: 132px;
+    right: 8px;
+    transform: rotate(-7deg);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--blue-pen);
+    line-height: 0.95;
+    max-width: 150px;
+    text-align: left;
+    z-index: 5;
+    text-shadow: 0 0 1px rgba(27,63,140,0.3);
+  }
+  .scrawl::after {
+    content: '';
+    position: absolute;
+    top: -72px;
+    left: -14px;
+    width: 160px;
+    height: 140px;
+    border: 3px solid var(--blue-pen);
+    border-radius: 50%;
+    transform: rotate(14deg);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  /* flip tab */
+  .flip-tab {
+    position: absolute;
+    bottom: 18px;
+    right: 16px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    z-index: 15;
+    box-shadow: 3px 3px 0 var(--gold);
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="cover">
+      <div class="topbar">
+        <span class="topbar-left">THE BAD PLOTS ANNUAL <span class="topbar-dev">अंक ०१</span></span>
+        <span class="topbar-right">APR 2026 · ₹ 30</span>
+      </div>
+      <div class="masthead-wrap">
+        <div class="masthead">Seedha<br>Plot</div>
+        <div class="masthead-row">
+          <span>WRITTEN BY KAVITA AUNTY</span>
+          <span class="issue">CARD ०२४</span>
+        </div>
+      </div>
+      <div class="star">
+        <img src="/inspiration/0286f0d45cf13b64d19d2052673cf4c0.jpg" alt="cover art">
+        <div class="blurb blurb-1"><strong>GUESS THE</strong>FILM FROM THE BAD PLOT</div>
+        <div class="blurb blurb-2">BOLLYWOOD · MEDIUM · 2 PTS</div>
+        <div class="scrawl">arrey aunty<br>ki chai toh<br>thandi ho gayi!</div>
+        <div class="kicker-strip">
+          <span>THE PLOT</span>
+          <span>◂ TAP TO FLIP</span>
+        </div>
+      </div>
+      <div class="headline-wrap">
+        <div class="headline-kicker">AS TOLD BY KAVITA AUNTY</div>
+        <div class="headline">A grieving dancer trains a blind girl to sing in a Greek villa while his mother disapproves. Chiffon saree always flying.</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

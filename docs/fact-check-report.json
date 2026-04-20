@@ -1,0 +1,639 @@
+{
+  "summary": {
+    "total": 30,
+    "pass": 15,
+    "review": 3,
+    "fail": 12,
+    "error": 0
+  },
+  "results": [
+    {
+      "id": "bw01",
+      "movie": "Dilwale Dulhania Le Jayenge",
+      "clue": "Boy meets girl. Father says no. They go to Europe anyway. Entire Punjab gives permission eventually.",
+      "claims": [
+        {
+          "text": "Boy meets girl.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Father says no.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "They go to Europe anyway.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Entire Punjab gives permission eventually.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw02",
+      "movie": "Kabhi Khushi Kabhie Gham",
+      "clue": "Eldest son marries a poor girl. Family is devastated. They fly to London to express this devastation at length.",
+      "claims": [
+        {
+          "text": "Eldest son marries a poor girl.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Family is devastated.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "They fly to London to express this devastation at length.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw03",
+      "movie": "Kal Ho Na Ho",
+      "clue": "Best friend is in love with your wife. He is also dying. He decides to help arrange the wedding anyway.",
+      "claims": [
+        {
+          "text": "Best friend is in love with your wife.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "He is also dying.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "He decides to help arrange the wedding anyway.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw04",
+      "movie": "Chachi 420",
+      "clue": "Man disguises as a woman to be his own child's nanny. Sari. Discovery. Redemption. More sari.",
+      "claims": [
+        {
+          "text": "Man disguises as a woman to be his own child's nanny.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Sari.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Discovery.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Redemption.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "More sari.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw05",
+      "movie": "Lagaan",
+      "clue": "Village challenges the British Empire to a cricket match to avoid paying taxes. They win. Obviously.",
+      "claims": [
+        {
+          "text": "Village challenges the British Empire to a cricket match to avoid paying taxes.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "They win.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Obviously.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw06",
+      "movie": "Swades",
+      "clue": "NASA engineer returns to his village. Is horrified. Fixes the water supply. Stays. NASA says nothing.",
+      "claims": [
+        {
+          "text": "NASA engineer returns to his village.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Is horrified.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Fixes the water supply.",
+          "verdict": "PARTIAL"
+        },
+        {
+          "text": "Stays.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "NASA says nothing.",
+          "verdict": "PARTIAL"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw07",
+      "movie": "Chak De! India",
+      "clue": "Women's hockey team hates their coach. Coach has a secret. They win the World Cup. Everyone cries.",
+      "claims": [
+        {
+          "text": "Women's hockey team hates their coach.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Coach has a secret.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "They win the World Cup.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Everyone cries.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw08",
+      "movie": "Hum Aapke Hain Koun",
+      "clue": "An entire family attends two weddings across four hours. A dog has a pivotal role in the resolution.",
+      "claims": [
+        {
+          "text": "An entire family attends two weddings across four hours.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "A dog has a pivotal role in the resolution.",
+          "verdict": "PARTIAL"
+        }
+      ],
+      "overall": "REVIEW"
+    },
+    {
+      "id": "bw09",
+      "movie": "Chennai Express",
+      "clue": "Man boards a train to scatter his grandfather's ashes. Accidentally ends up in a Tamil gangster's village. Accidentally gets engaged.",
+      "claims": [
+        {
+          "text": "Man boards a train to scatter his grandfather's ashes.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Accidentally ends up in a Tamil gangster's village.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Accidentally gets engaged.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw10",
+      "movie": "3 Idiots",
+      "clue": "Three college idiots. One is secretly a genius. This is discovered ten years later at a goat farm.",
+      "claims": [
+        {
+          "text": "Three college idiots.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "One is secretly a genius.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "This is discovered ten years later at a goat farm.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw11",
+      "movie": "Bajrangi Bhaijaan",
+      "clue": "Extremely honest man tries to return a lost child across a border that does not want to be crossed. Becomes a Pakistani celebrity by accident.",
+      "claims": [
+        {
+          "text": "Extremely honest man tries to return a lost child across a border that does not want to be crossed.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Becomes a Pakistani celebrity by accident.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw12",
+      "movie": "Kuch Kuch Hota Hai",
+      "clue": "Man realises he loved his best friend only after she married someone else. His daughter tries to fix this. She is eight.",
+      "claims": [
+        {
+          "text": "Man realises he loved his best friend only after she married someone else.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "His daughter tries to fix this.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "She is eight.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw13",
+      "movie": "Dil Chahta Hai",
+      "clue": "Three friends graduate and immediately stop agreeing on anything. One falls for a divorcee twice his age. The others are very judgy about this.",
+      "claims": [
+        {
+          "text": "Three friends graduate",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "immediately stop agreeing on anything.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "One falls for a divorcee twice his age.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "The others are very judgy about this.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw14",
+      "movie": "Sholay",
+      "clue": "Handicapped man hires two petty criminals to avenge his entire family. The criminals are not prepared for this job.",
+      "claims": [
+        {
+          "text": "Handicapped man hires two petty criminals to avenge his entire family.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "The criminals are not prepared for this job.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw15",
+      "movie": "Munna Bhai MBBS",
+      "clue": "Gangster pretends to be a doctor to impress his parents. Accidentally becomes a better doctor than the actual doctors.",
+      "claims": [
+        {
+          "text": "Gangster pretends to be a doctor to impress his parents.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Accidentally becomes a better doctor than the actual doctors.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw16",
+      "movie": "Rang De Basanti",
+      "clue": "Group of friends make a documentary about freedom fighters and slowly become them. The government does not appreciate this.",
+      "claims": [
+        {
+          "text": "Group of friends make a documentary about freedom fighters",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "slowly become them.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "The government does not appreciate this.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw17",
+      "movie": "Taare Zameen Par",
+      "clue": "Eight-year-old is sent to boarding school for being difficult. New teacher is the only adult who notices he is struggling. Parents needed a moment.",
+      "claims": [
+        {
+          "text": "Eight-year-old is sent to boarding school for being difficult.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "New teacher is the only adult who notices he is struggling.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Parents needed a moment.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw18",
+      "movie": "Queen",
+      "clue": "Woman gets dumped before her honeymoon. Goes on the honeymoon alone. Returns a completely different person. Ex-fiancé notices.",
+      "claims": [
+        {
+          "text": "Woman gets dumped before her honeymoon.",
+          "verdict": "PARTIAL"
+        },
+        {
+          "text": "Goes on the honeymoon alone.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Returns a completely different person.",
+          "verdict": "PARTIAL"
+        },
+        {
+          "text": "Ex-fiancé notices.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw19",
+      "movie": "PK",
+      "clue": "Alien loses his remote control in Rajasthan. Spends the film asking questions about religion that nobody wants to answer.",
+      "claims": [
+        {
+          "text": "Alien loses his remote control in Rajasthan.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Spends the film asking questions about religion that nobody wants to answer.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw20",
+      "movie": "Zindagi Na Milegi Dobara",
+      "clue": "Three friends on a road trip across Spain. Two of them love the same woman. Everyone learns something. Mostly about themselves.",
+      "claims": [
+        {
+          "text": "Three friends on a road trip across Spain.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Two of them love the same woman.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Everyone learns something.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Mostly about themselves.",
+          "verdict": "PARTIAL"
+        }
+      ],
+      "overall": "REVIEW"
+    },
+    {
+      "id": "bw21",
+      "movie": "Kabhi Alvida Naa Kehna",
+      "clue": "Two unhappily married people fall in love. Both spouses find out. Karan Johar explores consequences for once.",
+      "claims": [
+        {
+          "text": "Two unhappily married people fall in love.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Both spouses find out.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Karan Johar explores consequences for once.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw22",
+      "movie": "Jab We Met",
+      "clue": "Man tries to get off a train. Woman won't let him. Not because she cares — she just won't stop talking.",
+      "claims": [
+        {
+          "text": "Man tries to get off a train.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Woman won't let him.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Not because she cares — she just won't stop talking.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw23",
+      "movie": "Andaz Apna Apna",
+      "clue": "Two broke men both try to marry the same heiress. Neither has a plan. Both plans fail constantly.",
+      "claims": [
+        {
+          "text": "Two broke men both try to marry the same heiress.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Neither has a plan.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Both plans fail constantly.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw24",
+      "movie": "Hera Pheri",
+      "clue": "Three failures receive a wrong number call about a kidnapping ransom. Decide to keep the money. This goes poorly.",
+      "claims": [
+        {
+          "text": "Three failures receive a wrong number call about a kidnapping ransom.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Decide to keep the money.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "This goes poorly.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw25",
+      "movie": "Dangal",
+      "clue": "Father forces daughters to wrestle. Daughters are furious. They win Olympic gold. Father was right apparently.",
+      "claims": [
+        {
+          "text": "Father forces daughters to wrestle.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Daughters are furious.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "They win Olympic gold.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "Father was right apparently.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw26",
+      "movie": "Dil Se",
+      "clue": "Journalist falls for a woman who is about to blow something up. He knows this. He escalates anyway.",
+      "claims": [
+        {
+          "text": "Journalist falls for a woman who is about to blow something up.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "He knows this.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "He escalates anyway.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw27",
+      "movie": "Om Shanti Om",
+      "clue": "Nobody man dies. Comes back with better cheekbones and a film career. Uses both to settle a score.",
+      "claims": [
+        {
+          "text": "Nobody man dies.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Comes back with better cheekbones",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "a film career.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Uses both to settle a score.",
+          "verdict": "VERIFIED"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "id": "bw28",
+      "movie": "Stree",
+      "clue": "Men in a small town are vanishing during the festival. They write a polite note on their doors asking her to come back tomorrow.",
+      "claims": [
+        {
+          "text": "Men in a small town are vanishing during the festival.",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "They write a polite note on their doors asking her to come back tomorrow.",
+          "verdict": "VAGUE_NO_SOURCE"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw29",
+      "movie": "Jaane Tu Ya Jaane Na",
+      "clue": "Boy and girl are just friends. Insist on this for two hours. Nobody believes them. They eventually stop believing themselves.",
+      "claims": [
+        {
+          "text": "Boy",
+          "verdict": "VAGUE_NO_SOURCE"
+        },
+        {
+          "text": "girl are just friends.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Insist on this for two hours.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Nobody believes them.",
+          "verdict": "PARTIAL"
+        },
+        {
+          "text": "They eventually stop believing themselves.",
+          "verdict": "PARTIAL"
+        }
+      ],
+      "overall": "FAIL — vague / no specificity"
+    },
+    {
+      "id": "bw30",
+      "movie": "Bhool Bhulaiyaa",
+      "clue": "Family moves into a haunted mansion. Calls a psychiatrist instead of a priest. Psychiatrist makes things significantly worse.",
+      "claims": [
+        {
+          "text": "Family moves into a haunted mansion.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Calls a psychiatrist instead of a priest.",
+          "verdict": "VERIFIED"
+        },
+        {
+          "text": "Psychiatrist makes things significantly worse.",
+          "verdict": "PARTIAL"
+        }
+      ],
+      "overall": "REVIEW"
+    }
+  ]
+}

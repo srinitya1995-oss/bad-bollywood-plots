@@ -1,2 +1,8 @@
 node_modules/
+dist/
 .env
+.superpowers/
+.DS_Store
+.session-log.md
+screenshots/qa/
+vite.config.ts.timestamp-*

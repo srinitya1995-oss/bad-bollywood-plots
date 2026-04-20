@@ -1,0 +1,411 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. VI · FRONT &amp; BACK</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक ६</span>
+    <span>SETUP → PUNCHLINE</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Card lab — both faces</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:700px;">
+    Four card systems. Each shown as a pair: <strong>front</strong> (the terrible plot — setup) and <strong>back</strong> (the reveal — movie name, year, fun fact — the punchline). The card's whole job is to land that joke. Click the system that lands it best.
+  </p>
+</div>
+
+<style>
+  .pair-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 40px;
+    align-items: center;
+  }
+  .pair-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 18px 22px;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .pair-row:hover { background: rgba(255,255,255,0.03); }
+  .pair-row.selected { border-color: #FFD60A; background: rgba(255,214,10,0.06); }
+  .pair-cards {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+  }
+  .pair-arrow {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    color: rgba(255,255,255,0.35);
+    transform: translateY(-4px);
+  }
+  .pair-label {
+    margin-top: 18px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+  }
+  .pair-sub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    max-width: 660px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .face {
+    width: 280px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 22px 50px -12px rgba(0,0,0,0.55);
+  }
+  .face-tag {
+    position: absolute;
+    top: -10px; left: 16px;
+    background: #1a1a22;
+    color: rgba(255,255,255,0.8);
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+
+  .face .meta-top {
+    padding: 18px 22px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .face .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px;
+    gap: 12px;
+  }
+  .face .meta-bot {
+    padding: 12px 22px 18px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* ──────── S1 EDITORIAL CREAM ──────── */
+  .s1 { background: #F1E8D2; color: #1A0F08; border: 1px solid rgba(26,15,8,0.2); }
+  .s1 .meta-top { color: #C73821; border-bottom: 1px solid #C73821; }
+  .s1 .meta-bot { color: rgba(26,15,8,0.55); border-top: 1px solid rgba(26,15,8,0.25); }
+  .s1.front .body .clue {
+    font-family: 'Anton', sans-serif;
+    font-size: 32px;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #1A0F08;
+  }
+  .s1.back .body .title {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 50px;
+    line-height: 0.88;
+    color: #C73821;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .s1.back .body .year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.6);
+  }
+  .s1.back .body .divider {
+    width: 32px; height: 1px;
+    background: #C73821;
+    margin: 0;
+  }
+  .s1.back .body .fact {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(26,15,8,0.78);
+    max-width: 240px;
+  }
+
+  /* ──────── S2 SOLID CRIMSON ──────── */
+  .s2 { background: #C73821; color: #F5E8C8; }
+  .s2 .meta-top { color: #F5E8C8; opacity: 0.78; border-bottom: 1px solid rgba(245,232,200,0.35); }
+  .s2 .meta-bot { color: rgba(245,232,200,0.65); border-top: 1px solid rgba(245,232,200,0.25); }
+  .s2.front .body .clue {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.05;
+    color: #F5E8C8;
+  }
+  .s2.back { background: #8E1F0C; }
+  .s2.back .body .title {
+    font-family: 'Anton', sans-serif;
+    font-size: 64px;
+    line-height: 0.85;
+    color: #F5E8C8;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .s2.back .body .year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #F2B500;
+  }
+  .s2.back .body .divider { width: 32px; height: 1px; background: #F2B500; }
+  .s2.back .body .fact {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(245,232,200,0.85);
+    max-width: 240px;
+  }
+
+  /* ──────── S3 CHROME LOTTERY ──────── */
+  .s3 {
+    background: #F2B500;
+    color: #1A0F08;
+    border: 3px solid #1A0F08;
+    box-shadow: 6px 6px 0 #C73821, 0 22px 50px -12px rgba(0,0,0,0.55);
+  }
+  .s3 .meta-top { color: #C73821; border-bottom: 3px dashed #1A0F08; padding-top: 14px; }
+  .s3 .meta-bot { color: #1A0F08; border-top: 3px dashed #1A0F08; }
+  .s3.front .body .clue {
+    font-family: 'Bungee', sans-serif;
+    font-size: 24px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1A0F08;
+    letter-spacing: -0.005em;
+  }
+  .s3.back { background: #1A0F08; color: #F2B500; }
+  .s3.back .meta-top { color: #F2B500; border-bottom: 3px dashed #F2B500; }
+  .s3.back .meta-bot { color: #F2B500; border-top: 3px dashed #F2B500; }
+  .s3.back .body .winner {
+    font-family: 'Bungee', sans-serif;
+    font-size: 11px;
+    color: #C73821;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .s3.back .body .title {
+    font-family: 'Bungee', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: #F2B500;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .s3.back .body .year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C73821;
+  }
+  .s3.back .body .divider { width: 32px; height: 1px; background: #C73821; }
+  .s3.back .body .fact {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(242,181,0,0.85);
+    max-width: 240px;
+  }
+
+  /* ──────── S4 INDIGO COUNTERPOINT ──────── */
+  .s4 {
+    background: #1F2E5C;
+    color: #F5E8C8;
+    border: 1px solid #F2B500;
+  }
+  .s4 .meta-top { color: #F2B500; border-bottom: 1px solid #F2B500; }
+  .s4 .meta-bot { color: rgba(242,181,0,0.7); border-top: 1px solid rgba(242,181,0,0.35); }
+  .s4.front .body .clue {
+    font-family: 'Yeseva One', serif;
+    font-size: 28px;
+    line-height: 1.1;
+    color: #F5E8C8;
+  }
+  .s4.back .body .title {
+    font-family: 'Yeseva One', serif;
+    font-size: 44px;
+    line-height: 0.95;
+    color: #F2B500;
+    letter-spacing: -0.01em;
+  }
+  .s4.back .body .year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #F5E8C8;
+    opacity: 0.7;
+  }
+  .s4.back .body .divider { width: 32px; height: 1px; background: #F2B500; }
+  .s4.back .body .fact {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(245,232,200,0.85);
+    max-width: 240px;
+  }
+</style>
+
+<div class="pair-grid">
+
+  <!-- ═══ S1 — EDITORIAL CREAM ═══ -->
+  <div class="pair-row" onclick="this.classList.toggle('selected')">
+    <div class="pair-cards">
+      <div class="face s1 front">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="meta-top"><span>Bollywood</span><span>Med</span></div>
+        <div class="body">
+          <div class="clue">Three engineers learn life isn't multiple choice</div>
+        </div>
+        <div class="meta-bot">tap to reveal →</div>
+      </div>
+      <div class="pair-arrow">→</div>
+      <div class="face s1 back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="meta-top"><span>Answer</span><span>Med</span></div>
+        <div class="body">
+          <div class="title">3 Idiots</div>
+          <div class="year">2009 · Hirani</div>
+          <div class="divider"></div>
+          <div class="fact">The "all is well" mantra outlived three sequels and one engineering syllabus.</div>
+        </div>
+        <div class="meta-bot">next card →</div>
+      </div>
+    </div>
+    <div class="pair-label">S1 · Editorial Cream</div>
+    <div class="pair-sub">Front = quiet Anton uppercase clue. Back = italic DM Serif title in tomato. Magazine-page reveal — the joke lands like a feature article kicker.</div>
+  </div>
+
+  <!-- ═══ S2 — SOLID CRIMSON POSTER ═══ -->
+  <div class="pair-row" onclick="this.classList.toggle('selected')">
+    <div class="pair-cards">
+      <div class="face s2 front">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="meta-top"><span>Bollywood</span><span>Med</span></div>
+        <div class="body">
+          <div class="clue">"Three engineers learn life is not a multiple choice question"</div>
+        </div>
+        <div class="meta-bot">tap to reveal →</div>
+      </div>
+      <div class="pair-arrow">→</div>
+      <div class="face s2 back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="meta-top"><span>Answer</span><span>Med</span></div>
+        <div class="body">
+          <div class="title">3 IDIOTS</div>
+          <div class="year">2009 · Hirani</div>
+          <div class="divider"></div>
+          <div class="fact">The "all is well" mantra outlived three sequels and an engineering syllabus.</div>
+        </div>
+        <div class="meta-bot">next card →</div>
+      </div>
+    </div>
+    <div class="pair-label">S2 · Solid Crimson Poster</div>
+    <div class="pair-sub">Front = italic serif clue on bright crimson. Back = darker crimson with MASSIVE Anton title. The reveal feels like a curtain dropping — full theatre.</div>
+  </div>
+
+  <!-- ═══ S3 — CHROME LOTTERY ═══ -->
+  <div class="pair-row" onclick="this.classList.toggle('selected')">
+    <div class="pair-cards">
+      <div class="face s3 front">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="meta-top"><span>★ Bollywood ★</span><span>№ 0042</span></div>
+        <div class="body">
+          <div class="clue">Three engineers vs MCQ</div>
+        </div>
+        <div class="meta-bot">scratch to reveal</div>
+      </div>
+      <div class="pair-arrow">→</div>
+      <div class="face s3 back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="meta-top"><span>★ WINNER ★</span><span>№ 0042</span></div>
+        <div class="body">
+          <div class="winner">— Lucky Draw Result —</div>
+          <div class="title">3 Idiots</div>
+          <div class="year">2009 · Hirani</div>
+          <div class="divider"></div>
+          <div class="fact">The "all is well" mantra outlived three sequels and an engineering syllabus.</div>
+        </div>
+        <div class="meta-bot">next ticket →</div>
+      </div>
+    </div>
+    <div class="pair-label">S3 · Chrome Lottery</div>
+    <div class="pair-sub">Front = chrome yellow ticket with Bungee block clue. Back = ink black "WINNER" reveal with same chrome type. Reveal is the lottery payout moment.</div>
+  </div>
+
+  <!-- ═══ S4 — INDIGO COUNTERPOINT ═══ -->
+  <div class="pair-row" onclick="this.classList.toggle('selected')">
+    <div class="pair-cards">
+      <div class="face s4 front">
+        <span class="face-tag">FRONT · SETUP</span>
+        <div class="meta-top"><span>Tollywood</span><span>Hard</span></div>
+        <div class="body">
+          <div class="clue">NRI returns. Father objects. Bus girl waits.</div>
+        </div>
+        <div class="meta-bot">tap to reveal →</div>
+      </div>
+      <div class="pair-arrow">→</div>
+      <div class="face s4 back">
+        <span class="face-tag">BACK · PUNCHLINE</span>
+        <div class="meta-top"><span>Answer</span><span>Hard</span></div>
+        <div class="body">
+          <div class="title">Bommarillu</div>
+          <div class="year">2006 · Bhaskar</div>
+          <div class="divider"></div>
+          <div class="fact">Siddharth's most-quoted speech is still played at South Indian engagement parties.</div>
+        </div>
+        <div class="meta-bot">next card →</div>
+      </div>
+    </div>
+    <div class="pair-label">S4 · Indigo Counterpoint</div>
+    <div class="pair-sub">Cool indigo with gold thin frame. Yeseva serif clue + gold serif title on reveal. The contemplative "rest" card in the deck — every warm crimson needs an indigo to breathe between.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+The reveal is the <strong>moment</strong>. The front sets up a terrible plot summary; the back lands the title + year + fun fact. Click the system whose pair feels most satisfying. Or tell me to swing harder on the punchline side.
+</p>

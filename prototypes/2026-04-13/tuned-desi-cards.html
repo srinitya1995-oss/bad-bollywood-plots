@@ -1,0 +1,518 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bowlby+One&family=Bungee&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Limelight&family=Permanent+Marker&family=Rozha+One&family=Tiro+Devanagari+Hindi&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. IV · TUNED</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक ४</span>
+    <span>3 COLORS MAX</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Card lab — tuned</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:680px;">
+    Cream editorial was drab; hot-clash was too loud. This is the middle: 3 colors max per card, saturated but harmonious, fun but rest-able. Same desi metaphors, lean into ONE warm hero color per card with one accent. Tell me which energy is hitting the goldilocks zone.
+  </p>
+</div>
+
+<style>
+  :root {
+    --cream: #F5E8C8;
+    --cream-warm: #F0DCB0;
+    --ink: #1F0E08;
+    --crimson: #C73821;
+    --crimson-deep: #8E1F0C;
+    --tomato: #E0431D;
+    --burnt-sienna: #B85420;
+    --emerald: #1B7A4C;
+    --emerald-leaf: #167040;
+    --gold-leaf: #C4912F;
+    --chrome-yellow: #F2B500;
+    --indigo: #1F2E5C;
+    --rose-paper: #F0D8C0;
+  }
+
+  .tuned-grid { display: flex; flex-wrap: wrap; gap: 36px; justify-content: center; margin-top: 32px; }
+  .tuned-item { display: flex; flex-direction: column; align-items: center; }
+  .tuned-card {
+    width: 270px; height: 380px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    position: relative;
+    border: 3px solid transparent;
+    box-sizing: content-box;
+  }
+  .tuned-card:hover { transform: translateY(-4px); }
+  .tuned-card.selected { border-color: var(--chrome-yellow); box-shadow: 0 0 0 6px rgba(242,181,0,0.3); }
+  .tuned-tag { margin-top: 14px; font-family: 'Khand', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.8); text-align: center; }
+  .tuned-sub { margin-top: 4px; font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; color: rgba(255,255,255,0.5); max-width: 280px; text-align: center; line-height: 1.4; }
+  .palette {
+    margin-top: 8px;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+  }
+  .palette .sw { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); }
+
+  /* ═══════ T1 — CRIMSON MATRIMONIAL ═══════ */
+  /* 3 colors: cream + ink + crimson */
+  .t1 {
+    background: var(--cream);
+    color: var(--ink);
+    padding: 16px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--crimson);
+    font-family: 'IBM Plex Mono', monospace;
+    transform: rotate(-1.5deg);
+  }
+  .t1 .head {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    text-align: center;
+    letter-spacing: 0.16em;
+    color: var(--crimson);
+    border-bottom: 2px solid var(--crimson);
+    padding-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .t1 .title {
+    font-family: 'Rozha One', serif;
+    font-size: 24px;
+    text-align: center;
+    margin: 10px 0 8px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .t1 .photo-row { display: flex; align-items: center; gap: 12px; }
+  .t1 .photo {
+    width: 60px; height: 60px;
+    background: var(--ink);
+    color: var(--cream);
+    border: 2px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    text-align: center;
+    line-height: 1.1;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+  .t1 .body { flex: 1; font-size: 9px; line-height: 1.4; }
+  .t1 .body strong { color: var(--crimson); }
+  .t1 .footer {
+    text-align: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-top: 1px dashed var(--ink);
+    padding-top: 6px;
+    margin-top: 6px;
+    color: var(--ink);
+  }
+
+  /* ═══════ T2 — CHROME LOTTERY ═══════ */
+  /* 3 colors: chrome yellow + ink + crimson */
+  .t2 {
+    background: var(--chrome-yellow);
+    color: var(--ink);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 6px 6px 0 var(--ink);
+    border: 3px solid var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .t2 .top {
+    background: var(--crimson);
+    color: var(--cream);
+    padding: 12px 14px 10px;
+    text-align: center;
+    border-bottom: 4px dashed var(--ink);
+  }
+  .t2 .top .super { font-family: 'Bowlby One', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .t2 .top .name { font-family: 'Bungee', sans-serif; font-size: 26px; line-height: 1; margin-top: 4px; text-transform: uppercase; }
+  .t2 .mid { padding: 14px 16px 12px; text-align: center; }
+  .t2 .draw { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--crimson); }
+  .t2 .clue { font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1; text-transform: uppercase; margin: 10px 0; color: var(--ink); letter-spacing: -0.01em; }
+  .t2 .stars { color: var(--crimson); font-size: 12px; letter-spacing: 0.4em; margin: 4px 0; }
+  .t2 .number { background: var(--ink); color: var(--chrome-yellow); display: inline-block; padding: 5px 14px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; margin-top: 6px; }
+  .t2 .bottom { background: var(--ink); color: var(--chrome-yellow); padding: 7px 12px; font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; }
+
+  /* ═══════ T3 — SIENNA HOARDING ═══════ */
+  /* 3 colors: burnt sienna + cream + chrome yellow */
+  .t3 {
+    background: linear-gradient(180deg, var(--burnt-sienna) 0%, #8C3A14 100%);
+    color: var(--cream);
+    padding: 14px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 6px solid var(--chrome-yellow);
+    box-shadow: 0 22px 44px -10px rgba(0,0,0,0.6);
+    overflow: hidden;
+    position: relative;
+  }
+  .t3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(244,224,184,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .t3 .above { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; color: var(--chrome-yellow); position: relative; }
+  .t3 .stars { text-align: center; color: var(--chrome-yellow); font-size: 14px; margin: 4px 0 6px; letter-spacing: 0.5em; position: relative; }
+  .t3 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 32px;
+    text-align: center;
+    color: var(--cream);
+    line-height: 1;
+    text-shadow: 3px 3px 0 var(--ink);
+    position: relative;
+  }
+  .t3 .english { font-family: 'Limelight', sans-serif; font-size: 13px; text-align: center; color: var(--chrome-yellow); letter-spacing: 0.04em; margin-top: 6px; text-transform: uppercase; position: relative; }
+  .t3 .clue { flex: 1; font-family: 'Yeseva One', serif; font-size: 18px; line-height: 1.05; text-align: center; color: var(--cream); padding: 12px 4px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .t3 .footer { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; color: var(--chrome-yellow); border-top: 2px solid var(--chrome-yellow); padding-top: 6px; position: relative; }
+
+  /* ═══════ T4 — EMERALD AUTO ═══════ */
+  /* 3 colors: emerald + cream + crimson */
+  .t4 {
+    background: var(--emerald);
+    color: var(--cream);
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 6px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--crimson);
+    overflow: hidden;
+  }
+  .t4 .stripe { height: 12px; background: repeating-linear-gradient(90deg, var(--ink) 0 12px, var(--cream) 12px 24px); }
+  .t4 .horn-row { display: flex; align-items: stretch; }
+  .t4 .horn-side { background: var(--ink); color: var(--cream); padding: 6px 8px; font-family: 'Bungee', sans-serif; font-size: 9px; writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; }
+  .t4 .horn-mid { flex: 1; text-align: center; background: var(--crimson); color: var(--cream); padding: 8px 4px; font-family: 'Bungee', sans-serif; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .t4 .icons { text-align: center; font-size: 14px; padding: 6px 0; background: var(--cream); color: var(--crimson); letter-spacing: 0.3em; }
+  .t4 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 22px;
+    text-align: center;
+    color: var(--cream);
+    line-height: 1;
+    padding: 10px 0 4px;
+  }
+  .t4 .clue {
+    flex: 1;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 22px;
+    line-height: 1.05;
+    text-align: center;
+    color: var(--cream);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-1deg);
+  }
+  .t4 .stripe-bot { height: 12px; background: repeating-linear-gradient(90deg, var(--ink) 0 12px, var(--cream) 12px 24px); }
+
+  /* ═══════ T5 — TROPICAL ORANGE ═══════ */
+  /* 3 colors: tropical orange + emerald + cream */
+  .t5 {
+    background: linear-gradient(180deg, var(--tomato) 0%, #B5341A 100%);
+    color: var(--cream);
+    padding: 0;
+    overflow: hidden;
+    border: 5px solid var(--emerald);
+    box-shadow: 6px 6px 0 var(--ink);
+    display: flex;
+    flex-direction: column;
+  }
+  .t5 .top-arc {
+    background: var(--emerald);
+    color: var(--cream);
+    padding: 12px 14px 14px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  }
+  .t5 .top-arc .name { font-family: 'Bungee', sans-serif; font-size: 32px; line-height: 1; text-transform: uppercase; letter-spacing: -0.01em; }
+  .t5 .top-arc .tag { font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.18em; margin-top: 4px; text-transform: uppercase; }
+  .t5 .splash {
+    background: var(--cream);
+    color: var(--tomato);
+    margin: 16px 16px 0;
+    padding: 8px 10px;
+    text-align: center;
+    transform: rotate(-2deg);
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .t5 .splash .pulp { font-family: 'Bungee', sans-serif; font-size: 22px; line-height: 1; text-transform: uppercase; }
+  .t5 .clue {
+    flex: 1;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    text-shadow: 2px 2px 0 var(--ink);
+  }
+  .t5 .meta { background: var(--cream); color: var(--ink); padding: 7px 12px; font-family: 'Bungee', sans-serif; font-size: 9px; letter-spacing: 0.14em; text-align: center; text-transform: uppercase; }
+
+  /* ═══════ T6 — INDIGO ASTROLOGER ═══════ */
+  /* 3 colors: indigo + cream + chrome yellow */
+  .t6 {
+    background: var(--indigo);
+    color: var(--chrome-yellow);
+    padding: 16px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--chrome-yellow);
+    box-shadow: 6px 6px 0 var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .t6::before {
+    content: "★ ☽ ✦ ★ ☽ ✦ ★ ☽ ✦ ★ ☽ ✦ ★";
+    position: absolute;
+    inset: 0;
+    color: rgba(242,181,0,0.07);
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+    overflow: hidden;
+    pointer-events: none;
+    padding: 4px;
+  }
+  .t6 .top { font-family: 'Bowlby One', sans-serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; text-align: center; color: var(--chrome-yellow); border-bottom: 1px solid var(--chrome-yellow); padding-bottom: 5px; position: relative; }
+  .t6 .raashi { font-family: 'Tiro Devanagari Hindi', serif; font-size: 22px; color: var(--cream); text-align: center; margin: 12px 0 4px; line-height: 1; position: relative; }
+  .t6 .moon { font-family: 'Yatra One', serif; font-size: 13px; text-align: center; color: var(--chrome-yellow); margin-bottom: 8px; position: relative; }
+  .t6 .clue { flex: 1; font-family: 'DM Serif Display', serif; font-style: italic; font-size: 16px; line-height: 1.3; text-align: center; color: var(--cream); padding: 8px 0; display: flex; align-items: center; justify-content: center; position: relative; }
+  .t6 .footer { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; color: var(--chrome-yellow); border-top: 1px solid rgba(242,181,0,0.4); padding-top: 6px; position: relative; }
+
+  /* ═══════ T7 — ROSE SANGEET ═══════ */
+  /* 3 colors: rose paper + ink + gold leaf */
+  .t7 {
+    background: var(--rose-paper);
+    color: var(--ink);
+    padding: 18px 18px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--gold-leaf);
+    box-shadow: 0 18px 36px -10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .t7::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 3px double var(--gold-leaf);
+    pointer-events: none;
+  }
+  .t7::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--gold-leaf);
+    pointer-events: none;
+  }
+  .t7 .corners { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; color: var(--gold-leaf); font-size: 14px; }
+  .t7 .inner { position: relative; z-index: 2; padding: 14px 8px 8px; text-align: center; flex: 1; display: flex; flex-direction: column; }
+  .t7 .pre { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-leaf); }
+  .t7 .om { color: var(--crimson); font-size: 14px; margin: 4px 0; }
+  .t7 .devnag { font-family: 'Tiro Devanagari Hindi', serif; font-size: 18px; color: var(--crimson); margin-bottom: 4px; line-height: 1; }
+  .t7 .request { font-family: 'Fraunces', serif; font-style: italic; font-size: 11px; line-height: 1.4; color: var(--ink); }
+  .t7 .union { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 24px; line-height: 1; color: var(--crimson); margin: 8px 0; }
+  .t7 .clue { font-family: 'Yeseva One', serif; font-size: 13px; line-height: 1.25; flex: 1; display: flex; align-items: center; justify-content: center; padding: 6px 0; color: var(--ink); }
+  .t7 .when { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-leaf); border-top: 1px solid var(--gold-leaf); padding-top: 6px; }
+
+  /* ═══════ T8 — BOLLYWOOD QUEEN MUTED ═══════ */
+  /* 3 colors: cream + crimson + emerald (the actual mood board pairing, not hot pink chrome) */
+  .t8 {
+    background: var(--cream);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 22px 50px -10px rgba(0,0,0,0.5);
+    border: 10px solid;
+    border-image: repeating-linear-gradient(45deg, var(--crimson) 0 8px, var(--cream) 8px 16px, var(--emerald) 16px 24px, var(--cream) 24px 32px) 10;
+    display: flex;
+    flex-direction: column;
+  }
+  .t8 .inner-frame {
+    background: var(--cream);
+    flex: 1;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--ink);
+    margin: 4px;
+  }
+  .t8 .head {
+    font-family: 'Yatra One', serif;
+    font-size: 28px;
+    text-align: center;
+    color: var(--crimson);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .t8 .sub-en { font-family: 'Limelight', sans-serif; font-size: 12px; text-align: center; color: var(--emerald); letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 2px solid var(--ink); padding-bottom: 4px; }
+  .t8 .clue { flex: 1; font-family: 'DM Serif Display', serif; font-style: italic; font-size: 16px; line-height: 1.2; text-align: center; color: var(--ink); padding: 12px 0; display: flex; align-items: center; justify-content: center; }
+  .t8 .badge { background: var(--crimson); color: var(--cream); text-align: center; padding: 4px 10px; font-family: 'Bowlby One', sans-serif; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; align-self: center; transform: rotate(-2deg); }
+  .t8 .meta { font-family: 'Khand', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-align: center; border-top: 1px solid var(--ink); padding-top: 4px; margin-top: 6px; }
+</style>
+
+<div class="tuned-grid">
+
+  <!-- T1 — CRIMSON MATRIMONIAL -->
+  <div class="tuned-item">
+    <div class="tuned-card t1" data-choice="t1" onclick="this.classList.toggle('selected')">
+      <div class="head">★ Sunday Times Matrimonial ★</div>
+      <div class="title">Wanted: A Suitable Guess</div>
+      <div class="photo-row">
+        <div class="photo">PHOTO<br>OF<br>FILM</div>
+        <div class="body">
+          <strong>BOLLYWOOD</strong>, 2009, medium build, engineering background, brooding, looking for a viewer who appreciates rooftop song sequences. <strong>Caste no bar.</strong>
+        </div>
+      </div>
+      <div class="footer">Box № 042 · Reply within</div>
+    </div>
+    <div class="tuned-tag">T1 · Crimson Matrimonial</div>
+    <div class="tuned-sub">Cream paper · ink · crimson. The original matrimonial concept tuned to 3 colors.</div>
+    <div class="palette"><div class="sw" style="background:#F5E8C8"></div><div class="sw" style="background:#1F0E08"></div><div class="sw" style="background:#C73821"></div></div>
+  </div>
+
+  <!-- T2 — CHROME LOTTERY -->
+  <div class="tuned-item">
+    <div class="tuned-card t2" data-choice="t2" onclick="this.classList.toggle('selected')">
+      <div class="top">
+        <div class="super">★ Filmi Lucky Draw ★</div>
+        <div class="name">BAD PLOTS</div>
+      </div>
+      <div class="mid">
+        <div class="draw">— Bumper Round —</div>
+        <div class="clue">Three engineers vs one professor</div>
+        <div class="stars">★ ★ ★</div>
+        <div class="number">№ 0042-BW</div>
+      </div>
+      <div class="bottom">Scratch to reveal answer</div>
+    </div>
+    <div class="tuned-tag">T2 · Chrome Lottery</div>
+    <div class="tuned-sub">Chrome yellow + crimson + ink. Indian state lottery dialed in. No magenta or emerald — just three solid colors.</div>
+    <div class="palette"><div class="sw" style="background:#F2B500"></div><div class="sw" style="background:#1F0E08"></div><div class="sw" style="background:#C73821"></div></div>
+  </div>
+
+  <!-- T3 — SIENNA HOARDING -->
+  <div class="tuned-item">
+    <div class="tuned-card t3" data-choice="t3" onclick="this.classList.toggle('selected')">
+      <div class="above">★ Now Showing ★ Sold Out ★</div>
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <div class="devnag">तीन इडियट</div>
+      <div class="english">Bollywood Cinema</div>
+      <div class="clue">"Three engineers learn life isn't a multiple choice question"</div>
+      <div class="footer">★ A Filmi Spectacle ★ 2009 ★</div>
+    </div>
+    <div class="tuned-tag">T3 · Sienna Hoarding</div>
+    <div class="tuned-sub">Burnt sienna gradient + chrome yellow border + cream type. The painted single-screen poster, no cobalt, no second shadow.</div>
+    <div class="palette"><div class="sw" style="background:#B85420"></div><div class="sw" style="background:#F2B500"></div><div class="sw" style="background:#F5E8C8"></div></div>
+  </div>
+
+  <!-- T4 — EMERALD AUTO -->
+  <div class="tuned-item">
+    <div class="tuned-card t4" data-choice="t4" onclick="this.classList.toggle('selected')">
+      <div class="stripe"></div>
+      <div class="horn-row">
+        <div class="horn-side">★</div>
+        <div class="horn-mid">Horn OK Please</div>
+        <div class="horn-side">★</div>
+      </div>
+      <div class="icons">♥ ✿ ☆ ✿ ♥</div>
+      <div class="devnag">बॉलीवुड</div>
+      <div class="clue">"Three engineer life is not MCQ!"</div>
+      <div class="stripe-bot"></div>
+    </div>
+    <div class="tuned-tag">T4 · Emerald Auto</div>
+    <div class="tuned-sub">Emerald + cream + crimson. Painted side panel, simpler stripes, just three colors clashing instead of five.</div>
+    <div class="palette"><div class="sw" style="background:#1B7A4C"></div><div class="sw" style="background:#F5E8C8"></div><div class="sw" style="background:#C73821"></div></div>
+  </div>
+
+  <!-- T5 — TROPICAL ORANGE -->
+  <div class="tuned-item">
+    <div class="tuned-card t5" data-choice="t5" onclick="this.classList.toggle('selected')">
+      <div class="top-arc">
+        <div class="name">PLOTSY</div>
+        <div class="tag">— filmi flavour —</div>
+      </div>
+      <div class="splash">
+        <div class="pulp">100% PULP</div>
+      </div>
+      <div class="clue">"Three engineers learn life isn't MCQ"</div>
+      <div class="meta">Bollywood · 2009 · Med · Tap →</div>
+    </div>
+    <div class="tuned-tag">T5 · Tropical Orange</div>
+    <div class="tuned-sub">Tomato gradient + emerald arch + cream. Vintage Indian fruit drink, three colors only, splash badge in cream.</div>
+    <div class="palette"><div class="sw" style="background:#E0431D"></div><div class="sw" style="background:#1B7A4C"></div><div class="sw" style="background:#F5E8C8"></div></div>
+  </div>
+
+  <!-- T6 — INDIGO ASTROLOGER -->
+  <div class="tuned-item">
+    <div class="tuned-card t6" data-choice="t6" onclick="this.classList.toggle('selected')">
+      <div class="top">★ Today's Filmi Raashi ★</div>
+      <div class="raashi">कन्या राशि</div>
+      <div class="moon">— Bollywood ascendant —</div>
+      <div class="clue">"You will encounter three engineers and a professor. Trust the rooftop song."</div>
+      <div class="footer">2009 · Med · Pluto retrograde</div>
+    </div>
+    <div class="tuned-tag">T6 · Indigo Astrologer</div>
+    <div class="tuned-sub">Deep indigo + chrome yellow + cream. Newspaper filmi horoscope. The only "cool" card; serves as a counterpoint when stacked with warm cards.</div>
+    <div class="palette"><div class="sw" style="background:#1F2E5C"></div><div class="sw" style="background:#F2B500"></div><div class="sw" style="background:#F5E8C8"></div></div>
+  </div>
+
+  <!-- T7 — ROSE SANGEET -->
+  <div class="tuned-item">
+    <div class="tuned-card t7" data-choice="t7" onclick="this.classList.toggle('selected')">
+      <div class="corners"><span>❀</span><span>❀</span></div>
+      <div class="inner">
+        <div class="pre">— with the blessings of —</div>
+        <div class="om">卐 · ॐ · 卐</div>
+        <div class="devnag">शुभ विवाह</div>
+        <div class="request">Mr &amp; Mrs Cinema cordially request your presence at the union of</div>
+        <div class="union">Bollywood<br>&amp; Tollywood</div>
+        <div class="clue">"Three engineers vs one professor"</div>
+        <div class="when">2009 · Medium · RSVP</div>
+      </div>
+    </div>
+    <div class="tuned-tag">T7 · Rose Sangeet</div>
+    <div class="tuned-sub">Warm rose paper + crimson + gold leaf. Wedding card with double-rule frame. Three warm tones, no clash.</div>
+    <div class="palette"><div class="sw" style="background:#F0D8C0"></div><div class="sw" style="background:#C73821"></div><div class="sw" style="background:#C4912F"></div></div>
+  </div>
+
+  <!-- T8 — BOLLYWOOD QUEEN -->
+  <div class="tuned-item">
+    <div class="tuned-card t8" data-choice="t8" onclick="this.classList.toggle('selected')">
+      <div class="inner-frame">
+        <div class="head">बॉलीवुड क्वीन</div>
+        <div class="sub-en">Bollywood Queen</div>
+        <div class="clue">"Three engineers learn life is not a multiple choice question"</div>
+        <div class="badge">★ Filmfare Pick ★</div>
+        <div class="meta">2009 · Medium · Original Print</div>
+      </div>
+    </div>
+    <div class="tuned-tag">T8 · Bollywood Queen</div>
+    <div class="tuned-sub">Crimson + emerald + cream checker border (the actual mood board pairing, not hot pink + chrome neon). Pure vintage.</div>
+    <div class="palette"><div class="sw" style="background:#F5E8C8"></div><div class="sw" style="background:#C73821"></div><div class="sw" style="background:#1B7A4C"></div></div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Each card is exactly <strong>3 colors</strong> (4 max counting cream as paper). Tell me which energy is in the goldilocks zone. Bias toward warm hero color + cream + ink/accent. The cool indigo astrologer is there as the "rest" card — every deck needs one.
+</p>

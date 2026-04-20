@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — v7 web · desktop play surface</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6EBD1;
+    --ink: #1A1208;
+    --ink-soft: rgba(26,18,8,0.55);
+    --ink-line: rgba(26,18,8,0.22);
+    --pen: #1B3F8C;
+    --tomato: #C8321C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+    background: #14100a;
+  }
+  .stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+  .bg { position: absolute; inset: 0; }
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 75%;
+    filter: saturate(0.98);
+  }
+  .wash {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1200px 800px at 50% 50%, rgba(20,16,8,0.15) 0%, rgba(20,16,8,0.55) 70%),
+      linear-gradient(180deg, rgba(20,16,8,0.5) 0%, rgba(20,16,8,0.05) 18%, rgba(20,16,8,0.05) 75%, rgba(20,16,8,0.65) 100%);
+    pointer-events: none;
+  }
+
+  /* Top bar */
+  .topbar {
+    position: absolute;
+    top: 28px;
+    left: 48px;
+    right: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    z-index: 15;
+    opacity: 0.92;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+  }
+  .topbar .wordmark {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+  }
+  .topbar .meta {
+    display: flex;
+    gap: 32px;
+  }
+  .topbar .meta .score { color: #F7D05B; }
+
+  /* Card (same shape as mobile, centered on desktop) */
+  .card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 460px;
+    height: 500px;
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 26px 30px 24px;
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(26,18,8,0.15);
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+  }
+  .card-wordmark {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink-line);
+    flex-shrink: 0;
+  }
+  .card-num {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .plot-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+  }
+  .card-plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.24;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    text-align: left;
+    width: 100%;
+  }
+  .card-rule {
+    height: 1px;
+    background: var(--ink-line);
+    margin: 16px 0 14px;
+    flex-shrink: 0;
+  }
+  .pen-wrap {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .card-pen {
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--pen);
+    text-align: left;
+    width: 100%;
+  }
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink-line);
+    flex-shrink: 0;
+  }
+
+  /* Actions centered below card */
+  .actions {
+    position: absolute;
+    top: calc(50% + 280px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 30;
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 17px 38px;
+    border-radius: 999px;
+    border: 1px solid rgba(246,235,209,0.4);
+    background: rgba(20,16,8,0.55);
+    color: var(--paper);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    cursor: pointer;
+  }
+  .btn.primary {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+    padding: 17px 54px;
+  }
+
+  /* Keyboard hint */
+  .keys {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    display: flex;
+    gap: 28px;
+  }
+  .keys kbd {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    padding: 3px 8px;
+    border: 1px solid rgba(246,235,209,0.35);
+    border-radius: 4px;
+    background: rgba(20,16,8,0.45);
+    margin-right: 6px;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="bg"><img id="bgImg" src="/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg" alt=""></div>
+    <div class="wash"></div>
+
+    <div class="topbar">
+      <span class="wordmark">Bad Desi Plots</span>
+      <span class="meta">
+        <span id="turn">Turn 3 of 12</span>
+        <span class="score" id="score">12 pts</span>
+      </span>
+    </div>
+
+    <div class="card">
+      <div class="card-wordmark">Bad Desi Plots</div>
+      <div class="card-num">
+        <span id="num">No. 024</span>
+        <span id="genre">Bollywood · Medium</span>
+      </div>
+      <div class="plot-wrap">
+        <div class="card-plot" id="plot">
+          A grieving dancer trains a blind girl to sing in a Greek villa while his mother disapproves. A chiffon saree is always flying.
+        </div>
+      </div>
+      <div class="card-rule"></div>
+      <div class="pen-wrap">
+        <div class="card-pen" id="pen">arrey itna SAD kyun banaya??</div>
+      </div>
+      <div class="card-foot">
+        <span id="worth">Worth 2 pts</span>
+        <span id="phase">Pass the phone</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn">Skip</button>
+      <button class="btn primary">Flip Card</button>
+    </div>
+
+    <div class="keys">
+      <span><kbd>Space</kbd>Flip</span>
+      <span><kbd>S</kbd>Skip</span>
+      <span><kbd>Esc</kbd>Pause</span>
+    </div>
+  </div>
+<script>
+  const BGS = {
+    chai:   '/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg',
+    radio:  '/inspiration/6b219c5c4211a854833abea96fe55db4.jpg',
+    hand:   '/inspiration/0286f0d45cf13b64d19d2052673cf4c0.jpg',
+    haveli: '/inspiration/28cb4d1b3ce98e985c80c16d2a56283e.jpg',
+    mirror: '/inspiration/85d97d902ebaf088a7e5bf3ea94c2448.jpg',
+    hunt:   '/inspiration/ac4da3421c6dffbafbcc4c7d75f4098a.jpg',
+    cards:  '/inspiration/4134f8b2d1f0d1e89f4cd858c21a2388.jpg',
+    masala: '/inspiration/863c632563a6cd3c44aaa9987e3525c9.jpg',
+  };
+  const PLOTS = {
+    1: { num: 'No. 007', genre: 'Bollywood · Easy',
+         plot: 'A man forgets he has a twin.',
+         pen: 'yeh to obvious hai bhai', worth: 'Worth 1 pt' },
+    2: { num: 'No. 024', genre: 'Bollywood · Medium',
+         plot: 'A grieving dancer trains a blind girl to sing in a Greek villa while his mother disapproves.',
+         pen: 'arrey itna SAD kyun banaya??', worth: 'Worth 2 pts' },
+    3: { num: 'No. 061', genre: 'Tollywood · Hard',
+         plot: 'A buffalo herder with anger issues discovers he is the lost prince of a forgotten kingdom, learns ancient martial arts from a bald uncle in three days, and destroys an entire empire for kidnapping his crush.',
+         pen: 'boss itna OP hai lekin kaun film?', worth: 'Worth 3 pts' },
+    4: { num: 'No. 088', genre: 'Bollywood · Hard',
+         plot: 'Two childhood best friends grow up loving the same woman, one becomes a poet and dies tragically, the other raises her child, then twenty years later the child falls in love with a singer who turns out to be the poet reincarnated, and everyone cries in Switzerland.',
+         pen: 'bro this is every SRK movie combined', worth: 'Worth 3 pts' }
+  };
+  const params = new URLSearchParams(location.search);
+  const bgKey = params.get('bg') || 'chai';
+  const pKey = params.get('p') || '2';
+  const data = PLOTS[pKey] || PLOTS[2];
+
+  document.getElementById('bgImg').src = BGS[bgKey] || BGS.chai;
+  document.getElementById('num').textContent = data.num;
+  document.getElementById('genre').textContent = data.genre;
+  document.getElementById('plot').textContent = data.plot;
+  document.getElementById('pen').textContent = data.pen;
+  document.getElementById('worth').textContent = data.worth;
+
+  function fitPlot() {
+    const el = document.getElementById('plot');
+    const wrap = el.parentElement;
+    let size = 30;
+    const minSize = 17;
+    el.style.fontSize = size + 'px';
+    while (el.scrollHeight > wrap.clientHeight && size > minSize) {
+      size -= 0.5;
+      el.style.fontSize = size + 'px';
+    }
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPlot);
+  else window.addEventListener('load', fitPlot);
+</script>
+</body>
+</html>

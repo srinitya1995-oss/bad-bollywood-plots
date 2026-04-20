@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — v4 full flow</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #d8cbac;
+    min-height: 100vh;
+    padding: 30px 20px;
+    color: #141008;
+  }
+  header {
+    max-width: 1700px;
+    margin: 0 auto 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 10px;
+  }
+  h1 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .meta {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .grid {
+    max-width: 1700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 1450px) {
+    .grid { grid-template-columns: 1fr 1fr; max-width: 900px; }
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; max-width: 460px; }
+  }
+  .slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .slot-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 800;
+  }
+  .slot iframe {
+    width: 100%;
+    max-width: 430px;
+    height: 920px;
+    border: none;
+    background: transparent;
+    display: block;
+  }
+  .slot a {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #141008;
+    margin-top: 8px;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>v4 · full flow · clean card · haveli bg</h1>
+    <span class="meta">landing · plot · reveal · verdict</span>
+  </header>
+  <div class="grid">
+    <div class="slot">
+      <div class="slot-label">1 · landing</div>
+      <iframe src="landing-v4.html"></iframe>
+      <a href="landing-v4.html" target="_blank">open fullscreen ›</a>
+    </div>
+    <div class="slot">
+      <div class="slot-label">2 · card (plot)</div>
+      <iframe src="card-front-v4.html"></iframe>
+      <a href="card-front-v4.html" target="_blank">open fullscreen ›</a>
+    </div>
+    <div class="slot">
+      <div class="slot-label">3 · flip (reveal)</div>
+      <iframe src="card-flip-v4.html"></iframe>
+      <a href="card-flip-v4.html" target="_blank">open fullscreen ›</a>
+    </div>
+    <div class="slot">
+      <div class="slot-label">4 · final (verdict)</div>
+      <iframe src="final-v4.html"></iframe>
+      <a href="final-v4.html" target="_blank">open fullscreen ›</a>
+    </div>
+  </div>
+</body>
+</html>

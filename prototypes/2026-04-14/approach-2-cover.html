@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedha Plot — Approach 2: The Cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6ECD8;
+    --paper-dim: #EBDFC6;
+    --ink: #1A0F0A;
+    --tomato: #E85D3A;
+    --tomato-deep: #B83A1E;
+    --gold: #C9A55C;
+    --hot-pink: #EE4D88;
+    --blue-pen: #1B3F8C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #1a0e08;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--paper);
+  }
+  .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(246,236,216,0.6);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .label strong { color: var(--tomato); font-weight: 700; letter-spacing: 0.1em; }
+  .phone {
+    width: 390px;
+    height: 844px;
+    border-radius: 44px;
+    background: var(--paper);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 8px #0a0503, 0 0 0 10px #1f1208;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #0a0503;
+    border-radius: 14px;
+    z-index: 10;
+  }
+  /* cover */
+  .cover {
+    position: absolute;
+    inset: 0;
+    padding: 48px 22px 24px;
+    background:
+      radial-gradient(ellipse 120% 80% at 30% 0%, rgba(232,93,58,0.08) 0%, transparent 50%),
+      var(--paper);
+  }
+  /* masthead */
+  .masthead {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 72px;
+    line-height: 0.82;
+    letter-spacing: -0.045em;
+    color: var(--tomato);
+    text-transform: uppercase;
+    text-shadow: 2px 3px 0 rgba(26,15,10,0.12);
+  }
+  .masthead .and { color: var(--ink); font-size: 52px; vertical-align: 3px; display: inline-block; margin: 0 -4px 0 -2px; font-weight: 400; font-style: italic; }
+  .masthead-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 6px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--ink);
+  }
+  .issue-badge {
+    font-family: 'Fraunces', serif;
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: right;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+  .issue-badge .devanagari {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  /* star photo area */
+  .star {
+    margin-top: 12px;
+    height: 430px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 180px 240px at 50% 35%, #ffd4a8 0%, rgba(255,212,168,0) 60%),
+      radial-gradient(ellipse 90px 120px at 50% 40%, #f5a670 0%, rgba(245,166,112,0) 70%),
+      radial-gradient(circle at 50% 75%, #6b1d0a 0%, #2a0b04 70%),
+      linear-gradient(180deg, #3a1508 0%, #1a0605 100%);
+  }
+  /* a vague silhouette hint using box-shadow ellipses */
+  .star::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 80px;
+    height: 100px;
+    border-radius: 50% 50% 45% 45%;
+    background: radial-gradient(ellipse at 50% 40%, rgba(255,215,180,0.35) 0%, rgba(120,45,20,0.2) 70%);
+    transform: translateX(-50%);
+    filter: blur(2px);
+  }
+  .star::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    width: 180px;
+    height: 200px;
+    background: radial-gradient(ellipse at 50% 30%, rgba(30,10,5,0.6) 0%, rgba(30,10,5,0) 70%);
+    transform: translateX(-50%);
+    filter: blur(4px);
+  }
+  .star-stamp {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    color: rgba(246,236,216,0.55);
+    text-transform: uppercase;
+  }
+  /* caption band */
+  .caption-band {
+    position: absolute;
+    top: 186px;
+    left: 0;
+    right: 0;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 5px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 1px 0 rgba(26,15,10,0.15);
+  }
+  /* headline over cover */
+  .headline {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 20px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.18;
+    color: #fff;
+    letter-spacing: -0.015em;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+  }
+  .headline .kicker {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--hot-pink);
+    margin-bottom: 8px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  }
+  /* blue pen scrawl */
+  .scrawl {
+    position: absolute;
+    top: 230px;
+    right: -4px;
+    transform: rotate(-8deg);
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--blue-pen);
+    line-height: 0.95;
+    max-width: 180px;
+    text-align: left;
+    filter: drop-shadow(0 0 1px rgba(27,63,140,0.2));
+    z-index: 5;
+  }
+  .scrawl::after {
+    content: '';
+    position: absolute;
+    top: -72px;
+    left: 10px;
+    width: 150px;
+    height: 110px;
+    border: 3px solid var(--blue-pen);
+    border-radius: 50%;
+    transform: rotate(10deg);
+    pointer-events: none;
+    opacity: 0.85;
+    filter: drop-shadow(0 0 1px rgba(27,63,140,0.2));
+  }
+  .scrawl-arrow {
+    position: absolute;
+    top: -12px;
+    left: -44px;
+    color: var(--blue-pen);
+    font-size: 22px;
+    font-family: 'Caveat', cursive;
+    transform: rotate(8deg);
+  }
+  /* footer */
+  .footer {
+    position: absolute;
+    bottom: 14px;
+    left: 22px;
+    right: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.7;
+  }
+  .footer .tap {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 14px;
+    border-radius: 999px;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+  <div class="label"><strong>Approach 2 — The Cover</strong> · every card is one Filmfare cover, fullscreen</div>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="cover">
+      <div class="masthead">Seedha<br>Plot</div>
+      <div class="masthead-row">
+        <div style="font-family:'DM Sans'; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink); opacity:0.75; font-weight:700;">
+          THE BAD PLOTS ANNUAL
+        </div>
+        <div class="issue-badge">
+          <span class="devanagari">अंक ०१</span>
+          APRIL 2026 · ₹ 30
+        </div>
+      </div>
+      <div class="star">
+        <span class="star-stamp">COVER · HRITHIK · 2001</span>
+        <div class="caption-band">
+          <span>CARD · ०२४</span>
+          <span>BOLLYWOOD · MEDIUM</span>
+        </div>
+        <div class="headline">
+          <span class="kicker">THE PLOT, AS WRITTEN BY AUNTY</span>
+          A grieving dancer trains a blind girl to sing in a Greek villa while his mother keeps disapproving. A chiffon saree is always flying.
+        </div>
+      </div>
+      <div class="scrawl">
+        arrey itna<br>SAD kyun<br>banaya?
+        <span class="scrawl-arrow">↷</span>
+      </div>
+      <div class="footer">
+        <span>◂ PASS THE PHONE</span>
+        <span class="tap">TAP TO FLIP</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

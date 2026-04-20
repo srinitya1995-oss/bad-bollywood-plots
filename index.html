@@ -2,266 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#140E0A">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#C8321C">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Bad Plots">
-  <meta name="description" content="Terrible plots. Real movies. Guess Bollywood and Tollywood films from hilariously bad descriptions.">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="assets/logo-favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
-  <title>Bad Plots: The Desi Party Game</title>
+  <meta name="description" content="Famous Bollywood plots summarized badly on purpose. Guess the movie. Play solo or pass the phone.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.badbollywoodplots.com">
+
+  <!-- Icons -->
+  <link rel="icon" href="/assets/logo-favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/icon-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Bad Desi Plots">
+  <meta property="og:title" content="Bad Desi Plots: The Desi Party Game">
+  <meta property="og:description" content="Famous Bollywood plots summarized badly on purpose. Guess the movie. Play solo or pass the phone.">
+  <meta property="og:url" content="https://www.badbollywoodplots.com">
+  <meta property="og:image" content="https://www.badbollywoodplots.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bad Desi Plots: The Desi Party Game">
+  <meta name="twitter:description" content="Famous Bollywood plots summarized badly on purpose. Guess the movie. Play solo or pass the phone.">
+  <meta name="twitter:image" content="https://www.badbollywoodplots.com/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+  <title>Bad Desi Plots: The Desi Party Game</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-
-<!-- Screen reader announcements -->
-<div id="sr-announce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-
-<!-- Toast -->
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-<!-- HOME -->
-<main id="home" class="screen active" aria-label="Home">
-  <div class="home-page">
-    <div class="color-strip"></div>
-
-    <!-- Background patches -->
-    <div class="patch patch-1">
-      <img src="inspiration/cf0f1be0a7f452456e708a7bf912f1fb.jpg" alt="" aria-hidden="true">
-    </div>
-    <div class="patch patch-2">
-      <img src="inspiration/4134f8b2d1f0d1e89f4cd858c21a2388.jpg" alt="" aria-hidden="true">
-    </div>
-
-    <div class="home-content">
-      <!-- Top bar -->
-      <div class="top-row">
-        <button class="top-link" id="suggest-btn">Suggest a Movie</button>
-        <a href="https://www.linkedin.com/in/srinityaduppanapudisatya/" target="_blank" rel="noopener" class="top-link">@Srinitya</a>
-      </div>
-
-      <!-- Hero -->
-      <div class="hero">
-        <h1 class="hero-title">
-          <span class="title-bad">Bad</span>
-          <span class="title-plots">Plots</span>
-        </h1>
-        <p class="hero-explain">
-          We describe Bollywood and Tollywood movies <strong>badly</strong>.
-          You guess which film it is. Simple, chaotic, and
-          best played with chai and friends.
-        </p>
-      </div>
-
-      <!-- Cinema choice -->
-      <div class="section-label">Pick Your Cinema</div>
-      <div class="cinema-row">
-        <button class="cinema-btn bw" data-mode="BW">
-          <div class="cinema-name">Bollywood</div>
-          <div class="cinema-sub">Hindi films</div>
-        </button>
-        <button class="cinema-btn tw" data-mode="TW">
-          <div class="cinema-name">Tollywood</div>
-          <div class="cinema-sub">Telugu films</div>
-        </button>
-      </div>
-
-      <!-- Mode -->
-      <div class="modes">
-        <div class="section-label">How Do You Want to Play?</div>
-        <div class="mode-cards">
-          <button class="mode-card party selected" data-gamemode="party">
-            <span class="mode-tag">Popular</span>
-            <div class="mode-card-name">Party</div>
-            <div class="mode-desc">12 cards, mixed difficulty. Perfect for game night with friends.</div>
-            <span class="mode-check">✓</span>
-          </button>
-          <button class="mode-card endless" data-gamemode="endless">
-            <div class="mode-card-name">Endless</div>
-            <div class="mode-desc">Keep going until you run out of lives. How far can you get?</div>
-            <span class="mode-check">✓</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="home-footer">
-      <button class="footer-link" id="feedback-btn">Feedback</button>
-      <a href="#" class="footer-link">About</a>
-    </footer>
-  </div>
-</main>
-
-<!-- PLAYER SETUP (bottom sheet) -->
-<div class="sheet-overlay" id="players-overlay" role="dialog" aria-modal="true" aria-labelledby="players-title">
-  <div class="sheet">
-    <div class="sheet-handle" aria-hidden="true"></div>
-    <h2 class="sheet-title" id="players-title">Who's playing?</h2>
-    <p class="sheet-sub">Add players or just tap Start for solo</p>
-    <div id="player-list" class="player-list"></div>
-    <button class="add-player-btn" id="add-player-btn">+ Add player</button>
-    <button class="btn-primary" id="start-game-btn">Start game</button>
-  </div>
-</div>
-
-<!-- GAME -->
-<main id="game" class="screen" aria-label="Game">
-  <header class="game-bar">
-    <button class="game-exit-btn" id="game-exit">
-      <span aria-hidden="true">&larr;</span> Exit
-    </button>
-    <div class="game-info" id="game-info">
-      <span class="game-prog" id="g-prog">1 / 12</span>
-    </div>
-    <div class="game-score" id="g-pts">0 pts</div>
-  </header>
-  <div class="prog-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="g-bar-track">
-    <div class="prog-fill" id="g-bar"></div>
-  </div>
-
-  <!-- Lives (endless mode only) -->
-  <div class="game-lives" id="game-lives" style="display:none" aria-label="Lives remaining">
-    <span class="life active" aria-label="Life 1"></span>
-    <span class="life active" aria-label="Life 2"></span>
-    <span class="life active" aria-label="Life 3"></span>
-  </div>
-
-  <!-- Player tabs (multiplayer only) -->
-  <div class="player-tabs" id="player-tabs" role="tablist" aria-label="Players" style="display:none"></div>
-
-  <!-- Pass-the-phone interstitial -->
-  <div class="turn-interstitial" id="turn-interstitial" style="display:none">
-    <h2 class="turn-name" id="turn-name">Player 1</h2>
-    <p class="turn-sub">Your turn</p>
-    <button class="btn-primary" id="turn-ready-btn">Ready</button>
-  </div>
-
-  <!-- Card stage -->
-  <div class="card-stage" id="card-stage">
-    <div class="card-wrap" id="card-wrap">
-      <div class="card-inner" id="card-inner">
-        <!-- Front face -->
-        <div class="card-face card-front" id="card-front">
-          <div class="card-frame" aria-hidden="true"></div>
-          <div class="card-content">
-            <div class="card-meta">
-              <span class="card-ind" id="cf-ind">Bollywood</span>
-              <span class="card-era" id="cf-era">90s</span>
-            </div>
-            <p class="card-clue" id="cf-clue"></p>
-            <span class="card-tap">Tap to reveal answer</span>
-          </div>
-        </div>
-        <!-- Back face -->
-        <div class="card-face card-back" id="card-back">
-          <div class="card-frame card-frame-back" aria-hidden="true"></div>
-          <div class="card-content">
-            <span class="card-ind-back" id="cb-ind">Bollywood</span>
-            <h3 class="card-answer" id="cb-answer"></h3>
-            <span class="card-year" id="cb-year"></span>
-            <hr class="card-divider" aria-hidden="true">
-            <p class="card-fact-label">Did you know</p>
-            <p class="card-fact" id="cb-fact"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Score zone -->
-  <div class="score-zone" id="score-zone" style="display:none">
-    <div class="score-btns">
-      <button class="score-btn btn-got" id="btn-got">Got it</button>
-      <button class="score-btn btn-miss" id="btn-miss">Missed</button>
-    </div>
-    <button class="btn-skip" id="btn-skip">Skip</button>
-  </div>
-</main>
-
-<!-- RESULTS -->
-<main id="results" class="screen" aria-label="Results">
-  <header class="res-top">
-    <p class="res-eyebrow">Game over</p>
-    <h1 class="res-title" id="r-title">Not bad.</h1>
-    <p class="res-sub" id="r-sub"></p>
-    <div class="res-stats">
-      <div class="res-stat">
-        <span class="res-stat-n" id="r-correct">0</span>
-        <span class="res-stat-l">Correct</span>
-      </div>
-      <div class="res-stat">
-        <span class="res-stat-n" id="r-played">0</span>
-        <span class="res-stat-l">Played</span>
-      </div>
-      <div class="res-stat">
-        <span class="res-stat-n" id="r-pts">0</span>
-        <span class="res-stat-l">Points</span>
-      </div>
-    </div>
-  </header>
-  <div class="res-body">
-    <blockquote class="res-verdict">
-      <p class="res-verdict-text" id="r-verdict"></p>
-    </blockquote>
-    <div class="leaderboard" id="leaderboard" style="display:none">
-      <h2 class="lb-title">Leaderboard</h2>
-      <div id="lb-rows"></div>
-    </div>
-    <div class="res-actions">
-      <button class="btn-primary" id="btn-replay">Play again</button>
-      <button class="btn-secondary" id="btn-share">Share score</button>
-      <button class="link-btn" id="btn-feedback-end">How was that?</button>
-    </div>
-  </div>
-</main>
-
-<!-- FEEDBACK SHEET -->
-<div class="sheet-overlay" id="fb-overlay" role="dialog" aria-modal="true" aria-labelledby="fb-title">
-  <div class="sheet">
-    <div class="sheet-handle" aria-hidden="true"></div>
-    <h2 class="sheet-title" id="fb-title">Share your feedback</h2>
-    <p class="sheet-sub" id="fb-sub">Tell us what's working and what's not</p>
-    <div class="fb-tags" id="fb-tags">
-      <button class="fb-tag" data-v="love_it" aria-pressed="false">Love it</button>
-      <button class="fb-tag" data-v="needs_work" aria-pressed="false">Needs work</button>
-      <button class="fb-tag" data-v="want_more_cards" aria-pressed="false">Want more cards</button>
-      <button class="fb-tag" data-v="great_for_parties" aria-pressed="false">Great for parties</button>
-      <button class="fb-tag" data-v="ui_issue" aria-pressed="false">UI issue</button>
-      <button class="fb-tag" data-v="bug" aria-pressed="false">Found a bug</button>
-    </div>
-    <label for="fb-text" class="sr-only">Additional feedback</label>
-    <textarea class="fb-textarea" id="fb-text" placeholder="Anything else? (optional)"></textarea>
-    <button class="btn-primary" id="fb-submit">Submit feedback</button>
-    <button class="btn-skip" id="fb-skip">Cancel</button>
-  </div>
-</div>
-
-<!-- SUGGEST SHEET -->
-<div class="sheet-overlay" id="suggest-overlay" role="dialog" aria-modal="true" aria-labelledby="suggest-title">
-  <div class="sheet">
-    <div class="sheet-handle" aria-hidden="true"></div>
-    <h2 class="sheet-title" id="suggest-title">Suggest a movie</h2>
-    <p class="sheet-sub">We'll write a terrible plot description for it</p>
-    <label for="suggest-movie" class="sr-only">Movie name</label>
-    <input class="form-input" id="suggest-movie" placeholder="Movie name" type="text" aria-label="Movie name">
-    <label for="suggest-industry" class="sr-only">Industry</label>
-    <select class="form-input" id="suggest-industry" aria-label="Industry">
-      <option value="" disabled selected>Bollywood / Tollywood / Other</option>
-      <option value="Bollywood">Bollywood</option>
-      <option value="Tollywood">Tollywood</option>
-      <option value="Other">Other</option>
-    </select>
-    <p class="form-hint">We read every suggestion. If we add it, you'll be in the credits.</p>
-    <button class="btn-primary" id="suggest-submit">Submit suggestion</button>
-    <button class="btn-skip" id="suggest-cancel">Maybe later</button>
-  </div>
-</div>
-
-<!-- Supabase client — loaded before app.js so window.supabase is available -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script type="module" src="app.js"></script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

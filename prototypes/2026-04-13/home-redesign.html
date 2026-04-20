@@ -1,0 +1,647 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bowlby+One&family=Bungee&family=Caveat+Brush&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Limelight&family=Permanent+Marker&family=Rozha+One&family=Special+Elite&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#1a1a22; padding: 24px 28px; border-radius: 6px; color:#F1E8D2; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #F1E8D2;border-bottom:1px solid #F1E8D2;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>HOME PAGE · RESET</span>
+    <span style="color:#C73821">— pivot —</span>
+    <span>3 RADICAL DIRECTIONS</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#F1E8D2;text-transform:uppercase;letter-spacing:-0.02em;">Home — three new metaphors</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:rgba(241,232,210,0.7);margin:0;max-width:680px;">
+    Throwing out the "wordmark + tagline + 2 cards on cream paper" template. Three radically different home metaphors: a newspaper front page, a painted cinema marquee, and a sticker-bombed flyposting wall. Each commits hard to its visual world. Click the one that breaks something open.
+  </p>
+</div>
+
+<style>
+  .home-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .home-item { display: flex; flex-direction: column; align-items: center; }
+  .h-phone {
+    width: 390px;
+    height: 800px;
+    border-radius: 38px;
+    box-shadow:
+      0 0 0 8px #1a1a22,
+      0 0 0 9px #2a2a32,
+      0 36px 90px -22px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: 4px solid transparent;
+    transition: transform 0.15s ease;
+  }
+  .h-phone:hover { transform: translateY(-4px); }
+  .h-phone.selected { border-color: #FFD60A; box-shadow: 0 0 0 8px #1a1a22, 0 0 0 9px #2a2a32, 0 0 0 16px rgba(255,214,10,0.3), 0 36px 90px -22px rgba(0,0,0,0.7); }
+  .h-label {
+    margin-top: 16px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+  }
+  .h-sub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    max-width: 380px;
+    text-align: center;
+    line-height: 1.45;
+  }
+
+  /* ════════════════════════════════════════ */
+  /* H1 · NEWSPAPER FRONT PAGE                */
+  /* ════════════════════════════════════════ */
+  .h1 {
+    background: #F1E8D2;
+    color: #1A0F08;
+    font-family: 'Fraunces', serif;
+  }
+  .h1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(26,15,8,0.07) 0.6px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
+  }
+  .h1 .nh {
+    position: relative;
+    z-index: 2;
+    padding: 44px 24px 0;
+  }
+  .h1 .nh-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1A0F08;
+    padding-bottom: 4px;
+  }
+  .h1 .nh-mast {
+    text-align: center;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 60px;
+    line-height: 0.92;
+    margin: 8px 0 4px;
+    letter-spacing: -0.02em;
+  }
+  .h1 .nh-mast .accent { color: #C73821; }
+  .h1 .nh-pull {
+    text-align: center;
+    font-style: italic;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #3D2814;
+    border-bottom: 3px double #1A0F08;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  .h1 .nh-pull::before, .h1 .nh-pull::after { content: "—"; color: #C73821; margin: 0 4px; }
+  .h1 .nh-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 8px 24px 14px;
+    column-rule: 1px solid #1A0F08;
+  }
+  .h1 .nh-col h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    line-height: 1;
+    margin: 0 0 4px;
+    color: #1A0F08;
+  }
+  .h1 .nh-col .kick {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #C73821;
+    margin-bottom: 2px;
+  }
+  .h1 .nh-col .lede {
+    font-family: 'Fraunces', serif;
+    font-size: 10px;
+    line-height: 1.4;
+    color: #3D2814;
+    margin: 0;
+  }
+  .h1 .nh-col .lede::first-letter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    float: left;
+    line-height: 0.85;
+    padding: 4px 4px 0 0;
+  }
+  .h1 .nh-col .more {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #C73821;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .h1 .nh-cta-row {
+    border-top: 1px solid #1A0F08;
+    padding: 12px 24px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .h1 .nh-cta {
+    background: #1A0F08;
+    color: #F1E8D2;
+    border: none;
+    padding: 14px 24px 12px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 4px 4px 0 #C73821;
+    cursor: pointer;
+  }
+  .h1 .nh-aside {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: #1A0F08;
+    text-align: right;
+  }
+  .h1 .nh-aside .price {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: #C73821;
+    text-transform: none;
+    display: block;
+    line-height: 1;
+  }
+  .h1 .nh-foot {
+    border-top: 1px solid rgba(26,15,8,0.4);
+    padding: 8px 24px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.6);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ════════════════════════════════════════ */
+  /* H2 · CINEMA MARQUEE                      */
+  /* ════════════════════════════════════════ */
+  .h2 {
+    background: linear-gradient(180deg, #4A1A0F 0%, #1A0F08 100%);
+    color: #F1E8D2;
+  }
+  .h2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(255,214,10,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .h2 .marq {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 44px 24px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .h2 .marq-bulbs {
+    height: 14px;
+    background-image: radial-gradient(circle at 7px 7px, #FFD60A 4px, rgba(255,214,10,0.3) 4.5px, transparent 5px);
+    background-size: 18px 14px;
+  }
+  .h2 .marq-frame {
+    flex: 1;
+    border: 4px solid #FFD60A;
+    border-image: repeating-linear-gradient(90deg, #FFD60A 0 14px, #C73821 14px 16px) 4;
+    margin-top: 12px;
+    padding: 18px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .h2 .marq-now {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: #FFD60A;
+    text-transform: uppercase;
+    border: 2px solid #FFD60A;
+    padding: 4px 14px;
+    margin-bottom: 10px;
+  }
+  .h2 .marq-title {
+    font-family: 'Limelight', sans-serif;
+    font-size: 56px;
+    line-height: 0.92;
+    color: #F1E8D2;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-shadow: 3px 3px 0 #1A0F08, 5px 5px 0 #C73821;
+    margin: 8px 0 6px;
+  }
+  .h2 .marq-tag {
+    font-family: 'Yeseva One', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #FFD60A;
+    border-top: 2px solid #FFD60A;
+    border-bottom: 2px solid #FFD60A;
+    padding: 6px 0;
+    margin: 8px 14px;
+  }
+  .h2 .marq-stars { color: #FFD60A; font-size: 16px; letter-spacing: 0.5em; margin: 12px 0 4px; }
+  .h2 .marq-billing {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #F1E8D2;
+    margin: 6px 0;
+  }
+  .h2 .marq-show {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .h2 .marq-show button {
+    background: transparent;
+    border: 2px solid #FFD60A;
+    color: #FFD60A;
+    padding: 14px 6px 12px;
+    font-family: 'Limelight', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .h2 .marq-show button .show-time {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: #F1E8D2;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+  .h2 .marq-buy {
+    background: #FFD60A;
+    color: #1A0F08;
+    border: none;
+    padding: 16px 0;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 14px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #1A0F08;
+  }
+  .h2 .marq-foot {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    text-align: center;
+    color: rgba(255,214,10,0.7);
+    margin-top: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .h2 .marq-bulbs-bot {
+    height: 14px;
+    background-image: radial-gradient(circle at 7px 7px, #FFD60A 4px, rgba(255,214,10,0.3) 4.5px, transparent 5px);
+    background-size: 18px 14px;
+    margin-top: 12px;
+  }
+
+  /* ════════════════════════════════════════ */
+  /* H3 · STICKER WALL                        */
+  /* ════════════════════════════════════════ */
+  .h3 {
+    background: #2A1A0F;
+    color: #F1E8D2;
+  }
+  .h3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,255,255,0.03) 2px 3px),
+      repeating-linear-gradient(90deg, transparent 0 4px, rgba(0,0,0,0.05) 4px 5px);
+    pointer-events: none;
+  }
+  .h3 .wall {
+    position: relative;
+    z-index: 2;
+    padding: 44px 18px 20px;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .h3 .poster {
+    position: absolute;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+  }
+  /* small back posters */
+  .h3 .p1 {
+    background: #FFD60A;
+    color: #1A0F08;
+    width: 140px; height: 90px;
+    top: 76px; left: 14px;
+    transform: rotate(-6deg);
+    padding: 8px 10px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    border: 2px solid #1A0F08;
+  }
+  .h3 .p1 small {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    color: #C73821;
+    margin-top: 4px;
+  }
+  .h3 .p2 {
+    background: #0CA85A;
+    color: #F1E8D2;
+    width: 110px; height: 130px;
+    top: 90px; right: 16px;
+    transform: rotate(5deg);
+    padding: 10px;
+    font-family: 'Yatra One', serif;
+    font-size: 14px;
+    line-height: 1.05;
+    border: 2px solid #1A0F08;
+  }
+  .h3 .p2 small {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #FFD60A;
+    display: block;
+    margin-top: 6px;
+  }
+  .h3 .p3 {
+    background: #C73821;
+    color: #FFD60A;
+    width: 100px; height: 70px;
+    top: 200px; left: 32px;
+    transform: rotate(3deg);
+    padding: 6px 8px;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 13px;
+    line-height: 1;
+    border: 2px solid #1A0F08;
+  }
+  .h3 .p4 {
+    background: #F1E8D2;
+    color: #1A0F08;
+    width: 80px; height: 100px;
+    top: 240px; right: 30px;
+    transform: rotate(-4deg);
+    padding: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7px;
+    line-height: 1.3;
+    border: 2px solid #1A0F08;
+    text-transform: uppercase;
+  }
+  /* main BAD PLOTS poster on top */
+  .h3 .main-poster {
+    position: absolute;
+    width: 320px;
+    height: 360px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%) rotate(-2deg);
+    background: #F1E8D2;
+    color: #1A0F08;
+    border: 4px solid #1A0F08;
+    box-shadow: 8px 8px 0 #C73821, 0 22px 50px -10px rgba(0,0,0,0.7);
+    padding: 14px 18px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .h3 .main-poster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(26,15,8,0.06) 0.6px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
+  }
+  .h3 .main-mast {
+    position: relative;
+    border-top: 2px solid #1A0F08;
+    border-bottom: 1px solid #1A0F08;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .h3 .main-mast .ank { font-family: 'Yatra One', serif; font-size: 11px; letter-spacing: 0.04em; text-transform: none; color: #C73821; }
+  .h3 .main-word {
+    position: relative;
+    font-family: 'Anton', sans-serif;
+    font-size: 86px;
+    line-height: 0.82;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #1A0F08;
+    margin: 12px 0 4px;
+  }
+  .h3 .main-tag {
+    position: relative;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: #3D2814;
+    border-bottom: 1px solid #1A0F08;
+    padding-bottom: 8px;
+  }
+  .h3 .main-cta {
+    position: relative;
+    margin-top: auto;
+    background: #1A0F08;
+    color: #F1E8D2;
+    border: none;
+    padding: 14px 0 12px;
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 4px 4px 0 #C73821;
+    cursor: pointer;
+  }
+  .h3 .main-foot {
+    position: relative;
+    text-align: center;
+    margin-top: 8px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(26,15,8,0.55);
+  }
+  .h3 .tape-1 {
+    position: absolute;
+    top: -12px; left: 26px;
+    width: 60px; height: 18px;
+    background: rgba(255,214,10,0.6);
+    border: 1px solid rgba(255,214,10,0.8);
+    transform: rotate(-3deg);
+  }
+  .h3 .tape-2 {
+    position: absolute;
+    top: -12px; right: 30px;
+    width: 60px; height: 18px;
+    background: rgba(255,214,10,0.6);
+    border: 1px solid rgba(255,214,10,0.8);
+    transform: rotate(4deg);
+  }
+</style>
+
+<div class="home-row">
+
+  <!-- ═══ H1 — NEWSPAPER FRONT PAGE ═══ -->
+  <div class="home-item">
+    <div class="h-phone h1" onclick="this.classList.toggle('selected')">
+      <div class="nh">
+        <div class="nh-top">
+          <span>VOL. I · ISSUE 1</span>
+          <span>FRI · APR 13</span>
+          <span>FILMI TIMES</span>
+        </div>
+        <h1 class="nh-mast">Bad <span class="accent">Plots</span></h1>
+        <p class="nh-pull">A weekly anthology of terrible movie descriptions, played at chai gatherings</p>
+      </div>
+      <div class="nh-cols">
+        <div class="nh-col">
+          <div class="kick">— Bollywood Desk —</div>
+          <h3>75 plots, 0 plot.</h3>
+          <p class="lede">An exhaustive examination of the Hindi film industry's worst plot summaries, hand-curated from a thousand rooftop song sequences and one professorial breakdown.</p>
+          <a class="more">Play it →</a>
+        </div>
+        <div class="nh-col">
+          <div class="kick">— Tollywood Desk —</div>
+          <h3>The South responds.</h3>
+          <p class="lede">From Brahmananda to Bommarillu, our Telugu correspondent collects the most tragic descriptions of an industry built on bus-girl meet-cutes and disapproving fathers.</p>
+          <a class="more">Play it →</a>
+        </div>
+      </div>
+      <div class="nh-cta-row">
+        <button class="nh-cta">Deal me in</button>
+        <div class="nh-aside">
+          <span class="price">₹0</span>
+          free play<br>4-8 friends
+        </div>
+      </div>
+      <div class="nh-foot">
+        <span>SUGGEST A MOVIE</span>
+        <span>FEEDBACK</span>
+        <span>@SRINITYA</span>
+      </div>
+    </div>
+    <div class="h-label">H1 · Newspaper Front Page</div>
+    <div class="h-sub">Like Filmi Times broadsheet. DM Serif italic masthead, two columns of "stories" being the menu (Bollywood Desk, Tollywood Desk), price corner, double-rule pull quote, monospace dateline.</div>
+  </div>
+
+  <!-- ═══ H2 — CINEMA MARQUEE ═══ -->
+  <div class="home-item">
+    <div class="h-phone h2" onclick="this.classList.toggle('selected')">
+      <div class="marq">
+        <div class="marq-bulbs"></div>
+        <div class="marq-frame">
+          <div class="marq-now">★ Now Showing ★</div>
+          <h1 class="marq-title">Bad<br>Plots</h1>
+          <div class="marq-tag">"You'll laugh. You'll cringe. You'll guess wrong."</div>
+          <div class="marq-stars">★ ★ ★ ★ ★</div>
+          <div class="marq-billing">Starring · Bollywood &amp; Tollywood</div>
+          <div class="marq-show">
+            <button>Bollywood<span class="show-time">75 plots · party</span></button>
+            <button>Tollywood<span class="show-time">75 plots · party</span></button>
+          </div>
+          <button class="marq-buy">Book Tickets</button>
+          <div class="marq-foot">+ play with friends · suggest a movie</div>
+        </div>
+        <div class="marq-bulbs-bot"></div>
+      </div>
+    </div>
+    <div class="h-label">H2 · Cinema Marquee</div>
+    <div class="h-sub">Single-screen cinema marquee at night. Yellow bulb borders top and bottom, double-rule golden frame, Limelight title with triple drop shadow, "BOOK TICKETS" instead of "Deal me in". Pure 1970s Bombay theatre.</div>
+  </div>
+
+  <!-- ═══ H3 — STICKER WALL ═══ -->
+  <div class="home-item">
+    <div class="h-phone h3" onclick="this.classList.toggle('selected')">
+      <div class="wall">
+        <!-- Background flyposted layered posters -->
+        <div class="poster p1">CAST<br>YOUR<br>VOTE<small>elec. 2026</small></div>
+        <div class="poster p2">गीत<br>संगीत<small>Sun 8pm</small></div>
+        <div class="poster p3">FOR SALE<br>2BHK</div>
+        <div class="poster p4">LOST<br>DOG<br><br>brown<br>4yr</div>
+
+        <!-- Main BAD PLOTS poster pasted on top -->
+        <div class="main-poster">
+          <div class="tape-1"></div>
+          <div class="tape-2"></div>
+          <div class="main-mast">
+            <span>VOL. I · A PARTY GAME</span>
+            <span class="ank">अंक १</span>
+            <span>FRIENDS+</span>
+          </div>
+          <h1 class="main-word">BAD<br>PLOTS</h1>
+          <p class="main-tag">guess the movie from the terrible plot</p>
+          <button class="main-cta">Deal me in</button>
+          <div class="main-foot">+ play with friends</div>
+        </div>
+      </div>
+    </div>
+    <div class="h-label">H3 · Sticker Wall</div>
+    <div class="h-sub">Mumbai street wall with multiple flyposted posters layered on top of each other. BAD PLOTS is the dominant one taped to the front. Background posters are real desi flyer types (election, sangeet, for sale, lost dog).</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Three different home metaphors. Click which world you want to live in. None of them are "wordmark on cream paper with two cards" — that's the template I keep falling back into. Tell me which is right or which to mash with the corner-stamp card direction.
+</p>

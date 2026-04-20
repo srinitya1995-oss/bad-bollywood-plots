@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,wght@1,400&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; }
+  .og {
+    width: 1200px; height: 630px;
+    background: #14100a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .og::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 8px; background: #C8321C;
+  }
+  .og::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px; background: #F5C457;
+  }
+  .kicker {
+    font-family: 'Anton', sans-serif; font-size: 18px;
+    color: #F5C457; letter-spacing: 8px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .title {
+    font-family: 'Anton', sans-serif; font-size: 110px;
+    color: #F6EBD1; letter-spacing: 4px; line-height: 0.95;
+    text-align: center;
+  }
+  .title .accent { color: #C8321C; }
+  .tagline {
+    font-family: 'Fraunces', serif; font-size: 22px;
+    color: #F6EBD1; opacity: 0.7; margin-top: 28px;
+    font-style: italic;
+  }
+  .url {
+    font-family: 'Anton', sans-serif; font-size: 16px;
+    color: #F5C457; letter-spacing: 5px; margin-top: 20px; opacity: 0.8;
+  }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="kicker">THE DESI PARTY GAME</div>
+  <div class="title">
+    BAD<br>
+    <span class="accent">BOLLYWOOD</span><br>
+    PLOTS
+  </div>
+  <div class="tagline">We describe movies badly. You guess the film.</div>
+  <div class="url">BADBOLLYWOODPLOTS.COM</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,768 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bowlby+One&family=Bungee&family=Caveat+Brush&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Limelight&family=Permanent+Marker&family=Rozha+One&family=Special+Elite&family=Tiro+Devanagari+Hindi&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. II · DESI EDITION</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक २</span>
+    <span>FUN INDEX: HIGH</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Card lab — desi street objects</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0;max-width:680px;">
+    Throwing out Western magazine restraint. Eight cards built around fun Indian everyday objects — matrimonial ads, lottery tickets, auto-rickshaw panels, fruit drink labels, wedding invitations, vintage Bollywood Queen posters, astrologer columns, paan packets. Hot color clashes. Devanagari pulled into the type, not just an accent. Click the ones that hit.
+  </p>
+</div>
+
+<style>
+  .desi-grid { display: flex; flex-wrap: wrap; gap: 36px; justify-content: center; margin-top: 32px; }
+  .desi-item { display: flex; flex-direction: column; align-items: center; }
+  .desi-card {
+    width: 270px; height: 380px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    position: relative;
+    border: 3px solid transparent;
+    box-sizing: content-box;
+  }
+  .desi-card:hover { transform: translateY(-4px); }
+  .desi-card.selected { border-color: #FFD60A; box-shadow: 0 0 0 6px rgba(255,214,10,0.22); }
+  .desi-tag {
+    margin-top: 14px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    text-align: center;
+  }
+  .desi-sub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    max-width: 280px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ═══════ D1 — MATRIMONIAL AD ═══════ */
+  .d1 {
+    background: #F1E8D2;
+    color: #1A0F08;
+    padding: 16px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #1A0F08;
+    box-shadow: 6px 6px 0 #C8201A;
+    font-family: 'IBM Plex Mono', monospace;
+    transform: rotate(-1.5deg);
+  }
+  .d1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(26,15,8,0.07) 0.6px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+  }
+  .d1 .head {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    text-align: center;
+    letter-spacing: 0.16em;
+    color: #C8201A;
+    border-bottom: 2px solid #C8201A;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .d1 .matri-title {
+    font-family: 'Rozha One', serif;
+    font-size: 22px;
+    text-align: center;
+    margin: 8px 0 6px;
+    line-height: 1;
+  }
+  .d1 .photo {
+    width: 70px; height: 70px;
+    background: #1A0F08;
+    color: #F1E8D2;
+    margin: 4px auto 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 2px solid #1A0F08;
+    text-align: center;
+    line-height: 1.1;
+  }
+  .d1 .body {
+    font-size: 9px;
+    line-height: 1.4;
+    text-align: center;
+    flex: 1;
+  }
+  .d1 .body strong { color: #C8201A; }
+  .d1 .footer {
+    text-align: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-top: 1px dashed #1A0F08;
+    padding-top: 5px;
+    margin-top: 6px;
+  }
+
+  /* ═══════ D2 — LOTTERY TICKET ═══════ */
+  .d2 {
+    background: #FFE15A;
+    color: #1A0F08;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 6px 6px 0 #C8201A, 0 18px 40px -10px rgba(0,0,0,0.5);
+    border: 3px solid #1A0F08;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .d2 .top {
+    background: #C8201A;
+    color: #FFE15A;
+    padding: 10px 14px 8px;
+    text-align: center;
+    border-bottom: 4px dashed #1A0F08;
+  }
+  .d2 .top .super {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .d2 .top .name {
+    font-family: 'Bungee', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+  .d2 .top .name .accent { color: #FFFCEE; }
+  .d2 .mid {
+    padding: 14px 16px 12px;
+    text-align: center;
+    position: relative;
+  }
+  .d2 .draw {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #C8201A;
+  }
+  .d2 .clue {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 8px 0;
+    letter-spacing: -0.01em;
+  }
+  .d2 .stars { color: #C8201A; font-size: 12px; letter-spacing: 0.4em; margin: 4px 0; }
+  .d2 .number {
+    background: #1A0F08;
+    color: #FFE15A;
+    display: inline-block;
+    padding: 4px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+  }
+  .d2 .bottom {
+    background: #1A0F08;
+    color: #FFE15A;
+    padding: 6px 12px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ═══════ D3 — AUTO-RICKSHAW PANEL ═══════ */
+  .d3 {
+    background: #FFD60A;
+    color: #1A0F08;
+    padding: 16px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 6px solid #1A0F08;
+    box-shadow: 8px 8px 0 #C8201A;
+    overflow: hidden;
+  }
+  .d3 .horn {
+    font-family: 'Bungee', sans-serif;
+    font-size: 13px;
+    text-align: center;
+    text-transform: uppercase;
+    border: 3px double #1A0F08;
+    padding: 4px;
+    color: #C8201A;
+    letter-spacing: 0.1em;
+  }
+  .d3 .icons { text-align: center; font-size: 18px; margin: 6px 0; letter-spacing: 0.3em; }
+  .d3 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 22px;
+    text-align: center;
+    color: #1A0F08;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .d3 .clue {
+    flex: 1;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 22px;
+    line-height: 1.05;
+    text-align: center;
+    color: #1A0F08;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-1deg);
+  }
+  .d3 .footer-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-top: 3px solid #1A0F08;
+    padding-top: 6px;
+  }
+  .d3 .footer-row .red { color: #C8201A; }
+
+  /* ═══════ D4 — LIMCA / FROOTI LABEL ═══════ */
+  .d4 {
+    background: linear-gradient(180deg, #0B7A3E 0%, #095830 100%);
+    color: #FFFCEE;
+    padding: 0;
+    overflow: hidden;
+    border: 4px solid #FFD60A;
+    box-shadow: 8px 8px 0 #C8201A, 0 18px 40px -10px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+  }
+  .d4 .top-arc {
+    background: #FFD60A;
+    color: #0B7A3E;
+    padding: 10px 14px 12px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  }
+  .d4 .top-arc .name {
+    font-family: 'Bungee', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .d4 .top-arc .tag {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    margin-top: 2px;
+    color: #C8201A;
+    text-transform: uppercase;
+  }
+  .d4 .splash {
+    background: #C8201A;
+    color: #FFE15A;
+    margin: 12px 16px 0;
+    padding: 8px 10px;
+    text-align: center;
+    transform: rotate(-3deg);
+    border: 2px solid #FFE15A;
+  }
+  .d4 .splash .star {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .d4 .splash .pulp {
+    font-family: 'Bungee', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .d4 .clue {
+    flex: 1;
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFCEE;
+  }
+  .d4 .meta {
+    background: #FFD60A;
+    color: #0B7A3E;
+    padding: 6px 12px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* ═══════ D5 — SANGEET WEDDING CARD ═══════ */
+  .d5 {
+    background: #F1E8D2;
+    color: #1A0F08;
+    padding: 18px 18px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #B8862A;
+    box-shadow: 0 18px 36px -10px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .d5::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 3px double #B8862A;
+    pointer-events: none;
+  }
+  .d5::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid #B8862A;
+    pointer-events: none;
+  }
+  .d5 .corners { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; color: #B8862A; font-size: 14px; }
+  .d5 .inner { position: relative; z-index: 2; padding: 16px 8px 8px; text-align: center; flex: 1; display: flex; flex-direction: column; }
+  .d5 .pre {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #B8862A;
+  }
+  .d5 .swastika { color: #C8321A; font-size: 14px; margin: 4px 0; }
+  .d5 .devnag {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: 18px;
+    color: #C8321A;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+  .d5 .request {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #1A0F08;
+  }
+  .d5 .union {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1;
+    color: #C8321A;
+    margin: 8px 0;
+  }
+  .d5 .clue {
+    font-family: 'Yeseva One', serif;
+    font-size: 13px;
+    line-height: 1.25;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0;
+  }
+  .d5 .when {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #B8862A;
+    border-top: 1px solid #B8862A;
+    padding-top: 6px;
+  }
+
+  /* ═══════ D6 — FILM HOARDING ═══════ */
+  .d6 {
+    background: linear-gradient(180deg, #C8321A 0%, #6E0F1A 100%);
+    color: #FFE15A;
+    padding: 14px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 6px solid #FFE15A;
+    box-shadow: 0 22px 44px -10px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .d6 .above {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFFCEE;
+  }
+  .d6 .stars { text-align: center; color: #FFE15A; font-size: 14px; margin: 4px 0 6px; letter-spacing: 0.5em; }
+  .d6 .devnag {
+    font-family: 'Yatra One', serif;
+    font-size: 30px;
+    text-align: center;
+    color: #FFFCEE;
+    line-height: 1;
+    text-shadow: 2px 2px 0 #1A0F08;
+  }
+  .d6 .english {
+    font-family: 'Limelight', sans-serif;
+    font-size: 14px;
+    text-align: center;
+    color: #FFE15A;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .d6 .clue {
+    flex: 1;
+    font-family: 'Yeseva One', serif;
+    font-size: 18px;
+    line-height: 1.05;
+    text-align: center;
+    color: #FFFCEE;
+    padding: 10px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 0 #1A0F08;
+  }
+  .d6 .footer {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFE15A;
+    border-top: 2px solid #FFE15A;
+    padding-top: 6px;
+  }
+
+  /* ═══════ D7 — BOLLYWOOD QUEEN POSTER ═══════ */
+  .d7 {
+    background: #F1E8D2;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 22px 44px -10px rgba(0,0,0,0.5);
+    border: 8px solid;
+    border-image: repeating-linear-gradient(45deg, #C8321A 0 8px, #FFFCEE 8px 16px, #0B7A3E 16px 24px, #FFFCEE 24px 32px) 8;
+    display: flex;
+    flex-direction: column;
+  }
+  .d7 .inner-frame {
+    background: #F1E8D2;
+    flex: 1;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #1A0F08;
+    margin: 4px;
+  }
+  .d7 .head {
+    font-family: 'Yatra One', serif;
+    font-size: 26px;
+    text-align: center;
+    color: #C8321A;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .d7 .sub-en {
+    font-family: 'Limelight', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: #0B7A3E;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #1A0F08;
+    padding-bottom: 4px;
+  }
+  .d7 .clue {
+    flex: 1;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.2;
+    text-align: center;
+    color: #1A0F08;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .d7 .badge {
+    background: #C8321A;
+    color: #FFE15A;
+    text-align: center;
+    padding: 4px 10px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    align-self: center;
+    transform: rotate(-2deg);
+  }
+  .d7 .meta {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #1A0F08;
+    text-align: center;
+    border-top: 1px solid #1A0F08;
+    padding-top: 4px;
+    margin-top: 6px;
+  }
+
+  /* ═══════ D8 — ASTROLOGER COLUMN ═══════ */
+  .d8 {
+    background: #2E1A4D;
+    color: #FFE15A;
+    padding: 16px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #FFE15A;
+    box-shadow: 6px 6px 0 #C8321A;
+    position: relative;
+    overflow: hidden;
+  }
+  .d8::before {
+    content: "★ ☽ ✦ ✧ ★ ☽ ✦ ✧ ★ ☽ ✦ ✧ ★ ☽ ✦ ✧";
+    position: absolute;
+    inset: 0;
+    color: rgba(255,225,90,0.08);
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+    overflow: hidden;
+    pointer-events: none;
+    padding: 4px;
+  }
+  .d8 .top {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFE15A;
+    border-bottom: 1px solid #FFE15A;
+    padding-bottom: 4px;
+    position: relative;
+  }
+  .d8 .raashi {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: 18px;
+    color: #FFFCEE;
+    text-align: center;
+    margin: 8px 0 2px;
+    line-height: 1;
+    position: relative;
+  }
+  .d8 .moon {
+    font-family: 'Yatra One', serif;
+    font-size: 13px;
+    text-align: center;
+    color: #FFE15A;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .d8 .clue {
+    flex: 1;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.3;
+    text-align: center;
+    color: #FFFCEE;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .d8 .footer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFE15A;
+    border-top: 1px solid rgba(255,225,90,0.4);
+    padding-top: 6px;
+    position: relative;
+  }
+</style>
+
+<div class="desi-grid">
+
+  <!-- D1 — MATRIMONIAL AD -->
+  <div class="desi-item">
+    <div class="desi-card d1" data-choice="d1" onclick="this.classList.toggle('selected')">
+      <div class="head">★ Sunday Times Matrimonial ★</div>
+      <div class="matri-title">Wanted: A Suitable Guess</div>
+      <div class="photo">PHOTO<br>OF<br>FILM</div>
+      <div class="body">
+        <strong>BOLLYWOOD</strong>, 2009, medium build,<br>
+        engineering background, brooding,<br>
+        looking for a viewer who appreciates<br>
+        rooftop song sequences and<br>
+        professorial monologues.<br><br>
+        <strong>Caste no bar.</strong>
+      </div>
+      <div class="footer">Box № 042 · Reply within</div>
+    </div>
+    <div class="desi-tag">D1 · Matrimonial Ad</div>
+    <div class="desi-sub">Sunday Times marriage column. "Wanted: a suitable guess." Tilted, framed, peak desi newspaper energy.</div>
+  </div>
+
+  <!-- D2 — LOTTERY TICKET -->
+  <div class="desi-item">
+    <div class="desi-card d2" data-choice="d2" onclick="this.classList.toggle('selected')">
+      <div class="top">
+        <div class="super">★ Filmi Lucky Draw ★</div>
+        <div class="name">BAD<span class="accent">PLOTS</span></div>
+      </div>
+      <div class="mid">
+        <div class="draw">— Bumper Round —</div>
+        <div class="clue">Three engineers learn life is not MCQ</div>
+        <div class="stars">★ ★ ★</div>
+        <div class="number">№ 0042-BW</div>
+      </div>
+      <div class="bottom">Scratch to reveal answer</div>
+    </div>
+    <div class="desi-tag">D2 · Lottery Ticket</div>
+    <div class="desi-sub">Indian state lottery: chrome yellow, dashed perforation, Bungee mascot type, lucky draw serial number.</div>
+  </div>
+
+  <!-- D3 — AUTO-RICKSHAW -->
+  <div class="desi-item">
+    <div class="desi-card d3" data-choice="d3" onclick="this.classList.toggle('selected')">
+      <div class="horn">★ Horn OK Please ★</div>
+      <div class="icons">♥ ☆ ✿ ☆ ♥</div>
+      <div class="devnag">बॉलीवुड</div>
+      <div class="clue">"Three engineer life is not MCQ"</div>
+      <div class="footer-row">
+        <span class="red">2009 · MED</span>
+        <span>tap →</span>
+      </div>
+    </div>
+    <div class="desi-tag">D3 · Auto-Rickshaw</div>
+    <div class="desi-sub">Painted yellow side panel, "HORN OK PLEASE", hand-lettered Permanent Marker clue, hearts and stars row.</div>
+  </div>
+
+  <!-- D4 — LIMCA LABEL -->
+  <div class="desi-item">
+    <div class="desi-card d4" data-choice="d4" onclick="this.classList.toggle('selected')">
+      <div class="top-arc">
+        <div class="name">PLOTSY</div>
+        <div class="tag">— filmi flavour —</div>
+      </div>
+      <div class="splash">
+        <div class="star">★ NEW ★</div>
+        <div class="pulp">100% PULP</div>
+      </div>
+      <div class="clue">"Three engineers learn life isn't MCQ"</div>
+      <div class="meta">Bollywood · 2009 · Med · Tap to open</div>
+    </div>
+    <div class="desi-tag">D4 · Fruit Drink Label</div>
+    <div class="desi-sub">Limca/Frooti vintage Indian beverage. Green bottle, yellow arc top, red splash badge, "100% PULP", Bungee chrome type.</div>
+  </div>
+
+  <!-- D5 — SANGEET WEDDING -->
+  <div class="desi-item">
+    <div class="desi-card d5" data-choice="d5" onclick="this.classList.toggle('selected')">
+      <div class="corners"><span>❀</span><span>❀</span></div>
+      <div class="inner">
+        <div class="pre">— with the blessings of —</div>
+        <div class="swastika">卍 · ॐ · 卍</div>
+        <div class="devnag">शुभ विवाह</div>
+        <div class="request">Mr. and Mrs. Cinema cordially request your presence at the union of</div>
+        <div class="union">Bollywood<br>&amp;<br>Tollywood</div>
+        <div class="clue">"Three engineers learn life isn't a multiple choice question"</div>
+        <div class="when">2009 · Medium · RSVP</div>
+      </div>
+    </div>
+    <div class="desi-tag">D5 · Sangeet Card</div>
+    <div class="desi-sub">Wedding/sangeet invitation. Triple gold border, Devanagari शुभ विवाह, "the union of Bollywood & Tollywood", floral corners.</div>
+  </div>
+
+  <!-- D6 — FILM HOARDING -->
+  <div class="desi-item">
+    <div class="desi-card d6" data-choice="d6" onclick="this.classList.toggle('selected')">
+      <div class="above">★ Now Showing ★ Sold Out ★</div>
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <div class="devnag">तीन इडियट</div>
+      <div class="english">Bollywood Cinema</div>
+      <div class="clue">"Three engineers learn life is not multiple choice"</div>
+      <div class="footer">★ A Filmi Spectacle ★ 2009 ★</div>
+    </div>
+    <div class="desi-tag">D6 · Painted Hoarding</div>
+    <div class="desi-sub">Single-screen cinema painted hoarding. Crimson + gold border, Devanagari title bigger than English, theatrical frame.</div>
+  </div>
+
+  <!-- D7 — BOLLYWOOD QUEEN POSTER -->
+  <div class="desi-item">
+    <div class="desi-card d7" data-choice="d7" onclick="this.classList.toggle('selected')">
+      <div class="inner-frame">
+        <div class="head">बॉलीवुड क्वीन</div>
+        <div class="sub-en">Bollywood Queen</div>
+        <div class="clue">"Three engineers learn life is not a multiple choice question"</div>
+        <div class="badge">★ Filmfare Pick ★</div>
+        <div class="meta">2009 · Medium · Original Print</div>
+      </div>
+    </div>
+    <div class="desi-tag">D7 · Bollywood Queen Poster</div>
+    <div class="desi-sub">Vintage poster from your mood board. Pink/cream/green checker border, Devanagari title, italic cover line.</div>
+  </div>
+
+  <!-- D8 — ASTROLOGER COLUMN -->
+  <div class="desi-item">
+    <div class="desi-card d8" data-choice="d8" onclick="this.classList.toggle('selected')">
+      <div class="top">★ Today's Filmi Raashi ★</div>
+      <div class="raashi">कन्या राशि</div>
+      <div class="moon">— Bollywood ascendant —</div>
+      <div class="clue">"You will encounter three engineers and a professor. Trust the rooftop song."</div>
+      <div class="footer">2009 · Med · Pluto retrograde</div>
+    </div>
+    <div class="desi-tag">D8 · Astrologer Column</div>
+    <div class="desi-sub">Newspaper filmi horoscope. Midnight purple, gold stars, Devanagari राशि, italic prediction-as-clue.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Multi-select on. Tell me which 1-3 are doing it. Best moves usually have the strongest cultural specificity (D1 matrimonial, D2 lottery, D5 sangeet are doing the most ownable work). Or tell me to swing harder in any direction.
+</p>

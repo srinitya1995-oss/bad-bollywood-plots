@@ -1,0 +1,707 @@
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Big+Shoulders+Display:wght@700;900&family=Bowlby+One&family=Caveat+Brush&family=DM+Serif+Display:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Mono:wght@400;700&family=Khand:wght@500;700&family=Limelight&family=Permanent+Marker&family=Rozha+One&family=Special+Elite&family=Yatra+One&family=Yeseva+One&display=swap" rel="stylesheet">
+
+<div style="background:#EBDEC1; padding: 24px 28px; border-radius: 6px; color:#1A0F08; font-family:'Khand',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1A0F08;border-bottom:1px solid #1A0F08;padding:8px 0 6px;font-weight:500;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;">
+    <span>VOL. I · A PARTY GAME</span>
+    <span style="font-family:'Yatra One',serif;font-size:14px;letter-spacing:0.04em;text-transform:none;">अंक १</span>
+    <span>FOUR FRIENDS MIN.</span>
+  </div>
+  <h2 style="font-family:'Anton',sans-serif;font-size:54px;line-height:0.85;margin:14px 0 4px;color:#1A0F08;text-transform:uppercase;letter-spacing:-0.02em;">Card lab — pick a metaphor</h2>
+  <p style="font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.45;color:#3D2814;margin:0 0 4px;max-width:640px;">
+    Eight different physical objects the card could be. Same clue text in every one. The metaphor is doing the work — that's where the soul lives. Click the ones that speak. Tell me to push any of them harder.
+  </p>
+</div>
+
+<style>
+  .meta-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .meta-item { display: flex; flex-direction: column; align-items: center; }
+  .meta-card {
+    width: 260px;
+    height: 360px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    position: relative;
+    border: 3px solid transparent;
+  }
+  .meta-card:hover { transform: translateY(-4px); }
+  .meta-card.selected {
+    border-color: #FFD60A;
+    box-shadow: 0 0 0 6px rgba(255,214,10,0.2);
+  }
+  .meta-tag {
+    margin-top: 14px;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+  }
+  .meta-sub {
+    margin-top: 4px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    max-width: 260px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ═══════ M1 — CINEMA TICKET STUB ═══════ */
+  .m1 {
+    background: #F4E89A;
+    color: #2A0808;
+    font-family: 'IBM Plex Mono', monospace;
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    border: 2px solid #2A0808;
+    box-shadow: 6px 6px 0 #C8201A;
+    overflow: hidden;
+  }
+  .m1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 4px;
+    background-image: radial-gradient(circle at 4px 2px, #2A0808 1.2px, transparent 2px);
+    background-size: 8px 4px;
+  }
+  .m1 .stub-main {
+    padding: 22px 18px 16px;
+    border-right: 2px dashed #2A0808;
+    display: flex;
+    flex-direction: column;
+  }
+  .m1 .stub-head {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    margin-bottom: 4px;
+  }
+  .m1 .stub-cinema {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    border-bottom: 2px double #2A0808;
+    padding-bottom: 8px;
+  }
+  .m1 .stub-clue {
+    flex: 1;
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 6px 0;
+  }
+  .m1 .stub-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .m1 .stub-tap {
+    margin-top: 6px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    background: #2A0808;
+    color: #F4E89A;
+    padding: 5px 0;
+    margin-left: -18px;
+    margin-right: -18px;
+    margin-bottom: -16px;
+  }
+  .m1 .stub-side {
+    background: #C8201A;
+    color: #F4E89A;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding: 14px 6px;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-align: center;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* ═══════ M2 — VINTAGE MOVIE POSTER ═══════ */
+  .m2 {
+    background: linear-gradient(180deg, #E63946 0%, #B81C2A 60%, #6E0F1A 100%);
+    color: #F2EDE4;
+    padding: 18px 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 6px solid #1A0F08;
+    box-shadow: 8px 8px 0 #1A0F08;
+    overflow: hidden;
+  }
+  .m2 .top-credit {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFD27A;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 6px;
+  }
+  .m2 .actor-block {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .m2 .actor-block .clue {
+    font-family: 'Yeseva One', serif;
+    font-size: 22px;
+    line-height: 1.05;
+    color: #F2EDE4;
+    text-shadow: 2px 2px 0 #1A0F08;
+  }
+  .m2 .title-block {
+    text-align: center;
+    border-top: 2px solid #FFD27A;
+    border-bottom: 2px solid #FFD27A;
+    padding: 8px 0;
+    margin: 6px 0 4px;
+  }
+  .m2 .title-block .lbl {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #FFD27A;
+  }
+  .m2 .bottom-row {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(242,237,228,0.75);
+  }
+
+  /* ═══════ M3 — NEWSPAPER CLIPPING ═══════ */
+  .m3 {
+    background: #F1E8D2;
+    color: #1A0F08;
+    padding: 18px 16px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 22px 40px -10px rgba(0,0,0,0.4);
+    transform: rotate(-2deg);
+    border: 1px solid #C8B585;
+  }
+  .m3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(26,15,8,0.08) 0.6px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+  }
+  .m3 .dateline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-top: 1px solid #1A0F08;
+    border-bottom: 1px solid #1A0F08;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .m3 .kicker {
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #C8321A;
+    margin-top: 12px;
+  }
+  .m3 .headline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.05;
+    margin: 6px 0 8px;
+  }
+  .m3 .byline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 9px;
+    margin-bottom: 8px;
+    border-bottom: 1px dotted #1A0F08;
+    padding-bottom: 6px;
+  }
+  .m3 .lede {
+    font-family: 'Fraunces', serif;
+    font-size: 11px;
+    line-height: 1.4;
+    flex: 1;
+    column-count: 2;
+    column-gap: 10px;
+    column-rule: 1px solid rgba(26,15,8,0.2);
+  }
+  .m3 .lede::first-letter {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    float: left;
+    line-height: 0.85;
+    padding: 4px 4px 0 0;
+  }
+  .m3 .turn {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 9px;
+    text-align: right;
+    margin-top: 4px;
+    opacity: 0.75;
+  }
+
+  /* ═══════ M4 — POLAROID PHOTO ═══════ */
+  .m4 {
+    background: #FFFCEE;
+    padding: 14px 14px 56px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 28px 50px -14px rgba(0,0,0,0.6),
+      inset 0 -2px 6px rgba(0,0,0,0.04);
+    transform: rotate(2deg);
+  }
+  .m4 .photo {
+    flex: 1;
+    background: linear-gradient(135deg, #1A0F08 0%, #3D2814 50%, #2A1A0E 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .m4 .photo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(255,210,140,0.25) 0%, transparent 50%),
+      radial-gradient(circle at 70% 80%, rgba(0,0,0,0.5) 0%, transparent 60%);
+  }
+  .m4 .photo .clue {
+    position: relative;
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1;
+    color: #F4E0B8;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  }
+  .m4 .caption {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 14px;
+    color: #1A0F08;
+    text-align: center;
+    margin-top: 12px;
+    line-height: 1;
+  }
+  .m4 .corner-stamp {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    color: rgba(26,15,8,0.4);
+    transform: rotate(2deg);
+  }
+
+  /* ═══════ M5 — FILMFARE COVER ═══════ */
+  .m5 {
+    background: #1A0F08;
+    color: #FFFCEE;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #B8862A;
+    box-shadow: 0 22px 40px -8px rgba(0,0,0,0.6);
+  }
+  .m5 .masthead {
+    font-family: 'Limelight', sans-serif;
+    font-size: 26px;
+    color: #C8321A;
+    text-align: center;
+    line-height: 1;
+    border-bottom: 2px solid #C8321A;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .m5 .ish {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    color: #B8862A;
+    text-align: right;
+    margin-top: 4px;
+  }
+  .m5 .coverline {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding: 8px 0 4px;
+  }
+  .m5 .coverline .clue {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1;
+  }
+  .m5 .coverline .clue .accent {
+    color: #C8321A;
+  }
+  .m5 .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 10px;
+    color: #B8862A;
+    border-top: 1px solid rgba(184,134,42,0.4);
+    padding-top: 8px;
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+  .m5 .badge {
+    position: absolute;
+    top: 90px;
+    right: 14px;
+    background: #C8321A;
+    color: #FFFCEE;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    transform: rotate(8deg);
+    line-height: 1;
+    text-align: center;
+    box-shadow: 3px 3px 0 #1A0F08;
+  }
+  .m5 .badge small { font-size: 7px; margin-top: 2px; }
+
+  /* ═══════ M6 — INDEX / LIBRARY CARD ═══════ */
+  .m6 {
+    background: #F0E6CC;
+    color: #1A0F08;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #C8B585;
+    box-shadow: 0 18px 36px -10px rgba(0,0,0,0.4);
+    background-image:
+      linear-gradient(transparent 22px, #B0A37C 22px, #B0A37C 23px, transparent 23px),
+      linear-gradient(180deg, transparent 0, transparent 30px, #C8201A 30px, #C8201A 31px, transparent 31px);
+    background-size: 100% 24px, 100% 100%;
+  }
+  .m6 .stamp {
+    border-bottom: 1px solid #C8B585;
+    padding: 6px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    color: #6B4A20;
+  }
+  .m6 .body {
+    flex: 1;
+    padding: 12px 14px;
+    font-family: 'Special Elite', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .m6 .body .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #C8201A;
+  }
+  .m6 .body .field { margin-bottom: 4px; }
+
+  /* ═══════ M7 — MASSIVE TYPE SLAB ═══════ */
+  .m7 {
+    background: #1A0F08;
+    color: #F1E8D2;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 22px 40px -8px rgba(0,0,0,0.6);
+  }
+  .m7 .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Khand', sans-serif;
+    font-weight: 700;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #C8321A;
+    border-bottom: 1px solid #C8321A;
+    padding-bottom: 6px;
+  }
+  .m7 .clue {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 38px;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #F1E8D2;
+    padding: 14px 0;
+  }
+  .m7 .clue .accent { color: #C8321A; }
+  .m7 .footer {
+    font-family: 'Khand', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(241,232,210,0.5);
+    border-top: 1px solid rgba(241,232,210,0.18);
+    padding-top: 6px;
+    text-align: right;
+  }
+
+  /* ═══════ M8 — TELEGRAM / AIRMAIL ═══════ */
+  .m8 {
+    background: #FFFCEE;
+    color: #1A0F08;
+    padding: 14px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    box-shadow:
+      0 0 0 4px transparent,
+      0 18px 36px -10px rgba(0,0,0,0.4);
+    background-image:
+      linear-gradient(#FFFCEE,#FFFCEE),
+      repeating-linear-gradient(45deg, #1A0F08 0 8px, transparent 8px 16px, #C8201A 16px 24px, transparent 24px 32px);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+  .m8 .top {
+    font-family: 'Bowlby One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    border: 2px solid #1A0F08;
+    padding: 5px 0;
+    margin-bottom: 10px;
+  }
+  .m8 .from {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .m8 .from div { margin-bottom: 1px; }
+  .m8 .body {
+    flex: 1;
+    font-family: 'Special Elite', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    padding: 6px 0;
+  }
+  .m8 .body .stop { color: #C8201A; font-weight: 700; }
+  .m8 .footer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    text-align: right;
+    border-top: 1px dashed #1A0F08;
+    padding-top: 6px;
+  }
+</style>
+
+<div class="meta-grid">
+
+  <!-- M1 — CINEMA TICKET STUB -->
+  <div class="meta-item">
+    <div class="meta-card m1" data-choice="m1" onclick="toggleSelect(this)">
+      <div class="stub-main">
+        <div class="stub-head">★ ADMIT ONE ★</div>
+        <div class="stub-cinema">Bollywood<br>Cinema</div>
+        <div class="stub-clue">Three engineers learn life is not multiple choice</div>
+        <div class="stub-row">
+          <span>Row M Seat 12</span>
+          <span>2009 · Med</span>
+        </div>
+        <div class="stub-tap">Tap to reveal answer</div>
+      </div>
+      <div class="stub-side">No.<br>0042<br><br>BAD<br>PLOT</div>
+    </div>
+    <div class="meta-tag">M1 · Cinema Ticket</div>
+    <div class="meta-sub">Yellow stub with red side, perforated edge, monospace serial. You tear it off to play.</div>
+  </div>
+
+  <!-- M2 — VINTAGE MOVIE POSTER -->
+  <div class="meta-item">
+    <div class="meta-card m2" data-choice="m2" onclick="toggleSelect(this)">
+      <div class="top-credit">A Bad Plots Original ★ 2026</div>
+      <div class="actor-block">
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+      </div>
+      <div class="title-block">
+        <div class="lbl">— Bollywood · Medium —</div>
+      </div>
+      <div class="bottom-row">तीन यार · in technicolor</div>
+    </div>
+    <div class="meta-tag">M2 · Movie Poster</div>
+    <div class="meta-sub">Painted Bollywood hoarding. Crimson gradient, double gold rule, hand-shadowed type.</div>
+  </div>
+
+  <!-- M3 — NEWSPAPER CLIPPING -->
+  <div class="meta-item">
+    <div class="meta-card m3" data-choice="m3" onclick="toggleSelect(this)">
+      <div class="dateline"><span>FILMI TIMES</span><span>FRI · MED · 2009</span></div>
+      <div class="kicker">— Bollywood Desk —</div>
+      <div class="headline">"Three Engineers Learn Life Isn't Multiple Choice"</div>
+      <div class="byline">filed by R. Mehta · screening room correspondent</div>
+      <div class="lede">A trio of unwilling pupils discover the syllabus does not match the world. Their professor is unconvinced. Hijinks of a deeply earnest variety ensue, set to a medley of inspirational songs filmed largely on rooftops at golden hour.</div>
+      <div class="turn">turn page →</div>
+    </div>
+    <div class="meta-tag">M3 · Newspaper Clipping</div>
+    <div class="meta-sub">Two-column lede, drop cap, dateline, byline. A torn page from FILMI TIMES. Rotated 2°.</div>
+  </div>
+
+  <!-- M4 — POLAROID -->
+  <div class="meta-item">
+    <div class="meta-card m4" data-choice="m4" onclick="toggleSelect(this)">
+      <div class="photo">
+        <div class="clue">Three engineers learn life is not multiple choice</div>
+      </div>
+      <div class="caption">three idiots? IIT? — Diwali 09</div>
+      <div class="corner-stamp">SX-70 · 042</div>
+    </div>
+    <div class="meta-tag">M4 · Polaroid</div>
+    <div class="meta-sub">Snap from someone's living room movie night. Sharpie caption, Fuji corner stamp.</div>
+  </div>
+
+  <!-- M5 — FILMFARE COVER -->
+  <div class="meta-item">
+    <div class="meta-card m5" data-choice="m5" onclick="toggleSelect(this)">
+      <div class="masthead">FILMFARE</div>
+      <div class="ish">VOL. 56 · ISSUE 11 · ₹40</div>
+      <div class="badge">42<small>RATING</small></div>
+      <div class="coverline">
+        <div class="clue">"Three engineers <span class="accent">learn life</span> isn't multiple choice"</div>
+      </div>
+      <div class="quote">— exclusive: the rooftop song scene that broke an industry. inside.</div>
+    </div>
+    <div class="meta-tag">M5 · Filmfare Cover</div>
+    <div class="meta-sub">Vintage film magazine. Limelight masthead, crimson splash circle, italic cover line.</div>
+  </div>
+
+  <!-- M6 — INDEX / LIBRARY CARD -->
+  <div class="meta-item">
+    <div class="meta-card m6" data-choice="m6" onclick="toggleSelect(this)">
+      <div class="stamp"><span>FILMI ARCHIVE</span><span>CAT. № 0042</span></div>
+      <div class="body">
+        <div class="field"><span class="label">Industry:</span> Bollywood</div>
+        <div class="field"><span class="label">Era:</span> 2009 · Medium</div>
+        <div class="field"><span class="label">Synopsis:</span></div>
+        <div class="field">Three engineers learn life is not multiple choice. Professor disagrees.</div>
+      </div>
+    </div>
+    <div class="meta-tag">M6 · Library Card</div>
+    <div class="meta-sub">Beige ruled card, red margin line, typewriter monospace. Filmi Archive cataloguing.</div>
+  </div>
+
+  <!-- M7 — MASSIVE TYPE SLAB -->
+  <div class="meta-item">
+    <div class="meta-card m7" data-choice="m7" onclick="toggleSelect(this)">
+      <div class="top"><span>Bollywood</span><span>2009 · Med</span></div>
+      <div class="clue">THREE<br>ENGINEERS<br>LEARN <span class="accent">LIFE</span><br>ISN'T MCQ</div>
+      <div class="footer">Tap to reveal answer →</div>
+    </div>
+    <div class="meta-tag">M7 · Type Slab</div>
+    <div class="meta-sub">Black card, no decoration, just Anton at 38px filling the entire face. Tomato accent on one word.</div>
+  </div>
+
+  <!-- M8 — TELEGRAM / AIRMAIL -->
+  <div class="meta-item">
+    <div class="meta-card m8" data-choice="m8" onclick="toggleSelect(this)">
+      <div class="top">★ Telegram ★</div>
+      <div class="from">
+        <div>FROM: BOLLYWOOD CINEMA</div>
+        <div>TO:   YOU</div>
+        <div>DATE: 2009 · MED</div>
+      </div>
+      <div class="body">THREE ENGINEERS <span class="stop">STOP</span> LEARN LIFE NOT MCQ <span class="stop">STOP</span> PROFESSOR DISAGREES <span class="stop">FULL STOP</span></div>
+      <div class="footer">042 · END OF MESSAGE</div>
+    </div>
+    <div class="meta-tag">M8 · Telegram</div>
+    <div class="meta-sub">Airmail-bordered envelope. Typewriter STOP-STOP-STOP body. Vintage urgent.</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:36px;text-align:center;">
+Click as many as you want — multi-select on. Tell me which 1-3 to push to full game-screen fidelity. Best moves are usually the ones with the strongest physical metaphor (M1 ticket, M3 clipping, M4 polaroid, M5 cover all have it).
+</p>
+<script>
+  // Enable multi-select on the wrapping cards
+  document.querySelectorAll('.meta-card').forEach(c => {
+    c.addEventListener('click', function() {
+      this.classList.toggle('selected');
+    });
+  });
+</script>

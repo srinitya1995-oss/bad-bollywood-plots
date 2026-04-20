@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — Clean Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5EBD4;
+    --paper-deep: #EADFBF;
+    --ink: #1A1208;
+    --ink-soft: #5a4a30;
+    --pen: #1B3F8C;
+    --stage: #1e140a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--stage);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    color: var(--paper);
+  }
+
+  .phone {
+    width: 390px;
+    height: 844px;
+    border-radius: 44px;
+    background: var(--stage);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 8px #0a0503, 0 0 0 10px #1f1208;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 26px;
+    background: #0a0503;
+    border-radius: 14px;
+    z-index: 10;
+  }
+
+  /* quiet top bar — just score info, no chrome */
+  .meta-bar {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    padding: 4px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--paper);
+    opacity: 0.7;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    z-index: 5;
+  }
+  .meta-bar .score {
+    color: var(--paper);
+  }
+
+  /* THE CARD — ink on cream, nothing else */
+  .card {
+    position: absolute;
+    top: 152px;
+    left: 24px;
+    right: 24px;
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 28px 30px 24px;
+    border: 1px solid rgba(26,18,8,0.2);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+    min-height: 460px;
+  }
+
+  .card-wordmark {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.6;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(26,18,8,0.15);
+  }
+
+  .card-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.45;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    margin-bottom: 22px;
+  }
+
+  .card-plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 1.28;
+    color: var(--ink);
+    text-align: left;
+    letter-spacing: -0.005em;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-pen {
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1;
+    color: var(--pen);
+    text-align: left;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(26,18,8,0.18);
+    opacity: 0.85;
+  }
+
+  .card-foot {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.45;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+  }
+
+  /* bottom actions — minimal, outlined */
+  .actions {
+    position: absolute;
+    bottom: 28px;
+    left: 24px;
+    right: 24px;
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+  }
+  .btn {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 15px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(245,235,212,0.35);
+    background: transparent;
+    color: var(--paper);
+  }
+  .btn.primary {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+    flex: 1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+
+    <div class="meta-bar">
+      <span>Turn 3</span>
+      <span class="score">12 PTS</span>
+    </div>
+
+    <div class="card">
+      <div class="card-wordmark">Bad Desi Plots</div>
+      <div class="card-num">
+        <span>No. 024</span>
+        <span>Bollywood · Medium</span>
+      </div>
+      <div class="card-plot">
+        A grieving dancer trains a blind girl to sing in a Greek villa while his mother disapproves. A chiffon saree is always flying.
+      </div>
+      <div class="card-pen">
+        arrey itna SAD kyun banaya??
+      </div>
+      <div class="card-foot">
+        <span>Worth 2 pts</span>
+        <span>Pass the phone</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn">Skip</button>
+      <button class="btn primary">Flip Card</button>
+    </div>
+  </div>
+</body>
+</html>

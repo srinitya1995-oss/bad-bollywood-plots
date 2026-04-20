@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bad Desi Plots — playable v6.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:wght@400;500;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6EBD1;
+    --paper-warm: #F4E4C4;
+    --ink: #1A1208;
+    --ink-soft: rgba(26,18,8,0.55);
+    --ink-line: rgba(26,18,8,0.22);
+    --tomato: #C8321C;
+    --ok: #3A7A4F;
+    --gold: #F7D05B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    background: #2a1d10;
+    overflow-x: hidden;
+  }
+
+  /* BG */
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: radial-gradient(ellipse at center, #3a2512 0%, #1a0e06 70%, #0a0604 100%);
+  }
+  .bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 85%;
+    filter: saturate(1.08) contrast(1.04);
+  }
+  @media (min-width: 900px) {
+    /* Desktop: kill the photo, use a warm painted gradient */
+    .bg {
+      background:
+        radial-gradient(ellipse 62% 55% at 50% 42%, rgba(247,208,91,0.09) 0%, transparent 72%),
+        radial-gradient(ellipse 90% 100% at 50% 60%, #3a1a0a 0%, #1d0a04 58%, #080301 100%);
+    }
+    .bg img { display: none; }
+  }
+  .wash {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg,
+      rgba(40,24,8,0.35) 0%,
+      rgba(40,24,8,0.00) 18%,
+      rgba(20,14,6,0.00) 58%,
+      rgba(10,6,2,0.55) 100%);
+    pointer-events: none;
+  }
+  @media (min-width: 900px) {
+    .wash {
+      background:
+        linear-gradient(180deg, rgba(10,4,2,0.25) 0%, rgba(10,4,2,0.0) 22%, rgba(10,4,2,0.0) 74%, rgba(10,4,2,0.55) 100%);
+    }
+  }
+
+  /* Film-grain noise layer (desktop only) */
+  @media (min-width: 900px) {
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.15 0 0 0 0.25 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.35;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+  }
+
+  /* Fairy lights strip across the top (desktop only) */
+  .fairy-strip {
+    display: none;
+    position: fixed;
+    top: 74px;
+    left: 40px;
+    right: 40px;
+    height: 44px;
+    z-index: 2;
+    pointer-events: none;
+    align-items: center;
+    justify-content: space-between;
+  }
+  @media (min-width: 900px) { .fairy-strip { display: flex; } }
+  .fairy-strip::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(247,208,91,0.22) 8%, rgba(247,208,91,0.22) 92%, transparent 100%);
+    transform: translateY(-50%);
+  }
+  .light {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff4d4 0%, #f7d05b 40%, rgba(247,208,91,0.2) 100%);
+    box-shadow:
+      0 0 14px 3px rgba(247,208,91,0.55),
+      0 0 34px 8px rgba(247,208,91,0.25),
+      0 0 56px 14px rgba(247,208,91,0.1);
+    position: relative;
+    z-index: 1;
+  }
+  .light:nth-child(1)  { transform: translateY(-4px); }
+  .light:nth-child(2)  { transform: translateY(5px); }
+  .light:nth-child(3)  { transform: translateY(-2px); }
+  .light:nth-child(4)  { transform: translateY(7px); }
+  .light:nth-child(5)  { transform: translateY(-3px); }
+  .light:nth-child(6)  { transform: translateY(4px); }
+  .light:nth-child(7)  { transform: translateY(-5px); }
+  .light:nth-child(8)  { transform: translateY(6px); }
+  .light:nth-child(9)  { transform: translateY(-1px); }
+  .light:nth-child(10) { transform: translateY(3px); }
+  .light:nth-child(11) { transform: translateY(-4px); }
+  .light:nth-child(12) { transform: translateY(5px); }
+  .light:nth-child(13) { transform: translateY(-2px); }
+  .light:nth-child(14) { transform: translateY(4px); }
+
+  /* MASTHEAD */
+  .mast {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 22px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--paper);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    z-index: 20;
+    background: linear-gradient(180deg, rgba(15,8,3,0.75), rgba(15,8,3,0));
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+  .mast .word {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+  .mast .status {
+    font-size: 10px;
+    color: var(--paper);
+    opacity: 0.95;
+  }
+  .mast .status .sep { opacity: 0.4; margin: 0 8px; }
+  .mast .status .pts { color: var(--gold); }
+  @media (min-width: 900px) {
+    .mast { padding: 22px 44px; }
+    .mast .word { font-size: 15px; }
+    .mast .status { font-size: 11px; letter-spacing: 0.3em; }
+  }
+
+  /* STAGE */
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 20px 40px;
+  }
+  @media (min-width: 900px) {
+    .stage { padding: 110px 40px 60px; }
+  }
+
+  /* SCREENS */
+  .screen { display: none; flex-direction: column; align-items: center; width: 100%; }
+  .screen.active { display: flex; }
+
+  /* CARD BASE */
+  .card {
+    width: min(540px, 100%);
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 36px 30px 34px;
+    box-shadow: 0 36px 90px rgba(0,0,0,0.55), 0 0 0 1px rgba(26,18,8,0.15);
+    position: relative;
+  }
+  @media (min-width: 900px) {
+    .card { width: 600px; padding: 48px 54px 42px; }
+  }
+
+  /* INDUSTRY PILL (top of card) */
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--ink-line);
+    color: var(--ink-soft);
+  }
+  .pill.bw { border-color: rgba(200,50,28,0.35); color: var(--tomato); }
+  .pill.tw { border-color: rgba(58,122,79,0.35); color: var(--ok); }
+
+  /* LANDING TITLE CARD */
+  .title-card { text-align: center; padding: 44px 30px 38px; }
+  .title-card .kicker {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .title-card .title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 58px;
+    line-height: 0.88;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-top: 28px;
+  }
+  .title-card .amp {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--tomato);
+    margin-top: 14px;
+    letter-spacing: -0.01em;
+  }
+  .title-card .tag {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.38;
+    color: var(--ink);
+    margin: 26px auto 0;
+    max-width: 440px;
+  }
+  @media (min-width: 900px) {
+    .title-card { padding: 56px 64px 48px; }
+    .title-card .title { font-size: 96px; margin-top: 36px; }
+    .title-card .amp { font-size: 36px; margin-top: 14px; }
+    .title-card .tag { font-size: 19px; max-width: 460px; }
+  }
+
+  /* PLOT CARD (front) — only plot text */
+  .plot-card {
+    text-align: left;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .plot-card .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .plot-card .plot {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.28;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .plot-card .hint-row {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink-line);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  @media (min-width: 900px) {
+    .plot-card { min-height: 420px; }
+    .plot-card .plot { font-size: 30px; line-height: 1.26; }
+  }
+
+  /* REVEAL CARD (back) */
+  .reveal-card {
+    text-align: left;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+  }
+  .reveal-card .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .reveal-card .movie {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .reveal-card .year {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--tomato);
+    margin-top: 8px;
+    letter-spacing: -0.005em;
+  }
+  .reveal-card .divider {
+    height: 1px;
+    background: var(--ink-line);
+    margin: 26px 0 18px;
+  }
+  .reveal-card .fun-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .reveal-card .fun {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  @media (min-width: 900px) {
+    .reveal-card { min-height: 420px; }
+    .reveal-card .movie { font-size: 72px; }
+    .reveal-card .year { font-size: 28px; }
+    .reveal-card .fun { font-size: 18px; }
+  }
+
+  /* REAL 3D FLIP */
+  .card-flipper {
+    width: min(540px, 100%);
+    perspective: 1800px;
+  }
+  @media (min-width: 900px) {
+    .card-flipper { width: 600px; }
+  }
+  .card-3d {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .card-3d.flipped { transform: rotateY(180deg); }
+  .face {
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .face.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+  }
+
+  /* NAME ENTRY */
+  .names-card { text-align: left; }
+  .names-card h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .names-card .sub {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.38;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
+  .names-list {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .name-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--ink-line);
+    padding: 10px 0;
+  }
+  .name-input .num {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    color: var(--ink-soft);
+    min-width: 40px;
+  }
+  .name-input input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink);
+    padding: 4px 0;
+  }
+  .name-input input::placeholder { color: rgba(26,18,8,0.3); font-style: italic; }
+  .name-input .remove {
+    background: transparent;
+    border: none;
+    color: var(--ink-soft);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  .add-player {
+    margin-top: 14px;
+    background: transparent;
+    border: 1px dashed var(--ink-line);
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    width: 100%;
+  }
+  @media (min-width: 900px) {
+    .names-card h2 { font-size: 44px; }
+    .names-card .sub { font-size: 18px; }
+    .name-input input { font-size: 26px; }
+  }
+
+  /* TURN INTERSTITIAL */
+  .turn-card { text-align: center; }
+  .turn-card .kicker {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .turn-card .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-top: 32px;
+  }
+  .turn-card .instruct {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--tomato);
+    margin-top: 14px;
+  }
+  .turn-card .standings {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink-line);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 16px;
+  }
+  .turn-card .stand-item {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .turn-card .stand-item .s { color: var(--ink); font-weight: 600; margin-left: 4px; }
+  .turn-card .stand-item.leader .s { color: var(--tomato); }
+  @media (min-width: 900px) {
+    .turn-card .name { font-size: 84px; margin-top: 38px; }
+    .turn-card .instruct { font-size: 24px; }
+  }
+
+  /* FINAL VERDICT */
+  .final-card { text-align: center; }
+  .final-card .kicker {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .final-card .score-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 128px;
+    line-height: 0.88;
+    color: var(--ink);
+    margin: 26px 0 4px;
+    letter-spacing: -0.035em;
+  }
+  .final-card .score-out {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--tomato);
+    margin-bottom: 22px;
+  }
+  .final-card .verdict {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    line-height: 1.32;
+    padding: 20px 6px;
+    border-top: 1px solid var(--ink-line);
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .final-card .leader {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .final-card .leader-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ink-line);
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+  }
+  .final-card .leader-row .rank {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    min-width: 40px;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .final-card .leader-row .who { flex: 1; text-align: left; padding-left: 6px; }
+  .final-card .leader-row .pts { color: var(--ink); font-weight: 600; }
+  .final-card .leader-row.crown {
+    border-bottom-color: var(--tomato);
+  }
+  .final-card .leader-row.crown .who {
+    font-weight: 600;
+    color: var(--tomato);
+  }
+  .final-card .leader-row.crown .rank { color: var(--tomato); }
+  .final-card .leader-row.crown .pts { color: var(--tomato); }
+  .final-card .crown-line {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--tomato);
+    margin: 18px 0 6px;
+  }
+  @media (min-width: 900px) {
+    .final-card .score-num { font-size: 180px; }
+    .final-card .verdict { font-size: 24px; }
+  }
+
+  /* ACTIONS */
+  .actions {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(540px, 100%);
+  }
+  @media (min-width: 900px) {
+    .actions { width: 600px; margin-top: 24px; }
+  }
+  .btn {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 17px 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(246,235,209,0.4);
+    background: rgba(20,16,8,0.55);
+    color: var(--paper);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: transform 120ms ease, background 120ms ease, opacity 120ms ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn:hover { transform: translateY(-1px); background: rgba(20,16,8,0.72); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn.primary {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+    font-size: 12px;
+  }
+  .btn.primary:hover { background: #fff4d9; }
+  .btn.green {
+    background: var(--ok);
+    color: var(--paper);
+    border-color: var(--ok);
+    font-size: 12px;
+  }
+  .btn.green:hover { background: #4a8c5d; }
+  .btn.red {
+    background: var(--tomato);
+    color: var(--paper);
+    border-color: var(--tomato);
+    font-size: 12px;
+  }
+  .btn.red:hover { background: #d94530; }
+  .btn-row { display: flex; gap: 10px; }
+  .btn-row .btn { flex: 1; }
+  @media (min-width: 900px) {
+    .btn { padding: 18px 34px; }
+    .btn.primary { padding: 20px 48px; }
+  }
+
+  /* Bottom chip (only on landing) */
+  .chip {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 18px 16px 22px;
+    text-align: center;
+    color: var(--paper);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    background: linear-gradient(180deg, rgba(15,8,3,0), rgba(15,8,3,0.65));
+    z-index: 5;
+    pointer-events: none;
+  }
+  @media (min-width: 900px) {
+    .chip { font-size: 10px; }
+  }
+
+  /* How to play modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,6,2,0.72);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 20px;
+  }
+  .modal.active { display: flex; }
+  .modal .sheet {
+    width: min(520px, 100%);
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 36px 32px 30px;
+    box-shadow: 0 36px 90px rgba(0,0,0,0.6);
+    text-align: left;
+  }
+  .modal h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .modal ol {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.45;
+    padding-left: 18px;
+  }
+  .modal ol li { margin-bottom: 10px; }
+  .modal .close-row {
+    margin-top: 22px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .modal .close-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ===== SCORING DISPLAY LAYER ===== */
+
+  /* Status strip: tier, pts, lives */
+  .mast .status .tier {
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.22em;
+  }
+  .mast .status .lives { letter-spacing: 0.14em; opacity: 0.95; }
+  .mast .status .pts {
+    color: var(--gold);
+    font-weight: 700;
+    transition: transform 180ms ease, color 180ms ease;
+    display: inline-block;
+  }
+  .mast .status .pts.pulse { transform: scale(1.4); color: #fff4d9; }
+  .mast .status .lives.pulse-red { color: var(--tomato); animation: livesShake 260ms ease-out; }
+  @keyframes livesShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+
+  /* Floating +N chip */
+  .pts-float {
+    position: fixed;
+    right: 40px;
+    top: 36px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--gold);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    animation: floatUp 950ms ease-out forwards;
+    pointer-events: none;
+    z-index: 55;
+  }
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(10px) scale(0.9); }
+    15% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-44px) scale(1); }
+  }
+
+  /* Pts chip on the card */
+  .pts-chip {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--ink);
+    background: rgba(26,18,8,0.08);
+    border: 1px solid rgba(26,18,8,0.15);
+  }
+  .pts-chip.diff-easy   { background: rgba(58,122,79,0.14); color: var(--ok);     border-color: rgba(58,122,79,0.25); }
+  .pts-chip.diff-medium { background: rgba(247,208,91,0.22); color: #7a5a00;      border-color: rgba(138,106,10,0.35); }
+  .pts-chip.diff-hard   { background: rgba(200,50,28,0.14); color: var(--tomato); border-color: rgba(200,50,28,0.3); }
+
+  /* Card flash feedback on score */
+  .card-3d.flash-correct .card {
+    box-shadow:
+      0 36px 90px rgba(58,122,79,0.55),
+      0 0 0 2px rgba(58,122,79,0.65),
+      0 0 70px rgba(58,122,79,0.45);
+    transition: box-shadow 140ms ease-out;
+  }
+  .card-3d.flash-miss .card {
+    box-shadow:
+      0 36px 90px rgba(200,50,28,0.55),
+      0 0 0 2px rgba(200,50,28,0.7),
+      0 0 70px rgba(200,50,28,0.45);
+    transition: box-shadow 140ms ease-out;
+  }
+
+  /* Streak badge */
+  .streak-badge {
+    position: fixed;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: var(--tomato);
+    color: var(--paper);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    animation: streakPop 1100ms ease-out forwards;
+    z-index: 60;
+    pointer-events: none;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  @keyframes streakPop {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+    18%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+    28%  { transform: translate(-50%, -50%) scale(1.0); }
+    82%  { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
+    100% { opacity: 0; transform: translate(-50%, -60%) scale(0.94); }
+  }
+
+  /* Final-screen additions */
+  .final-card .verdict-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-top: 22px;
+  }
+  .final-card .verdict-title + .verdict { border-top: none; padding-top: 10px; }
+  .final-card .ability-tag {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ink-line);
+    line-height: 1.4;
+  }
+  .final-card .ability-tag strong {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--tomato);
+  }
+  @media (min-width: 900px) {
+    .final-card .verdict-title { font-size: 32px; }
+    .final-card .ability-tag { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg"><img src="/inspiration/b0c397fda38eb0c4c5df536cbefa06dc.jpg" alt=""></div>
+  <div class="wash"></div>
+  <div class="fairy-strip" aria-hidden="true">
+    <span class="light"></span><span class="light"></span><span class="light"></span>
+    <span class="light"></span><span class="light"></span><span class="light"></span>
+    <span class="light"></span><span class="light"></span><span class="light"></span>
+    <span class="light"></span><span class="light"></span><span class="light"></span>
+    <span class="light"></span><span class="light"></span>
+  </div>
+
+  <header class="mast">
+    <div class="word">Bad Desi Plots</div>
+    <div class="status" id="status"></div>
+  </header>
+
+  <main class="stage">
+    <!-- 1. LANDING -->
+    <div class="screen active" id="scr-landing">
+      <div class="card title-card">
+        <div class="kicker">An Indian Party Game · Vol. I</div>
+        <div class="title">
+          Bad Desi Plots
+          <span class="amp">the terrible-plot round</span>
+        </div>
+        <div class="tag">
+          Read a plot so bad it should never have been greenlit. Guess the movie before your cousin.
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="pickSolo()">Solo</button>
+        <button class="btn primary" onclick="pickParty()">Pass &amp; Play</button>
+        <button class="btn" onclick="openHow()">How to play</button>
+      </div>
+    </div>
+
+    <!-- 2. NAMES (party only) -->
+    <div class="screen" id="scr-names">
+      <div class="card names-card">
+        <h2>Who's playing?</h2>
+        <p class="sub">Add 2 to 8 players. You'll pass the phone around after every card.</p>
+        <div class="names-list" id="namesList"></div>
+        <button class="add-player" onclick="addPlayer()">+ Add another player</button>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="startPartyBtn" onclick="startParty()">Start the round</button>
+        <button class="btn" onclick="goLanding()">Back</button>
+      </div>
+    </div>
+
+    <!-- 3. TURN INTERSTITIAL (party only) -->
+    <div class="screen" id="scr-turn">
+      <div class="card turn-card">
+        <div class="kicker">Pass the phone</div>
+        <div class="name" id="turnName">Arjun</div>
+        <div class="instruct">your turn. guess the plot.</div>
+        <div class="standings" id="standings"></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="beginTurn()">I'm ready</button>
+      </div>
+    </div>
+
+    <!-- 4. CARD (plot + flipped reveal) -->
+    <div class="screen" id="scr-card">
+      <div class="card-flipper">
+        <div class="card-3d" id="card3d">
+          <!-- FRONT: plot only -->
+          <div class="face front">
+            <div class="card plot-card">
+              <div class="top-row">
+                <span class="pill" id="frontPill">HINDI</span>
+                <span class="pts-chip diff-medium" id="frontPts">+2</span>
+              </div>
+              <div class="plot" id="plotText">—</div>
+              <div class="hint-row">
+                <span>Tap to flip</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK: movie + year + fun fact -->
+          <div class="face back">
+            <div class="card reveal-card">
+              <div class="top-row">
+                <span class="pill" id="backPill">HINDI</span>
+                <span class="pts-chip diff-medium" id="backPts">+2</span>
+              </div>
+              <div class="movie" id="movieText">—
+                <span class="year" id="yearText">1999</span>
+              </div>
+              <div class="divider"></div>
+              <div class="fun-label">Fun fact</div>
+              <div class="fun" id="funText">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions" id="cardActions">
+        <button class="btn primary" id="flipBtn" onclick="flipCard()">Flip card</button>
+        <div class="btn-row" id="scoreBtns" style="display:none">
+          <button class="btn red" onclick="scoreCard(false)">Missed</button>
+          <button class="btn green" onclick="scoreCard(true)">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. FINAL -->
+    <div class="screen" id="scr-final">
+      <div class="card final-card" id="finalCardEl">
+        <!-- injected -->
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="playAgain()">Play again</button>
+        <button class="btn" onclick="goLanding()">Back to start</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="chip" id="chip">
+    Best played on your phone, passed around a room
+  </div>
+
+  <!-- How to play modal -->
+  <div class="modal" id="howModal">
+    <div class="sheet">
+      <h3>How to play</h3>
+      <ol>
+        <li>Pick Solo or Pass &amp; Play. Pass &amp; Play is for 2 to 8 people sharing one phone.</li>
+        <li>Read the terrible plot on the card out loud. You get 15 seconds in your head to guess the movie.</li>
+        <li>Tap to flip. If you nailed the title, tap <strong>Got it</strong>. If you missed, tap <strong>Missed</strong>.</li>
+        <li>In Pass &amp; Play the phone goes to the next player after every card. Whoever has the most points when the deck ends wins.</li>
+      </ol>
+      <div class="close-row">
+        <button class="close-btn" onclick="closeHow()">Got it</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* =====================================================================
+   BAD DESI PLOTS — scoring engine
+   Ports adaptive.ts + scorer.ts from src/core/ into browser JS.
+   ===================================================================== */
+
+const DIFFICULTY_RATING = { easy: 900, medium: 1200, hard: 1550 };
+const POINT_MAP         = { easy: 1,   medium: 2,    hard: 3 };
+
+const SOLO_LIVES        = 3;
+const PARTY_TOTAL_CARDS = 12;
+const CAL_REVEAL_AFTER  = 4;   // show tier in status strip after this many answers
+
+/* ---------- GMAT CAT engine (adaptive.ts mirror) ---------- */
+function kFactor(n) {
+  if (n < 4) return 80;   // high volatility early
+  if (n < 8) return 50;   // settling
+  return 32;              // stable
+}
+
+function createAdaptive() {
+  return { ability: 1100, answered: 0, history: [], peak: 1100 };
+}
+
+function expectedScore(ability, rating) {
+  return 1 / (1 + Math.pow(10, (rating - ability) / 400));
+}
+
+function updateAbility(a, card, correct) {
+  const rating = DIFFICULTY_RATING[card.diff];
+  const exp = expectedScore(a.ability, rating);
+  const act = correct ? 1 : 0;
+  const k = kFactor(a.answered);
+  const next = Math.round(a.ability + k * (act - exp));
+  const clamped = Math.max(500, Math.min(2000, next));
+  return {
+    ability: clamped,
+    answered: a.answered + 1,
+    history: [...a.history, { cardId: card.id, rating, correct }],
+    peak: Math.max(a.peak, clamped),
+  };
+}
+
+function pickAdaptive(pool, dealt, ability) {
+  const available = pool.filter(c => !dealt.has(c.id));
+  if (available.length === 0) return null;
+  const scored = available.map(c => {
+    const rating = DIFFICULTY_RATING[c.diff];
+    const distance = Math.abs(rating - ability);
+    const noise = Math.random() * 150;
+    return { card: c, score: distance + noise };
+  });
+  scored.sort((x, y) => x.score - y.score);
+  const pick = scored[0].card;
+  dealt.add(pick.id);
+  return pick;
+}
+
+function getAbilityTier(a) {
+  if (a >= 1600) return 'Filmi Genius';
+  if (a >= 1400) return 'Cinephile';
+  if (a >= 1200) return 'Movie Buff';
+  if (a >= 1000) return 'Casual Viewer';
+  if (a >= 800)  return 'Beginner';
+  return 'Netflix Newbie';
+}
+
+function getPercentile(a) {
+  const p = 100 / (1 + Math.pow(10, (1100 - a) / 300));
+  return Math.round(Math.max(1, Math.min(99, p)));
+}
+
+/* ---------- Scorer (weighted pts + streak bonus) ---------- */
+function createScorer(players, lives = 0) {
+  return {
+    totalPts: 0,
+    correctCount: 0,
+    streak: 0,
+    lives,
+    players: players.map(p => ({ ...p })),
+    currentPlayerIdx: 0,
+  };
+}
+
+function applyScore(s, card, result) {
+  const base = POINT_MAP[card.diff] ?? 1;
+  const next = { ...s, players: s.players.map(p => ({ ...p })) };
+  let gained = 0, bonus = 0, streakHit = false;
+  if (result === 'correct') {
+    next.correctCount += 1;
+    next.streak += 1;
+    bonus = next.streak >= 7 ? 3 : next.streak >= 5 ? 2 : next.streak >= 3 ? 1 : 0;
+    streakHit = bonus > 0;
+    gained = base + bonus;
+    next.totalPts += gained;
+    next.players[s.currentPlayerIdx].score += gained;
+  } else if (result === 'miss') {
+    next.streak = 0;
+    if (s.lives > 0) next.lives = s.lives - 1;
+  }
+  return { scorer: next, gained, bonus, streakHit, base };
+}
+
+/* ---------- Verdicts (port of scorer.ts VERDICT_TIERS) ---------- */
+const VERDICTS_90 = [
+  { title: 'Interval Khatam, Full Marks!', verdict: 'Yeh toh Amitabh Bachchan level knowledge hai. Take your trophy and leave.' },
+  { title: 'Blockbuster!', verdict: "You didn't just watch these movies, you lived in the theater. Respect." },
+  { title: 'First Day First Show', verdict: "You've seen more movies than a film critic on a deadline. Seedha filmi encyclopedia." },
+];
+const VERDICTS_70 = [
+  { title: 'Superhit!', verdict: 'Interval mein samosa lelo, second half mein full marks aayenge.' },
+  { title: 'Mass Entertainer', verdict: "The multiplex crowd is impressed. The single-screen crowd says 'not bad, yaar.'" },
+  { title: 'Weekend Collection: Strong', verdict: 'Your Bollywood knowledge has good opening numbers. Word of mouth will carry you.' },
+];
+const VERDICTS_50 = [
+  { title: 'Average', verdict: 'Half the movie you understood, other half you slept through. Classic Monday show energy.' },
+  { title: 'Paisa Vasool', verdict: "Got your money's worth, but nobody's writing a review about this performance." },
+  { title: 'Interval Time', verdict: 'Theek hai, go get your popcorn and come back stronger.' },
+];
+const VERDICTS_25 = [
+  { title: 'Flop Show', verdict: 'Bhai, have you actually WATCHED any movies or do you just scroll Netflix thumbnails?' },
+  { title: 'Disaster', verdict: 'Your knowledge has the box office trajectory of a Vivek Oberoi solo film.' },
+  { title: "Critic's Choice", verdict: "The critics will say 'ambitious attempt' which is Bollywood for 'flop.'" },
+];
+const VERDICTS_0 = [
+  { title: 'Shelved', verdict: 'Netflix subscription cancel karo. Start from the beginning. Watch DDLJ first.' },
+  { title: 'Censor Board Reject', verdict: 'This performance has been deemed unfit for public viewing.' },
+  { title: 'Straight to OTT', verdict: "Not even a theatrical release. Straight to 'I will watch it someday' list." },
+];
+
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function getVerdict(correct, total) {
+  const pct = total > 0 ? (correct / total) * 100 : 0;
+  if (pct >= 90) return rand(VERDICTS_90);
+  if (pct >= 70) return rand(VERDICTS_70);
+  if (pct >= 50) return rand(VERDICTS_50);
+  if (pct >= 25) return rand(VERDICTS_25);
+  return rand(VERDICTS_0);
+}
+
+/* ---------- Web Audio synth sounds ---------- */
+let _audioCtx = null;
+let _audioUnlocked = false;
+
+function ensureAudio() {
+  if (!_audioCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    _audioCtx = new Ctx();
+  }
+  if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  _audioUnlocked = true;
+  return _audioCtx;
+}
+
+/** Paper-flip whoosh: filtered noise burst + low thwack landing. */
+function playFlipSound() {
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+
+  // 1. Rustle — 90ms of bandpass noise, high end
+  const len = Math.floor(ctx.sampleRate * 0.09);
+  const buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < len; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 1.8);
+  }
+  const noise = ctx.createBufferSource();
+  noise.buffer = buffer;
+  const noiseFilter = ctx.createBiquadFilter();
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 2800;
+  noiseFilter.Q.value = 0.7;
+  const noiseGain = ctx.createGain();
+  noiseGain.gain.setValueAtTime(0.22, t);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+  noise.connect(noiseFilter).connect(noiseGain).connect(ctx.destination);
+  noise.start(t);
+  noise.stop(t + 0.1);
+
+  // 2. Thwack — brief low sine dip at 210ms
+  const thwackStart = t + 0.19;
+  const osc = ctx.createOscillator();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(180, thwackStart);
+  osc.frequency.exponentialRampToValueAtTime(80, thwackStart + 0.06);
+  const oscGain = ctx.createGain();
+  oscGain.gain.setValueAtTime(0.001, thwackStart);
+  oscGain.gain.exponentialRampToValueAtTime(0.18, thwackStart + 0.01);
+  oscGain.gain.exponentialRampToValueAtTime(0.001, thwackStart + 0.09);
+  osc.connect(oscGain).connect(ctx.destination);
+  osc.start(thwackStart);
+  osc.stop(thwackStart + 0.1);
+}
+
+/** Pickup tick on Got it — quick pluck. */
+function playPickupSound() {
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  // Two-note chirp: C6 → E6
+  [
+    [1047, t, 0.06],
+    [1319, t + 0.06, 0.09],
+  ].forEach(([freq, start, dur]) => {
+    const osc = ctx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, start);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, start);
+    g.gain.exponentialRampToValueAtTime(0.18, start + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.001, start + dur);
+    osc.connect(g).connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + dur + 0.02);
+  });
+}
+
+/** Miss tick — short low blip. */
+function playMissSound() {
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(220, t);
+  osc.frequency.exponentialRampToValueAtTime(140, t + 0.12);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.16, t + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+  osc.connect(g).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + 0.18);
+}
+
+/* ---------- Card pool loader ---------- */
+let CARD_POOL = [];
+
+async function loadCards() {
+  try {
+    const res = await fetch('/public/content/packs/hi.json');
+    const data = await res.json();
+    CARD_POOL = (data.cards || []).filter(c => c.c && c.n && c.diff);
+    console.log(`Loaded ${CARD_POOL.length} cards from hi.json`);
+  } catch (e) {
+    console.error('Card load failed:', e);
+    CARD_POOL = [];
+  }
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildCalibrationDeck() {
+  const easy = shuffle(CARD_POOL.filter(c => c.diff === 'easy')).slice(0, 1);
+  const med  = shuffle(CARD_POOL.filter(c => c.diff === 'medium')).slice(0, 1);
+  const hard = shuffle(CARD_POOL.filter(c => c.diff === 'hard')).slice(0, 1);
+  return [...easy, ...med, ...hard];
+}
+
+/* ---------- Game state ---------- */
+let game = {
+  mode: null,
+  phase: 'landing',
+  players: [],
+  scorer: null,
+  adaptive: null,
+  deck: [],
+  cardIdx: 0,
+  currentCard: null,
+  flipped: false,
+  dealt: new Set(),
+};
+
+function resetGame() {
+  game = {
+    mode: null,
+    phase: 'landing',
+    players: [],
+    scorer: null,
+    adaptive: null,
+    deck: [],
+    cardIdx: 0,
+    currentCard: null,
+    flipped: false,
+    dealt: new Set(),
+  };
+}
+
+/* ---------- Screen routing ---------- */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Status strip ---------- */
+function renderLives(lives) {
+  let out = '';
+  for (let i = 0; i < 3; i++) out += i < lives ? '●' : '○';
+  return out;
+}
+
+function updateStatus() {
+  const el = document.getElementById('status');
+  if (game.phase === 'landing' || game.phase === 'names' || game.phase === 'final') {
+    el.innerHTML = '';
+    return;
+  }
+  const s = '<span class="sep">·</span>';
+  if (game.mode === 'solo') {
+    const showTier = game.adaptive.answered >= CAL_REVEAL_AFTER;
+    const tier = showTier ? `<span class="tier">${getAbilityTier(game.adaptive.ability)}</span>${s}` : '';
+    el.innerHTML = `${tier}<span class="pts">${game.scorer.totalPts} pts</span>${s}<span class="lives">${renderLives(game.scorer.lives)}</span>`;
+  } else {
+    const p = game.scorer.players[game.scorer.currentPlayerIdx];
+    const cardNum = Math.min(game.cardIdx + 1, PARTY_TOTAL_CARDS);
+    el.innerHTML = `${p.name}${s}<span class="pts">${p.score} pts</span>${s}Card ${cardNum} / ${PARTY_TOTAL_CARDS}`;
+  }
+}
+game.sep = '<span class="sep">·</span>';
+
+function openHow()  { document.getElementById('howModal').classList.add('active'); }
+function closeHow() { document.getElementById('howModal').classList.remove('active'); }
+
+/* ---------- Solo start ---------- */
+async function pickSolo() {
+  if (CARD_POOL.length === 0) await loadCards();
+  if (CARD_POOL.length === 0) { alert('Cards failed to load. Check the dev server.'); return; }
+  resetGame();
+  game.mode = 'solo';
+  game.players = [{ name: 'You', score: 0 }];
+  game.adaptive = createAdaptive();
+  game.scorer = createScorer(game.players, SOLO_LIVES);
+  game.dealt = new Set();
+  const first = pickAdaptive(CARD_POOL, game.dealt, game.adaptive.ability);
+  if (!first) { alert('No cards available'); return; }
+  game.deck = [first];
+  game.cardIdx = 0;
+  game.currentCard = first;
+  game.phase = 'card';
+  document.getElementById('chip').style.display = 'none';
+  renderCard();
+  updateStatus();
+  show('scr-card');
+}
+
+/* ---------- Party start ---------- */
+async function pickParty() {
+  if (CARD_POOL.length === 0) await loadCards();
+  if (CARD_POOL.length === 0) { alert('Cards failed to load.'); return; }
+  resetGame();
+  game.mode = 'party';
+  game.players = [{ name: '', score: 0 }, { name: '', score: 0 }];
+  game.phase = 'names';
+  document.getElementById('chip').style.display = 'none';
+  renderNames();
+  updateStatus();
+  show('scr-names');
+}
+
+/* ---------- Name entry ---------- */
+function renderNames() {
+  const list = document.getElementById('namesList');
+  list.innerHTML = '';
+  const placeholders = ['Arjun', 'Priya', 'Kabir', 'Meera', 'Rohan', 'Ananya', 'Vikram', 'Ishani'];
+  game.players.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'name-input';
+    row.innerHTML = `
+      <span class="num">P${i + 1}</span>
+      <input type="text" placeholder="${placeholders[i] || 'Player'}" value="${p.name}" oninput="setPlayerName(${i}, this.value)" />
+      ${game.players.length > 2 ? `<button class="remove" onclick="removePlayer(${i})" aria-label="Remove">×</button>` : ''}
+    `;
+    list.appendChild(row);
+  });
+  document.getElementById('startPartyBtn').disabled = false;
+}
+
+function setPlayerName(i, v) { game.players[i].name = v; }
+
+function addPlayer() {
+  if (game.players.length >= 8) return;
+  game.players.push({ name: '', score: 0 });
+  renderNames();
+}
+
+function removePlayer(i) {
+  if (game.players.length <= 2) return;
+  game.players.splice(i, 1);
+  renderNames();
+}
+
+function startParty() {
+  const defaults = ['Arjun', 'Priya', 'Kabir', 'Meera', 'Rohan', 'Ananya', 'Vikram', 'Ishani'];
+  game.players.forEach((p, i) => { if (!p.name.trim()) p.name = defaults[i]; p.score = 0; });
+  game.adaptive = createAdaptive();
+  game.scorer = createScorer(game.players, 0);
+  game.dealt = new Set();
+  const cal = buildCalibrationDeck();
+  for (const c of cal) game.dealt.add(c.id);
+  game.deck = cal;
+  game.cardIdx = 0;
+  game.currentCard = game.deck[0];
+  game.phase = 'turn';
+  renderTurn();
+  updateStatus();
+  show('scr-turn');
+}
+
+/* ---------- Turn interstitial ---------- */
+function renderTurn() {
+  const p = game.scorer.players[game.scorer.currentPlayerIdx];
+  document.getElementById('turnName').textContent = p.name;
+  const standings = document.getElementById('standings');
+  const sorted = [...game.scorer.players].sort((a, b) => b.score - a.score);
+  const leaderScore = sorted[0].score;
+  standings.innerHTML = sorted.map(pl => {
+    const leading = pl.score === leaderScore && leaderScore > 0 ? ' leader' : '';
+    return `<span class="stand-item${leading}">${pl.name}<span class="s">${pl.score}</span></span>`;
+  }).join('');
+}
+
+function beginTurn() {
+  game.phase = 'card';
+  game.flipped = false;
+  game.currentCard = game.deck[game.cardIdx];
+  renderCard();
+  updateStatus();
+  show('scr-card');
+}
+
+/* ---------- Card rendering ---------- */
+function renderCard() {
+  const c = game.currentCard;
+  if (!c) return;
+  document.getElementById('plotText').textContent = c.c || c.plot || '—';
+  document.getElementById('movieText').childNodes[0].textContent = (c.n || c.movie) + ' ';
+  document.getElementById('yearText').textContent = c.y || c.year || '';
+  document.getElementById('funText').textContent = c.f || c.fun || '';
+
+  const indLabel = c.ind === 'HI' ? 'HINDI' : c.ind === 'TE' ? 'TELUGU' : (c.industry || 'HINDI');
+  const pillClass = (c.ind === 'TE' || c.industry === 'TOLLYWOOD') ? 'tw' : 'bw';
+  ['frontPill', 'backPill'].forEach(id => {
+    const el = document.getElementById(id);
+    el.textContent = indLabel;
+    el.className = 'pill ' + pillClass;
+  });
+
+  const pts = POINT_MAP[c.diff] ?? 1;
+  ['frontPts', 'backPts'].forEach(id => {
+    const el = document.getElementById(id);
+    el.textContent = '+' + pts;
+    el.className = 'pts-chip diff-' + c.diff;
+  });
+
+  document.getElementById('card3d').classList.remove('flipped', 'flash-correct', 'flash-miss');
+  document.getElementById('flipBtn').style.display = 'block';
+  document.getElementById('scoreBtns').style.display = 'none';
+}
+
+/* ---------- Flip ---------- */
+function flipCard() {
+  document.getElementById('card3d').classList.add('flipped');
+  game.flipped = true;
+  playFlipSound();
+  setTimeout(() => {
+    document.getElementById('flipBtn').style.display = 'none';
+    document.getElementById('scoreBtns').style.display = 'flex';
+  }, 240);
+}
+
+/* ---------- Score ---------- */
+function scoreCard(got) {
+  const card = game.currentCard;
+  const result = got ? 'correct' : 'miss';
+  const { scorer: nextScorer, gained, streakHit } = applyScore(game.scorer, card, result);
+  game.scorer = nextScorer;
+  game.adaptive = updateAbility(game.adaptive, card, got);
+
+  if (got) {
+    if (navigator.vibrate) navigator.vibrate(50);
+    playPickupSound();
+    flashCard('correct');
+    updateStatus();
+    pulseScore(gained);
+    if (streakHit) showStreakBadge(game.scorer.streak);
+  } else {
+    if (navigator.vibrate) navigator.vibrate([30, 30, 30]);
+    playMissSound();
+    flashCard('miss');
+    updateStatus();
+    if (game.mode === 'solo') pulseLives();
+  }
+
+  setTimeout(() => advance(), 620);
+}
+
+function flashCard(kind) {
+  const el = document.getElementById('card3d');
+  el.classList.add('flash-' + kind);
+  setTimeout(() => el.classList.remove('flash-' + kind), 420);
+}
+
+function pulseScore(gained) {
+  const pts = document.querySelector('#status .pts');
+  if (pts) {
+    pts.classList.add('pulse');
+    setTimeout(() => pts.classList.remove('pulse'), 440);
+  }
+  const float = document.createElement('span');
+  float.className = 'pts-float';
+  float.textContent = '+' + gained;
+  document.body.appendChild(float);
+  setTimeout(() => float.remove(), 960);
+}
+
+function pulseLives() {
+  const el = document.querySelector('#status .lives');
+  if (!el) return;
+  el.classList.add('pulse-red');
+  setTimeout(() => el.classList.remove('pulse-red'), 520);
+}
+
+function showStreakBadge(n) {
+  const bonus = n >= 7 ? 3 : n >= 5 ? 2 : 1;
+  const el = document.createElement('div');
+  el.className = 'streak-badge';
+  el.textContent = `${n} in a row · +${bonus} bonus`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1050);
+}
+
+/* ---------- Advance ---------- */
+function advance() {
+  game.cardIdx += 1;
+
+  if (game.mode === 'solo') {
+    if (game.scorer.lives <= 0) { endGame(); return; }
+    const next = pickAdaptive(CARD_POOL, game.dealt, game.adaptive.ability);
+    if (!next) { endGame(); return; }
+    game.deck.push(next);
+    game.currentCard = next;
+    renderCard();
+    updateStatus();
+  } else {
+    if (game.cardIdx >= PARTY_TOTAL_CARDS) { endGame(); return; }
+    if (game.cardIdx >= game.deck.length) {
+      const next = pickAdaptive(CARD_POOL, game.dealt, game.adaptive.ability);
+      if (!next) { endGame(); return; }
+      game.deck.push(next);
+    }
+    game.currentCard = game.deck[game.cardIdx];
+    game.scorer.currentPlayerIdx = (game.scorer.currentPlayerIdx + 1) % game.scorer.players.length;
+    game.phase = 'turn';
+    renderTurn();
+    updateStatus();
+    show('scr-turn');
+  }
+}
+
+/* ---------- Final ---------- */
+function endGame() {
+  game.phase = 'final';
+  const el = document.getElementById('finalCardEl');
+  const total = game.cardIdx;
+  const { correctCount, totalPts } = game.scorer;
+
+  if (game.mode === 'solo') {
+    const v = getVerdict(correctCount, total);
+    const tier = getAbilityTier(game.adaptive.ability);
+    const pctile = getPercentile(game.adaptive.ability);
+    el.innerHTML = `
+      <div class="kicker">Final verdict · end of round</div>
+      <div class="score-num">${totalPts}</div>
+      <div class="score-out">${correctCount} of ${total} correct</div>
+      <div class="verdict-title">${v.title}</div>
+      <div class="verdict">${v.verdict}</div>
+      <div class="ability-tag">You played at <strong>${tier}</strong> level · rating ${game.adaptive.ability} · top ${pctile}%</div>
+    `;
+  } else {
+    const sorted = [...game.scorer.players].sort((a, b) => b.score - a.score);
+    const winner = sorted[0];
+    const tied = sorted.filter(p => p.score === winner.score).length > 1;
+    const crownLine = tied
+      ? `Tie at ${winner.score}. Nobody wins. Run it back.`
+      : `${winner.name} takes the round.`;
+    const rows = sorted.map((p, i) => {
+      const pos = i === 0 ? '1st' : i === 1 ? '2nd' : i === 2 ? '3rd' : (i + 1) + 'th';
+      const crown = i === 0 && !tied ? ' crown' : '';
+      return `<div class="leader-row${crown}"><span class="rank">${pos}</span><span class="who">${p.name}</span><span class="pts">${p.score} pts</span></div>`;
+    }).join('');
+    el.innerHTML = `
+      <div class="kicker">Final standings · end of round</div>
+      <div class="crown-line">${crownLine}</div>
+      <div class="leader">${rows}</div>
+    `;
+  }
+  updateStatus();
+  show('scr-final');
+}
+
+function playAgain() {
+  if (game.mode === 'solo') {
+    pickSolo();
+  } else {
+    const names = game.players.map(p => ({ name: p.name, score: 0 }));
+    game.players = names;
+    game.adaptive = createAdaptive();
+    game.scorer = createScorer(names, 0);
+    game.dealt = new Set();
+    const cal = buildCalibrationDeck();
+    for (const c of cal) game.dealt.add(c.id);
+    game.deck = cal;
+    game.cardIdx = 0;
+    game.currentCard = game.deck[0];
+    game.phase = 'turn';
+    renderTurn();
+    updateStatus();
+    show('scr-turn');
+  }
+}
+
+function goLanding() {
+  resetGame();
+  document.getElementById('chip').style.display = 'block';
+  document.getElementById('status').innerHTML = '';
+  show('scr-landing');
+}
+
+/* ---------- Boot ---------- */
+loadCards();
+</script>
+</body>
+</html>

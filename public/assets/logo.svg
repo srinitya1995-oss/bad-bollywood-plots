@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" fill="none">
+  <text x="160" y="42" text-anchor="middle"
+    font-family="'Anton', 'Impact', sans-serif" font-weight="400"
+    font-size="36" fill="#F6EBD1" letter-spacing="6">BAD</text>
+  <text x="160" y="80" text-anchor="middle"
+    font-family="'Anton', 'Impact', sans-serif" font-weight="400"
+    font-size="28" fill="#C8321C" letter-spacing="4">BOLLYWOOD PLOTS</text>
+  <line x1="80" y1="48" x2="240" y2="48" stroke="#F5C457" stroke-width="1" opacity="0.5"/>
+</svg>
