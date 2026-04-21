@@ -48,7 +48,7 @@ Everything in this spec assumes zero paid spend in year one.
 These must be built into the product, not tacked on. Each has a v2.x ship target.
 
 ### Loop 1: Shareable round card (v2.3 target)
-After Results screen, a "Share the round" CTA generates an image: "RAHUL bagged 12 pts on BAD DESI PLOTS. Beat that? badbollywoodplots.com"
+After Results screen, a "Share the round" CTA generates an image: "RAHUL bagged 12 pts on BAD DESI PLOTS. Beat that? baddesiplots.com"
 
 - Native Web Share API (`navigator.share`) on mobile → WhatsApp / Instagram / SMS
 - Desktop falls back to "copy image + link"
@@ -69,7 +69,7 @@ One card per day, globally synced, same everywhere. Group chats share guesses: "
 
 - Becomes a ritual hook (Wordle-shaped)
 - Tied to streak tracking ("14-day streak on BDP")
-- Score format: `Bad Desi Plots · Apr 20 · ★★★☆☆ · badbollywoodplots.com/daily`
+- Score format: `Bad Desi Plots · Apr 20 · ★★★☆☆ · baddesiplots.com/daily`
 
 **KPI:** daily returning users, streak length distribution.
 
@@ -91,7 +91,7 @@ Every party round hits 2-8 people with the URL. The "how do I play this?" questi
 ### Ask
 - Play one round at your next gathering
 - Post a single photo or short video of your group playing
-- Tag @badbollywoodplots (IG handle TBD) or #BadDesiPlots
+- Tag @baddesiplots (IG handle TBD) or #BadDesiPlots
 
 ### Incentive
 - None monetary. Status + early-access badge.
@@ -183,8 +183,8 @@ All tracked in PostHog. See `applied-scientist-spec.md` §4 for definitions.
 - Product hosting (Netlify): $0 (free tier sufficient)
 - Analytics (PostHog): $0 (free tier sufficient, 1M events/month)
 - Database (Supabase): $0 (free tier sufficient)
-- Domain renewal (badbollywoodplots.com): ~$15/yr
-- Total hard cash: **$15/year**
+- Domain renewal (baddesiplots.com, Porkbun): ~$11/yr. Legacy badbollywoodplots.com held through 2026 for 301 continuity (~$15).
+- Total hard cash year 1: **~$26**; year 2 onward **~$11/yr** if legacy domain is dropped.
 
 ### Contingent spend (only if X happens)
 - $100 — one-off reel commission if organic growth stalls at week 8

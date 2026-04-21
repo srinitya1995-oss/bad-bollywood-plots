@@ -248,7 +248,7 @@ Target length: 2 pages for each. Plain language. Not a legal fortress.
 - Defensive posture: take down content on good-faith request, don't pick fights
 
 ### Takedown-receiving address
-- As of v2.1, no posted contact. Add a `legal@badbollywoodplots.com` alias once a legal inquiry arrives
+- As of v2.2, no posted contact. Add a `legal@baddesiplots.com` alias once a legal inquiry arrives
 - Until then, GitHub issue on the repo is the de-facto channel
 
 ## 12. Risk inventory
@@ -265,7 +265,7 @@ Ranked by likelihood × impact.
 | User defames someone in feedback text and we're sued | Very Low | Low | Don't display feedback publicly; delete offensive submissions |
 | Competitor copies the product | Medium | Low | Keep shipping; compete on content + voice (see `growth-spec.md` §12) |
 | Data breach via Supabase misconfiguration | Low | Medium | Anon-only RLS; no PII stored; audit RLS quarterly |
-| Loss of domain (badbollywoodplots.com) | Low | High | Auto-renew enabled; multi-year registration |
+| Loss of domain (baddesiplots.com) | Low | High | Auto-renew enabled at Porkbun; legacy badbollywoodplots.com held as fallback through 2026 |
 
 ## 13. Content sensitivity policy
 

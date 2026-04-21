@@ -508,7 +508,7 @@ echo "Prototypes: $(ls prototype-*.html | wc -l)"
 
 Record the counts in `.project-state.md` under `## Inventory`.
 
-**Last audited**: Not yet — run audit on next session start.
+**Last audited**: 2026-04-20 evening. Components: 18 · Hooks: 6 · Core: 7 · Cards: 355 · Tests: 16 · Prototypes: 51 · Specs: 8. See `.project-state.md` inventory block.
 
 ---
 

@@ -236,7 +236,7 @@ After first successful load, the game is fully playable offline. Only feature th
 ## 9. Deployment pipeline
 
 ### Branches
-- `main` — prod, auto-deploys to www.badbollywoodplots.com
+- `main` — prod, auto-deploys to baddesiplots.com (legacy badbollywoodplots.com is a Netlify alias, 301s to the primary via `netlify.toml` rules)
 - `ship/v*` — release branches, auto-deploy to Netlify deploy-previews
 - Feature branches — PR to `ship/v*` first, not directly to main
 

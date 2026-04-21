@@ -12,9 +12,9 @@ A desi party trivia game where players guess Bollywood and Tollywood movies from
 
 ## 2. Product identity
 
-- **Shipped name:** Bad Desi Plots (live at www.badbollywoodplots.com)
+- **Shipped name:** Bad Desi Plots (live at baddesiplots.com; legacy badbollywoodplots.com 301 redirects)
 - **Internal name:** Seedha Plot
-- **Version:** 2.1.0 (shipped 2026-04-20)
+- **Version:** 2.2.0 (domain swap + card scale landed 2026-04-20)
 - **Format:** React 18 + Vite + TypeScript PWA, mobile-first, installable
 - **Platforms:** Any modern phone browser, installable PWA on iOS / Android, works offline after first load
 
