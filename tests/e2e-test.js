@@ -8,7 +8,7 @@
 
 const SUPABASE_URL = 'https://wmfxkkgktmfsipiihsjq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtZnhra2drdG1mc2lwaWloc2pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzA2MTYsImV4cCI6MjA5MDA0NjYxNn0.eV3m6O_-Ti3cl8C2yq-Ffp7M2hdBj9qasEWSD3lnrTg';
-const SITE_URL = 'https://badbollywoodplots.com';
+const SITE_URL = 'https://baddesiplots.com';
 
 const HEADERS = {
   'apikey': SUPABASE_ANON_KEY,

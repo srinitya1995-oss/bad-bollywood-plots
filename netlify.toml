@@ -17,6 +17,20 @@
   status = 200
   force = true
 
+# 301 legacy domain → baddesiplots.com. Preserves inbound links + bookmarks
+# from pre-rebrand (badbollywoodplots.com era, ~38 uniques as of 2026-04-20).
+[[redirects]]
+  from = "https://www.badbollywoodplots.com/*"
+  to = "https://baddesiplots.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://badbollywoodplots.com/*"
+  to = "https://baddesiplots.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
