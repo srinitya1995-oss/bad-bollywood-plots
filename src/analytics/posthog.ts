@@ -51,12 +51,38 @@ let currentSessionId: string | null = null;
 // Bootstrapping
 // ---------------------------------------------------------------
 
+// Drop traffic from automation tools, scrapers, preview crawlers, and
+// anything that walks like a headless browser. These signals catch what
+// posthog-js's default user-agent blocklist misses (Lighthouse, Puppeteer,
+// Playwright, Selenium, screenshot bots, link-preview fetchers).
+function isLikelyBot(): boolean {
+  if (typeof navigator === 'undefined' || typeof window === 'undefined') return true;
+
+  if ((navigator as Navigator & { webdriver?: boolean }).webdriver === true) return true;
+
+  const w = window as Window & {
+    callPhantom?: unknown;
+    _phantom?: unknown;
+    __nightmare?: unknown;
+  };
+  if (w.callPhantom || w._phantom || w.__nightmare) return true;
+
+  const ua = navigator.userAgent || '';
+  const botPattern = /(HeadlessChrome|PhantomJS|Puppeteer|Playwright|Selenium|Lighthouse|PageSpeed|GTmetrix|Pingdom|UptimeRobot|Chrome-Lighthouse|Slackbot|TwitterBot|facebookexternalhit|LinkedInBot|WhatsApp|Discordbot|TelegramBot|bingpreview|YandexBot|DuckDuckBot|bot|crawler|spider|scraper)/i;
+  if (botPattern.test(ua)) return true;
+
+  if (Array.isArray(navigator.languages) && navigator.languages.length === 0) return true;
+
+  return false;
+}
+
 export function initPostHog(): void {
   if (!POSTHOG_TOKEN) {
     // No token in this environment (local dev without .env values). Skip init
     // so we don't spam the console with 400s from missing project credentials.
     return;
   }
+  if (isLikelyBot()) return;
   try {
     const script = document.createElement('script');
     script.type = 'text/javascript';
