@@ -4,7 +4,7 @@
  * Each card has a difficulty rating. The player has an ability estimate.
  * After each answer, both update using a logistic model (like ELO chess ratings).
  * Card selection picks the card closest to the player's current ability.
- * Final score IS the ability estimate — not a point count.
+ * Final score IS the ability estimate, not a point count.
  */
 
 import type { Card, Difficulty } from './types';
@@ -71,7 +71,7 @@ export function updateAbility(
 }
 
 /**
- * Pick the best next card — closest to the player's current ability.
+ * Pick the best next card, closest to the player's current ability.
  * Adds randomness within a band to avoid feeling deterministic.
  */
 export function pickAdaptiveCard(

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Seedha Plot — End-to-End Test Suite
+ * Seedha Plot, End-to-End Test Suite
  * Tests: live site, Supabase integration, app.js code integrity, PostHog event names
  *
  * Run:  node tests/e2e-test.js
@@ -22,7 +22,7 @@ let failed = 0;
 
 function log(status, name, detail = '') {
   const icon = status === 'PASS' ? '✅' : '❌';
-  console.log(`  ${icon} ${name}${detail ? ' — ' + detail : ''}`);
+  console.log(`  ${icon} ${name}${detail ? ', ' + detail : ''}`);
   if (status === 'PASS') passed++;
   else failed++;
 }
@@ -204,7 +204,7 @@ async function testPWA() {
 // ─── Run All ───
 async function main() {
   console.log('╔═══════════════════════════════════════════╗');
-  console.log('║   Seedha Plot — End-to-End Test Suite     ║');
+  console.log('║   Seedha Plot, End-to-End Test Suite     ║');
   console.log('╚═══════════════════════════════════════════╝');
 
   await testLiveSite();

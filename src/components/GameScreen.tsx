@@ -100,16 +100,53 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
   if (!currentCard) return null;
 
   const isFlipped = state === 'flipped';
-  // Endless (solo) has no fixed round length — show "CARD N" only.
+  // Endless (solo) has no fixed round length, show "CARD N" only.
   // Party caps at 12 via gameFSM, so the /N denominator only applies there.
   const gameMode = getGameInstance().getPayload().gameMode;
   const roundLen = getGameInstance().getSettings().roundLen ?? 10;
   const progress = gameMode === 'endless' ? `CARD ${idx + 1}` : `CARD ${idx + 1} / ${roundLen}`;
 
   return (
-    <main className="screen active v8-game-screen" aria-label="Game">
-      <div className="v8-game-progress">{progress}</div>
-      <div className="v8-game-card-area">
+    <main
+      className="screen active v8-game-screen"
+      aria-label="Game"
+      style={{
+        background: 'var(--cream)', flex: 1, padding: '14px 18px 22px',
+        display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative',
+      }}
+    >
+      <div
+        className="v8-game-progress"
+        style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 11, letterSpacing: '0.24em',
+          color: 'var(--gold)', textTransform: 'uppercase',
+        }}
+      >
+        <span>{progress}</span>
+        {isFlipped ? (
+          <button
+            type="button"
+            onClick={() => handleReport(currentCard)}
+            aria-label="Report this card"
+            style={{
+              background: 'transparent', border: 'none', padding: 0,
+              fontFamily: 'Bebas Neue, sans-serif', fontSize: 10, letterSpacing: '0.24em',
+              color: 'var(--tomato)', textTransform: 'uppercase', cursor: 'pointer',
+            }}
+          >
+            ⚑ REPORT
+          </button>
+        ) : (
+          <span style={{ color: 'var(--ink-muted)', fontSize: 10 }}>
+            {currentMode === 'solo' ? 'SOLO' : 'PASS & PLAY'}
+          </span>
+        )}
+      </div>
+      <div
+        className="v8-game-card-area"
+        style={{ marginTop: 14, flex: 1, display: 'flex', position: 'relative', minHeight: 0 }}
+      >
         <Card
           key={currentCard.id}
           card={currentCard}
@@ -128,10 +165,35 @@ export function GameScreen({ menuOpen = false, onMenuClose }: GameScreenProps) {
             className="v8-pts-float v8-pts-float--show"
             aria-live="polite"
             aria-atomic="true"
+            style={{
+              position: 'absolute', top: 18, right: 28, zIndex: 5,
+              display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6,
+              pointerEvents: 'none', animation: 'v4-fade-in 200ms ease-out',
+            }}
           >
-            <span className="v8-pts-float__base">+{ptsFloat.base} PTS</span>
+            <span
+              className="v8-pts-float__base"
+              style={{
+                padding: '6px 10px', background: 'var(--gold)', color: 'var(--ink)',
+                fontFamily: 'Anton, Impact, sans-serif', fontSize: 22,
+                border: '3px solid var(--ink)', boxShadow: '3px 3px 0 var(--ink)',
+                transform: 'rotate(-3deg)', textTransform: 'uppercase', letterSpacing: '-0.005em',
+              }}
+            >
+              +{ptsFloat.base} PTS
+            </span>
             {ptsFloat.bonus > 0 && (
-              <span className="v8-pts-float__bonus">{'\u{1F525}'} +{ptsFloat.bonus} STREAK</span>
+              <span
+                className="v8-pts-float__bonus"
+                style={{
+                  padding: '4px 8px', background: 'var(--tomato)', color: 'var(--cream)',
+                  fontFamily: 'Bebas Neue, sans-serif', fontSize: 11, letterSpacing: '0.22em',
+                  border: '2px solid var(--ink)', transform: 'rotate(4deg)',
+                  textTransform: 'uppercase',
+                }}
+              >
+                🔥 +{ptsFloat.bonus} STREAK
+              </span>
             )}
           </div>
         )}
