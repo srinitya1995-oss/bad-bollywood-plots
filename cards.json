@@ -144,10 +144,10 @@
     "ind": "BW",
     "diff": "easy",
     "era": "2000s",
-    "y": "2007",
-    "n": "Welcome",
-    "f": "Anees Bazmee directed. Akshay Kumar, Nana Patekar and Anil Kapoor sharing one film is a load-bearing decision the Hindi industry has not repeated.",
-    "c": "Don's sister wants a respectable groom. Every candidate has a fake ID and a stomach problem. The Mumbai skyline takes the blame."
+    "y": "2003",
+    "n": "Munna Bhai MBBS",
+    "f": "Sanjay Dutt learned to play a doctor by shadowing real doctors at a Mumbai hospital for a month.",
+    "c": "\"Gangster pretends to be a doctor to impress his parents. Accidentally becomes a better doctor than the actual doctors.\""
   },
   {
     "id": "bw16",
@@ -217,7 +217,7 @@
     "y": "2007",
     "n": "Jab We Met",
     "f": "Shahid Kapoor and Kareena were dating during filming and broke up shortly after. The chemistry was real. So was the breakup.",
-    "c": "An heir misses his train. A Punjabi woman does not. Hotel bookings proceed out of order."
+    "c": "\"Man tries to get off a train. Woman won't let him. Not because she cares — she just won't stop talking.\""
   },
   {
     "id": "bw23",
@@ -234,10 +234,10 @@
     "ind": "BW",
     "diff": "easy",
     "era": "2000s",
-    "y": "2009",
-    "n": "Wake Up Sid",
-    "f": "Ayan Mukerji's debut feature for Dharma. Konkona Sen Sharma plays a Calcutta transplant trying to write about Bombay while Ranbir Kapoor learns what a kettle is.",
-    "c": "Rich Bombay boy fails his exams and moves in with an older woman who pays rent. He learns to make eggs. Both find this educational."
+    "y": "2000",
+    "n": "Hera Pheri",
+    "f": "One of the most quoted Bollywood comedies ever. The trio chemistry was entirely improvised on set.",
+    "c": "\"Three failures receive a wrong number call about a kidnapping ransom. Decide to keep the money. This goes poorly.\""
   },
   {
     "id": "bw25",
@@ -347,7 +347,7 @@
     "y": "2009",
     "n": "Dev D",
     "f": "Anurag Kashyap's reimagining of Devdas. The only version where Devdas is sympathetic for about 20 minutes.",
-    "c": "Punjabi heir loses his fiancee and commits to self-destruction with a budget. Delhi nightlife is happy to invoice."
+    "c": "\"Man is given unconditional love by two women. Responds by making terrible decisions for two hours. Gets a redemption arc he did not earn.\""
   },
   {
     "id": "bw36",
@@ -406,8 +406,8 @@
     "era": "2010s",
     "y": "2013",
     "n": "Lootera",
-    "f": "Set in 1953 and loosely based on an O. Henry short story. Sonakshi Sinha watches a tree for roughly forty minutes of screen time.",
-    "c": "A forger books himself onto a Bengali estate dig as the lead archaeologist. The estate daughter falls for the archaeologist. The dig does not survive winter."
+    "f": "Set in 1953. Vikramaditya Motwane based it on an O. Henry short story. Sonakshi Sinha watches a tree for 40 minutes of screen time.",
+    "c": "\"Man cons a zamindaar's family. Falls genuinely in love with the daughter. Leaves anyway. She watches a tree and waits.\""
   },
   {
     "id": "bw42",
@@ -497,7 +497,7 @@
     "y": "2008",
     "n": "Rab Ne Bana Di Jodi",
     "f": "Anushka Sharma's debut. SRK changed his entire body language for the alter-ego Raj. Wife does not notice. This says something.",
-    "c": "A shy office worker dates his own wife in disguise. The disguise is a haircut. It works for longer than it should."
+    "c": "\"Wife does not recognise her own husband when he changes his hairstyle. Husband uses this to date his own wife. It works for longer than it should.\""
   },
   {
     "id": "bw51",
@@ -557,7 +557,7 @@
     "y": "1998",
     "n": "Satya",
     "f": "Ram Gopal Varma. Manoj Bajpayee's breakthrough. Essentially invented the Mumbai crime film as a genre.",
-    "c": "A penniless migrant lands a job at a Bombay dance bar. He meets a faction lieutenant inside a holding cell. The migrant writes the next chapter."
+    "c": "\"Innocent man arrives in Bombay. Gets absorbed into the underworld. By the end he is the underworld.\""
   },
   {
     "id": "bw58",
@@ -607,7 +607,7 @@
     "y": "2023",
     "n": "Animal",
     "f": "Ranbir Kapoor gained 10 kg for this role. The film runs 3.5 hours. The ending sets up a sequel nobody agreed to.",
-    "c": "Heir cannot get a meeting with his father. Begins issuing memos with a chainsaw. The corporate calendar reschedules around the chainsaw."
+    "c": "\"Man loves his father. Father does not notice. Man escalates.\""
   },
   {
     "id": "bw63",
@@ -657,7 +657,7 @@
     "y": "2004",
     "n": "Maqbool",
     "f": "Vishal Bhardwaj's first Shakespeare adaptation. The witches are corrupt cops who also predict the future. It works.",
-    "c": "A Shakespeare tragedy relocates to the Mumbai underworld. The witches become corrupt cops with horoscopes. The lieutenant believes them."
+    "c": "\"Macbeth but in the Mumbai underworld. The witches are corrupt cops. Everything else is identical.\""
   },
   {
     "id": "bw68",
@@ -706,8 +706,8 @@
     "era": "2010s",
     "y": "2015",
     "n": "Talvar",
-    "f": "Meghna Gulzar directed. Based on the Aarushi Talwar case. Vishal Bhardwaj wrote the screenplay from public court material.",
-    "c": "A teenage girl is found dead in a middle-class flat. Three separate agencies reconstruct the same night and file three incompatible versions. Nobody concedes."
+    "f": "Meghna Gulzar directed. Based on the Aarushi Talwar case. Irrfan Khan plays the CBI investigator. Three versions of the truth, none satisfying.",
+    "c": "\"A girl is found dead. Three agencies investigate. Each arrives at a different truth. The parents are convicted on the least convincing one.\""
   },
   {
     "id": "bw73",
@@ -722,12 +722,12 @@
   {
     "id": "bw74",
     "ind": "BW",
-    "diff": "medium",
+    "diff": "hard",
     "era": "2020s",
     "y": "2022",
     "n": "Gehraiyaaan",
-    "f": "Shakun Batra directed. Shot during the pandemic on long lenses in Alibaug. First Indian direct-to-streaming release from Dharma.",
-    "c": "A yoga instructor and her cousin's fiance realise their fathers have complicated history. Property paperwork does not help. Nobody books a therapist."
+    "f": "Shakun Batra. Deepika Padukone. The anxiety is physical. The apartment is the most expensive character in the film.",
+    "c": "\"Woman in a relationship starts another relationship. Both men are connected. The web tightens until someone drowns. Possibly literally.\""
   },
   {
     "id": "bw75",
@@ -756,8 +756,8 @@
     "era": "2000s",
     "y": "2006",
     "n": "Pokiri",
-    "f": "Mahesh Babu reportedly survived on boiled vegetables to get the lean frame. The film's Hindi remake starred Salman Khan three years later.",
-    "c": "A Hyderabad street operator takes beating after beating and files no complaints. He keeps a mango juice habit and a long list of phone numbers."
+    "f": "Highest-grossing Telugu film of its time. Remade as Wanted in Hindi. Puri Jagannadh wrote and directed.",
+    "c": "\"Small-time thug is actually an undercover cop. Falls for an aerobics instructor who has no idea. Hyderabad's underworld also has no idea.\""
   },
   {
     "id": "tw03",
@@ -867,7 +867,7 @@
     "y": "2018",
     "n": "Geetha Govindam",
     "f": "Vijay Deverakonda and Rashmika Mandanna. The bus scene alone generated 40 million YouTube views.",
-    "c": "A man kisses a sleeping passenger on a bus. She wakes up. They end up at the same wedding. His apologies do not land."
+    "c": "\"Man accidentally compromises a girl's reputation on a bus. Spends the rest of the film apologising. She does not accept easily.\""
   },
   {
     "id": "tw14",
@@ -1027,7 +1027,7 @@
     "y": "2009",
     "n": "Kick",
     "f": "Ravi Teja starrer. The adrenaline addiction concept was written before it was clinically defined in Telugu mass cinema.",
-    "c": "A man does everything for the adrenaline. He turns a robbery into a charity drive. The villain can never predict the next move."
+    "c": "\"Man is addicted to the feeling of doing something for the first time. This is a quirky trait until it becomes a superpower.\""
   },
   {
     "id": "tw30",
@@ -1116,8 +1116,8 @@
     "era": "2010s",
     "y": "2017",
     "n": "Duvvada Jagannadham",
-    "f": "Allu Arjun in a Harish Shankar comedy. The dual-identity gag sustained an entire film. Pooja Hegde co-starred.",
-    "c": "Catering chef with two LinkedIn profiles. One of them is HR-flagged. The next wedding has both clients."
+    "f": "Allu Arjun played a brahmin priest with absolute commitment. The dual identity gag sustained an entire film.",
+    "c": "\"Devout brahmin priest is secretly a contract killer. Has to keep these two identities separate. At a wedding. Challenging.\""
   },
   {
     "id": "tw39",
@@ -1217,7 +1217,7 @@
     "y": "2016",
     "n": "Babu Bangaram",
     "f": "Venkatesh and Nayanthara. The rom-com formula executed at senior star level. The chemistry was real.",
-    "c": "An ACP goes undercover to nab a fugitive ex-tax officer. Hides his cop badge from the fugitive's daughter. The cover story keeps acquiring feelings."
+    "c": "\"Cop is ordered to bodyguard a CM's daughter. She refuses him. Her fiance is a gangster hiring hitmen. His job is to keep her alive. Only one party wants it.\""
   },
   {
     "id": "tw49",
@@ -1277,7 +1277,7 @@
     "y": "2010",
     "n": "Brindavanam",
     "f": "NTR Jr and Kajal Aggarwal. Trivikram's dialogue made every line quotable. The hero pretends to be a boyfriend and the pretence becomes real.",
-    "c": "A man agrees to pose as a girl's fake boyfriend at her sister's wedding. The sister's husband was his old rival. Two pretences collide at a sangeet."
+    "c": "\"Man agrees to pretend to be someone's boyfriend to fend off a villain. Meets the real family. Starts feeling things he was not contracted for.\""
   },
   {
     "id": "tw55",
@@ -1287,7 +1287,7 @@
     "y": "2021",
     "n": "Rang De",
     "f": "Nithiin and Keerthy Suresh. The childhood-enemies-to-lovers arc runs on pure physical comedy.",
-    "c": "A man and woman are arranged into marriage despite hating each other since childhood. Both plan to sabotage the wedding. Neither plan goes to plan."
+    "c": "\"A girl has hated her neighbour since they shared a crib. Parents arrange their marriage anyway. She plans to make his life so miserable he divorces her. He likes it.\""
   },
   {
     "id": "tw56",
@@ -1366,8 +1366,8 @@
     "era": "90s",
     "y": "1993",
     "n": "Gaayam",
-    "f": "RGV's political thriller was shot in real Vijayawada factions' territory. The score by Sri was later lifted into several Hindi masala films.",
-    "c": "A 1980s Vijayawada faction lord wants justice on his own terms. A journalist takes notes. The notes start running the scoreboard."
+    "f": "Mani Ratnam produced. Jagapathi Babu's defining role. The political violence is unflinching.",
+    "c": "\"College student avenges his brother's murder by joining the faction that killed him. Becomes the most feared don in Rayalaseema in six months. Realises the man who ordered the murder is his new boss.\""
   },
   {
     "id": "tw64",
@@ -1386,8 +1386,8 @@
     "era": "90s",
     "y": "1998",
     "n": "Tholi Prema",
-    "f": "Pawan Kalyan's breakthrough. Won the National Award for Best Telugu Feature in 1998.",
-    "c": "Boy applies a brute-force algorithm to a no. Repeats annually. The annual review keeps coming back inconclusive."
+    "f": "Pawan Kalyan's breakthrough. The persistence-as-romance framing aged differently than it was intended.",
+    "c": "\"Boy loves girl. Pursues her for years. She says no repeatedly. He waits. The film thinks this is romantic.\""
   },
   {
     "id": "tw66",
@@ -1426,8 +1426,8 @@
     "era": "90s",
     "y": "1996",
     "n": "Ninne Pelladatha",
-    "f": "Krishna Vamsi directed Nagarjuna and Tabu in this 1996 romance. The soundtrack by MM Keeravani was a top seller that year.",
-    "c": "Man tries six disguises to win a girl who has said no in three languages. The disguises do not improve. The languages do not change."
+    "f": "Nagarjuna starrer. The disguise-based wooing strategy ran through multiple cities. She kept saying no. The film thought this was funny.",
+    "c": "\"Man woos a woman across several cities using various disguises. She keeps rejecting him. He keeps changing the disguise.\""
   },
   {
     "id": "tw70",
@@ -1574,10 +1574,10 @@
     "ind": "BW",
     "diff": "easy",
     "era": "2000s",
-    "y": "2007",
-    "n": "Bheja Fry",
-    "f": "Sagar Ballary's directorial debut, a Hindi remake of the French film Le Diner de Cons. Vinay Pathak became the breakout name.",
-    "c": "Wealthy executive hosts a dinner where every guest must be an idiot. Tonight's idiot arrives early. The host's evening is itemised in real time."
+    "y": "2006",
+    "n": "Lage Raho Munna Bhai",
+    "f": "Sequel to Munna Bhai MBBS. Popularised the word Gandhigiri in Indian English.",
+    "c": "\"Mumbai goon starts seeing a ghost in a dhoti. Ghost tells him to solve problems by handing out roses.\""
   },
   {
     "id": "bw088",
@@ -1627,7 +1627,7 @@
     "y": "2016",
     "n": "Pink",
     "f": "Aniruddha Roy Chowdhury's courtroom drama. The closing monologue became a public-service clip.",
-    "c": "Three flatmates attend a rock concert. A boy bleeds. A retired lawyer files paperwork the rest of the city avoided."
+    "c": "\"Three flatmates go to a rock concert. A boy bleeds. Lawyer in a kurta explains the word no for three hours.\""
   },
   {
     "id": "bw096",
@@ -1877,7 +1877,7 @@
     "y": "1971",
     "n": "Anand",
     "f": "Hrishikesh Mukherjee classic. The Babumoshai line is still quoted. Rajesh Khanna's most enduring performance.",
-    "c": "A cynical doctor takes in a terminally ill patient. The patient refuses to stop cracking jokes. The doctor starts taking notes."
+    "c": "\"Cynical Bombay doctor takes in a terminally ill patient who refuses to stop cracking jokes until the end.\""
   },
   {
     "id": "bw156",
@@ -2127,7 +2127,7 @@
     "y": "2024",
     "n": "Family Star",
     "f": "Parasuram's follow-up to Sarkaru Vaari Paata. Vijay Deverakonda and Mrunal Thakur lead. Underperformed at the box office.",
-    "c": "An architect runs his joint family like a project budget. A new lodger upstairs is secretly an heiress writing a thesis on him."
+    "c": "\"Architect single-handedly holds up a joint household. The new lodger upstairs is secretly a rich heiress studying him.\""
   },
   {
     "id": "tw099",
@@ -2196,8 +2196,8 @@
     "era": "2020s",
     "y": "2021",
     "n": "Maha Samudram",
-    "f": "Ajay Bhupathi's second outing pulled Sharwanand, Siddharth and Aditi Rao Hydari into a three-way coastal drama. Chaitan Bharadwaj scored it.",
-    "c": "Two childhood friends promise to share everything. A coastal smuggling pull tests the loyalty in instalments."
+    "f": "Ajay Bhupathi directed. Sharwanand and Siddharth lead. Set in the coastal fishermen belt of Visakhapatnam.",
+    "c": "\"Two best friends grow up in a Vizag slum. Both love the same woman. Both also do crime for the same boss.\""
   },
   {
     "id": "tw118",
@@ -2377,7 +2377,7 @@
     "y": "1997",
     "n": "Dil To Pagal Hai",
     "f": "Yash Chopra's musical won three National Film Awards including Best Popular Film. Karisma Kapoor took home her first major acting prize.",
-    "c": "A choreographer is sure he believes in one true love. He is dating two dancers. The rehearsals get tense."
+    "c": "\"Dance troupe choreographer juggles two dancers. Love triangle resolves itself through rehearsals.\""
   },
   {
     "id": "bw178",
@@ -2687,7 +2687,7 @@
     "y": "2018",
     "n": "Veere Di Wedding",
     "f": "Shashanka Ghosh's female-buddy comedy. The year's highest-grossing Hindi film led by women.",
-    "c": "Four school friends reunite for a mehendi. Each one is mid-resignation from a different relationship. The mehendi runs over schedule."
+    "c": "\"Four school friends reunite for a mehendi. Each one's love life is falling apart. A lot of alcohol is deployed.\""
   },
   {
     "id": "bw209",
@@ -2707,7 +2707,7 @@
     "y": "2018",
     "n": "Pad Man",
     "f": "Loosely based on Arunachalam Muruganantham, the Tamil entrepreneur who invented low-cost sanitary pad machines.",
-    "c": "Welder builds a sanitary-pad machine for his wife. Village panchayat files objections. He demos at the UN."
+    "c": "\"Small-town welder builds a menstrual-hygiene machine for his wife. Village calls him a pervert. He demos it at the UN.\""
   },
   {
     "id": "bw211",
@@ -3017,7 +3017,7 @@
     "y": "2004",
     "n": "Murder",
     "f": "Anurag Basu's Unfaithful-inspired thriller. Set and shot in Bangkok. Kicked off a three-film franchise.",
-    "c": "Bored Bangkok housewife rekindles a college affair. Husband audits the phone bill. The phone bill is itemised."
+    "c": "\"Bored NRI housewife in Bangkok rekindles with an ex. Husband finds a phone. Husband buys a tyre iron.\""
   },
   {
     "id": "bw246",
@@ -3548,1455 +3548,5 @@
     "n": "Maestro",
     "f": "Merlapaka Gandhi's direct Telugu remake of the Hindi Andhadhun released on Disney+ Hotstar and starred Nithiin as a blind pianist.",
     "c": "\"Pretend-blind pianist stumbles into a star-actor's murder. Keeps the act up through the police questioning. The act stops being an act.\""
-  },
-  {
-    "id": "bw276",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1996",
-    "n": "Is Raat Ki Subah Nahin",
-    "f": "Sudhir Mishra's Bombay-noir debut. Plays out across one night in near real time. Opened Rotterdam's Tiger Awards.",
-    "c": "A man hits a pedestrian with his car at midnight. He phones a local don for help. The don has conditions."
-  },
-  {
-    "id": "bw277",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Hazaaron Khwaishein Aisi",
-    "f": "Chitrangada Singh's debut. Sudhir Mishra's most quoted film. Took seven years to find funding.",
-    "c": "Three Delhi college friends pick Naxal activism, diplomatic service, and marrying up. All three choices outlive the seventies, badly."
-  },
-  {
-    "id": "bw278",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Chameli",
-    "f": "Kareena Kapoor's first National Film Award nomination. Director Anant Balani died mid-shoot; Sudhir Mishra finished the film.",
-    "c": "A lawyer's car breaks down in the rain. A sex worker takes shelter in the same lane. Neither leaves the conversation they started."
-  },
-  {
-    "id": "bw279",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2006",
-    "n": "Khosla Ka Ghosla",
-    "f": "Dibakar Banerjee's debut. Anupam Kher took a token fee of eleven rupees. Won the National Award for Best Feature in Hindi.",
-    "c": "A Delhi accountant buys a plot of land for retirement. A local goon squats on it. The accountant's sons recruit a stage actor."
-  },
-  {
-    "id": "bw280",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2007",
-    "n": "Manorama Six Feet Under",
-    "f": "Abhay Deol in the lead. Openly inspired by Roman Polanski's Chinatown. Shot entirely in a fictional Rajasthan town called Lakhot.",
-    "c": "A Rajasthan irrigation engineer writes detective novels on the side. A woman hires him to tail her husband. The tail leads away from her husband."
-  },
-  {
-    "id": "bw281",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Aamir",
-    "f": "Rajeev Khandelwal's film debut. Rajkumar Gupta's first feature. Shot on real Mumbai streets without closing any of them.",
-    "c": "An NRI doctor lands in Bombay and gets a phone call. The call has a destination. The destination has another call."
-  },
-  {
-    "id": "bw282",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Oye Lucky Lucky Oye",
-    "f": "Based on Bunty Chor, a real Delhi serial thief. Dibakar Banerjee's second film. Won the National Award for Best Popular Film.",
-    "c": "A Delhi boy starts stealing from neighbours. Neighbours become districts. Districts become farmhouses."
-  },
-  {
-    "id": "bw283",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2009",
-    "n": "Dev D",
-    "f": "Abhay Deol pitched the modern Devdas to Anurag Kashyap over dinner. Kalki Koechlin's acting debut.",
-    "c": "A Punjabi man loses his fiancee and commits to self-destruction. He adds opiates, Delhi nightlife, and a high-school webcam star. The playlist keeps pace."
-  },
-  {
-    "id": "tw275",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "90s",
-    "y": "1991",
-    "n": "Kshana Kshanam",
-    "f": "RGV's second film after Siva. Sridevi's only pairing with Venkatesh. Shot mostly on Hyderabad's then-empty outer ring road.",
-    "c": "A bank clerk accidentally witnesses a robbery. She runs into an unemployed engineer on the street. The robbers follow both, with company."
-  },
-  {
-    "id": "tw276",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1992",
-    "n": "Antham",
-    "f": "Made simultaneously in Telugu and Hindi (Drohi). RGV's fourth film. Nagarjuna and Urmila's first pairing.",
-    "c": "A gangster's lover is held in a room by police. The gangster is held in another. They take turns talking their way through the wall."
-  },
-  {
-    "id": "tw277",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Aithe",
-    "f": "Chandrasekhar Yeleti's debut. Made for under one crore rupees. Won six Nandi Awards including Best First Film.",
-    "c": "Four broke engineering graduates plan to kidnap a mafia operative for the bounty before he hijacks a flight. Planning takes longer than the kidnap. The mafia notices."
-  },
-  {
-    "id": "tw278",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2004",
-    "n": "Anand",
-    "f": "Sekhar Kammula's second film. Kamalini Mukherjee's first lead. Recovered its budget on opening weekend, rare for an indie drama.",
-    "c": "An industrialist's son is engaged to the wrong woman. The bride walks out on her own engagement and sets her own terms. The families file objections in writing."
-  },
-  {
-    "id": "tw279",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2006",
-    "n": "Godavari",
-    "f": "Sekhar Kammula's follow-up to Anand. Shot on an actual three-day river cruise. The album outsold the film collections.",
-    "c": "Two arranged-match candidates share a river cruise with their extended families. The river is loud. The families are louder."
-  },
-  {
-    "id": "tw280",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2007",
-    "n": "Happy Days",
-    "f": "Sekhar Kammula's biggest commercial hit. Cast assembled from a seven-day Hyderabad audition. Inspired a wave of engineering-college films.",
-    "c": "Eight engineering students meet on orientation day. They form three couples, one friendship, and one academic backlog. All five hold until graduation."
-  },
-  {
-    "id": "tw281",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Gamyam",
-    "f": "Won Best Feature at the 2008 Nandi Awards. Allari Naresh's switch from comedy sidekick to leading man.",
-    "c": "A rich brat's fiancee abandons him. He borrows a mechanic's bike and rides toward a pilgrimage. The mechanic has his own agenda."
-  },
-  {
-    "id": "tw282",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2000s",
-    "y": "2006",
-    "n": "Bommarillu",
-    "f": "Bhaskar's directorial debut. Siddharth and Genelia reunite after Boys (2003). Remade in Tamil and Hindi within three years.",
-    "c": "A Hyderabad father plans his son's life in advance, including the fiancee. The son agrees, then meets a different girl. The itinerary does not accommodate."
-  },
-  {
-    "id": "bw284",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1998",
-    "n": "Hyderabad Blues",
-    "f": "Nagesh Kukunoor self-funded the shoot on seventeen lakh rupees. Widely cited as the film that opened the door for Indian indie cinema.",
-    "c": "An NRI returns after twelve years and treats his own family like a customer feedback survey. Every aunt files a complaint. The marriage committee convenes anyway."
-  },
-  {
-    "id": "bw285",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2002",
-    "n": "Mr. & Mrs. Iyer",
-    "f": "Aparna Sen directed her daughter Konkona Sen Sharma to a National Award in her lead debut. Shot almost entirely on a stalled bus.",
-    "c": "A Tamil Brahmin mother and a Muslim photographer share a bus seat during a communal curfew. She introduces him to strangers as her husband. The introduction outlasts the journey."
-  },
-  {
-    "id": "bw286",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2005",
-    "n": "Being Cyrus",
-    "f": "Homi Adajania's debut. The entire film was shot in English with a Parsi family at its centre, a first for a mainstream Indian release.",
-    "c": "A drifter books himself into a dysfunctional Parsi household as an assistant. The household is full of complaints against each other. He takes notes."
-  },
-  {
-    "id": "bw287",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2007",
-    "n": "Hattrick",
-    "f": "Milan Luthria directed. The film stitches together three unrelated viewers glued to the same India vs Pakistan World Cup match.",
-    "c": "A heart patient, an estranged couple, and a call centre employee spend the same afternoon watching the same India versus Pakistan match. None of them are in the same room. All of them should be elsewhere."
-  },
-  {
-    "id": "bw288",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2005",
-    "n": "Page 3",
-    "f": "Madhur Bhandarkar won the National Award for Best Film. Konkona Sen Sharma shadowed real Bombay society reporters for research.",
-    "c": "Society reporter files party guest lists. Editor heavily redacts the lists. Photos survive every redaction."
-  },
-  {
-    "id": "bw289",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Haasil",
-    "f": "Tigmanshu Dhulia's debut feature. Irrfan Khan won the Filmfare Best Villain award, which set the template for his early 2000s run.",
-    "c": "An Allahabad university student union election turns into a regional body count. A meek history student is adopted by the winning faction. The faction expects loyalty in writing."
-  },
-  {
-    "id": "bw290",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1998",
-    "n": "Hazaar Chaurasi Ki Maa",
-    "f": "Govind Nihalani adapted Mahasweta Devi's novel. Jaya Bachchan returned to lead acting after a long gap for this role.",
-    "c": "A Calcutta housewife learns her son is on a morgue list with a case number instead of a name. She starts interviewing his friends like a second mother. Nobody in the family wants the interviews."
-  },
-  {
-    "id": "bw291",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Mithya",
-    "f": "Rajat Kapoor directed. Ranvir Shorey won the Filmfare Critics award. The film premiered at Cannes Marche before its Indian release.",
-    "c": "A struggling actor is kidnapped and told to impersonate a mob boss who looks exactly like him. He accepts it as a career upgrade. No exit clause."
-  },
-  {
-    "id": "bw292",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Shaurya",
-    "f": "Samar Khan directed. Loosely inspired by A Few Good Men, relocated to Kashmir. Kay Kay Menon won the IIFA Best Villain trophy.",
-    "c": "A military lawyer takes a Kashmir court martial assignment as a scheduling favour. The accused refuses to defend himself. Seniors refuse the questions."
-  },
-  {
-    "id": "bw293",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1996",
-    "n": "Maachis",
-    "f": "Gulzar directed and wrote the lyrics. Won the National Award for Best Popular Film. Vishal Bhardwaj's first major score.",
-    "c": "A Punjab engineering graduate watches his sister's fiance get picked up and returned damaged. Official complaints go nowhere. He stops filing official complaints."
-  },
-  {
-    "id": "bw294",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2001",
-    "n": "Chandni Bar",
-    "f": "Madhur Bhandarkar won the National Award for Best Film on Other Social Issues. Tabu won Best Actress for her role as a Mumbai dance bar performer.",
-    "c": "A village woman arrives in the city after a family riot and takes the only shift available at a dance bar. Two decades later the shift has outlasted the family. Her son inherits the geography."
-  },
-  {
-    "id": "bw295",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Court",
-    "f": "Chaitanya Tamhane's debut feature. India's official Oscar entry for 2016. Trial scenes shot in long static takes with non-actors.",
-    "c": "A protest singer is arrested for allegedly provoking a sewer worker's suicide through his lyrics. The trial schedules itself across many months. Everybody goes home for lunch on time."
-  },
-  {
-    "id": "bw296",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Titli",
-    "f": "Kanu Behl directed. Produced by Dibakar Banerjee and YRF. Premiered in the Un Certain Regard section at Cannes.",
-    "c": "Carjacking family schedules a wedding to keep the youngest brother on payroll. The bride brings her own resignation letter. The HR review goes long."
-  },
-  {
-    "id": "bw297",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2012",
-    "n": "Talaash",
-    "f": "Reema Kagti directed. Aamir Khan shot for it between Dhoom 3 prep. The script went through fourteen drafts over three years.",
-    "c": "A police inspector investigating a late-night car accident keeps getting tips from one specific woman at one specific hotel. His case file expands. His sleep does not."
-  },
-  {
-    "id": "bw298",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2012",
-    "n": "Ship of Theseus",
-    "f": "Anand Gandhi's debut. Crowdfunded release through a citizen ticketing drive after every major distributor passed on it.",
-    "c": "A blind photographer, a monk with liver disease, and a stockbroker with a kidney transplant share one question across three unrelated episodes. The question is whether the original owner still owns anything."
-  },
-  {
-    "id": "bw299",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1995",
-    "n": "Bandit Queen",
-    "f": "Shekhar Kapur directed. Seema Biswas made her feature debut as Phoolan Devi. Released abroad before a contested Indian clearance.",
-    "c": "A girl from a ravine village is married off, walks out, and ends up running the ravine. Every attempt to file her back into normal life fails. The file keeps reopening."
-  },
-  {
-    "id": "bw300",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Pagglait",
-    "f": "Umesh Bist directed. Sanya Malhotra leads. Shot in Lucknow during the pandemic with a reduced crew.",
-    "c": "A young widow finishes the funeral snacks and checks her late husband's phone. The phone contains a second inbox. The mourning schedule continues without her."
-  },
-  {
-    "id": "bw301",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2015",
-    "n": "Aligarh",
-    "f": "Hansal Mehta directed. Based on the real case of Professor Ramchandra Siras. Manoj Bajpayee won the Asia Pacific Screen Award.",
-    "c": "A university professor is suspended after a video of his private life is circulated. A young reporter offers to help him reinstate. The university is in no hurry."
-  },
-  {
-    "id": "bw302",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2013",
-    "n": "Jolly LLB",
-    "f": "Subhash Kapoor directed. Loosely inspired by the Sanjeev Nanda BMW hit and run case. Won the National Award for Best Hindi Film.",
-    "c": "A small-time lawyer with no practice files a public interest petition against a senior counsel who never loses. The senior counsel treats the hearings like a drop-in meeting. The junior files again."
-  },
-  {
-    "id": "bw303",
-    "ind": "BW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Photograph",
-    "f": "Ritesh Batra directed, his follow-up to The Lunchbox. Premiered at Sundance. Shot on location around Mumbai's Gateway of India.",
-    "c": "A Gateway of India photographer needs to produce a fiancee for his grandmother. A quiet accounting student agrees to hold the pose. The grandmother schedules the next session."
-  },
-  {
-    "id": "bw304",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2013",
-    "n": "Shuddh Desi Romance",
-    "f": "Maneesh Sharma directed. Parineeti Chopra and Sushant Singh Rajput lead. Jaipur reportedly saw a bump in wedding-location tourism.",
-    "c": "A Jaipur tour guide gets cold feet at his own wedding and walks out with a stranger. The stranger also has cold feet. Both reschedule."
-  },
-  {
-    "id": "bw305",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Hasee Toh Phasee",
-    "f": "Vinil Mathew directed his debut. Parineeti Chopra plays a scientist with a drug dependency. Dharma and Phantom co-produced.",
-    "c": "A girl hides in her sister's wedding house after returning from abroad. The groom befriends her like a project manager debugging a process. The wedding schedule continues around them."
-  },
-  {
-    "id": "bw306",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Chhichhore",
-    "f": "Nitesh Tiwari directed. Won the National Award for Best Feature Film in Hindi. Shraddha Kapoor and Sushant Singh Rajput lead the ensemble.",
-    "c": "A middle-aged father tells his hospitalised son about a college hostel competition from decades earlier. The hostel was ranked last. The father narrates the ranking in instalments."
-  },
-  {
-    "id": "bw307",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Badhaai Ho",
-    "f": "Amit Sharma directed. Grossed over two hundred crore worldwide. Neena Gupta and Surekha Sikri both won major awards for this one.",
-    "c": "A grown son finds out his parents are expecting another child. The office finds out before the extended family does. The extended family has opinions."
-  },
-  {
-    "id": "bw308",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Mimi",
-    "f": "Laxman Utekar directed. Kriti Sanon won the National Award for Best Actress. Shot in Rajasthan with a small crew during the pandemic.",
-    "c": "A Rajasthani stage dancer agrees to carry a baby for a foreign couple as a one-time contract. The foreign couple reviews the progress and cancels the order. The dancer is still on schedule."
-  },
-  {
-    "id": "bw309",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Pati Patni Aur Woh",
-    "f": "Mudassar Aziz directed. A remake of the 1978 original. Kartik Aaryan leads; Bhumi Pednekar and Ananya Panday round out the triangle.",
-    "c": "A Kanpur public works officer tells his office colleague his wife is difficult, then tells his wife the colleague is difficult. Both versions end up in the same WhatsApp group. Payroll notices."
-  },
-  {
-    "id": "bw310",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2020",
-    "n": "Ludo",
-    "f": "Anurag Basu directed. Released on Netflix during the pandemic. Pankaj Tripathi anchors the ensemble as a karmic bookkeeper.",
-    "c": "Four unrelated short stories cross the same corpse. Each story has a different person hiding a different object. The object keeps changing laps."
-  },
-  {
-    "id": "bw311",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Gully Boy",
-    "f": "Zoya Akhtar directed. India's official entry for the 2020 Oscars. Inspired by Mumbai rappers Divine and Naezy.",
-    "c": "A Dharavi college student writes street verses in his notebook and drives cars for a side income. A music producer spots the notebook. The family prefers the side income."
-  },
-  {
-    "id": "bw312",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Haseen Dillruba",
-    "f": "Vinil Mathew directed, written by Kanika Dhillon. Released on Netflix. A sequel landed two years later.",
-    "c": "A small-town wife is questioned about her husband's disappearance and offers a long answer built from pulp novels. The police take notes in real time. The library expands."
-  },
-  {
-    "id": "bw313",
-    "ind": "BW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2018",
-    "n": "October",
-    "f": "Shoojit Sircar directed. Varun Dhawan took a pay cut to headline. Shot chronologically over four seasons in Delhi.",
-    "c": "A hotel management trainee is told a co-trainee has had a serious accident. He starts visiting the hospital off shift. The family politely declines help."
-  },
-  {
-    "id": "bw314",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Sultan",
-    "f": "Ali Abbas Zafar directed. Second highest opening weekend of 2016. Salman Khan trained in freestyle wrestling for nine months.",
-    "c": "A Haryana wrestler retires into married life, then loses the married life, then comes back to the mat for a cage league with corporate sponsors. The sponsors want a comeback arc. He supplies one."
-  },
-  {
-    "id": "bw315",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Kahaani 2",
-    "f": "Sujoy Ghosh directed. Vidya Balan in a double identity. Shot in Chandan Nagar and Kalimpong, both used as full characters.",
-    "c": "A quiet office worker in a hill town is hit by a car in the morning and put into a coma. The investigating officer opens her diary. The diary contains a second name."
-  },
-  {
-    "id": "bw316",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Raazi",
-    "f": "Meghna Gulzar directed. Based on Harinder Sikka's novel Calling Sehmat. Alia Bhatt won the Filmfare Best Actress trophy.",
-    "c": "A Kashmiri student is married into a Pakistani military family as part of a family understanding. The in-laws treat her like a new bride. She treats them like a filing cabinet."
-  },
-  {
-    "id": "bw317",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2015",
-    "n": "Drishyam",
-    "f": "Nishikant Kamat directed. Hindi remake of the Malayalam original. Ajay Devgn plays a fourth-standard pass cable operator with a film habit.",
-    "c": "A cable operator in a Goa village builds a week-long written alibi for his family. He rehearses the alibi against the neighbours first. The neighbours corroborate."
-  },
-  {
-    "id": "bw318",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Uri: The Surgical Strike",
-    "f": "Aditya Dhar's debut. Based on the 2016 Indian Army operation across the Line of Control. Grossed over three hundred crore domestic.",
-    "c": "An army officer requests a desk posting to care for his mother. Within months he is briefed on a cross-border operation and asked to come back to field. The desk file stays open."
-  },
-  {
-    "id": "bw319",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Mission Mangal",
-    "f": "Jagan Shakti directed. A fictionalised take on India's Mars Orbiter Mission. Highest opening for a non-Khan Hindi film at the time.",
-    "c": "A senior ISRO scientist is demoted to a small satellite project after a launch fails. She picks a team of mostly dismissed women. Fuel budget is tiny."
-  },
-  {
-    "id": "bw320",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2023",
-    "n": "Jawan",
-    "f": "Atlee directed his Hindi debut. Shah Rukh Khan in a double role. Highest first day opening for a Hindi film at time of release.",
-    "c": "A prison warden runs a side operation using the inmates as field agents. A senior officer tracks the operation back to a name from decades earlier. The warden shares the name."
-  },
-  {
-    "id": "tw283",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2020",
-    "n": "Bheeshma",
-    "f": "Venky Kudumula wrote the script with Nithiin in mind and finished it in under six months. It ran Sankranti 2020 before lockdowns hit.",
-    "c": "An organic farm company needs a managing director. The selection committee picks a vlogger who protests about everything online."
-  },
-  {
-    "id": "tw284",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Krack",
-    "f": "Gopichand Malineni shot the film back-to-back with Ravi Teja's comeback arc. Mass songs by Thaman carried the first-week collections.",
-    "c": "A police officer handles four different troublemakers across four postings. Each one underestimates his filing style."
-  },
-  {
-    "id": "tw285",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2020",
-    "n": "Sarileru Neekevvaru",
-    "f": "Anil Ravipudi wrote Mahesh Babu as an army officer who rarely wears a uniform. It opened Sankranti 2020 with record numbers.",
-    "c": "An army man takes leave to visit the family of a fallen colleague. The family is in a political mess and he quietly opens a second file."
-  },
-  {
-    "id": "tw286",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2019",
-    "n": "F2 Fun and Frustration",
-    "f": "Anil Ravipudi's Sankranti comedy put Venkatesh and Varun Tej in matching domestic misery. It became Varun's first solo blockbuster.",
-    "c": "Two married men meet on a flight and compare complaint logs. They form a support group and then make things worse for each other."
-  },
-  {
-    "id": "tw287",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2022",
-    "n": "F3",
-    "f": "The sequel tripled the chaos with Sonal Chauhan and Mehreen Pirzada added to the roster. It released in May 2022 after a delayed shoot.",
-    "c": "Two men hear about an inheritance and convince themselves they are the rightful heirs. Several people file competing claims to the same money."
-  },
-  {
-    "id": "tw288",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Venky Mama",
-    "f": "Venkatesh and Naga Chaitanya shared the poster, uncle and nephew on screen and off. KS Ravindra directed.",
-    "c": "An uncle raises his orphaned nephew and pushes him into a clerical army posting. Then the family gets a ghost problem the HR manual does not cover."
-  },
-  {
-    "id": "tw289",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2019",
-    "n": "iSmart Shankar",
-    "f": "Puri Jagannadh's return after a dry patch made Ram Pothineni a Hyderabad slang icon. The film crossed 80 crore on a tight budget.",
-    "c": "A small-time Hyderabad operator gets a dead cop's memories transferred into his head. He keeps both filing styles active."
-  },
-  {
-    "id": "tw290",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Vakeel Saab",
-    "f": "Venu Sriram remade Pink with Pawan Kalyan after a two-year acting break. It returned him to the box office with Sankranti numbers.",
-    "c": "A lawyer on sabbatical takes up three women's assault case. He files hard and asks the room questions nobody prepared for."
-  },
-  {
-    "id": "tw291",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Dear Comrade",
-    "f": "Bharat Kamma's debut paired Vijay Deverakonda with Rashmika Mandanna for their second time. The song Kaadhale picked up a fandom of its own.",
-    "c": "A student union leader with anger issues falls for a state-level cricketer. She files a complaint of her own and he has to rethink the playbook."
-  },
-  {
-    "id": "tw292",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Sarrainodu",
-    "f": "Boyapati Sreenu put Allu Arjun in an ex-army avatar with colour-coded villains. It was one of his biggest pre-Pushpa hits.",
-    "c": "A retired soldier moves back to his village to solve other people's problems. He keeps a strict rule about not hitting a man first."
-  },
-  {
-    "id": "tw293",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2017",
-    "n": "MCA",
-    "f": "Dil Raju produced Nani's middle-class accountant role. The title stands for Middle Class Abbayi and the songs carried the family audience.",
-    "c": "A middle-class accountant becomes the household fixer after his brother marries in. He opens a spreadsheet and starts solving relatives."
-  },
-  {
-    "id": "tw294",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Nannaku Prematho",
-    "f": "Sukumar wrote it for Jr NTR after researching corporate-revenge plots for months. Most of it was shot in London.",
-    "c": "A terminally ill father gives his son a single task. The son moves to London and sets up a quiet long-form corporate takedown."
-  },
-  {
-    "id": "tw295",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2015",
-    "n": "Bruce Lee: The Fighter",
-    "f": "Ram Charan played a stunt man for the first time with Srinu Vaitla in the director's chair. Rakul Preet Singh was cast opposite.",
-    "c": "A stunt double is mistaken for a cop by a game designer with a drug peddler problem. He decides not to correct the misunderstanding. The peddler does not get the memo either."
-  },
-  {
-    "id": "tw296",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Chal Mohan Ranga",
-    "f": "Krishna Chaitanya directed Nithiin with Trivikram producing. It released in April 2018 and had a modest run.",
-    "c": "A software engineer moves abroad for a job and lands up chasing a stranger he met at a party. The whole thing starts with a lost bag."
-  },
-  {
-    "id": "tw297",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Love Story",
-    "f": "Sekhar Kammula returned after five years with Naga Chaitanya and Sai Pallavi. The Zumba sequence became the marketing anchor.",
-    "c": "A Zumba trainer and his small-town partner move from a village to the city. Their families back home file separate objections."
-  },
-  {
-    "id": "tw299",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Most Eligible Bachelor",
-    "f": "Bhaskar paired Akhil Akkineni with Pooja Hegde in a romantic-comedy structured around dating panels. It opened during Dussehra 2021.",
-    "c": "An NRI groom arrives home ready to marry. A stand-up comedian puts him on a panel and audits his dating history in public."
-  },
-  {
-    "id": "tw301",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2022",
-    "n": "Major",
-    "f": "Adivi Sesh wrote and starred in the biopic of Major Sandeep Unnikrishnan, releasing in three languages. Mahesh Babu produced it.",
-    "c": "A young army officer's career is reconstructed from briefings and home videos. The final assignment takes place inside a Mumbai hotel."
-  },
-  {
-    "id": "tw302",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2022",
-    "n": "Karthikeya 2",
-    "f": "Chandoo Mondeti continued his mystery thriller franchise with Nikhil Siddhartha. It picked up Hindi traction through word of mouth.",
-    "c": "A doctor on vacation chases a missing artifact across two states. A rival researcher keeps pulling his file and beating him to the site."
-  },
-  {
-    "id": "tw303",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Yevadu",
-    "f": "Vamshi Paidipally's body-swap action thriller assembled Ram Charan, Allu Arjun and Shruti Haasan. A face transplant plot carried the title.",
-    "c": "A musician receives a face transplant from a dead stranger. The dead stranger had a pending revenge list."
-  },
-  {
-    "id": "tw304",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Race Gurram",
-    "f": "Surender Reddy cast Allu Arjun opposite Shruti Haasan in a brothers-on-opposite-sides setup. S Thaman scored the chartbusters.",
-    "c": "Two brothers grow up choosing opposite sides of the law. The police officer files reports while the other one cancels them at the door."
-  },
-  {
-    "id": "tw305",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2012",
-    "n": "Gabbar Singh",
-    "f": "Harish Shankar reworked a Hindi action hit into Pawan Kalyan's highest opener at that point. The title song held the top spot for months.",
-    "c": "An irreverent officer transfers to a rural posting and refuses to take anyone seriously. The local strongman tries to file him first."
-  },
-  {
-    "id": "tw306",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2015",
-    "n": "Son of Satyamurthy",
-    "f": "Trivikram wrote it for Allu Arjun after a long gap. The film released during summer 2015 with a family-debt drama structure.",
-    "c": "A son inherits his late father's debts instead of the estate. He insists on paying each creditor himself and takes a job to prove it."
-  },
-  {
-    "id": "tw307",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Karthikeya",
-    "f": "Chandoo Mondeti's debut made Nikhil Siddhartha a thriller lead. The Subrahmanyeswara temple mystery anchored the script.",
-    "c": "A medical student with a debunking hobby takes a village trip. He lands inside a temple with a closed chamber and starts a research file."
-  },
-  {
-    "id": "tw308",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Jaathi Ratnalu",
-    "f": "Anudeep KV's debut turned three first-time leads into overnight memes. It became the highest-grossing small-budget Telugu comedy of 2021.",
-    "c": "Three small-town men arrive in the city with no plan and no address. One of them immediately gets booked for a crime that makes no sense."
-  },
-  {
-    "id": "tw309",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Oh Baby",
-    "f": "Nandini Reddy remade a Korean hit with Samantha and Lakshmi. The song Nuvvu Nuvvu was a re-recording of an older Telugu classic.",
-    "c": "A seventy-year-old woman enters a photo studio and walks out looking twenty-four. Her grandson's band suddenly has a new lead singer."
-  },
-  {
-    "id": "tw311",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Krishna Gaadi Veera Prema Gaadha",
-    "f": "Hanu Raghavapudi's debut paired Nani with Mehreen Pirzada in a village gangster-lover setup. It released in February 2016.",
-    "c": "A small-town romantic falls for the sister of a local faction leader. His plan to impress the family goes through three generations of grudges."
-  },
-  {
-    "id": "tw314",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2017",
-    "n": "Ninnu Kori",
-    "f": "Shiva Nirvana's debut cast Nani, Nivetha Thomas and Aadhi Pinisetty in a three-cornered marriage drama. Gopi Sundar scored.",
-    "c": "A married couple in San Francisco gets a ten-day visitor: her ex-boyfriend, flown in from Hyderabad to win her back. The husband insists on hosting."
-  },
-  {
-    "id": "tw315",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2025",
-    "n": "Sankranthiki Vasthunnam",
-    "f": "Anil Ravipudi's 2025 Sankranti release paired Venkatesh with Meenakshi Chaudhary and Aishwarya Rajesh. It crossed 200 crore worldwide.",
-    "c": "A retired cop takes his wife and his ex-girlfriend under the same roof for the holidays. A kidnapping case arrives by courier."
-  },
-  {
-    "id": "tw316",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2013",
-    "n": "Vinara Sodara Veera Kumara",
-    "f": "The Sai Kiran Adivi directorial starred Sreeram and picked up a cult following online after its theatrical run.",
-    "c": "A small-time petty operator is convinced a gold bar is hidden inside a condemned flat. He talks four neighbours into breaking the lease."
-  },
-  {
-    "id": "tw317",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Naandi",
-    "f": "Vijay Kanakamedala's courtroom drama gave Allari Naresh a career-reset lead role. It dealt with wrongful undertrial detention.",
-    "c": "A software engineer is arrested on a charge that falls apart on paper. Four years later a lawyer starts filing the countersuit."
-  },
-  {
-    "id": "tw318",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Loukyam",
-    "f": "Sriwass directed Gopichand and Rakul Preet Singh in a wedding-comedy structure. The film released in September 2014.",
-    "c": "A Hyderabad man crashes a village wedding to stop it. The bride's family has more elders than his own rehearsal list accounted for."
-  },
-  {
-    "id": "tw319",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Nela Ticket",
-    "f": "Kalyan Krishna Kurasala cast Ravi Teja and Malvika Sharma in a politician-villain setup. Shakthikanth Karthick scored the soundtrack.",
-    "c": "An orphan with no address sells the only thing he owns at night. A state legislator runs a parallel housing racket and the two lists collide."
-  },
-  {
-    "id": "tw320",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Gang Leader",
-    "f": "Vikram Kumar directed Nani in a crime-comedy with five widowed women as a revenge team. It released around Dussehra 2019.",
-    "c": "A crime novelist agrees to help five widows plan a murder. They treat the meetings like a book club and take minutes."
-  },
-  {
-    "id": "tw321",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Ishq",
-    "f": "S. S. Raju directed Teja Sajja and Priya Prakash Varrier in a relationship thriller released in 2021. The film debuted on Aha.",
-    "c": "A young couple on a road trip gets harassed by a stranger who demands papers. What looks like a one-hour problem turns into a night of documentation."
-  },
-  {
-    "id": "tw322",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2014",
-    "n": "Oohalu Gusagusalade",
-    "f": "Srinivas Avasarala's directorial debut cast Naga Shaurya, Rashi Khanna and Raja Chembolu. It released in June 2014 with indie marketing.",
-    "c": "A man falls for his best friend's fiancee during the wedding prep. He writes a song about it and hopes the band will stop him."
-  },
-  {
-    "id": "tw323",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2024",
-    "n": "Tillu Square",
-    "f": "Mallik Ram returned with Siddhu Jonnalagadda and Anupama Parameswaran in the sequel to DJ Tillu. It became a summer 2024 hit.",
-    "c": "A wedding DJ in Hyderabad agrees to fake a relationship for a one-day favour. A second woman arrives with the same agreement in writing."
-  },
-  {
-    "id": "tw324",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2013",
-    "n": "Sahasam",
-    "f": "Chandrasekhar Yeleti directed Gopichand and Taapsee Pannu in a cross-border treasure hunt. It was shot in Ladakh and Hyderabad.",
-    "c": "A Hyderabad security guard chases his grandfather's diary across the border. His passport has problems and his sense of direction has more."
-  },
-  {
-    "id": "tw325",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2011",
-    "n": "Ala Modalaindi",
-    "f": "Nandini Reddy's debut with Nani and Nithya Menen used a non-linear structure. Kalyani Malik scored the indie hit.",
-    "c": "A woman tells her friend how she met her current boyfriend. The story hops through eight years and three mistaken engagements."
-  },
-  {
-    "id": "tw326",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2011",
-    "n": "Prema Kavali",
-    "f": "K. Vijaya Bhaskar's directorial outing launched Aadi Saikumar as a solo romantic lead. Anoop Rubens scored the soundtrack.",
-    "c": "A college boy falls for a girl whose father is a police officer. He spends the first half winning her and the second half avoiding her address."
-  },
-  {
-    "id": "tw327",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Mr. Majnu",
-    "f": "Venky Atluri wrote and directed Akhil Akkineni in a travel-dating structure. Thaman scored the songs for the January 2019 release.",
-    "c": "A chronic flirt books a Europe tour and meets a woman who refuses to take him seriously. She keeps a running list of his previous entries."
-  },
-  {
-    "id": "tw328",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Happy Wedding",
-    "f": "Lakshman Karya directed Sumanth Ashwin and Niharika Konidela in a wedding-reluctant comedy. It released in 2018 after production delays.",
-    "c": "An engaged couple agrees to do every wedding ritual only because the elders will not stop. Somewhere between the mehendi and the sangeet, they panic."
-  },
-  {
-    "id": "tw330",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Aravinda Sametha Veera Raghava",
-    "f": "Trivikram directed Jr NTR and Pooja Hegde in a Rayalaseema faction drama. It released in October 2018 with a non-violence arc.",
-    "c": "A man returns home from London to bury his father. The village faction expects him to pick up the file and continue the ledger."
-  },
-  {
-    "id": "tw331",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Ee Nagaraniki Emaindi",
-    "f": "Tharun Bhascker's second film cast four fresh leads on a Hyderabad-to-Goa road trip. Vivek Sagar scored the soundtrack.",
-    "c": "Four friends in their twenties drive to Goa for a break. Each one is running from a different problem and none of them tells the others."
-  },
-  {
-    "id": "tw332",
-    "ind": "TW",
-    "diff": "easy",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Goodachari",
-    "f": "Sashi Kiran Tikka directed Adivi Sesh in a spy thriller co-written by Sesh himself. It ran sleeper-hit theatre legs in August 2018.",
-    "c": "A junior intelligence recruit is picked for a senior field op on week one. His application paperwork keeps turning up in places it should not."
-  },
-  {
-    "id": "tw333",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1992",
-    "n": "Ankuram",
-    "f": "Revathi won the Filmfare Best Actress (Telugu) for this C. Umamaheswara Rao drama, a landmark of Telugu parallel cinema.",
-    "c": "A Hyderabad woman on her building stairs watches a neighbour get dragged away by cops for a political murder. She walks up to the police and claims the infant the neighbour left behind."
-  },
-  {
-    "id": "tw334",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1995",
-    "n": "Ammoru",
-    "f": "Kodi Ramakrishna's devotional hit ran 175 days in Andhra and launched the VFX-heavy goddess-film template for a decade.",
-    "c": "A village woman skips the local priest and prays directly to the temple stone. The priest's gang runs a side business extorting devotees. The stone starts answering back."
-  },
-  {
-    "id": "tw335",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1996",
-    "n": "Subhalagnam",
-    "f": "Jagapathi Babu won his first Nandi Award for Best Actor for this SV Krishna Reddy film, scored on then-new keyboard arrangements.",
-    "c": "A husband divorces his wife after she accepts a settlement from his boss. He marries the boss's daughter the same week. The paperwork gets complicated."
-  },
-  {
-    "id": "tw336",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1994",
-    "n": "Govinda Govinda",
-    "f": "Ram Gopal Varma directed Nagarjuna and Sridevi here, shot largely around the Tirumala hills; Sridevi's only Telugu outing with RGV.",
-    "c": "A small-time crook is hired to lift the temple crown at Tirumala. A woman on pilgrimage sits next to him for eight hours. He starts answering her questions like a regular pilgrim."
-  },
-  {
-    "id": "tw337",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1997",
-    "n": "Priyuralu Pilichindi",
-    "f": "Rajiv Menon directed and co-wrote this Telugu-Tamil bilingual produced by Kalaipuli S. Thanu, with Ajith, Tabu, and Aishwarya Rai in one of her earliest leading roles.",
-    "c": "Two sisters from a wealthy Chettiar family lose the family estate. They move to Chennai with one cookbook and one electric guitar. The city files several invoices."
-  },
-  {
-    "id": "tw338",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1997",
-    "n": "Pelli",
-    "f": "B. Gopal's family drama ran over 100 days across multiple centres. The soundtrack by Koti sold heavily on cassette in 1997.",
-    "c": "A groom's family shows up with a list of demands the morning of the wedding. The bride's brother hands them a different list. The priest keeps checking his watch."
-  },
-  {
-    "id": "tw339",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1997",
-    "n": "Annamayya",
-    "f": "Raghavendra Rao's biopic of the 15th-century composer earned Nagarjuna a National Award and Keeravani a National Award for music direction.",
-    "c": "A village poet refuses to sing for the local landlord and walks to the hills to sing for a stone idol instead. The landlord files a complaint. The idol does not."
-  },
-  {
-    "id": "tw340",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "90s",
-    "y": "1998",
-    "n": "Chinnari Muddula Papa",
-    "f": "Meena starred opposite a child artist in this Muppalaneni Siva drama, remade from the Tamil hit Pasumpon.",
-    "c": "A young widow takes a teaching job in a village school. The village headman decides she shouldn't have the job. A seven-year-old keeps submitting the same homework."
-  },
-  {
-    "id": "tw341",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2004",
-    "n": "Grahanam",
-    "f": "Indraganti Mohana Krishna's debut won the National Award for Best First Film of a Director. Based on a Chalam short story from the 1930s.",
-    "c": "A village doctor investigates a curse the elders insist is real. The patient list is the village. The cure is filed under heresy."
-  },
-  {
-    "id": "tw342",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2005",
-    "n": "Sankranti",
-    "f": "Released during the harvest festival week of 2005, this Muppalaneni Siva film paired Venkatesh with Srikanth in a home-return drama.",
-    "c": "Eldest brother runs the family provisions store. A medical-bills secret and a wealthy man's daughter both arrive the same week. The shop ledger picks sides."
-  },
-  {
-    "id": "tw343",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Nenu Meeku Telusa",
-    "f": "Manjari Makijany directed this little-seen thriller starring Manchu Manoj and Sneha Ullal, edited by Marthand K. Venkatesh.",
-    "c": "A Bangalore software guy with short-term memory loss wakes up after a party with his uncle's body in his car. He phones his girlfriend. She asks which uncle."
-  },
-  {
-    "id": "tw344",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2008",
-    "n": "Kotha Bangaru Lokam",
-    "f": "Srikanth Addala's directorial debut. Mickey J. Meyer's score was released on tape and CD and became a college-hostel staple for years.",
-    "c": "A village boy moves to a Visakhapatnam residential college. He falls for a classmate with strict parents. Her father keeps finding reasons to visit campus."
-  },
-  {
-    "id": "tw345",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2009",
-    "n": "Seethakoka Chiluka",
-    "f": "Premji's only Telugu directorial; the film featured mostly newcomers and was shot around the Godavari districts on a small budget.",
-    "c": "A village girl writes a letter to a boy she saw once at a temple fair. He writes back from Hyderabad. Their parents open both envelopes."
-  },
-  {
-    "id": "tw346",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2004",
-    "n": "7/G Brindavan Colony",
-    "f": "Selvaraghavan remade his own Tamil hit for Telugu. The soundtrack by Yuvan Shankar Raja outsold the film itself in cassette markets.",
-    "c": "College repeat-offender fixates on a balcony across the courtyard. The warden's complaints box fills up. The warden is also his landlord."
-  },
-  {
-    "id": "tw347",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2007",
-    "n": "Poola Rangadu",
-    "f": "N. Shankar directed this Sunil action-comedy; the title references a 1967 NTR film but shares no plot elements with it.",
-    "c": "A small-town buyer signs for thirty acres of disputed village land. Two faction landlords already had their names on the file. He is now the third name."
-  },
-  {
-    "id": "tw348",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Dongodu",
-    "f": "A Telugu remake of the Malayalam hit Meesa Madhavan, repackaged for a Hyderabad audience.",
-    "c": "A village thief romances the landlord's daughter only to recover his own house papers. She believes the romance. The papers do not."
-  },
-  {
-    "id": "tw349",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2004",
-    "n": "Aa Naluguru",
-    "f": "Rajendra Prasad won the Nandi Award for Best Actor. Chandra Siddhartha directed this middle-class drama about mortality and family.",
-    "c": "A newspaper editor spends half his salary on charity for forty years. He dies on a Tuesday. His family discovers the ledger is longer than the will."
-  },
-  {
-    "id": "tw350",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2006",
-    "n": "Amma Cheppindi",
-    "f": "Director Gangaraju Gunnam's drama; Sharwanand's early lead role, two years before his Gamyam breakout.",
-    "c": "A 21-year-old who failed third standard works at a rocket-centre canteen. Two strangers convince him to deliver a parcel on Independence Day. The parcel is not lunch."
-  },
-  {
-    "id": "tw351",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2005",
-    "n": "Super",
-    "f": "Puri Jagannadh directed; the film was originally planned with a different lead before Nagarjuna stepped in late in pre-production.",
-    "c": "A cab service owner discovers the high-tech robber pulling jobs in his city is his oldest friend. They were brothers until a girl died. Bangkok files the next chapter."
-  },
-  {
-    "id": "tw352",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Sathyam",
-    "f": "Surya Kiran wrote and directed; dialogues by Sateesh-Ravi. Sumanth's role grew on set as the songwriter premise was tightened.",
-    "c": "A young songwriter ghostwrites for a famous lyricist whose name is on every cassette. He has to convince his father he writes the songs. His muse has her own list."
-  },
-  {
-    "id": "tw353",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2006",
-    "n": "Stalin",
-    "f": "A.R. Murugadoss's Telugu debut as director, shot in Hyderabad and Vishakapatnam with Chiranjeevi in the lead role.",
-    "c": "An army officer retires and starts a chain of good deeds in his neighbourhood. Each person he helps must help three strangers. The chain reaches the wrong office."
-  },
-  {
-    "id": "tw354",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2000s",
-    "y": "2003",
-    "n": "Ninne Ishtapaddanu",
-    "f": "Nagarjuna's brother Daggubati Venkatesh produced this Konda-directed romance with Tarun and Sridevi Vijaykumar.",
-    "c": "A guy keeps missing the same girl at the same bookshop for six months. He finally sends her a letter via the cashier. The cashier has been reading all her letters."
-  },
-  {
-    "id": "tw355",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2010",
-    "n": "Vedam",
-    "f": "Krish Jagarlamudi's hyperlink drama won the Nandi Award for Best Feature Film. Allu Arjun took a salary cut to play the cable operator role.",
-    "c": "A Hyderabad cable operator, a rockstar, a prostitute, and a Muslim tailor spend a single night at the same hospital. None of them know each other. The receptionist keeps losing forms."
-  },
-  {
-    "id": "tw356",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Mahanati",
-    "f": "Nag Ashwin's biopic won three National Awards including Best Telugu Feature. Keerthy Suresh trained with Savitri's choreographer's daughter.",
-    "c": "A Madras film heroine marries a married co-star in secret. The newspapers find out. She keeps showing up to sets anyway until the sets stop calling her."
-  },
-  {
-    "id": "tw357",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2017",
-    "n": "Ghazi",
-    "f": "Sankalp Reddy's debut was shot inside a decommissioned submarine set built in Hyderabad and released in three languages.",
-    "c": "An Indian navy sub crew gets orders to patrol a specific stretch of water during the 1971 war. Nobody is allowed to radio home. Something much louder is already down there."
-  },
-  {
-    "id": "tw358",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Rangasthalam",
-    "f": "Sukumar built an entire 1980s village set near Hyderabad. Ram Charan learned to operate agricultural pumps for three months before shooting.",
-    "c": "A partially deaf pump operator in a 1985 village gets his brother elected as the local council president. The outgoing president refuses to leave the office. The ledgers start going missing."
-  },
-  {
-    "id": "tw359",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2015",
-    "n": "Yevade Subramanyam",
-    "f": "Nag Ashwin's directorial debut; Nani shot portions of the film on an actual trek to the Kailash Mansarovar region.",
-    "c": "A Bangalore investment analyst leaves his promotion interview to scatter a dead friend's ashes in the Himalayas. A free-spirited stranger from a pub insists on coming along. The analyst has never slept in a tent."
-  },
-  {
-    "id": "tw360",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Husharu",
-    "f": "Director Sree Harsha Konuganti cast mostly newcomers; the reported budget was under five crores, and it became a surprise hit.",
-    "c": "Four Hyderabad flatmates graduate engineering with no jobs. They pool their savings for a weekend at a beach resort. The resort refuses their debit cards."
-  },
-  {
-    "id": "tw361",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Mallesham",
-    "f": "Priyadarshi played the real-life handloom inventor Chintakindi Mallesham, who patented the Asu weaving machine in 1999.",
-    "c": "A Pochampally weaver watches his mother do the same arm motion sixteen thousand times a week. He sketches a machine on paper. The engineering colleges he visits send him home with tea."
-  },
-  {
-    "id": "tw362",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2018",
-    "n": "Care of Kancharapalem",
-    "f": "Venkatesh Maha cast entirely non-professional actors from Kancharapalem. Rana Daggubati signed on as producer after a rough cut.",
-    "c": "A 49-year-old office peon develops feelings for his new boss. A schoolboy develops feelings for a classmate of a different religion. A middle-aged man sells liquor to forget his first wife. All four live on the same street."
-  },
-  {
-    "id": "tw363",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2019",
-    "n": "30 Rojullo Preminchadam Ela",
-    "f": "Munna Kasi's debut was released in March 2020 just days before the pandemic shutdown and later recovered its budget on streaming.",
-    "c": "Two souls reborn as engineering students wake up inside each other's bodies. The curse breaks if they fall in love in thirty days. Neither one is on schedule."
-  },
-  {
-    "id": "tw364",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Majili",
-    "f": "Shiva Nirvana directed this Naga Chaitanya drama with Samantha. The cricket flashback portions were shot at KSCA Bangalore.",
-    "c": "A Vizag cricketer loses a Ranji selection and spends the next ten years drinking on his father's balcony. His wife keeps a spare key. His father keeps a spare bottle."
-  },
-  {
-    "id": "tw365",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2019",
-    "n": "Dorasaani",
-    "f": "KVR Mahendra's directorial debut was shot in the Telangana villages of Warangal district, set during the Naxal movement of the 1980s.",
-    "c": "Landlord's daughter and farmhand's son exchange notes through a courtyard wall. The wall gets rebuilt taller. The notes do not."
-  },
-  {
-    "id": "tw366",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2011",
-    "n": "Mr. Perfect",
-    "f": "Dasaradh directed this Prabhas-Kajal Aggarwal romance. Devi Sri Prasad's soundtrack was a top-seller that year.",
-    "c": "A Hyderabad office manager writes a list of wife qualifications on an Excel sheet. His mother emails the list to a family friend. The family friend's daughter opens the attachment."
-  },
-  {
-    "id": "tw367",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Eedo Rakam Aado Rakam",
-    "f": "G. Nageswara Reddy directed this Manchu Vishnu-Raj Tarun buddy comedy set around a wedding complication.",
-    "c": "Two friends fall for two women at the same wedding. One of them poses as an orphan to win his match over. The other forgets which lie he is currently telling."
-  },
-  {
-    "id": "tw368",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Kshanam",
-    "f": "Ravikanth Perepu's debut was shot on a lean budget in Hyderabad and became a word-of-mouth hit on the multiplex circuit.",
-    "c": "A US-based banker flies to Hyderabad because his ex-girlfriend says her daughter is missing. The police have no record of the daughter. Neither do the school, the hospital, or the neighbours."
-  },
-  {
-    "id": "tw369",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2020",
-    "n": "Middle Class Melodies",
-    "f": "Vinod Anantoju's debut was produced by Bhavya Creations; shot entirely in the small town of Kolakaluru in Guntur district.",
-    "c": "A small-town cook opens a bombay chutney shop in his own village. The bus-stand tea guy already sells chutney. The panchayat meeting gets a new agenda item."
-  },
-  {
-    "id": "tw370",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2022",
-    "n": "Sita Ramam",
-    "f": "Hanu Raghavapudi shot across Kashmir, Srinagar, and London. Dulquer Salmaan learned basic Urdu pronunciation for the letter-writing scenes.",
-    "c": "A Pakistani law student in London gets a stack of letters addressed to an Indian army lieutenant from the 1960s. She travels to India to deliver them. Every address on the envelopes has been overwritten."
-  },
-  {
-    "id": "tw371",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Shyam Singha Roy",
-    "f": "Rahul Sankrityan directed; Nani and Sai Pallavi shot the Bengali portions in Kolkata with a local dialogue coach on set.",
-    "c": "A Hyderabad filmmaker keeps writing scenes about a Bengali priest from the 1960s. His producer thinks he is stealing another writer's work. A Kolkata lawyer flies in with a stack of photographs."
-  },
-  {
-    "id": "tw372",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2021",
-    "n": "Konda Polam",
-    "f": "Krish adapted the novel by Sannapureddy Venkatarami Reddy. Panja Vaisshnav Tej trained with Rayalaseema shepherds for weeks.",
-    "c": "A Hyderabad engineering graduate fails two job interviews and goes back to his village. His father asks him to take the goats up into the hills for grazing season. The hills have tigers, poachers, and no signal."
-  },
-  {
-    "id": "tw373",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2023",
-    "n": "Balagam",
-    "f": "Venu Yeldandi's debut, set around a Telangana funeral ritual, won two National Awards including Best Telugu Feature Film.",
-    "c": "A grandfather dies in a village and his three sons gather for the rituals. The priest says one specific bird must eat the ritual rice before the soul passes on. The bird refuses."
-  },
-  {
-    "id": "tw374",
-    "ind": "TW",
-    "diff": "hard",
-    "era": "2020s",
-    "y": "2023",
-    "n": "Mem Famous",
-    "f": "Sumanth Prabhas's directorial debut was shot in his own village in Nalgonda district with largely non-professional actors.",
-    "c": "Three jobless village friends decide to start a tent house business. The village calls them a shameless bunch. The bookings come in anyway."
-  },
-  {
-    "id": "bw321",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2024",
-    "n": "Laapataa Ladies",
-    "f": "Kiran Rao's second feature as director. Written by Biplab Goswami. India's official submission for the 2025 Oscars.",
-    "c": "Two brides in identical veils board the wrong trains at a wedding. Their husbands notice late. The railway staff notices later."
-  },
-  {
-    "id": "bw322",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2023",
-    "n": "Rocky Aur Rani Kii Prem Kahaani",
-    "f": "Karan Johar's directorial comeback after seven years. Ranveer Singh and Alia Bhatt's first pairing. Shabana Azmi and Dharmendra share scenes.",
-    "c": "A Punjabi gym boy and a Bengali news anchor want to marry. Both families object for different reasons. A month-long family exchange is scheduled."
-  },
-  {
-    "id": "bw323",
-    "ind": "BW",
-    "diff": "easy",
-    "era": "2020s",
-    "y": "2023",
-    "n": "12th Fail",
-    "f": "Vikrant Massey carried the film. Based on Anurag Pathak's biography of IPS officer Manoj Kumar Sharma. Vidhu Vinod Chopra's biggest grosser in a decade.",
-    "c": "A village boy fails his twelfth-grade exam and decides to sit the civil services anyway. He spends nine years in Delhi photocopy shops. The exam keeps rescheduling him."
-  },
-  {
-    "id": "tw375",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2010s",
-    "y": "2016",
-    "n": "Oopiri",
-    "f": "Vamsi Paidipally's Telugu-Tamil bilingual remake of the French film The Intouchables. Nagarjuna and Karthi headline. Shot simultaneously as Thozha.",
-    "c": "A quadriplegic industrialist hires an ex-convict as his personal assistant. The convict treats the job like parole. Neither man is invited to the other's functions."
-  },
-  {
-    "id": "tw376",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2024",
-    "n": "HanuMan",
-    "f": "Prasanth Varma's superhero film rooted in Ramayana mythology. Made for eight crore rupees, grossed over 350. Launched the Prasanth Varma Cinematic Universe.",
-    "c": "A small coastal village is protected by a reluctant petty thief who gains strength from a blue stone. The stone has rules. The rules do not include stealth."
-  },
-  {
-    "id": "tw377",
-    "ind": "TW",
-    "diff": "medium",
-    "era": "2020s",
-    "y": "2024",
-    "n": "Kalki 2898 AD",
-    "f": "Nag Ashwin's sci-fi epic. Most expensive Indian film at its release. Shot for Telugu, Hindi, Tamil, Malayalam, and Kannada simultaneously.",
-    "c": "A bounty hunter in a post-apocalyptic city is chasing a rebel's unborn child. An immortal guardian is chasing the bounty hunter. Several civilisations are running late."
   }
 ]

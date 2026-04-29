@@ -13,26 +13,22 @@ import { TopBand } from './TopBand';
 import { useAbandonDetection } from '../hooks/useAbandonDetection';
 import '../style.css';
 
-const HERO_LOADING_STYLES: React.CSSProperties = {
-  background: 'var(--cream)', flex: 1,
-  display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-  textAlign: 'center', padding: '0 28px',
-};
-
 export function App() {
   const { state } = useGameState();
   const [ready, setReady] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const prevStateRef = useRef(state);
-  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+  const toggleMenu = useCallback(() => setMenuOpen(prev => !prev), []);
 
   useAbandonDetection();
 
+  // Focus management: move focus to the new screen's heading on state change
   useEffect(() => {
     if (prevStateRef.current !== state && ready) {
+      // Defer focus to after render
       requestAnimationFrame(() => {
-        const main = document.querySelector('main.screen.active, .v8-inter');
+        const main = document.querySelector('main.screen.active, .turn-interstitial');
         if (main) {
           const heading = main.querySelector('h1, h2') as HTMLElement | null;
           if (heading) {
@@ -53,90 +49,58 @@ export function App() {
       initPostHog();
       initAnalyticsSubscriber(instance.bus, instance.sessionId);
       setReady(true);
-    }).catch(() => setLoadError(true));
+    }).catch(() => {
+      setLoadError(true);
+    });
   }, []);
 
   useEffect(() => { setShowSetup(state === 'setup'); }, [state]);
 
+  // Close menu when leaving game screens
   useEffect(() => {
     if (state !== 'playing' && state !== 'flipped' && state !== 'scoring') {
       setMenuOpen(false);
     }
   }, [state]);
 
-  if (!ready) {
-    return (
-      <>
-        <BgLayer />
-        <div className="phone-frame">
-          <TopBand />
-          <main className="screen active v8-home" aria-label="Loading" style={HERO_LOADING_STYLES}>
-            <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 12, letterSpacing: '0.32em', color: 'var(--tomato)', textTransform: 'uppercase' }}>
-              The desi party game
-            </div>
-            <div
-              style={{
-                marginTop: 18, fontFamily: 'Anton, Impact, sans-serif', fontSize: 82, lineHeight: 0.88,
-                color: 'var(--ink)', textTransform: 'uppercase', letterSpacing: '-0.02em',
-              }}
+  if (!ready) return (
+    <>
+      <BgLayer />
+      <main className="screen active v8-home" aria-label="Loading">
+        <div className="v8-home-hero">
+          <p className="v8-home-kicker">THE DESI PARTY GAME</p>
+          <h1 className="v8-home-title">
+            <span>BAD</span>
+            <br />
+            <span className="v8-home-title__accent">DESI</span>
+            <br />
+            <span>PLOTS</span>
+          </h1>
+          <p className="v8-home-sub" style={{ marginTop: 18, color: loadError ? 'var(--tomato)' : 'var(--v8-ink)', opacity: loadError ? 1 : 0.6 }}>
+            {loadError ? "COULDN'T LOAD. TAP TO RETRY." : 'LOADING CARDS...'}
+          </p>
+          {loadError && (
+            <button
+              onClick={() => window.location.reload()}
+              style={{ marginTop: 14, fontFamily: 'Bebas Neue, sans-serif', fontSize: 13, letterSpacing: '0.2em', color: 'var(--v8-ink)', background: 'var(--gold-bright)', border: '2px solid var(--v8-ink)', borderRadius: 999, padding: '10px 20px', cursor: 'pointer' }}
             >
-              Bad<br />
-              <span style={{ color: 'var(--tomato)', textShadow: '3px 3px 0 var(--ink), 6px 6px 0 var(--gold)' }}>Desi</span><br />
-              Plots.
-            </div>
-            <div style={{ marginTop: 26, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              <span className="loading-dot loading-dot--a" style={{ width: 8, height: 8, background: 'var(--tomato)' }} />
-              <span className="loading-dot loading-dot--b" style={{ width: 8, height: 8, background: 'var(--tomato)' }} />
-              <span className="loading-dot loading-dot--c" style={{ width: 8, height: 8, background: 'var(--tomato)' }} />
-            </div>
-            <div
-              style={{
-                marginTop: 10, fontFamily: 'Bebas Neue, sans-serif', fontSize: 11,
-                letterSpacing: '0.3em', color: loadError ? 'var(--tomato)' : 'var(--ink-muted)',
-                textTransform: 'uppercase',
-              }}
-            >
-              {loadError ? "Couldn't load. Tap to retry." : 'Loading cards…'}
-            </div>
-            {loadError && (
-              <button
-                onClick={() => window.location.reload()}
-                style={{
-                  marginTop: 14, fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
-                  letterSpacing: '0.2em', color: 'var(--ink)', background: 'var(--gold)',
-                  border: '2px solid var(--ink)', boxShadow: '3px 3px 0 var(--ink)',
-                  padding: '10px 20px', cursor: 'pointer', textTransform: 'uppercase',
-                }}
-              >
-                Retry
-              </button>
-            )}
-          </main>
+              RETRY
+            </button>
+          )}
         </div>
-      </>
-    );
-  }
+      </main>
+    </>
+  );
 
   return (
     <>
       <BgLayer />
-      <div className="phone-frame">
-        <TopBand onMenuClick={toggleMenu} />
-        {state === 'home' && <HomeScreen />}
-        {(state === 'playing' || state === 'flipped' || state === 'scoring') && (
-          <GameScreen menuOpen={menuOpen} onMenuClose={() => setMenuOpen(false)} />
-        )}
-        {(state === 'turnChange' || state === 'continue') && <TurnInterstitial />}
-        {state === 'results' && <ResultsScreen />}
-        {showSetup && (
-          <PlayerSetup onClose={() => {
-            setShowSetup(false);
-            if (getGameInstance().fsm.getState() === 'setup') {
-              getGameInstance().fsm.transition('home');
-            }
-          }} />
-        )}
-      </div>
+      <TopBand onMenuClick={toggleMenu} />
+      {state === 'home' && <HomeScreen />}
+      {(state === 'playing' || state === 'flipped' || state === 'scoring') && <GameScreen menuOpen={menuOpen} onMenuClose={() => setMenuOpen(false)} />}
+      {(state === 'turnChange' || state === 'continue') && <TurnInterstitial />}
+      {state === 'results' && <ResultsScreen />}
+      {showSetup && <PlayerSetup onClose={() => { setShowSetup(false); if (getGameInstance().fsm.getState() === 'setup') { getGameInstance().fsm.transition('home'); } }} />}
       <Toast />
     </>
   );

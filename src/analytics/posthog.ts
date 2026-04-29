@@ -3,12 +3,12 @@
  *
  * -----------------------------------------------------------------
  * Feature flags to create in the PostHog UI (project 356713):
- *   - `solo_mode_enabled`        (boolean, default true) , gates the
+ *   - `solo_mode_enabled`        (boolean, default true)  — gates the
  *     "Play Solo" home screen affordance so we can cut it without a
  *     ship if it tanks retention.
- *   - `settings_screen_enabled`  (boolean, default true) , gates the
+ *   - `settings_screen_enabled`  (boolean, default true)  — gates the
  *     whole Settings surface; useful while we iterate post-launch.
- *   - `report_flow_v2`           (boolean, default true) , enables the
+ *   - `report_flow_v2`           (boolean, default true)  — enables the
  *     new inline card report flow vs. the old bottom-sheet version.
  *
  * Use `isFeatureEnabled(flag)` from anywhere in the app; it reads
@@ -17,9 +17,9 @@
  * -----------------------------------------------------------------
  *
  * Events are emitted via two paths:
- *   1. `track.*`, strongly-typed wrappers for UI code that needs to
+ *   1. `track.*` — strongly-typed wrappers for UI code that needs to
  *      fire an explicit event (suggestions, reports, settings, etc).
- *   2. `initAnalyticsSubscriber(bus, sessionId)`, bridges the game
+ *   2. `initAnalyticsSubscriber(bus, sessionId)` — bridges the game
  *      eventBus to PostHog so components never have to call `track.*`
  *      for core game loop events. Each bus event is mapped to a
  *      canonical PostHog event name below.
@@ -222,7 +222,7 @@ export function onFeatureFlagsReady(cb: () => void): void {
 }
 
 // ---------------------------------------------------------------
-// Bus subscriber, bridges the game eventBus to PostHog
+// Bus subscriber — bridges the game eventBus to PostHog
 // ---------------------------------------------------------------
 
 export function initAnalyticsSubscriber(bus: TypedEventBus, sessionId: string): void {

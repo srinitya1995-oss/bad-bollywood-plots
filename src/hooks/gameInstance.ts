@@ -169,49 +169,25 @@ class GameInstance {
     this._lastResult = null;
     this._scores = players.map(() => 0);
 
-    // Honor user-selected difficulty filter from Settings (defaults to 'all').
-    const difficultyFilter: DifficultyFilter = this._settings.difficultyFilter ?? 'all';
-
     if (this.gameMode === 'endless') {
-      // Adaptive: pick first card at starting ability (1100 → medium-ish).
-      // If a difficulty filter is set, narrow the pool before adaptive picking.
-      const filteredPool = difficultyFilter === 'all' ? pool : pool.filter(c => c.diff === difficultyFilter);
-      const adaptivePool = filteredPool.length > 0 ? filteredPool : pool;
-      const first = pickAdaptiveCard(adaptivePool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
+      // Adaptive: pick first card at starting ability (1100 → medium-ish)
+      const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       this.deck = first ? [first] : [];
     } else {
       // Party mode: start with 3 calibration cards (one of each difficulty)
-      // then adaptive cards appended via markResult, up to the user's roundLen.
+      // then 9 adaptive cards appended via markResult.
       const seen = this.storage.getSeenCards();
       // Auto-reset seen list once ≥70% of pool is exhausted so players stop
       // looping the same "already seen" tail.
       if (seen.length >= Math.ceil(pool.length * 0.7)) {
         this.storage.clearSeenCards();
       }
-      if (difficultyFilter === 'all') {
-        // buildPartyDeck returns [easy×4, medium×4, hard×4] with each tier shuffled
-        // independently. Take the first of each tier to honor the 1/1/1 calibration promise.
-        const partyDeck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
-        const calibration = [partyDeck[0], partyDeck[4], partyDeck[8]].filter((c): c is typeof pool[0] => c != null);
-        this.deck = calibration;
-        // Remaining cards will be picked adaptively in markResult, capped at roundLen.
-      } else {
-        // User picked a single-difficulty filter. Skip the 1/1/1 calibration triplet
-        // (it doesn't make sense when the user wants only one difficulty) and seed the
-        // deck from the filtered pool. Adaptive picks fill up to roundLen via markResult.
-        const seenSet = new Set(seen);
-        const filtered = pool
-          .filter(c => c.diff === difficultyFilter && !seenSet.has(c.id) && !this.sessionDealt.has(c.id));
-        // Shuffle in place (Fisher-Yates) and take 3 to seed.
-        for (let i = filtered.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
-        }
-        const seedCount = Math.min(3, this.partyRoundCap(), filtered.length);
-        const seed = filtered.slice(0, seedCount);
-        for (const c of seed) this.sessionDealt.add(c.id);
-        this.deck = seed;
-      }
+      // buildPartyDeck returns [easy×4, medium×4, hard×4] with each tier shuffled
+      // independently. Take the first of each tier to honor the 1/1/1 calibration promise.
+      const partyDeck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
+      const calibration = [partyDeck[0], partyDeck[4], partyDeck[8]].filter((c): c is typeof pool[0] => c != null);
+      this.deck = calibration;
+      // Remaining 9 cards will be picked adaptively in markResult
     }
 
     this.fsm.transition('turnChange');
@@ -254,17 +230,10 @@ class GameInstance {
       }
     }
 
-    // Party mode: after calibration (3 cards), pick adaptive cards up to the
-    // user-selected roundLen (default 10, hard cap 12).
-    if (this.gameMode === 'party' && this.idx >= this.deck.length && this.deck.length < this.partyRoundCap()) {
+    // Party mode: after calibration (3 cards), pick adaptive cards up to 12 total
+    if (this.gameMode === 'party' && this.idx >= this.deck.length && this.deck.length < 12) {
       const pool = ContentLoader.getCardPool(this.cards, this.industry!);
-      // Honor difficulty filter if set: narrow the adaptive pool first.
-      const difficultyFilter: DifficultyFilter = this._settings.difficultyFilter ?? 'all';
-      const adaptivePool = difficultyFilter === 'all'
-        ? pool
-        : pool.filter(c => c.diff === difficultyFilter);
-      const fallbackPool = adaptivePool.length > 0 ? adaptivePool : pool;
-      const next = pickAdaptiveCard(fallbackPool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
+      const next = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       if (next) this.deck.push(next);
     }
 
@@ -319,28 +288,18 @@ class GameInstance {
     if (reason !== 'exit') this.fsm.transition('results');
   }
 
-  /** Hard cap of 12 prevents runaway rounds; floor is whatever the user picked
-   * (or 10 if they never opened Settings). Each channel handler appends its
-   * own UTM-tagged URL after this string, so the share copy stays clean. */
-  private partyRoundCap(): number {
-    const userLen = this._settings.roundLen ?? 10;
-    return Math.min(userLen, 12);
-  }
-
   getShareText(): string {
     const ind = this.industry ? INDUSTRY_META[this.industry].lang : 'Cinema';
     const tier = getAbilityTier(this.adaptive.ability);
     const pct = getAbilityPercentile(this.adaptive.ability);
     const emoji = this.adaptive.ability >= 1500 ? '\u{1F525}' : this.adaptive.ability >= 1300 ? '\u{1F4AA}' : this.adaptive.ability >= 1100 ? '\u{1F3AC}' : '\u{1F605}';
-    // The trailing URL is intentionally omitted: each share channel appends its
-    // own UTM-tagged URL in ResultsScreen.tsx, so including a bare URL here
-    // produces a duplicate-URL preview in WhatsApp / email / copy.
     return [
       `${emoji} ${tier} (${this.adaptive.ability} rating)`,
       `${this.scorer.correctCount}/${this.idx} ${ind} movies · Top ${pct}%`,
       '',
       'Terrible plots. Real movies.',
       'Think you can beat that?',
+      'baddesiplots.com',
     ].join('\n');
   }
 

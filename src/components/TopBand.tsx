@@ -1,6 +1,5 @@
 import { useGameState } from '../hooks/useGameState';
 import { getGameInstance } from '../hooks/gameInstance';
-import { Logo } from './Logo';
 
 type Props = {
   leader?: string;
@@ -10,12 +9,13 @@ type Props = {
 
 export function TopBand({ leader, points, onMenuClick }: Props) {
   const { state } = useGameState();
+  if (state === 'home' || state === 'setup') return null;
 
   const truncated = leader && leader.length > 8 ? `${leader.slice(0, 8)}…` : leader;
-  const inActiveRound =
-    state === 'playing' || state === 'flipped' || state === 'scoring' ||
-    state === 'turnChange' || state === 'continue';
 
+  // Click the brand in the topband to leave the current round and go home.
+  // Gives a discoverable "exit" affordance for users who don't find the •• menu.
+  const inActiveRound = state === 'playing' || state === 'flipped' || state === 'scoring' || state === 'turnChange' || state === 'continue';
   const handleTitleClick = () => {
     if (!inActiveRound) return;
     const ok = window.confirm('Leave this round and go home?');
@@ -23,55 +23,33 @@ export function TopBand({ leader, points, onMenuClick }: Props) {
   };
 
   return (
-    <div
-      className="v8-topband"
-      role="banner"
-      style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '12px 16px', background: 'var(--ink)', color: 'var(--cream)',
-        borderBottom: '3px solid var(--tomato)', height: 52, flexShrink: 0,
-      }}
-    >
+    <div className="v8-topband" role="banner">
       <button
         type="button"
         className="v8-topband__title"
         onClick={handleTitleClick}
         aria-label={inActiveRound ? 'Leave round and go home' : 'Bad Desi Plots'}
-        style={{
-          display: 'flex', alignItems: 'center', gap: 8,
-          background: 'none', border: 'none', color: 'var(--cream)',
-          fontFamily: 'Anton, Impact, sans-serif', fontSize: 16,
-          textTransform: 'uppercase', letterSpacing: '-0.005em',
-          cursor: inActiveRound ? 'pointer' : 'default', padding: 0,
-        }}
       >
-        {inActiveRound && (
-          <span className="v8-topband__home" aria-hidden="true" style={{ fontSize: 14, color: 'var(--gold)' }}>&#8962;</span>
-        )}
-        <Logo size={18} />
-        <span>
-          Bad <span className="v8-topband__accent" style={{ color: 'var(--tomato)' }}>Desi</span> Plots
-        </span>
+        {inActiveRound && <span className="v8-topband__home" aria-hidden="true">&#8962;</span>}
+        Bad <span className="v8-topband__accent">Desi</span> Plots
       </button>
-      <div className="v8-topband__right" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div className="v8-topband__right">
         {truncated && (
-          <span
-            className="v8-topband__leader"
-            style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 10, letterSpacing: '0.2em', color: 'var(--gold)' }}
-          >
-            {truncated}{typeof points === 'number' ? ` · ${points}` : ''}
-          </span>
+          <>
+            <span className="v8-topband__leader">{truncated}</span>
+            {typeof points === 'number' && (
+              <>
+                <span className="v8-topband__divider" aria-hidden="true" />
+                <span className="v8-topband__pts">{points}</span>
+              </>
+            )}
+          </>
         )}
         {onMenuClick && (
           <button
             className="v8-topband__menu"
             onClick={onMenuClick}
             aria-label="Game menu"
-            style={{
-              width: 28, height: 28, display: 'grid', placeItems: 'center',
-              background: 'none', border: 'none', color: 'var(--cream)',
-              fontSize: 16, opacity: 0.7, cursor: 'pointer',
-            }}
           >
             •••
           </button>

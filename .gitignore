@@ -6,4 +6,3 @@ dist/
 .session-log.md
 screenshots/qa/
 vite.config.ts.timestamp-*
-.vercel

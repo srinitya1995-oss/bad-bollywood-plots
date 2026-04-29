@@ -49,11 +49,11 @@ describe('HomeScreen', () => {
     mockCanResume = false;
   });
 
-  it('renders title "BAD DESI PLOTS"', () => {
+  it('renders title "BAD BOLLYWOOD PLOTS"', () => {
     const tree = create(<HomeScreen />);
     expect(findByText(tree.root, 'BAD')).toBeTruthy();
-    expect(findByText(tree.root, 'DESI')).toBeTruthy();
-    expect(findByText(tree.root, 'PLOTS.')).toBeTruthy();
+    expect(findByText(tree.root, 'BOLLYWOOD')).toBeTruthy();
+    expect(findByText(tree.root, 'PLOTS')).toBeTruthy();
   });
 
   it('renders "PASS & PLAY" button', () => {

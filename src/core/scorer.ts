@@ -69,7 +69,7 @@ const VERDICTS_0: readonly VerdictEntry[] = [
   { title: 'Straight to OTT', verdict: "Not even a theatrical release. Straight to 'I'll watch it someday' list." },
 ];
 
-/** Exported for testing, maps tier to its verdict variants. */
+/** Exported for testing — maps tier to its verdict variants. */
 export const VERDICT_TIERS = {
   legendary: VERDICTS_90,
   impressive: VERDICTS_70,

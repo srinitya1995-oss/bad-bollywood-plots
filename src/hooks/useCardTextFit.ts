@@ -1,28 +1,16 @@
 import { useLayoutEffect, useState, type RefObject } from 'react';
 
-/** Result of useCardTextFit: the resolved font size and whether the long-card
- * branch is active. When `compact` is true, the caller should switch the body
- * style from italic Fraunces to upright Fraunces so that the readability floor
- * is preserved for the elder cohort (panel P1-8). */
-export interface CardTextFit {
-  fontSize: number;
-  /** True when the auto-fit had to drop to (or near) the minimum size. */
-  compact: boolean;
-}
-
 /**
  * Auto-fit text size within a fixed-height container.
  * Steps down from maxSize to minSize until the text no longer overflows.
- * The minimum is floored at 14px so long cards stay legible for the
- * aunty / mom cohort (simulator P0 row 3, panel P1-8).
  */
 export function useCardTextFit(
   text: string,
   containerRef: RefObject<HTMLElement | null>,
   maxSize = 27,
-  minSize = 14,
-): CardTextFit {
-  const [fit, setFit] = useState<CardTextFit>({ fontSize: maxSize, compact: false });
+  minSize = 16,
+): number {
+  const [fontSize, setFontSize] = useState(maxSize);
 
   useLayoutEffect(() => {
     const el = containerRef.current;
@@ -46,11 +34,8 @@ export function useCardTextFit(
     }
 
     el.style.fontSize = '';
-    // Treat the bottom 2px of the range as "compact" so the upright fallback
-    // kicks in before we hit absolute floor and lose any more legibility.
-    const compact = best <= minSize + 2;
-    setFit({ fontSize: best, compact });
+    setFontSize(best);
   }, [text, containerRef, maxSize, minSize]);
 
-  return fit;
+  return fontSize;
 }

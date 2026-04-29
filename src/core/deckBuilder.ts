@@ -36,7 +36,7 @@ export function buildFixedRoundDeck(
   filter: DifficultyFilter,
 ): Card[] {
   // Step 1: apply difficulty filter
-  const candidates = filter === 'all' ? pool : pool.filter(c => c.diff === filter);
+  let candidates = filter === 'all' ? pool : pool.filter(c => c.diff === filter);
 
   // Step 2: exclude seen and sessionDealt
   let available = candidates.filter(c => !seen.has(c.id) && !sessionDealt.has(c.id));
