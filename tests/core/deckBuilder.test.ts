@@ -115,7 +115,7 @@ describe('pickEndlessCard', () => {
 
   it('falls back to any card when target difficulty pool is empty', () => {
     const hardOnly = [makeCard('h1', 'hard')];
-    // streak 0 wants easy, but only hard available — should fallback
+    // streak 0 wants easy, but only hard available, should fallback
     const card = pickEndlessCard(hardOnly, new Set(), [], 0);
     expect(card).not.toBeNull();
     expect(card!.diff).toBe('hard');

@@ -56,13 +56,13 @@ describe('AdaptiveState', () => {
 
   it('ability is clamped between 500 and 2000', () => {
     let state = createAdaptiveState();
-    // Miss 20 easy cards in a row — should not go below 500
+    // Miss 20 easy cards in a row, should not go below 500
     for (let i = 0; i < 20; i++) {
       state = updateAbility(state, makeCard(`e${i}`, 'easy'), false);
     }
     expect(state.ability).toBeGreaterThanOrEqual(500);
 
-    // Get 20 hard cards right — should not exceed 2000
+    // Get 20 hard cards right, should not exceed 2000
     state = { ...createAdaptiveState(), ability: 1800 };
     for (let i = 0; i < 20; i++) {
       state = updateAbility(state, makeCard(`h${i}`, 'hard'), true);

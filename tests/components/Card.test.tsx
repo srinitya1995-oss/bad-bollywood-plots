@@ -81,16 +81,16 @@ describe('Card', () => {
         readerIdx={0}
       />,
     );
-    expect(findByText(tree.root, 'Priya')).toBeTruthy();
+    // Spec §4: reader is excluded from the picker. With readerIdx=0 (Priya), only Rahul + Anjali show.
     expect(findByText(tree.root, 'Rahul')).toBeTruthy();
     expect(findByText(tree.root, 'Anjali')).toBeTruthy();
     const buttons = tree.root.findAll(
       (n) => n.type === 'button' && typeof n.props.className === 'string' && n.props.className.includes('v8-pchip'),
     );
-    expect(buttons.length).toBe(4); // 3 players + NOBODY
+    expect(buttons.length).toBe(3); // 2 non-reader players + NOBODY
   });
 
-  it('reader can claim points too (not filtered from picker)', () => {
+  it('excludes the reader from the picker grid (spec §4)', () => {
     const card = makeCard();
     const tree = create(
       <Card
@@ -104,7 +104,7 @@ describe('Card', () => {
     const pickerButtons = tree.root.findAll(
       (n) => n.type === 'button' && typeof n.props.className === 'string' && n.props.className.includes('v8-pchip') && !n.props.className.includes('nobody'),
     );
-    expect(pickerButtons.length).toBe(3);
+    expect(pickerButtons.length).toBe(2); // 3 players minus the reader
   });
 
   it('shows NOBODY button in picker', () => {
@@ -236,11 +236,11 @@ describe('Card', () => {
     expect(queryByText(tree.root, 'WHO GUESSED IT?')).toBeNull();
   });
 
-  it('shows report link on back face', () => {
+  it('does not render report link on the card face (handled by GameScreen mast row)', () => {
     const tree = create(
       <Card card={makeCard()} isFlipped={true} onFlip={() => {}} />,
     );
-    expect(findAllByText(tree.root, /REPORT/).length).toBeGreaterThan(0);
+    expect(findAllByText(tree.root, /REPORT/).length).toBe(0);
   });
 
   it('calls onAwardPoints when picker button is tapped', () => {
@@ -256,14 +256,14 @@ describe('Card', () => {
         onAwardPoints={onAward}
       />,
     );
-    // First non-nobody picker button is Priya (idx 0) since no players are filtered out
+    // readerIdx=0 (Priya) is excluded; first non-nobody picker button is Rahul (originalIdx 1).
     const firstPickerBtn = tree.root.findAll(
       (n) => n.type === 'button' && typeof n.props.className === 'string' && n.props.className.includes('v8-pchip') && !n.props.className.includes('nobody'),
     )[0];
     act(() => {
       firstPickerBtn.props.onClick({ stopPropagation: vi.fn() });
     });
-    expect(onAward).toHaveBeenCalledWith(0, card);
+    expect(onAward).toHaveBeenCalledWith(1, card);
   });
 
   it('calls onAwardNobody when NOBODY button is tapped', () => {
