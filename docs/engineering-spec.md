@@ -21,7 +21,7 @@ See `system-architecture-spec.md` §2 for the full table. Summary:
 - Framer Motion 12.x (used sparingly; prefer CSS keyframes)
 - Supabase + PostHog (client-side, fire-and-forget)
 - PWA via `vite-plugin-pwa` 0.20
-- Netlify for hosting + deploy previews
+- Vercel for hosting + preview URLs (legacy `netlify.toml` still in tree, inactive)
 
 ## 3. Source conventions
 
@@ -59,14 +59,15 @@ See `system-architecture-spec.md` §2 for the full table. Summary:
 
 ## 4. Testing strategy
 
-### Current state (v2.1.0)
-- 185 tests across 16 files. All pass.
+### Current state (2026-04-30)
+- 186 tests across 16 files. All pass.
 - Coverage: core modules 90%+ (FSM, scorer, deckBuilder, adaptive), components covered at behavior level (not DOM snapshots).
+- Settings wiring (`gameInstance.setSettings()` → `partyRoundCap()` / `filteredPool()`) is covered by `tests/hooks/gameInstance-award.test.ts` (+2 cases added 2026-04-30). Treat the Settings UI as live: changes to difficulty filter or round length actually affect the loop; do not regress these without updating the tests.
 
 ### Test types
 - **Core unit tests** (`tests/core/`) — FSM transitions, scoring math, shuffle determinism (with seeded RNG), adaptive-no-repeat, event bus pub/sub.
 - **Component tests** (`tests/components/`) — render + user-event assertions. Testing Library queries by role / label, not by class name.
-- **No E2E suite** (yet). The end-to-end story is covered by Netlify preview + manual mobile test. If bugs repeatedly slip through this, add Playwright.
+- **No E2E suite** (yet). The end-to-end story is covered by Vercel preview + manual mobile test. If bugs repeatedly slip through this, add Playwright.
 
 ### Writing tests
 - One logical assertion per test. If a test has two `expect` blocks asserting unrelated things, split it.
@@ -110,11 +111,11 @@ npm run lint        # zero warnings
 ### Gate 4: Integration gate
 ```bash
 npm run typecheck   # zero errors
-npm run test        # 185/185 pass (or more)
+npm run test        # 186/186 pass (or more)
 npm run build       # clean production build
 ```
 - Bundle < 250KB gzipped JS, < 25KB gzipped CSS
-- Netlify deploy-preview builds cleanly
+- Vercel preview builds cleanly
 - Lighthouse PWA score ≥ 90 on mobile (see `/ship-playbook` check)
 - **Verdict:** `INTEGRATION_PASS` or `INTEGRATION_FAIL: [which check]`
 
@@ -126,7 +127,7 @@ the user. Never silently downgrade a gate. No "it's close enough to 7.0."
 
 ### Branching
 - `main` — prod, protected. No direct commits. Requires explicit user approval to merge.
-- `ship/vX.Y.Z` — release candidates. Auto-deploys to Netlify preview.
+- `ship/vX.Y.Z` — release candidates. Auto-deploys to Vercel preview.
 - Feature / fix branches — prefix `feat/`, `fix/`, `chore/`, `docs/`. Merge into `ship/*`, not `main`.
 
 ### Commit messages
@@ -148,7 +149,7 @@ Always end with a Claude co-author line when authored with Claude Code.
 2. `.project-state.md` updated (mandatory per CLAUDE.md §9)
 3. Screenshots attached for any UI change
 4. Changelog entry added (if user-visible)
-5. Test the Netlify preview on an actual mobile device
+5. Test the Vercel preview on an actual mobile device
 
 ### Never
 - `git commit --no-verify`
@@ -269,7 +270,7 @@ Before opening a PR, verify:
 - [ ] Touch targets ≥ 44×44px
 - [ ] `.project-state.md` updated
 - [ ] Changelog entry added (if user-visible)
-- [ ] Netlify preview tested on a physical phone
+- [ ] Vercel preview tested on a physical phone
 - [ ] No console errors or warnings in the preview
 
 ## 12. Architectural debt

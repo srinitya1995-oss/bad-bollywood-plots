@@ -66,7 +66,8 @@ When a desi group gathers and the conversation drifts into "remember that movie�
 | Card report link | ✓ live | Flag a card mid-round without leaving the game |
 | End round menu | ✓ live | Abandon mid-round cleanly with verdict |
 | Offline play (PWA) | ✓ live | Service worker caches app + cards on first load |
-| 149-card BW + TW deck | ✓ live (v2.1) | All fact-verified against Wikipedia |
+| 500-card BW + TW deck | ✓ live | v3 voice + fact pass; 14 cards rewritten 2026-04-30 to remove title-leak in plot text |
+| Settings (sound, difficulty filter, round length) | ✓ live (2026-04-30) | Previously dead UI. Now wired through `gameInstance.setSettings()`; single-tier party mode skips calibration and seeds 3 cards from chosen tier |
 | Adaptive card selection (no repeats across session) | ✓ live | `src/core/adaptive.ts` tracks per-session played IDs |
 | PostHog analytics | ✓ live | Events: game_start, card_flip, card_score, round_end, feedback_submit |
 | Reduced-motion support | ✓ live | All animations degrade to opacity-only fades |
@@ -76,10 +77,10 @@ When a desi group gathers and the conversation drifts into "remember that movie�
 For any feature to leave `ship/*` and merge to `main`:
 
 - TypeScript typecheck: zero errors
-- All unit + component tests pass (185 tests as of v2.1.0)
+- All unit + component tests pass (186 tests as of 2026-04-30)
 - Production build clean, bundle < 250KB gzipped JS
 - Visual QA score >= 7.0 / 10.0 on affected screens (see `engineering-spec.md` Gate 3)
-- Mobile preview (375px viewport) manually tested via Netlify deploy-preview
+- Mobile preview (375px viewport) manually tested via Vercel preview
 - Animation coherence verified on mobile (iOS + Android), desktop (Chrome + Safari)
 - Reduced-motion paths verified — animations degrade to opacity-only fades without silencing state changes
 - Supabase + PostHog writes are fire-and-forget and never block the game loop
@@ -123,7 +124,7 @@ See `applied-scientist-spec.md` for event schema and dashboards. Headline number
 ## 10. Business model
 
 - Free, ad-free, PWA-only
-- Hosted on Netlify (cost: essentially zero at current scale)
+- Hosted on Vercel (cost: essentially zero at current scale)
 - Supabase free tier handles analytics event writes
 - No monetization planned for v2 or v3
 - If adoption scales past free-tier limits, the author self-funds infra before considering any paid tier

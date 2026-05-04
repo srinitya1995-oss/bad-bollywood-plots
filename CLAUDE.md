@@ -436,7 +436,7 @@ After compaction, ask: "If I were starting fresh with only what I preserved, cou
 | Testing | Vitest + Testing Library | 4.x + 16.x |
 | Linting | ESLint + Prettier | 8.x + 3.x |
 | Analytics | PostHog | (via CDN + MCP) |
-| Hosting | Netlify | (see `netlify.toml`) |
+| Hosting | Vercel | (see `vercel.json`; legacy `netlify.toml` still in tree but inactive) |
 
 ### Source Structure
 ```
@@ -508,7 +508,7 @@ echo "Prototypes: $(ls prototype-*.html | wc -l)"
 
 Record the counts in `.project-state.md` under `## Inventory`.
 
-**Last audited**: 2026-04-20 evening. Components: 18 · Hooks: 6 · Core: 7 · Cards: 355 · Tests: 16 · Prototypes: 51 · Specs: 8. See `.project-state.md` inventory block.
+**Last audited**: 2026-04-30. Components: 18 · Hooks: 6 · Core: 7 · Cards: 500 · Tests: 16 files / 186 cases · Prototypes: 51 · Specs: 8. See `.project-state.md` inventory block.
 
 ---
 

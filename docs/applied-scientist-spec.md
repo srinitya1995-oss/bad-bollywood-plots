@@ -142,8 +142,10 @@ Cards are content; treat them like an inventory.
 
 ## 7. Adaptive deck (current + future)
 
-### Current (v2.1)
+### Current
 `src/core/adaptive.ts` tracks played card IDs in the current session and filters them out of the next deal. Simple, deterministic, no ML.
+
+**Picker noise band (2026-04-30):** the rating-noise term is `Math.random() * 300` (was `* 150`). Doubling the band lets harder cards surface even at low estimated ability, which kills the "all the cards feel familiar" complaint reported in solo. Anything that revisits the picker should preserve a noise band of ~300 unless data justifies a change; rating-noise is the only knob currently surfacing surprise into the deal.
 
 ### Planned improvements
 1. **Cross-session dedup (opt-in)** — remember last N played per device so a returning user doesn't see the same cards for a week

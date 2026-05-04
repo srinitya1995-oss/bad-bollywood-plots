@@ -52,7 +52,7 @@
 | Testing | Vitest + Testing Library | 4.x + 16.x | Fast, Vite-native |
 | Linting | ESLint + Prettier | 8.x + 3.x | Default Airbnb-ish config |
 | Analytics | PostHog | via CDN + MCP | Event tracking, feature flags, product analytics |
-| Hosting | Netlify | — | Static + PWA deploy with branch previews, see `netlify.toml` |
+| Hosting | Vercel | — | Static + PWA deploy with branch previews, see `vercel.json`. `netlify.toml` is still in tree for legacy reference but inactive. |
 
 No backend server. No authentication. No user accounts. The only network writes are fire-and-forget analytics events to PostHog and optional feedback/suggestions to Supabase.
 
@@ -69,10 +69,10 @@ src/
     adaptive.ts       — per-session no-repeat card selection
     eventBus.ts       — pub/sub for analytics and cross-cutting concerns
   hooks/
-    gameInstance.ts   — singleton game instance
+    gameInstance.ts   — singleton game instance; `setSettings()` wires sound / difficultyFilter / roundLen into the loop. Helpers: `partyRoundCap()` (settings-aware round length) and `filteredPool()` (applies difficulty filter to pool). Single-tier party mode skips 1/1/1 calibration and seeds 3 cards from the chosen tier.
     useGameState.ts   — React hook bridging FSM state to UI
     useGameActions.ts — React hook exposing game actions
-    useCardTextFit.ts — auto-fit plot text to locked card size
+    useCardTextFit.ts — auto-fit plot text to locked card size; minSize floor is 14px and returns `{ fontSize, compact }` so the card view can drop italic when within 2px of the floor
     useAbandonDetection.ts — detects tab close / app background / navigation
   components/
     App.tsx           — root component, FSM state router
@@ -122,7 +122,7 @@ docs/
   card-voice-rubric.md, full-redesign-prompt.md,
   phase1-new-cards-{bw,tw}-round{1,2}.json — staged card expansions
 
-cards.json            — the card database (149 cards at v2.1.0)
+cards.json            — the card database (500 cards as of 2026-04-30)
 ```
 
 ## 4. Game FSM
@@ -236,29 +236,30 @@ After first successful load, the game is fully playable offline. Only feature th
 ## 9. Deployment pipeline
 
 ### Branches
-- `main` — prod, auto-deploys to baddesiplots.com (legacy badbollywoodplots.com is a Netlify alias, 301s to the primary via `netlify.toml` rules)
-- `ship/v*` — release branches, auto-deploy to Netlify deploy-previews
+- `main` — prod, auto-deploys to baddesiplots.com (legacy badbollywoodplots.com 301s to the primary)
+- `ship/v*` — release branches, auto-deploy to Vercel preview URLs
 - Feature branches — PR to `ship/v*` first, not directly to main
 
 ### Per-push
-- Netlify runs `npm run build` on a Linux runner
-- Bundle + PWA assets pushed to Netlify CDN
+- Vercel runs `npm run build` on its build runner
+- Bundle + PWA assets pushed to Vercel's edge network
 - Prod deploy: `main` only, auto on merge
-- Preview deploy: every PR gets a unique `deploy-preview-N--seedhaplot.netlify.app` URL
+- Preview deploy: every PR gets a unique `*-vercel.app` URL
 
-### Netlify config (`netlify.toml`)
+### Vercel config (`vercel.json`)
 - Build command: `npm run build`
-- Publish dir: `dist`
-- Node version pinned
-- Redirect: all unmatched paths → `/index.html` (SPA)
+- Output dir: `dist`
+- Rewrites: all unmatched paths → `/index.html` (SPA), `admin.html` and `/assets/*` excluded
+- Headers: `admin.html` carries `X-Robots-Tag: noindex, nofollow` and `Cache-Control: no-store`; `/assets/*` is cached `immutable` for 1y
+- Legacy `netlify.toml` is still in the tree but inactive
 
 ### Release flow
 1. Finish features on feature branches, merge to `ship/vX.Y.Z`
-2. Test on Netlify deploy-preview (mobile + desktop)
+2. Test on Vercel preview (mobile + desktop)
 3. Run gates: typecheck, test, build, visual QA
 4. Open PR `ship/vX.Y.Z` → `main`
 5. User re-tests preview, gives explicit approval (per `feedback_seedhaplot_no_prod_push.md`)
-6. Squash-merge PR → Netlify deploys prod
+6. Squash-merge PR → Vercel deploys prod
 7. Tag release + update changelog
 
 ## 10. Third-party services

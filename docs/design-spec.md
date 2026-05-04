@@ -67,7 +67,7 @@ User picked v8 over v7 (quiet editorial) on 2026-04-15 after side-by-side review
 - Fraunces only in italic for verdict / quote surfaces. Not for plot body.
 - Letter-spacing: `-0.02em` for Anton headlines; `0` for Fraunces body; `0.14–0.38em` for Bebas Neue labels.
 - Line-height: `0.88–0.95` for Anton display, `1.5` for Fraunces body, `1.2` for Bebas Neue labels.
-- Card plot auto-fits to a clamp (15–27px) via `src/hooks/useCardTextFit.ts` so card shape stays locked across varying plot lengths.
+- Card plot auto-fits to a clamp (14–27px) via `src/hooks/useCardTextFit.ts` so card shape stays locked across varying plot lengths. Hook returns `{ fontSize, compact }`. When the fitted size lands within 2px of the 14px floor, the plot drops italic Fraunces and renders upright (legibility wins over flourish on long plots).
 
 ## 6. Component specs
 
@@ -191,9 +191,10 @@ User picked v8 over v7 (quiet editorial) on 2026-04-15 after side-by-side review
 
 - Primary target: 375px width, 667–932px height (iPhone SE–15 Pro Max range)
 - Grace desktop layout: centered card-width panels at up to 440px max-width
-- No desktop-specific redesigns — the desktop is a zoomed-out mobile
+- No desktop-specific redesigns. The desktop is a zoomed-out mobile.
 - Breakpoint for short screens (`max-height: 700px`): card height drops 460→400px, back title drops 58→46px
 - Safe-area insets respected via `env(safe-area-inset-top / bottom)` on game and results containers
+- Mobile flex chain (load-bearing): `html, body, #root` all `display: flex; flex-direction: column; flex: 1; min-height: 0`. Without the `#root` rule, `.v8-game-card-area` collapses to 0px on iOS Safari. Do not remove from `src/style.css`.
 
 ## 11. Visual gate (pre-merge)
 

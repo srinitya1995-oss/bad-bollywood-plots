@@ -203,9 +203,17 @@ Cards describe movies badly on purpose, but the facts embedded must be correct. 
 
 ### Facts out of scope (don't over-verify)
 - Supporting character names
-- Specific dialogue (verbatim dialogue is banned anyway — see voice rubric §Forbidden)
+- Specific dialogue (verbatim dialogue is banned anyway, see voice rubric §Forbidden)
 - Minor plot details that don't carry the clue's specificity anchor
 - Box office numbers (unless explicitly used; almost never)
+
+### No title-leak in plot (hard rule, formalized 2026-04-30)
+The movie title must not appear, in whole or in part, inside the plot text on the front of the card. Includes:
+- Literal title words ("Rockstar" cannot say "rockstar," "3 Idiots" cannot say "idiots," "Pad Man" cannot say "pad," "Jersey" cannot say "jersey")
+- Disguised forms (translation, plural, casing variant, hyphen split)
+- Lead character name when the title *is* the character name (Bombay, Godavari, Family Star)
+
+Rationale: the plot is the puzzle. If the title is in the puzzle, there is no puzzle. A 2026-04-30 sweep rewrote 14 cards (Rockstar, Khaleja, 3 Idiots, Bombay, Jersey, Family Star, Pad Man, OMG, Rowdy Inspector, HIT 2, Godavari, Chandni Bar, Son of Satyamurthy, Happy Wedding) to enforce this; future card writers and the LLM generation prompt must respect it. Voice audit and fact check both fail a card that violates this rule.
 
 ## 12. Timed / event-linked cards
 
