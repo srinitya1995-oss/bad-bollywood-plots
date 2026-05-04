@@ -49,10 +49,10 @@ describe('HomeScreen', () => {
     mockCanResume = false;
   });
 
-  it('renders title "BAD BOLLYWOOD PLOTS"', () => {
+  it('renders title "BAD DESI PLOTS"', () => {
     const tree = create(<HomeScreen />);
     expect(findByText(tree.root, 'BAD')).toBeTruthy();
-    expect(findByText(tree.root, 'BOLLYWOOD')).toBeTruthy();
+    expect(findByText(tree.root, 'DESI')).toBeTruthy();
     expect(findByText(tree.root, 'PLOTS')).toBeTruthy();
   });
 

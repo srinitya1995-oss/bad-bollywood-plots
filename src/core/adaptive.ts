@@ -93,7 +93,7 @@ export function pickAdaptiveCard(
   const scored = available.map(c => {
     const rating = DIFFICULTY_RATING[c.diff];
     const distance = Math.abs(rating - ability);
-    const noise = Math.random() * 150; // adds variety within ~150 rating band
+    const noise = Math.random() * 300; // adds variety within ~300 rating band so hard cards surface even at low ability
     return { card: c, score: distance + noise };
   });
 

@@ -31,7 +31,7 @@ export function HomeScreen() {
           <span>PLOTS</span>
         </h1>
         <p className="v8-home-tag">
-          We describe Bollywood movies badly. You guess which film it is.
+          We describe desi movies badly. You guess which film it is.
         </p>
         <p className="v8-home-sub">
           Simple, chaotic, and best played with chai and friends.

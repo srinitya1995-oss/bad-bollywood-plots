@@ -8,9 +8,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Bad Bollywood Plots',
+        name: 'Bad Desi Plots',
         short_name: 'Bad Plots',
-        description: 'Famous Bollywood plots summarized badly on purpose. Guess the movie. Play solo or pass the phone.',
+        description: 'Famous desi movies summarized badly on purpose. Guess the film. Play solo or pass the phone.',
         theme_color: '#C8321C',
         background_color: '#14100a',
         display: 'standalone',

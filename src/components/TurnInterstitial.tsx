@@ -23,6 +23,22 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
     }
   }, [isSolo, state, actions, isFirstCard]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (isContinue) {
+          actions.continueGame();
+        } else {
+          actions.ready();
+        }
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isContinue, actions]);
+
   if (isSolo && state === 'turnChange' && !isFirstCard) return null;
 
   const nextPlayer = players[readerIdx % players.length];
@@ -35,19 +51,6 @@ export function TurnInterstitial({ onReportLastPlot }: TurnInterstitialProps) {
       actions.ready();
     }
   };
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleTap();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isContinue]);
 
   const handleSeeResults = (e: React.MouseEvent) => {
     e.stopPropagation();

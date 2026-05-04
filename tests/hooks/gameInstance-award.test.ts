@@ -279,3 +279,70 @@ describe('setSettings', () => {
     expect(settings.difficultyFilter).toBe('easy');
   });
 });
+
+describe('Settings wiring in startGame (P0-2)', () => {
+  function buildPool() {
+    const pool: Card[] = [];
+    for (let i = 0; i < 10; i++) pool.push(makeCard({ id: `e${i}`, diff: 'easy' }));
+    for (let i = 0; i < 10; i++) pool.push(makeCard({ id: `m${i}`, diff: 'medium' }));
+    for (let i = 0; i < 10; i++) pool.push(makeCard({ id: `h${i}`, diff: 'hard' }));
+    return pool;
+  }
+
+  it('honors roundLen=5 by stopping deck growth at 5 cards in solo party mode', async () => {
+    vi.resetModules();
+    const { getGameInstance } = await import('../../src/hooks/gameInstance');
+    const gi = getGameInstance();
+
+    const giAny = gi as unknown as { cards: Card[] };
+    giAny.cards = buildPool();
+
+    gi.setSettings({ roundLen: 5 });
+    gi.selectMode('HI');
+    gi.startGame([{ name: 'Solo', score: 0 }]);
+
+    // Loop flip → markResult until the FSM leaves 'playing' (signals deck end).
+    let safety = 50;
+    while (safety-- > 0) {
+      const state = gi.fsm.getState();
+      if (state === 'turnChange') gi.ready();
+      else if (state === 'playing') {
+        gi.flipCard();
+        gi.markResult('correct');
+      } else break;
+    }
+
+    const payload = gi.getPayload();
+    expect(payload.deck.length).toBeLessThanOrEqual(5);
+  });
+
+  it("honors difficultyFilter='hard' by only seeding hard cards", async () => {
+    vi.resetModules();
+    const { getGameInstance } = await import('../../src/hooks/gameInstance');
+    const gi = getGameInstance();
+
+    const giAny = gi as unknown as { cards: Card[] };
+    giAny.cards = buildPool();
+
+    gi.setSettings({ difficultyFilter: 'hard' });
+    gi.selectMode('HI');
+    gi.startGame([{ name: 'Solo', score: 0 }]);
+
+    const seed = gi.getPayload().deck;
+    expect(seed.length).toBeGreaterThan(0);
+    for (const c of seed) expect(c.diff).toBe('hard');
+
+    // Drain a few rounds to confirm adaptive picker stays in the filtered tier.
+    let safety = 30;
+    while (safety-- > 0) {
+      const state = gi.fsm.getState();
+      if (state === 'turnChange') gi.ready();
+      else if (state === 'playing') {
+        gi.flipCard();
+        gi.markResult('correct');
+      } else break;
+    }
+
+    for (const c of gi.getPayload().deck) expect(c.diff).toBe('hard');
+  });
+});

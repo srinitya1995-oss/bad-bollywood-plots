@@ -6,7 +6,7 @@ import { SupabaseAdapter } from '../storage/supabase';
 import type { StorageAdapter } from '../storage/interface';
 import type { Card, Industry, GameMode, Player, DifficultyFilter, RoundLength } from '../core/types';
 import { INDUSTRY_META, POINT_MAP } from '../core/types';
-import { buildPartyDeck } from '../core/deckBuilder';
+import { buildPartyDeck, shuffle as shuffleArray } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
 import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
 
@@ -159,8 +159,20 @@ class GameInstance {
     this.gameMode = mode;
   }
 
-  startGame(players: Player[]): void {
+  /** Honors user-chosen round length, hard-capped at 12 to keep party flow predictable. */
+  private partyRoundCap(): number {
+    return Math.min(this._settings.roundLen ?? 10, 12);
+  }
+
+  /** Pool restricted to the user's selected difficulty tier (or full pool when 'all'). */
+  private filteredPool(): Card[] {
     const pool = ContentLoader.getCardPool(this.cards, this.industry!);
+    const f = this._settings.difficultyFilter;
+    return !f || f === 'all' ? pool : pool.filter(c => c.diff === f);
+  }
+
+  startGame(players: Player[]): void {
+    const pool = this.filteredPool();
     this.sessionDealt.clear();
     this.idx = 0;
     this.scorer = createScorerState(players, this.gameMode === 'endless' ? 3 : 0);
@@ -169,25 +181,27 @@ class GameInstance {
     this._lastResult = null;
     this._scores = players.map(() => 0);
 
+    const filterActive = this._settings.difficultyFilter && this._settings.difficultyFilter !== 'all';
+
     if (this.gameMode === 'endless') {
-      // Adaptive: pick first card at starting ability (1100 → medium-ish)
       const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       this.deck = first ? [first] : [];
+    } else if (filterActive) {
+      // Single-tier party mode: skip 1/1/1 calibration (it only makes sense for an all-mix)
+      // and seed up to 3 cards from the filtered tier. Remaining filled adaptively in markResult.
+      const seed = shuffleArray(pool.filter(c => !this.sessionDealt.has(c.id))).slice(0, 3);
+      for (const c of seed) this.sessionDealt.add(c.id);
+      this.deck = seed;
     } else {
-      // Party mode: start with 3 calibration cards (one of each difficulty)
-      // then 9 adaptive cards appended via markResult.
+      // Party mode (all difficulties): 3 calibration cards (one of each tier),
+      // then adaptive cards appended via markResult up to partyRoundCap().
       const seen = this.storage.getSeenCards();
-      // Auto-reset seen list once ≥70% of pool is exhausted so players stop
-      // looping the same "already seen" tail.
       if (seen.length >= Math.ceil(pool.length * 0.7)) {
         this.storage.clearSeenCards();
       }
-      // buildPartyDeck returns [easy×4, medium×4, hard×4] with each tier shuffled
-      // independently. Take the first of each tier to honor the 1/1/1 calibration promise.
       const partyDeck = buildPartyDeck(pool, this.sessionDealt, this.storage.getSeenCards());
       const calibration = [partyDeck[0], partyDeck[4], partyDeck[8]].filter((c): c is typeof pool[0] => c != null);
       this.deck = calibration;
-      // Remaining 9 cards will be picked adaptively in markResult
     }
 
     this.fsm.transition('turnChange');
@@ -214,13 +228,14 @@ class GameInstance {
     this.bus.emit('score:updated', { result, pts, totalPts: this.scorer.totalPts, ability: this.adaptive.ability });
     this.idx++;
 
-    // In endless mode, pick next card adaptively based on ability estimate
+    // In endless mode, pick next card adaptively based on ability estimate.
+    // Pool narrows to the user's chosen difficulty tier when set.
     if (this.gameMode === 'endless') {
       if (this.scorer.lives <= 0) {
         this.endGame('lives-exhausted');
         return;
       }
-      const pool = ContentLoader.getCardPool(this.cards, this.industry!);
+      const pool = this.filteredPool();
       const next = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       if (next) {
         this.deck.push(next);
@@ -230,9 +245,9 @@ class GameInstance {
       }
     }
 
-    // Party mode: after calibration (3 cards), pick adaptive cards up to 12 total
-    if (this.gameMode === 'party' && this.idx >= this.deck.length && this.deck.length < 12) {
-      const pool = ContentLoader.getCardPool(this.cards, this.industry!);
+    // Party mode: after the seed (3 cards), pick adaptive cards up to the user-chosen cap.
+    if (this.gameMode === 'party' && this.idx >= this.deck.length && this.deck.length < this.partyRoundCap()) {
+      const pool = this.filteredPool();
       const next = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
       if (next) this.deck.push(next);
     }
@@ -255,8 +270,7 @@ class GameInstance {
   }
 
   continueGame(): void {
-    const pool = ContentLoader.getCardPool(this.cards, this.industry!);
-    // Continue with adaptive cards at current ability (not static deck)
+    const pool = this.filteredPool();
     const first = pickAdaptiveCard(pool, this.sessionDealt, this.storage.getSeenCards(), this.adaptive.ability);
     if (first) this.deck.push(first);
     this.fsm.transition('playing');

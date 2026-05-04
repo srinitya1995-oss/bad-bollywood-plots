@@ -1,5 +1,11 @@
 import { useLayoutEffect, useState, type RefObject } from 'react';
 
+export interface CardTextFit {
+  fontSize: number;
+  /** True when the auto-fit had to settle within 2px of the floor — caller can swap italic to upright for legibility. */
+  compact: boolean;
+}
+
 /**
  * Auto-fit text size within a fixed-height container.
  * Steps down from maxSize to minSize until the text no longer overflows.
@@ -8,15 +14,14 @@ export function useCardTextFit(
   text: string,
   containerRef: RefObject<HTMLElement | null>,
   maxSize = 27,
-  minSize = 16,
-): number {
-  const [fontSize, setFontSize] = useState(maxSize);
+  minSize = 14,
+): CardTextFit {
+  const [fit, setFit] = useState<CardTextFit>({ fontSize: maxSize, compact: false });
 
   useLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    // Binary search for the largest font size that fits
     let lo = minSize;
     let hi = maxSize;
     let best = minSize;
@@ -34,8 +39,8 @@ export function useCardTextFit(
     }
 
     el.style.fontSize = '';
-    setFontSize(best);
+    setFit({ fontSize: best, compact: best <= minSize + 2 });
   }, [text, containerRef, maxSize, minSize]);
 
-  return fontSize;
+  return fit;
 }

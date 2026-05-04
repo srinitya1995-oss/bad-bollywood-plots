@@ -44,7 +44,7 @@ export function Card({
   const pts = POINT_MAP[card.diff];
   const plotRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const fittedSize = useCardTextFit(card.c, plotRef);
+  const { fontSize: fittedSize, compact } = useCardTextFit(card.c, plotRef);
 
   useEffect(() => {
     if (!isFlipped) stageRef.current?.focus({ preventScroll: true });
@@ -119,7 +119,10 @@ export function Card({
             <div
               ref={plotRef}
               className="v8-card-plot"
-              style={{ fontSize: `${fittedSize}px` }}
+              style={{
+                fontSize: `${fittedSize}px`,
+                fontStyle: compact ? 'normal' : undefined,
+              }}
             >
               {card.c}
             </div>

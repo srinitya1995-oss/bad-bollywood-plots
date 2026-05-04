@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   BAD PLOTS — "Bollywood Bold"
+   BAD DESI PLOTS — "Loud Editorial"
 
    Design system built on what code does BEST:
    - Massive typography with dramatic weight contrast
@@ -23,6 +23,16 @@ body {
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* React mount needs to participate in body's flex chain so .screen's flex:1 children
+   (game card area) can take real height on mobile. Without this, .v8-game-card-area
+   collapses to 0px and the plot card disappears. */
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 /* ── DESIGN TOKENS ── */
@@ -82,7 +92,7 @@ body {
   --text-2xl: 32px;
   --text-3xl: 48px;
 
-  /* ── v8 tokens (Bad Bollywood Plots — loud editorial) ── */
+  /* v8 tokens (Bad Desi Plots, loud editorial) */
   --paper: #F6EBD1;
   --paper-warm: #F9F0D9;
   --v8-ink: #1A0F06;

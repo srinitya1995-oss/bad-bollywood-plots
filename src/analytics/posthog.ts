@@ -1,5 +1,5 @@
 /**
- * PostHog analytics layer for the Bad Bollywood Plots React app.
+ * PostHog analytics layer for the Bad Desi Plots React app.
  *
  * -----------------------------------------------------------------
  * Feature flags to create in the PostHog UI (project 356713):

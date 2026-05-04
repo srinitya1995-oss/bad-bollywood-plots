@@ -48,7 +48,7 @@ const VERDICTS_90: readonly VerdictEntry[] = [
 const VERDICTS_70: readonly VerdictEntry[] = [
   { title: 'Superhit!', verdict: 'Interval mein samosa lelo, second half mein full marks aayenge.' },
   { title: 'Mass Entertainer', verdict: "The multiplex crowd is impressed. The single-screen crowd says 'not bad, yaar.'" },
-  { title: 'Weekend Collection: Strong', verdict: 'Your Bollywood knowledge has good opening numbers. Word of mouth will carry you.' },
+  { title: 'Weekend Collection: Strong', verdict: 'Your filmi knowledge has good opening numbers. Word of mouth will carry you.' },
 ];
 
 const VERDICTS_50: readonly VerdictEntry[] = [
@@ -60,7 +60,7 @@ const VERDICTS_50: readonly VerdictEntry[] = [
 const VERDICTS_25: readonly VerdictEntry[] = [
   { title: 'Flop Show', verdict: 'Bhai, have you actually WATCHED any movies or do you just scroll Netflix thumbnails?' },
   { title: 'Disaster', verdict: 'Your knowledge has the box office trajectory of a Vivek Oberoi solo film.' },
-  { title: "Critic's Choice", verdict: "The critics will say 'ambitious attempt' which is Bollywood for 'flop.'" },
+  { title: "Critic's Choice", verdict: "The critics will say 'ambitious attempt' which is filmi for 'flop.'" },
 ];
 
 const VERDICTS_0: readonly VerdictEntry[] = [
