@@ -991,7 +991,7 @@ async function sendChat() {
 
   try {
     const dataContext = aggregated ? JSON.stringify(aggregated) : '{"note":"No data loaded yet"}';
-    const sysPrompt = `You are an analytics assistant for SeedhaPlot (Bad Bollywood Plots), a Desi movie trivia party game with Bollywood and Tollywood cards in easy/medium/hard difficulty tiers.\n\nCURRENT DATA:\n${dataContext}\n\nAnalyze this data to answer questions. Be direct. Use numbers. Cite specific cards by name. Keep responses concise (3-5 paragraphs max).`;
+    const sysPrompt = `You are an analytics assistant for SeedhaPlot (Bad Desi Plots), a desi movie trivia party game with Bollywood and Tollywood cards in easy/medium/hard difficulty tiers.\n\nCURRENT DATA:\n${dataContext}\n\nAnalyze this data to answer questions. Be direct. Use numbers. Cite specific cards by name. Keep responses concise (3-5 paragraphs max).`;
 
     chatHistory.push({ role: 'user', content: question });
 

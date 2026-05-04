@@ -10,7 +10,7 @@ const MODEL = 'claude-sonnet-4-20250514';
 const BATCH_SIZE = 5;
 const COST_PER_CARD_EST = 0.005; // rough estimate
 
-const SYSTEM_PROMPT = `You are a card writer for "Bad Bollywood Plots" — a Desi movie trivia party game.
+const SYSTEM_PROMPT = `You are a card writer for "Bad Desi Plots", a desi movie trivia party game.
 You write terrible, hilarious one-paragraph plot summaries of real Indian films.
 
 VOICE RULES:

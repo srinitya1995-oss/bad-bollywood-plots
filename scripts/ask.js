@@ -14,7 +14,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const CACHE_PATH = join(__dirname, '../.cache-aggregated.json');
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
-const SYSTEM_PROMPT = `You are an analytics assistant for SeedhaPlot (Bad Bollywood Plots), a Desi movie trivia party game.
+const SYSTEM_PROMPT = `You are an analytics assistant for SeedhaPlot (Bad Desi Plots), a desi movie trivia party game.
 
 The game has cards with terrible plot summaries of Bollywood and Tollywood movies. Players guess the movie. There are 3 difficulty tiers (easy/medium/hard), solo and multiplayer modes, and a feedback system.
 

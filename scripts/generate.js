@@ -9,7 +9,7 @@ import { validateCard, formatCardForInsert } from './lib/card-schema.js';
 
 const BATCH_SIZE = 5;
 
-const SYSTEM_PROMPT = `You are a card writer for "Bad Bollywood Plots" — a Desi movie trivia party game.
+const SYSTEM_PROMPT = `You are a card writer for "Bad Desi Plots", a desi movie trivia party game.
 You write terrible, hilarious one-paragraph plot summaries of real Indian films.
 
 VOICE FINGERPRINT (see docs/voice-fingerprint.md for full spec):
