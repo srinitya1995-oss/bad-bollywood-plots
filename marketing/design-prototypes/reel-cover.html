@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=0.3" />
+<title>Reel Cover · 9:16 + grid crop · Bad Desi Plots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A0F0A;
+    --card-bw:#E85D3A;
+    --gold:#F2A72E;
+    --cream:#F5E8D4;
+    --ink:#1A0F0A;
+    --saffron:#E89A2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0e0805;color:var(--cream);font-family:'DM Sans',sans-serif}
+  body{display:flex;flex-direction:column;align-items:center;gap:32px;padding:24px 12px 64px;min-height:100vh}
+
+  .rationale{
+    max-width:1080px;width:100%;
+    background:#1A0F0A;border:1px solid rgba(245,232,212,0.18);
+    border-radius:8px;padding:20px 24px;color:var(--cream);
+    font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;
+  }
+  .rationale h1{font-family:'Playfair Display',serif;font-weight:600;font-size:24px;letter-spacing:-0.02em;color:var(--gold);margin-bottom:6px}
+  .rationale h2{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--saffron);margin:14px 0 4px;font-weight:500}
+  .rationale p{color:rgba(245,232,212,0.78)}
+  .rationale strong{color:var(--cream)}
+
+  .label{
+    font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.45em;text-transform:uppercase;
+    color:rgba(245,232,212,0.55);
+    margin-top:8px;
+  }
+
+  .row{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+
+  .canvas-1080-1920{
+    width:1080px;height:1920px;position:relative;overflow:hidden;
+    background:#1A0F0A;
+    isolation:isolate;
+  }
+  .canvas-1080-1350{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    background:#1A0F0A;
+    isolation:isolate;
+  }
+
+  .paper-noise{
+    position:absolute;inset:0;pointer-events:none;opacity:0.07;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.91 0 0 0 0 0.83 0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  }
+  .halo{
+    position:absolute;left:50%;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,93,58,0.32) 0%, rgba(232,93,58,0.08) 45%, rgba(232,93,58,0) 70%);
+    filter:blur(40px);z-index:0;
+  }
+
+  /* shared frame + ticks */
+  .modern-frame{position:absolute;inset:48px;border:1px solid rgba(242,167,46,0.45);z-index:2;pointer-events:none}
+  .corner-tick{position:absolute;width:22px;height:22px;border:1px solid var(--gold);z-index:3}
+  .corner-tick.tl{left:40px;top:40px;border-right:none;border-bottom:none}
+  .corner-tick.tr{right:40px;top:40px;border-left:none;border-bottom:none}
+  .corner-tick.bl{left:40px;bottom:40px;border-right:none;border-top:none}
+  .corner-tick.br{right:40px;bottom:40px;border-left:none;border-top:none}
+
+  /* 9:16 layout — vertical stack, hook above and card below, IG-bar safe */
+  .reel .top-band{
+    position:absolute;left:0;right:0;top:120px;text-align:center;z-index:5;padding:0 90px;
+  }
+  .reel .top-band .kicker{
+    display:inline-flex;align-items:center;gap:12px;
+    color:var(--card-bw);font-family:'DM Sans',sans-serif;font-weight:700;font-size:18px;letter-spacing:0.55em;text-transform:uppercase;
+    margin-bottom:32px;
+  }
+  .reel .top-band .kicker::before, .reel .top-band .kicker::after{
+    content:"";width:48px;height:1px;background:var(--card-bw);
+  }
+  .reel .top-band .hook{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+    font-size:140px;line-height:0.98;letter-spacing:-0.025em;color:var(--cream);
+  }
+  .reel .top-band .hook .accent{color:var(--gold)}
+  .reel .top-band .sub{
+    margin-top:36px;
+    font-family:'DM Sans',sans-serif;font-weight:400;font-size:24px;letter-spacing:0.32em;text-transform:uppercase;
+    color:rgba(245,232,212,0.65);
+  }
+
+  /* card teaser - lower midstack */
+  .card-teaser{
+    position:absolute;left:90px;right:90px;top:920px;
+    background:linear-gradient(180deg, rgba(40,18,12,0.82), rgba(26,15,10,0.92));
+    border:2px solid var(--gold);
+    box-shadow:0 0 0 6px rgba(242,167,46,0.15), 0 24px 60px rgba(0,0,0,0.55);
+    padding:48px 48px;z-index:5;
+  }
+  .card-teaser .industry-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    color:var(--card-bw);font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.45em;text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .card-teaser .industry-tag::before, .card-teaser .industry-tag::after{
+    content:"";width:32px;height:1px;background:var(--card-bw);
+  }
+  .card-teaser .plot{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:50px;line-height:1.18;letter-spacing:-0.01em;color:var(--cream);
+  }
+  .card-teaser .plot .accent{color:var(--card-bw);font-weight:600}
+
+  /* IG safe zone marker (bottom 20%) - dashed outline */
+  .ig-safe-bottom{
+    position:absolute;left:0;right:0;bottom:0;height:384px; /* 20% of 1920 */
+    border-top:1px dashed rgba(245,232,212,0.18);
+    z-index:1;
+    background:linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%);
+  }
+  .ig-safe-bottom::after{
+    content:"IG UI BAR · NEVER PLACE TEXT BELOW THIS LINE";
+    position:absolute;left:50%;top:24px;transform:translateX(-50%);
+    font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.4em;text-transform:uppercase;
+    color:rgba(245,232,212,0.30);
+  }
+
+  /* CTA above the safe zone */
+  .reel-cta{
+    position:absolute;left:0;right:0;bottom:480px;text-align:center;z-index:5;
+  }
+  .reel-cta .text{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:42px;
+    color:var(--gold);letter-spacing:-0.01em;
+  }
+  .reel-cta .arrow{font-style:normal;color:var(--card-bw);margin-left:8px}
+
+  /* footer mark inside the safe zone (visual only — IG masks it) */
+  .reel-mark{
+    position:absolute;left:0;right:0;bottom:120px;text-align:center;
+    font-family:'DM Sans',sans-serif;font-size:14px;letter-spacing:0.5em;text-transform:uppercase;
+    color:rgba(245,232,212,0.45);z-index:5;
+  }
+
+  /* GRID CROP — same composition adapted for 1080×1350 (center crop of the 9:16) */
+  .grid .top-band{
+    position:absolute;left:0;right:0;top:140px;text-align:center;z-index:5;padding:0 90px;
+  }
+  .grid .top-band .kicker{
+    display:inline-flex;align-items:center;gap:12px;
+    color:var(--card-bw);font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.55em;text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .grid .top-band .kicker::before, .grid .top-band .kicker::after{
+    content:"";width:48px;height:1px;background:var(--card-bw);
+  }
+  .grid .top-band .hook{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+    font-size:104px;line-height:0.98;letter-spacing:-0.025em;color:var(--cream);
+  }
+  .grid .top-band .hook .accent{color:var(--gold)}
+  .grid .card-teaser{
+    position:absolute;left:90px;right:90px;top:610px;
+    padding:36px 36px;
+  }
+  .grid .card-teaser .plot{font-size:38px;line-height:1.20}
+  .grid .reel-cta{
+    position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:5;
+  }
+  .grid .reel-cta .text{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;font-size:34px;
+    color:var(--gold);letter-spacing:-0.01em;
+  }
+  .grid .reel-cta .arrow{font-style:normal;color:var(--card-bw);margin-left:8px}
+</style>
+</head>
+<body>
+
+<header class="rationale">
+  <h1>Reel cover — 9:16 (1080×1920) + grid crop (1080×1350)</h1>
+  <p>Direction-2 layout adapted to vertical with a card teaser pinned in the lower-third. Both views must read — the 9:16 is what plays full-screen in Reels, the 1080×1350 grid crop is what shows in profile feed.</p>
+  <h2>Composition (9:16)</h2>
+  <p><strong>Hook lives top-third:</strong> "BOLLYWOOD" kicker tag, 140px Playfair italic hook ("guess the movie."), 24px DM Sans subtitle ("from a terrible plot"). The accent word "movie" is gold to give the hook a focal pop. <strong>Card teaser in the middle:</strong> bordered gold card with the BW industry tag and a 50px plot snippet — DDLJ. Smaller than Template A so the hook above it stays dominant. <strong>CTA "watch all 5 ↓"</strong> in Playfair italic, gold + flame arrow. <strong>Bottom 20% safe zone</strong> is dashed-marked — never place text in the IG UI bar overlap. <strong>Watermark sits inside the safe zone</strong> deliberately — it's expected to be partially masked, that's fine.</p>
+  <h2>Composition (grid crop)</h2>
+  <p>Center-crops the 9:16 vertically. Hook drops to 104px, card teaser plot drops to 38px to maintain visual hierarchy at the smaller frame. The thumb-stop hook + the gold accent on "movie" must still be readable at 270px grid thumbnail (~3× downscale).</p>
+  <h2>Squint test</h2>
+  <p>At 270px wide, the hook word "movie." in gold is the load-bearing element. If you can read that, the cover does its job. The kicker tracking and the card teaser become atmospheric texture.</p>
+</header>
+
+<!-- ============ 9:16 — full Reel cover ============ -->
+<div class="row">
+  <div>
+    <div class="canvas-1080-1920 reel">
+      <div class="halo" style="top:38%;transform:translate(-50%,-50%);width:920px;height:920px"></div>
+      <div class="paper-noise"></div>
+      <div class="modern-frame"></div>
+      <div class="corner-tick tl"></div><div class="corner-tick tr"></div>
+      <div class="corner-tick bl"></div><div class="corner-tick br"></div>
+
+      <div class="top-band">
+        <div class="kicker">Bollywood</div>
+        <div class="hook">guess the<br/><span class="accent">movie.</span></div>
+        <div class="sub">from a terrible plot</div>
+      </div>
+
+      <div class="card-teaser">
+        <div class="industry-tag">vol. 01 · plot 001</div>
+        <div class="plot">
+          "Boy meets girl. Father says no. They go to Europe anyway. Entire <span class="accent">Punjab</span> gives permission eventually."
+        </div>
+      </div>
+
+      <div class="reel-cta">
+        <div class="text">watch all 5<span class="arrow">↓</span></div>
+      </div>
+
+      <div class="ig-safe-bottom"></div>
+      <div class="reel-mark">baddesiplots.com</div>
+    </div>
+    <div class="label">1080 × 1920 · full reel cover</div>
+  </div>
+
+  <!-- Grid crop -->
+  <div>
+    <div class="canvas-1080-1350 grid">
+      <div class="halo" style="top:55%;transform:translate(-50%,-50%);width:880px;height:880px"></div>
+      <div class="paper-noise"></div>
+      <div class="modern-frame"></div>
+      <div class="corner-tick tl"></div><div class="corner-tick tr"></div>
+      <div class="corner-tick bl"></div><div class="corner-tick br"></div>
+
+      <div class="top-band">
+        <div class="kicker">Bollywood</div>
+        <div class="hook">guess the <span class="accent">movie.</span></div>
+      </div>
+
+      <div class="card-teaser">
+        <div class="industry-tag">plot 001</div>
+        <div class="plot">
+          "Boy meets girl. Father says no. They go to Europe anyway. Entire <span class="accent">Punjab</span> gives permission eventually."
+        </div>
+      </div>
+
+      <div class="reel-cta">
+        <div class="text">watch ↓</div>
+      </div>
+    </div>
+    <div class="label">1080 × 1350 · grid crop</div>
+  </div>
+</div>
+
+</body>
+</html>

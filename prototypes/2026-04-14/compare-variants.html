@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Variants — VS-1 / VS-2 / VS-3 / VS-4</title>
+<style>
+  body { margin: 0; padding: 20px; background: #1a1109; color: #f6ebd1; font-family: system-ui, sans-serif; }
+  h1 { margin: 0 0 20px; font-size: 18px; }
+  p { margin: 0 0 20px; color: #c8b89e; font-size: 14px; }
+  .row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .cell h2 { margin: 0; font-size: 14px; font-family: 'Anton', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #f5c457; }
+  .cell small { color: #9a8b7e; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .frame { width: 390px; height: 844px; border: 2px solid #f5c457; }
+  .btn { display: inline-block; margin-top: 4px; font-size: 11px; padding: 3px 8px; background: #c8321c; color: #f6ebd1; border-radius: 4px; text-decoration: none; letter-spacing: 0.06em; }
+  .scribble-hint { font-family: 'Caveat', cursive; color: #1b3f8c; font-size: 22px; transform: rotate(-4deg); display: inline-block; margin-left: 8px; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat&display=swap" rel="stylesheet">
+</head>
+<body>
+<h1>Card reveal variants — cards auto-flip on load so you see the differences on the back.</h1>
+<p>VS-1 current locked · VS-2 restrained blue · VS-3 full tabletop (scribble) · VS-4 tabletop-v3 reference</p>
+<script>
+  window.addEventListener('load', () => {
+    document.querySelectorAll('iframe.frame').forEach((frame) => {
+      const tryFlip = () => {
+        try {
+          const doc = frame.contentDocument;
+          const stage = doc && doc.querySelector('.card-stage');
+          if (stage) { stage.classList.add('flipped'); return true; }
+        } catch (e) { /* cross-origin or not-ready */ }
+        return false;
+      };
+      // Try after iframe load + small delay for its own animations to settle
+      frame.addEventListener('load', () => {
+        setTimeout(tryFlip, 400);
+        setTimeout(tryFlip, 1200);
+      });
+      // Also try once in case load already fired
+      setTimeout(tryFlip, 1500);
+    });
+  });
+</script>
+
+<div class="row">
+  <div class="cell">
+    <h2>VS-1 — LOCKED</h2>
+    <small>current proto-v8</small>
+    <iframe class="frame" src="proto-v8.html"></iframe>
+    <a class="btn" href="proto-v8.html" target="_blank">open alone</a>
+  </div>
+  <div class="cell">
+    <h2>VS-2 — RESTRAINED BLUE</h2>
+    <small>blue-pen year pill + blue/gold +pts</small>
+    <iframe class="frame" src="proto-v8-blue-restrained.html"></iframe>
+    <a class="btn" href="proto-v8-blue-restrained.html" target="_blank">open alone</a>
+  </div>
+  <div class="cell">
+    <h2>VS-3 — FULL TABLETOP <span class="scribble-hint">+ scribble</span></h2>
+    <small>restrained + "so sad yaar" caveat overlay</small>
+    <iframe class="frame" src="proto-v8-blue-full.html"></iframe>
+    <a class="btn" href="proto-v8-blue-full.html" target="_blank">open alone</a>
+  </div>
+  <div class="cell">
+    <h2>VS-4 — TABLETOP REFERENCE</h2>
+    <small>your inspiration (front, not reveal)</small>
+    <iframe class="frame" src="approach-1-tabletop-v3.html"></iframe>
+    <a class="btn" href="approach-1-tabletop-v3.html" target="_blank">open alone</a>
+  </div>
+</div>
+</body>
+</html>

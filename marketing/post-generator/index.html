@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Bad Desi Plots · Week 1 Post Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --ink:#0E1326; --paper:#F4ECD6; --bone:#EFE6CC;
+    --pink:#FF2E63; --emerald:#1E8C5E; --mustard:#E8B82A; --navy:#0A1A3A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);min-height:100vh;font-family:'IBM Plex Mono',monospace}
+  body{padding:48px 56px;background-image:radial-gradient(rgba(14,19,38,0.05) 0.8px,transparent 0.8px),radial-gradient(rgba(255,46,99,0.022) 0.6px,transparent 0.6px);background-size:3px 3px,7px 7px;background-position:0 0,1px 2px}
+
+  .mast{display:flex;align-items:baseline;justify-content:space-between;border-top:4px solid var(--ink);border-bottom:2px solid var(--ink);padding:20px 0;margin-bottom:32px}
+  .mast .logo{font-family:'Oswald',sans-serif;font-weight:700;font-size:54px;letter-spacing:-0.015em;text-transform:uppercase;line-height:1}
+  .mast .meta{font-size:18px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500}
+
+  .strip{background:var(--ink);color:var(--paper);padding:14px 22px;display:flex;justify-content:space-between;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:32px}
+  .strip .accent{color:var(--mustard)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:0;border-top:2px solid var(--ink);border-left:2px solid var(--ink)}
+  .post{border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:28px 32px;background:var(--paper);text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;transition:background 0.15s}
+  .post:hover{background:var(--bone)}
+  .post .day{font-family:'Oswald',sans-serif;font-weight:700;font-size:64px;line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase}
+  .post .label{font-family:'Oswald',sans-serif;font-weight:700;font-size:32px;line-height:1;text-transform:uppercase;letter-spacing:-0.005em;margin-top:6px}
+  .post .label.bw{color:var(--pink)}
+  .post .label.tw{color:var(--emerald)}
+  .post .label.both{color:var(--mustard)}
+  .post .label.neutral{color:var(--ink)}
+  .post .body{font-family:'Crimson Pro',serif;font-style:italic;font-weight:400;font-size:22px;line-height:1.3;color:var(--ink);margin-top:14px;flex:1}
+  .post .footer{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--ink);padding-top:14px;margin-top:18px;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500}
+  .post .footer .arrow{color:var(--pink);font-weight:600}
+
+  .howto{margin-top:48px;background:var(--ink);color:var(--paper);padding:28px 32px}
+  .howto h2{font-family:'Oswald',sans-serif;font-weight:700;font-size:42px;text-transform:uppercase;margin-bottom:14px;letter-spacing:-0.005em}
+  .howto h2 span{color:var(--pink)}
+  .howto ol{padding-left:24px;font-family:'Crimson Pro',serif;font-style:italic;font-size:22px;line-height:1.5}
+  .howto ol li{margin-bottom:8px}
+  .howto code{font-family:'IBM Plex Mono',monospace;background:rgba(244,236,214,0.12);padding:2px 8px;font-style:normal;font-size:18px;color:var(--mustard)}
+
+  .footer-mark{margin-top:32px;border-top:1px solid var(--ink);padding-top:18px;display:flex;justify-content:space-between;font-size:14px;letter-spacing:0.1em;text-transform:uppercase}
+  .footer-mark .accent{color:var(--pink)}
+</style>
+</head>
+<body>
+
+<div class="mast">
+  <div class="logo">Bad Desi Plots</div>
+  <div class="meta">Issue №01 · Week 1 · Static · ₹0</div>
+</div>
+
+<div class="strip">
+  <span>5 posts · 5 slots · 0 reels</span>
+  <span class="accent">tap any tile to render &amp; screenshot</span>
+</div>
+
+<div class="grid">
+  <a class="post" href="posts/01-tue-A-DDLJ.html">
+    <div class="day">Tue</div>
+    <div class="label bw">Template A · BW</div>
+    <div class="body">Boy meets girl. Father says no. They go to Europe anyway. Entire Punjab gives permission eventually.</div>
+    <div class="footer"><span>bw01 · 1080×1350</span><span class="arrow">open →</span></div>
+  </a>
+
+  <a class="post" href="posts/02-wed-A-RRR.html">
+    <div class="day">Wed</div>
+    <div class="label tw">Template A · TW</div>
+    <div class="body">Two freedom fighters meet, become best friends, and discover they are on opposite sides. They dance about it.</div>
+    <div class="footer"><span>tw08 · 1080×1350</span><span class="arrow">open →</span></div>
+  </a>
+
+  <a class="post" href="posts/03-thu-B-carousel.html">
+    <div class="day">Thu</div>
+    <div class="label bw">Template B · 6-slide carousel</div>
+    <div class="body">cover + 4 plots (K3G, KHNH, Lagaan, 3 Idiots) + final tally outro. issue no. 01.</div>
+    <div class="footer"><span>bw02·bw03·bw05·bw10</span><span class="arrow">open →</span></div>
+  </a>
+
+  <a class="post" href="posts/04-fri-E-quote.html">
+    <div class="day">Fri</div>
+    <div class="label neutral">Template E · Marginalia</div>
+    <div class="body">"the movie that ruined your last family road trip." palette cleanser. no card art. voice-only.</div>
+    <div class="footer"><span>quote · 1080×1350</span><span class="arrow">open →</span></div>
+  </a>
+
+  <a class="post" href="posts/05-sat-C-DDLJ-reveal.html">
+    <div class="day">Sat</div>
+    <div class="label bw">Template C · Reveal Pair</div>
+    <div class="body">tuesday's plot, with the "ANSWERED" stamp / then the title splash on navy. closes the loop on DDLJ.</div>
+    <div class="footer"><span>bw01 reveal · 2 slides</span><span class="arrow">open →</span></div>
+  </a>
+</div>
+
+<div class="howto">
+  <h2>How to <span>screenshot &amp; ship</span></h2>
+  <ol>
+    <li>Click any tile. The post renders inside its own page at <code>1080×1350</code> for single posts, or wide horizontal for B/C which stack slides.</li>
+    <li>For carousels (Thu, Sat): scroll right. Screenshot each <code>1080×1350</code> slide individually. Upload as a single carousel post.</li>
+    <li>Best screenshot tool — Chrome DevTools → Cmd+Shift+P → "Capture full size screenshot" with viewport set to 1080×1350. Or use the <code>Screenshot</code> Chrome extension.</li>
+    <li>Save PNGs to <code>marketing/post-generator/output/week-1/</code>. Name them <code>01-tue-ddlj.png</code> etc.</li>
+    <li>Upload via Meta Business Suite (free, supports scheduling) or directly in IG mobile.</li>
+  </ol>
+</div>
+
+<div class="footer-mark">
+  <span>baddesiplots.com · @baddesiplots</span>
+  <span class="accent">tabloid v3 · static-only</span>
+  <span>p.01</span>
+</div>
+
+</body>
+</html>

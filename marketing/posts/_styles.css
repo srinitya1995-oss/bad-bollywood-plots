@@ -1,0 +1,510 @@
+/* Bad Desi Plots — Instagram Post Templates
+   Shared styles. All posts use --bg + Playfair Display + DM Sans.
+   Card dimensions are 1080x1350 (4:5 IG portrait optimal).
+   Screenshot each .ig-post element to export. */
+
+:root {
+  --bg: #1A0F0A;
+  --card-bw: #E85D3A;
+  --card-tw: #3EA87A;
+  --gold: #F2A72E;
+  --cream: #F5E8D4;
+  --ink: #1A0F0A;
+  --glow-bw: rgba(232, 93, 58, 0.45);
+  --glow-tw: rgba(62, 168, 122, 0.45);
+  --paper-dim: rgba(245, 232, 212, 0.6);
+  --ink-muted: rgba(245, 232, 212, 0.4);
+  --flame-bright: #FF7A4F;
+  --emerald-bright: #4FC798;
+  --mauve: #6B4F6B;
+  --saffron: #E89A2E;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0a0604;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: var(--cream);
+  padding: 32px;
+  min-height: 100vh;
+}
+
+.page-header {
+  max-width: 1080px;
+  margin: 0 auto 32px;
+  padding: 16px 24px;
+  border: 1px solid var(--ink-muted);
+  border-radius: 8px;
+  background: rgba(245, 232, 212, 0.05);
+}
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  margin-bottom: 6px;
+  color: var(--gold);
+  letter-spacing: -0.01em;
+}
+.page-header p { font-size: 14px; line-height: 1.5; color: var(--paper-dim); }
+.page-header code {
+  background: rgba(0,0,0,0.35);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+/* The actual post — exactly 1080×1350 */
+.ig-post {
+  width: 1080px;
+  height: 1350px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  margin: 24px auto;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,232,212,0.08);
+}
+
+/* Worn paper texture using gradients (subtle) */
+.ig-post::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top left, rgba(242,167,46,0.06), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(232,93,58,0.04), transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Jharokha arch decorative frame */
+.jharokha-frame {
+  position: absolute;
+  inset: 60px 60px 60px 60px;
+  border: 2px solid var(--gold);
+  z-index: 2;
+}
+.jharokha-frame::before,
+.jharokha-frame::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--gold);
+}
+.jharokha-frame::before {
+  top: -2px; left: -2px;
+  border-right: none; border-bottom: none;
+  border-top-left-radius: 80px;
+}
+.jharokha-frame::after {
+  top: -2px; right: -2px;
+  border-left: none; border-bottom: none;
+  border-top-right-radius: 80px;
+}
+
+.jharokha-corners-bottom::before,
+.jharokha-corners-bottom::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--gold);
+  bottom: 60px;
+  z-index: 2;
+}
+.jharokha-corners-bottom::before {
+  left: 60px;
+  border-right: none; border-top: none;
+  border-bottom-left-radius: 80px;
+}
+.jharokha-corners-bottom::after {
+  right: 60px;
+  border-left: none; border-top: none;
+  border-bottom-right-radius: 80px;
+}
+
+/* Top crown ornament */
+.crown {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.crown-line {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.crown-diamond {
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+.crown-diamond.small { width: 8px; height: 8px; opacity: 0.6; }
+
+/* Industry badge */
+.industry-badge {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+.industry-badge.bw { color: var(--card-bw); }
+.industry-badge.tw { color: var(--card-tw); }
+
+/* Difficulty dots */
+.difficulty {
+  position: absolute;
+  top: 140px;
+  right: 100px;
+  z-index: 4;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.difficulty-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin-right: 8px;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--paper-dim);
+  opacity: 0.25;
+}
+.dot.active { opacity: 1; }
+.bw .dot.active { background: var(--card-bw); box-shadow: 0 0 12px var(--glow-bw); }
+.tw .dot.active { background: var(--card-tw); box-shadow: 0 0 12px var(--glow-tw); }
+
+/* The card itself */
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 720px;
+  z-index: 5;
+  text-align: center;
+  padding: 80px 40px;
+}
+
+.card-quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 200px;
+  line-height: 0.5;
+  color: var(--gold);
+  opacity: 0.4;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.card-plot {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  line-height: 1.25;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.card-plot.smaller {
+  font-size: 44px;
+}
+
+/* Glow halo behind the card */
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 3;
+  opacity: 0.55;
+}
+.glow.bw { background: radial-gradient(circle, var(--glow-bw), transparent 60%); }
+.glow.tw { background: radial-gradient(circle, var(--glow-tw), transparent 60%); }
+
+/* Bottom CTA strip */
+.bottom-strip {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  text-align: center;
+}
+.bottom-prompt {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 32px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.bottom-meta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* Era pill (top right of card) */
+.era-pill {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* Watermark */
+.watermark {
+  position: absolute;
+  bottom: 36px;
+  left: 0; right: 0;
+  text-align: center;
+  z-index: 4;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+
+/* === Carousel cover slide === */
+.cover .card-plot {
+  font-size: 84px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-style: normal;
+}
+.cover .card-plot .accent { color: var(--card-bw); }
+.cover .subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 24px;
+  margin-top: 28px;
+  color: var(--paper-dim);
+  letter-spacing: 0.04em;
+}
+.cover .swipe-arrow {
+  margin-top: 60px;
+  font-size: 18px;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* === Final carousel slide === */
+.final .card-plot {
+  font-size: 64px;
+  font-weight: 600;
+  font-style: normal;
+}
+.final .cta {
+  margin-top: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--paper-dim);
+  line-height: 1.6;
+}
+.final .url {
+  margin-top: 30px;
+  display: inline-block;
+  padding: 16px 32px;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-size: 22px;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.02em;
+}
+
+/* === Reveal back face === */
+.reveal-front .card-plot { font-size: 52px; }
+.reveal-back {
+  text-align: center;
+}
+.reveal-back .movie-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+.reveal-back .movie-year {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.4em;
+  color: var(--cream);
+  opacity: 0.75;
+  margin-bottom: 60px;
+}
+.reveal-back .movie-fact {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--paper-dim);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Carousel layout for Template B (puts 6 slides on one scrollable page) */
+.carousel {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.slide-label {
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 12px;
+  margin-top: 20px;
+}
+
+/* Reel storyboard frames (9:16) */
+.reel-frame {
+  width: 540px;
+  height: 960px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(245,232,212,0.1);
+}
+.reel-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+.reel-frame .timestamp {
+  position: absolute;
+  top: 16px; left: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  background: rgba(0,0,0,0.6);
+  padding: 4px 10px;
+  border-radius: 100px;
+  z-index: 10;
+}
+.reel-frame .narration {
+  position: absolute;
+  bottom: 24px; left: 24px; right: 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--paper-dim);
+  line-height: 1.5;
+  background: rgba(0,0,0,0.55);
+  padding: 12px 16px;
+  border-radius: 6px;
+  z-index: 10;
+}
+.reel-frame .frame-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 48px 32px;
+  text-align: center;
+  z-index: 5;
+}
+.reel-frame .frame-text .plot {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--cream);
+}
+.reel-frame .frame-text .reveal {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.reel-frame .frame-text .url-band {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  color: var(--cream);
+  margin-top: 24px;
+  text-transform: uppercase;
+}
+
+/* Caption / hashtag panels */
+.caption-panel {
+  max-width: 1080px;
+  margin: 16px auto 48px;
+  padding: 24px 28px;
+  border: 1px dashed var(--gold);
+  border-radius: 8px;
+  background: rgba(242,167,46,0.04);
+}
+.caption-panel h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+.caption-panel pre {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--cream);
+}
+.caption-panel .hashtags {
+  margin-top: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--saffron);
+  line-height: 1.7;
+}
+.caption-panel .meta {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--paper-dim);
+  letter-spacing: 0.04em;
+}

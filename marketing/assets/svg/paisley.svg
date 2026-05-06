@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 240" role="img" aria-label="paisley">
+  <title>Paisley</title>
+  <g fill="none" stroke="#F2A72E" stroke-width="1.5">
+    <path d="M70 10 Q120 50 110 110 Q100 170 70 220 Q40 170 30 110 Q20 50 70 10 Z"/>
+    <path d="M70 30 Q100 60 92 110 Q84 160 70 200 Q56 160 48 110 Q40 60 70 30 Z" opacity="0.75"/>
+    <path d="M70 60 Q86 80 80 110 Q74 140 70 170" opacity="0.6"/>
+  </g>
+  <g fill="#F2A72E">
+    <circle cx="70" cy="22" r="4"/>
+    <circle cx="70" cy="110" r="3"/>
+  </g>
+  <g fill="#E85D3A">
+    <circle cx="60" cy="80" r="2.4"/>
+    <circle cx="80" cy="140" r="2.4"/>
+  </g>
+</svg>

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=0.35" />
+<title>Template A · Direction 1 · Maximalist Haveli · DDLJ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A0F0A;
+    --card-bw:#E85D3A;
+    --card-tw:#3EA87A;
+    --gold:#F2A72E;
+    --cream:#F5E8D4;
+    --ink:#1A0F0A;
+    --glow-bw:rgba(232,93,58,0.35);
+    --flame-bright:#FF7A4F;
+    --saffron:#E89A2E;
+    --mauve:#6B4F6B;
+    --ink-muted:#2A1810;
+    --paper-dim:rgba(245,232,212,0.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0e0805;color:var(--cream);font-family:'DM Sans',sans-serif}
+  body{display:flex;flex-direction:column;align-items:center;gap:24px;padding:24px 12px 48px;min-height:100vh}
+
+  /* Rationale card sits above the canvas, not inside it */
+  .rationale{
+    max-width:1080px;width:100%;
+    background:#1A0F0A;border:1px solid rgba(245,232,212,0.18);
+    border-radius:8px;padding:20px 24px;color:var(--cream);
+    font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;
+  }
+  .rationale h1{font-family:'Playfair Display',serif;font-weight:600;font-size:24px;letter-spacing:-0.02em;color:var(--gold);margin-bottom:6px}
+  .rationale h2{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--saffron);margin:14px 0 4px;font-weight:500}
+  .rationale p{color:rgba(245,232,212,0.78)}
+  .rationale strong{color:var(--cream)}
+
+  /* The actual IG canvas — lock to 1080×1350 like Figma */
+  .canvas{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(ellipse at 50% 30%, #2C1510 0%, #1A0F0A 55%, #120804 100%);
+    isolation:isolate;
+  }
+
+  /* Worn paper overlay (subtle noise, not "fake") */
+  .paper-noise{
+    position:absolute;inset:0;pointer-events:none;opacity:0.08;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.91 0 0 0 0 0.83 0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  }
+
+  /* Layered atmosphere — large mehendi medallion behind everything */
+  .medallion-bg{
+    position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);
+    width:1300px;height:1300px;opacity:0.10;pointer-events:none;
+  }
+
+  /* Crown top ornament */
+  .crown{
+    position:absolute;left:50%;top:96px;transform:translateX(-50%);
+    width:220px;height:auto;
+  }
+
+  /* The arch + card stack — center column */
+  .stage{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:880px;height:1120px;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* Glow halo behind the arch */
+  .halo{
+    position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+    width:780px;height:920px;border-radius:50%;
+    background:radial-gradient(circle, var(--glow-bw) 0%, rgba(232,93,58,0.10) 40%, rgba(232,93,58,0) 70%);
+    filter:blur(20px);
+    z-index:0;
+  }
+
+  /* Jharokha arch frame */
+  .arch{
+    position:relative;z-index:2;
+    width:760px;height:1040px;
+  }
+
+  /* Card body inside the arch */
+  .card{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:640px;height:880px;
+    background:
+      linear-gradient(180deg, rgba(40,18,12,0.85), rgba(26,15,10,0.92)),
+      radial-gradient(circle at 50% 18%, rgba(232,93,58,0.18) 0%, transparent 55%);
+    border:2px solid var(--gold);
+    box-shadow:
+      0 0 0 6px rgba(242,167,46,0.15),
+      0 30px 90px rgba(0,0,0,0.55),
+      inset 0 0 80px rgba(232,93,58,0.10);
+    display:flex;flex-direction:column;align-items:center;
+    padding:60px 56px 40px;
+    z-index:3;
+  }
+
+  /* Industry badge */
+  .badge{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 20px;border:1.5px solid var(--card-bw);
+    background:rgba(232,93,58,0.12);
+    color:var(--card-bw);
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.4em;text-transform:uppercase;
+    border-radius:2px;
+    margin-top:6px;
+  }
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--card-bw);box-shadow:0 0 12px var(--card-bw)}
+
+  /* Difficulty + era row */
+  .meta-row{
+    display:flex;align-items:center;gap:18px;margin-top:18px;
+    color:var(--paper-dim);
+    font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;
+  }
+  .diff-dots{display:flex;gap:6px}
+  .diff-dots span{width:9px;height:9px;border-radius:50%;background:rgba(245,232,212,0.18);border:1px solid rgba(245,232,212,0.35)}
+  .diff-dots span.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 8px rgba(242,167,46,0.6)}
+  .meta-sep{color:rgba(245,232,212,0.35)}
+
+  /* Plot text — the hero */
+  .plot{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    padding:20px 8px;
+  }
+  .plot-text{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:54px;line-height:1.18;letter-spacing:-0.01em;
+    text-align:center;color:var(--cream);
+  }
+  .plot-text .openq, .plot-text .closeq{
+    color:var(--gold);font-weight:600;font-size:84px;line-height:0;
+    position:relative;top:18px;display:inline-block;margin:0 4px;
+  }
+
+  /* Bottom: CTA strip + watermark */
+  .cta-strip{
+    width:100%;text-align:center;
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:18px;letter-spacing:0.34em;text-transform:uppercase;
+    color:var(--gold);
+    padding:18px 0 12px;
+    border-top:1px dashed rgba(242,167,46,0.35);
+    margin-top:18px;
+  }
+  .watermark{
+    font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.3em;text-transform:uppercase;
+    color:rgba(245,232,212,0.5);
+    margin-top:8px;
+  }
+
+  /* Side ornaments — paisleys */
+  .side-ornament{position:absolute;width:140px;height:auto;opacity:0.85;z-index:1}
+  .side-ornament.left{left:60px;top:50%;transform:translateY(-50%) scaleX(-1)}
+  .side-ornament.right{right:60px;top:50%;transform:translateY(-50%)}
+
+  /* Bottom corner gold flourishes */
+  .corner-flourish{position:absolute;width:160px;z-index:4;opacity:0.95}
+  .corner-flourish.bl{left:90px;bottom:120px;transform:scale(-1,1)}
+  .corner-flourish.br{right:90px;bottom:120px}
+
+  /* Top stamp */
+  .stamp{
+    position:absolute;left:50%;top:46px;transform:translateX(-50%);
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.5em;text-transform:uppercase;
+    color:var(--gold);opacity:0.7;
+    z-index:5;
+  }
+  .stamp::before,.stamp::after{content:"✦";margin:0 12px;color:var(--saffron);font-size:9px}
+
+  /* Footer band - bg URL */
+  .footer{
+    position:absolute;left:0;right:0;bottom:0;height:96px;
+    display:flex;align-items:center;justify-content:center;gap:24px;
+    color:var(--gold);
+    font-family:'Playfair Display',serif;font-weight:500;font-size:26px;letter-spacing:0.06em;font-style:italic;
+    z-index:5;
+    background:linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 100%);
+  }
+  .footer .arrow{font-style:normal;color:var(--card-bw)}
+</style>
+</head>
+<body>
+
+<header class="rationale">
+  <h1>Direction 1 — Maximalist Haveli</h1>
+  <p>Heavy ornament density, jharokha arch dominant, gold leaf flourishes, theatrical. The card is an event — every petal placed.</p>
+  <h2>Choices</h2>
+  <p><strong>Foreground:</strong> Card sits inside a real SVG jharokha arch with carved ogee curves, scalloped lobing, and a crown finial. Gold double-line stroke at 2px / 6px halo to feel like gilt leaf, not a CSS box. <strong>Midground:</strong> Paisley ornaments flank the arch on either side (real SVG, mehendi-derived). A pulsing BW glow halo sits behind the whole stack at 35% opacity (medium difficulty would be 35%; we're using easy here at slightly elevated opacity to push the BW signature for thumb-stop). <strong>Background:</strong> A 1300px mehendi medallion at 10% opacity gives the canvas atmospheric depth — you can't tell what it is, but the canvas isn't flat. Worn paper noise at 8% layered on top.</p>
+  <h2>Type</h2>
+  <p>Plot text in Playfair italic 54px (well above the 24px floor), tilted-curtain feel. Industry badge in DM Sans 14px tracked +0.4em. Crown stamp in 11px DM Sans bold tracked +0.5em — microcopy ornament, not body text.</p>
+  <h2>Why ship this</h2>
+  <p>It looks like a Bollywood poster pinned inside a haveli alcove. It is loud, ornate, and distinctly desi — no sterile minimalism, no banking-app energy. Risk: dense compositions can feel busy at 270px grid thumbnail; the arch silhouette compensates by giving an unmistakable shape signature.</p>
+</header>
+
+<div class="canvas" id="canvas">
+
+  <div class="paper-noise"></div>
+
+  <!-- Background medallion (mehendi-style) -->
+  <svg class="medallion-bg" viewBox="0 0 1000 1000" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1">
+      <circle cx="500" cy="500" r="480"/>
+      <circle cx="500" cy="500" r="420"/>
+      <circle cx="500" cy="500" r="340"/>
+      <circle cx="500" cy="500" r="260"/>
+      <circle cx="500" cy="500" r="180"/>
+      <circle cx="500" cy="500" r="100"/>
+    </g>
+    <g fill="#F2A72E" stroke="none">
+      <!-- 24 petals around outer ring -->
+      <g id="petals">
+        <path d="M500 60 Q510 100 500 140 Q490 100 500 60"/>
+      </g>
+    </g>
+    <g stroke="#F2A72E" stroke-width="1" fill="none">
+      <!-- spokes -->
+      <line x1="500" y1="20" x2="500" y2="980"/>
+      <line x1="20" y1="500" x2="980" y2="500"/>
+      <line x1="160" y1="160" x2="840" y2="840"/>
+      <line x1="840" y1="160" x2="160" y2="840"/>
+      <line x1="500" y1="20" x2="290" y2="980" stroke-dasharray="2 4"/>
+      <line x1="500" y1="20" x2="710" y2="980" stroke-dasharray="2 4"/>
+      <line x1="20" y1="500" x2="980" y2="290" stroke-dasharray="2 4"/>
+      <line x1="20" y1="500" x2="980" y2="710" stroke-dasharray="2 4"/>
+    </g>
+    <g fill="#F2A72E">
+      <!-- inner star -->
+      <polygon points="500,360 520,470 630,470 540,535 575,645 500,580 425,645 460,535 370,470 480,470" opacity="0.55"/>
+    </g>
+  </svg>
+
+  <!-- BW glow halo -->
+  <div class="halo"></div>
+
+  <!-- Crown top ornament -->
+  <svg class="crown" viewBox="0 0 220 110" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="2">
+      <path d="M10 100 Q60 20 110 60 Q160 20 210 100" />
+      <path d="M30 100 Q70 50 110 75 Q150 50 190 100" />
+      <circle cx="110" cy="22" r="6" fill="#F2A72E"/>
+      <circle cx="60" cy="48" r="4" fill="#F2A72E"/>
+      <circle cx="160" cy="48" r="4" fill="#F2A72E"/>
+      <circle cx="20" cy="92" r="3" fill="#E85D3A"/>
+      <circle cx="200" cy="92" r="3" fill="#E85D3A"/>
+      <path d="M110 28 L110 55" />
+    </g>
+  </svg>
+
+  <!-- Stamp microcopy -->
+  <div class="stamp">officially bad · est. 2026</div>
+
+  <!-- Side paisleys -->
+  <svg class="side-ornament left" viewBox="0 0 140 480" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.5" opacity="0.85">
+      <path d="M70 20 Q120 80 100 160 Q80 240 70 320 Q60 400 70 460"/>
+      <path d="M70 60 Q40 80 60 110 Q80 130 70 160" />
+      <path d="M70 180 Q100 200 80 230 Q60 250 70 280" />
+      <path d="M70 300 Q40 320 60 350 Q80 370 70 400" />
+      <circle cx="70" cy="20" r="6" fill="#F2A72E"/>
+      <circle cx="70" cy="460" r="6" fill="#F2A72E"/>
+      <circle cx="60" cy="110" r="3" fill="#E85D3A"/>
+      <circle cx="80" cy="230" r="3" fill="#E85D3A"/>
+      <circle cx="60" cy="350" r="3" fill="#E85D3A"/>
+    </g>
+  </svg>
+  <svg class="side-ornament right" viewBox="0 0 140 480" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.5" opacity="0.85">
+      <path d="M70 20 Q120 80 100 160 Q80 240 70 320 Q60 400 70 460"/>
+      <path d="M70 60 Q40 80 60 110 Q80 130 70 160" />
+      <path d="M70 180 Q100 200 80 230 Q60 250 70 280" />
+      <path d="M70 300 Q40 320 60 350 Q80 370 70 400" />
+      <circle cx="70" cy="20" r="6" fill="#F2A72E"/>
+      <circle cx="70" cy="460" r="6" fill="#F2A72E"/>
+    </g>
+  </svg>
+
+  <!-- The arch + card -->
+  <div class="stage">
+    <svg class="arch" viewBox="0 0 760 1040" aria-hidden="true">
+      <!-- Outer ogee jharokha arch -->
+      <defs>
+        <linearGradient id="goldStroke" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#F2A72E"/>
+          <stop offset="0.5" stop-color="#FFD27D"/>
+          <stop offset="1" stop-color="#A36F1C"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Outer arch silhouette -->
+      <path
+        d="M40 1020
+           L40 360
+           Q40 220 140 130
+           Q220 50 380 30
+           Q540 50 620 130
+           Q720 220 720 360
+           L720 1020
+           Z"
+        fill="none" stroke="url(#goldStroke)" stroke-width="3"/>
+      <!-- Inner arch double-line -->
+      <path
+        d="M62 1000
+           L62 360
+           Q62 230 156 148
+           Q230 76 380 56
+           Q530 76 604 148
+           Q698 230 698 360
+           L698 1000
+           Z"
+        fill="none" stroke="url(#goldStroke)" stroke-width="1.5" opacity="0.85"/>
+
+      <!-- Scalloped inner trim along the arch curve -->
+      <g fill="#F2A72E">
+        <circle cx="380" cy="44" r="5"/>
+        <circle cx="300" cy="60" r="4"/>
+        <circle cx="460" cy="60" r="4"/>
+        <circle cx="220" cy="100" r="4"/>
+        <circle cx="540" cy="100" r="4"/>
+        <circle cx="160" cy="160" r="4"/>
+        <circle cx="600" cy="160" r="4"/>
+        <circle cx="110" cy="240" r="3"/>
+        <circle cx="650" cy="240" r="3"/>
+        <circle cx="80" cy="340" r="3"/>
+        <circle cx="680" cy="340" r="3"/>
+      </g>
+
+      <!-- Spandrel mehendi corners -->
+      <g fill="none" stroke="#F2A72E" stroke-width="1.2" opacity="0.85">
+        <!-- left spandrel -->
+        <path d="M40 360 Q90 380 120 420 Q140 460 130 500"/>
+        <path d="M40 420 Q70 440 90 470"/>
+        <circle cx="78" cy="408" r="6" fill="#F2A72E"/>
+        <!-- right spandrel -->
+        <path d="M720 360 Q670 380 640 420 Q620 460 630 500"/>
+        <path d="M720 420 Q690 440 670 470"/>
+        <circle cx="682" cy="408" r="6" fill="#F2A72E"/>
+      </g>
+
+      <!-- Bottom ornamental band -->
+      <g fill="none" stroke="#F2A72E" stroke-width="1.5">
+        <line x1="40" y1="980" x2="720" y2="980"/>
+        <line x1="40" y1="1000" x2="720" y2="1000" opacity="0.6"/>
+      </g>
+      <g fill="#F2A72E">
+        <circle cx="100" cy="990" r="3"/>
+        <circle cx="200" cy="990" r="3"/>
+        <circle cx="300" cy="990" r="3"/>
+        <circle cx="380" cy="990" r="5"/>
+        <circle cx="460" cy="990" r="3"/>
+        <circle cx="560" cy="990" r="3"/>
+        <circle cx="660" cy="990" r="3"/>
+      </g>
+    </svg>
+
+    <!-- Card content -->
+    <div class="card">
+      <div class="badge"><span class="dot"></span> Bollywood</div>
+
+      <div class="meta-row">
+        <span>Easy</span>
+        <span class="diff-dots">
+          <span class="on"></span><span></span><span></span>
+        </span>
+        <span class="meta-sep">·</span>
+        <span>The 90s</span>
+      </div>
+
+      <div class="plot">
+        <div class="plot-text">
+          <span class="openq">"</span>Boy meets girl. Father says no. They go to Europe anyway. Entire Punjab gives permission eventually.<span class="closeq">"</span>
+        </div>
+      </div>
+
+      <div class="cta-strip">guess in comments &nbsp;·&nbsp; reveal tomorrow</div>
+      <div class="watermark">baddesiplots.com</div>
+    </div>
+  </div>
+
+  <!-- Bottom corner gold flourishes (real SVG paths) -->
+  <svg class="corner-flourish bl" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.4" opacity="0.95">
+      <path d="M10 150 Q40 130 60 100 Q80 70 80 30"/>
+      <path d="M10 130 Q30 110 50 90"/>
+      <circle cx="80" cy="30" r="5" fill="#F2A72E"/>
+      <circle cx="50" cy="90" r="3" fill="#E85D3A"/>
+      <path d="M30 150 L50 150 M70 150 L90 150 M110 150 L130 150" stroke-width="2"/>
+    </g>
+  </svg>
+  <svg class="corner-flourish br" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.4" opacity="0.95">
+      <path d="M10 150 Q40 130 60 100 Q80 70 80 30"/>
+      <path d="M10 130 Q30 110 50 90"/>
+      <circle cx="80" cy="30" r="5" fill="#F2A72E"/>
+      <circle cx="50" cy="90" r="3" fill="#E85D3A"/>
+      <path d="M30 150 L50 150 M70 150 L90 150 M110 150 L130 150" stroke-width="2"/>
+    </g>
+  </svg>
+
+  <!-- Footer prompt -->
+  <div class="footer">
+    <span>name this one</span><span class="arrow">↓</span>
+  </div>
+</div>
+
+</body>
+</html>

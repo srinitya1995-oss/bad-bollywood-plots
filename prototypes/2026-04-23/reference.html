@@ -1,0 +1,1625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Bad Desi Plots — Visual Redesign (from spec)</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='10' fill='%230F1430'/><g transform='translate(8 14)'><rect x='0' y='14' width='48' height='26' fill='%23F3E9D2' stroke='%230F1430' stroke-width='3'/><g transform='translate(0 0) rotate(-8 4 8)'><rect x='0' y='0' width='48' height='12' fill='%230F1430' stroke='%230F1430' stroke-width='2'/><polygon points='4,0 10,12 16,0 22,12 28,0 34,12 40,0 46,12' fill='%23F3E9D2'/></g><text x='24' y='33' text-anchor='middle' font-family='Anton, Impact, sans-serif' font-size='14' font-weight='700' fill='%23E5276B' letter-spacing='-0.5'>BAD</text></g></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    /* Midnight & Magenta palette */
+    --bg:#0F1430; --cream:#F3E9D2; --paper:#F3E9D2; --ink:#0F1430; --ink-muted:#4a506e; --ink-line:rgba(15,20,48,0.12);
+    --tomato:#E5276B; --tomato-bright:#FF4A89;   /* magenta accent */
+    --emerald:#3EA87A; --gold:#F1BE3A; --gold-bright:#FFD35C;  /* warmer gold */
+    --saffron:#F1BE3A; --mauve:#8C6BA8;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0 }
+  html,body{ background:var(--bg); color:var(--cream);
+    font-family:'DM Sans', sans-serif; -webkit-font-smoothing:antialiased }
+  button{ font:inherit; cursor:pointer; border:none; background:none; color:inherit }
+  input,textarea{ font:inherit; color:inherit; background:none; border:none; outline:none }
+
+  .canvas{ min-height:100vh; padding:56px 40px 120px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(229,39,107,0.12), transparent 60%), var(--bg) }
+  .head{ max-width:1820px; margin:0 auto 40px; padding-bottom:24px;
+    border-bottom:1px solid rgba(243,233,210,0.15);
+    display:grid; grid-template-columns:1fr auto; gap:40px; align-items:end }
+  .head .eyebrow{ font-family:'Bebas Neue', sans-serif; font-size:12px;
+    letter-spacing:0.28em; color:var(--gold); text-transform:uppercase; margin-bottom:14px }
+  .head h1{ font-family:'Anton', sans-serif; font-weight:400; font-size:66px; line-height:0.9;
+    letter-spacing:-0.01em; text-transform:uppercase }
+  .head h1 em{ font-style:normal; color:var(--tomato) }
+  .head .note{ font-family:'Fraunces', serif; font-style:italic; font-weight:300; font-size:16px;
+    line-height:1.5; color:rgba(243,233,210,0.75); max-width:520px }
+  .head .note b{ color:var(--cream); font-style:normal; font-weight:600 }
+
+  .section{ max-width:1820px; margin:0 auto }
+  .section-head{ display:grid; grid-template-columns:auto 1fr auto; gap:20px;
+    align-items:baseline; margin:60px 0 18px }
+  .section-head .num{ font-family:'Bebas Neue', sans-serif; font-size:13px;
+    color:var(--gold); letter-spacing:0.24em }
+  .section-head .t{ font-family:'Anton', sans-serif; font-size:26px; color:var(--cream);
+    letter-spacing:-0.005em; text-transform:uppercase }
+  .section-head .rule{ height:1px; background:rgba(243,233,210,0.18); align-self:center }
+  .section-head .tag{ font-family:'Bebas Neue', sans-serif; font-size:11px;
+    color:rgba(243,233,210,0.5); letter-spacing:0.22em; text-transform:uppercase }
+
+  .strip{ display:grid; grid-template-columns:repeat(4, 1fr); gap:32px 24px }
+  .strip-3{ display:grid; grid-template-columns:repeat(3, 1fr); gap:32px 24px }
+
+  .frame-label{ display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:baseline;
+    margin-bottom:12px; padding:0 6px; color:var(--cream) }
+  .frame-label .ix{ font-family:'Bebas Neue', sans-serif; font-size:12px; color:var(--gold); letter-spacing:0.18em }
+  .frame-label .tl{ font-family:'Fraunces', serif; font-style:italic; font-size:16px; color:var(--cream); font-weight:400 }
+  .frame-label .tag{ font-family:'Bebas Neue', sans-serif; font-size:10px;
+    color:rgba(243,233,210,0.45); letter-spacing:0.18em; text-transform:uppercase }
+
+  .note-caption{ margin-top:8px; padding:0 6px; font-family:'Fraunces',serif;
+    font-style:italic; font-size:12px; color:rgba(243,233,210,0.55) }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#0F1430">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0F1430"/>
+    <g transform="translate(600 400)">
+      <rect x="-160" y="-160" width="320" height="320" fill="#F3E9D2" stroke="#0F1430" stroke-width="10"/>
+      <rect x="-145" y="-145" width="290" height="290" fill="none" stroke="#E5276B" stroke-width="3"/>
+      <text x="8" y="80" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+        font-size="320" fill="#E5276B" opacity="0.85" font-weight="700" letter-spacing="-8">B</text>
+      <text x="0" y="72" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+        font-size="320" fill="#0F1430" font-weight="700" letter-spacing="-8">B</text>
+    </g>
+    <text x="600" y="720" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+      font-size="44" fill="#F3E9D2" letter-spacing="8">BAD DESI PLOTS</text>
+  </svg>
+</template>
+
+<div class="canvas">
+  <div class="head">
+    <div>
+      <div class="eyebrow">visual pass · mechanics unchanged · baddesiplots.com</div>
+      <div style="display:flex; align-items:center; gap:18px; margin-bottom:6px">
+        <svg viewBox="0 0 48 48" width="48" height="48" aria-label="Bad Desi Plots mark" style="display:block">
+          <rect x="1.5" y="1.5" width="45" height="45" fill="#0F1430" stroke="#F3E9D2" stroke-width="2.5"/>
+          <rect x="5" y="5" width="38" height="38" fill="none" stroke="#E5276B" stroke-width="1"/>
+          <text x="24" y="38" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+            font-size="40" fill="#F3E9D2" letter-spacing="-1" style="font-weight:700">B</text>
+          <text x="24" y="38" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+            font-size="40" fill="#E5276B" letter-spacing="-1" style="font-weight:700" transform="translate(1.5 1.5)" opacity="0.85">B</text>
+        </svg>
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:0.24em;
+          color:rgba(243,233,210,0.55); text-transform:uppercase">Logomark · favicon · top-bar</span>
+      </div>
+      <h1>Same game.<br/><em>Louder poster.</em></h1>
+    </div>
+    <div class="note">
+      Visual-only redesign of the eight screens in the flow spec. Nothing invented — reader-tap scoring, no timer, no typed guesses, no personas, no daily. Just <b>tighter hierarchy, a bigger reveal, and the share band as a proper artifact.</b>
+    </div>
+  </div>
+  <div class="section" id="root"></div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" data-presets="react">
+const { Fragment } = React;
+
+/* ─── Logomark: stamped "B". size = height in px. ─── */
+function Clap({ size=28, style, onDark=true }){
+  const bg = onDark ? 'var(--cream)' : 'var(--ink)';
+  const fg = onDark ? 'var(--ink)' : 'var(--cream)';
+  const accent = 'var(--tomato)';
+  return (
+    <svg viewBox="0 0 48 48" width={size} height={size} style={{ display:'block', ...style }}>
+      {/* stamp block */}
+      <rect x="1.5" y="1.5" width="45" height="45" fill={bg} stroke={fg} strokeWidth="2.5"/>
+      {/* inner hairline */}
+      <rect x="5" y="5" width="38" height="38" fill="none" stroke={accent} strokeWidth="1"/>
+      {/* drop-shadow B */}
+      <text x="24" y="38" textAnchor="middle" fontFamily="Anton, Impact, sans-serif"
+        fontSize="40" fill={accent} letterSpacing="-1"
+        style={{ fontWeight:700 }} transform="translate(1.5 1.5)" opacity="0.85">B</text>
+      {/* main B */}
+      <text x="24" y="38" textAnchor="middle" fontFamily="Anton, Impact, sans-serif"
+        fontSize="40" fill={fg} letterSpacing="-1"
+        style={{ fontWeight:700 }}>B</text>
+    </svg>
+  );
+}
+
+/* ─── phone frame (375×760 target, desktop shows mobile-first) ─── */
+function Phone({ children, width=380, height=760 }){
+  return (
+    <div style={{ width, height, borderRadius:28, overflow:'hidden',
+      boxShadow:'0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(243,233,210,0.08)',
+      position:'relative', background:'var(--cream)',
+      border:'1px solid rgba(15,20,48,0.9)' }}>
+      {children}
+    </div>
+  );
+}
+
+/* ─── global chrome: TopBand (§9A) ─── */
+function TopBand({ inRound=true, leader=null }){
+  return (
+    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center',
+      padding:'12px 16px', background:'var(--ink)', color:'var(--cream)',
+      borderBottom:'3px solid var(--tomato)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+        {inRound && <span style={{ fontSize:14, color:'var(--gold)' }}>⌂</span>}
+        <Clap size={18}/>
+        <span style={{ fontFamily:'Anton', fontSize:16, textTransform:'uppercase',
+          letterSpacing:'-0.005em' }}>
+          Bad <span style={{ color:'var(--tomato)' }}>Desi</span> Plots
+        </span>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+        {leader && <span style={{ fontFamily:'Bebas Neue', fontSize:10,
+          letterSpacing:'0.2em', color:'var(--gold)' }}>{leader}</span>}
+        <button style={{ width:28, height:28, display:'grid', placeItems:'center',
+          fontSize:16, color:'var(--cream)', opacity:0.7 }}>•••</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Poster panel (reusable) ─── */
+function Poster({ children, style, tomato=false }){
+  return (
+    <div style={{
+      background: tomato ? 'var(--tomato)' : 'var(--cream)',
+      color: tomato ? 'var(--cream)' : 'var(--ink)',
+      border:'3px solid var(--ink)',
+      boxShadow:'5px 5px 0 var(--ink)', ...style,
+    }}>{children}</div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   01 · LOADING (§2)
+   ══════════════════════════════════════════════════════════════ */
+function Loading(){
+  return (
+    <Phone>
+      <div style={{ height:'100%', background:'var(--cream)',
+        display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
+        textAlign:'center', padding:'0 28px' }}>
+        <div style={{ fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.32em',
+          color:'var(--tomato)' }}>The desi party game</div>
+        <div style={{ marginTop:18, fontFamily:'Anton', fontSize:82, lineHeight:0.88,
+          color:'var(--ink)', textTransform:'uppercase', letterSpacing:'-0.02em' }}>
+          Bad<br/><span style={{ color:'var(--tomato)',
+            textShadow:'3px 3px 0 var(--ink), 6px 6px 0 var(--gold)' }}>Desi</span><br/>Plots.
+        </div>
+        <div style={{ marginTop:26, display:'inline-flex', alignItems:'center', gap:8 }}>
+          <span style={{ width:8, height:8, background:'var(--tomato)' }}/>
+          <span style={{ width:8, height:8, background:'var(--tomato)', opacity:0.5 }}/>
+          <span style={{ width:8, height:8, background:'var(--tomato)', opacity:0.2 }}/>
+        </div>
+        <div style={{ marginTop:10, fontFamily:'Bebas Neue', fontSize:11,
+          letterSpacing:'0.3em', color:'var(--ink-muted)' }}>Loading cards…</div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   02 · HOME (§3) — v8 hero + cinema toggle + CTAs + footer
+   ══════════════════════════════════════════════════════════════ */
+function Home({ canResume=true }){
+  return (
+    <Phone>
+      <TopBand inRound={false}/>
+      <div style={{ padding:'22px 22px 20px', background:'var(--cream)',
+        height:'calc(100% - 52px)', overflow:'hidden', display:'flex', flexDirection:'column' }}>
+
+        {/* HERO */}
+        <div>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.3em',
+            color:'var(--tomato)' }}>The desi party game</div>
+          <div style={{ marginTop:8, fontFamily:'Anton', fontSize:78, lineHeight:0.86,
+            color:'var(--ink)', textTransform:'uppercase', letterSpacing:'-0.02em' }}>
+            Bad<br/>
+            <span style={{ color:'var(--tomato)',
+              textShadow:'3px 3px 0 var(--ink), 6px 6px 0 var(--gold)' }}>Desi</span><br/>
+            Plots.
+          </div>
+          <div style={{ marginTop:10, fontFamily:'Fraunces', fontStyle:'italic', fontWeight:300,
+            fontSize:14, color:'var(--ink)', lineHeight:1.45, maxWidth:320 }}>
+            We describe Bollywood movies badly. You guess which film it is.
+          </div>
+          <div style={{ marginTop:4, fontFamily:'Fraunces', fontStyle:'italic', fontWeight:300,
+            fontSize:13, color:'var(--ink-muted)', lineHeight:1.4 }}>
+            Simple, chaotic, best played with chai and friends.
+          </div>
+          <div style={{ marginTop:10, fontFamily:'Bebas Neue', fontSize:10,
+            letterSpacing:'0.28em', color:'var(--ink-muted)' }}>
+            Solo · Party · No setup
+          </div>
+        </div>
+
+        {/* CINEMA TOGGLE */}
+        <div style={{ marginTop:16 }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.28em',
+            color:'var(--ink-muted)', marginBottom:6 }}>Pick your cinema</div>
+          <div role="radiogroup" style={{
+            display:'grid', gridTemplateColumns:'1fr 1fr', gap:8,
+            border:'2px solid var(--ink)' }}>
+            <button style={{ padding:'10px 10px', background:'var(--tomato)',
+              color:'var(--cream)', fontFamily:'Anton', fontSize:18,
+              textTransform:'uppercase', letterSpacing:'-0.005em',
+              borderRight:'2px solid var(--ink)' }}>Bollywood</button>
+            <button style={{ padding:'10px 10px', background:'var(--cream)',
+              color:'var(--ink)', fontFamily:'Anton', fontSize:18,
+              textTransform:'uppercase', letterSpacing:'-0.005em', opacity:0.82 }}>
+              Tollywood
+            </button>
+          </div>
+        </div>
+
+        {/* CTAs */}
+        <div style={{ marginTop:14, display:'grid', gap:8 }}>
+          {canResume && (
+            <button style={{ padding:'10px 12px',
+              background:'var(--gold)', color:'var(--ink)',
+              border:'2px solid var(--ink)', boxShadow:'3px 3px 0 var(--ink)',
+              fontFamily:'Bebas Neue', fontSize:13, letterSpacing:'0.22em',
+              textTransform:'uppercase', textAlign:'left',
+              display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <span>↺ Resume last game</span>
+              <span style={{ fontSize:14 }}>→</span>
+            </button>
+          )}
+          <button style={{ padding:'16px 16px', background:'var(--ink)',
+            color:'var(--cream)', border:'3px solid var(--ink)',
+            boxShadow:'5px 5px 0 var(--tomato)',
+            fontFamily:'Anton', fontSize:24, textTransform:'uppercase',
+            letterSpacing:'-0.005em', textAlign:'left',
+            display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span>
+              <span style={{ display:'block', fontFamily:'Bebas Neue', fontSize:10,
+                letterSpacing:'0.24em', color:'var(--gold)' }}>2–8 players</span>
+              <span>Pass &amp; Play</span>
+            </span>
+            <span style={{ fontSize:22, color:'var(--gold)' }}>→</span>
+          </button>
+          <button style={{ padding:'14px 16px', background:'var(--cream)',
+            color:'var(--ink)', border:'3px solid var(--ink)',
+            boxShadow:'5px 5px 0 var(--ink)',
+            fontFamily:'Anton', fontSize:20, textTransform:'uppercase',
+            letterSpacing:'-0.005em', textAlign:'left',
+            display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span>
+              <span style={{ display:'block', fontFamily:'Bebas Neue', fontSize:10,
+                letterSpacing:'0.24em', color:'var(--tomato)' }}>Just me</span>
+              <span>Solo</span>
+            </span>
+            <span style={{ fontSize:20 }}>→</span>
+          </button>
+        </div>
+
+        {/* FOOTER — now chunky */}
+        <div style={{ marginTop:'auto', paddingTop:14 }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+            {['How to play','Suggest a movie','Feedback','Settings'].map((t,i)=>(
+              <button key={i} style={{
+                padding:'9px 10px', border:'2px solid var(--ink)',
+                background:'var(--cream)', color:'var(--ink)',
+                fontFamily:'Anton', fontSize:14, textTransform:'uppercase',
+                letterSpacing:'0.01em', textAlign:'left',
+                display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                <span>{t}</span>
+                <span style={{ color:'var(--tomato)' }}>→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   03 · SETUP (§4) — overlay on home
+   ══════════════════════════════════════════════════════════════ */
+function Setup(){
+  const ps=['Riya','Arjun','Neha','Kabir'];
+  const colors=['var(--tomato)','var(--gold)','var(--emerald)','var(--mauve)'];
+  return (
+    <Phone>
+      <TopBand inRound={false}/>
+      {/* dim backdrop */}
+      <div style={{ position:'absolute', top:52, left:0, right:0, bottom:0,
+        background:'rgba(15,20,48,0.55)' }}/>
+      {/* panel */}
+      <div style={{ position:'absolute', left:12, right:12, top:70, bottom:12,
+        background:'var(--cream)', border:'3px solid var(--ink)',
+        boxShadow:'6px 6px 0 var(--ink)', padding:'16px 16px 14px',
+        display:'flex', flexDirection:'column', overflow:'hidden' }}>
+
+        {/* mast */}
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start' }}>
+          <div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.26em',
+              color:'var(--tomato)' }}>Pass &amp; play · min 2 · max 8</div>
+            <div style={{ fontFamily:'Anton', fontSize:38, color:'var(--ink)', lineHeight:1,
+              textTransform:'uppercase', letterSpacing:'-0.01em', marginTop:4 }}>
+              Who's playing?
+            </div>
+          </div>
+          <button style={{ fontSize:20, color:'var(--ink)' }}>×</button>
+        </div>
+
+        {/* mode toggle */}
+        <div style={{ marginTop:12, display:'grid', gridTemplateColumns:'1fr 1fr',
+          border:'2px solid var(--ink)' }}>
+          <button style={{ padding:'8px', background:'var(--ink)',
+            color:'var(--cream)', fontFamily:'Anton', fontSize:14, textTransform:'uppercase' }}>
+            Pass &amp; play
+            <div style={{ fontFamily:'Bebas Neue', fontSize:9, letterSpacing:'0.2em',
+              color:'var(--gold)', marginTop:2 }}>one phone · party</div>
+          </button>
+          <button style={{ padding:'8px', background:'var(--cream)',
+            color:'var(--ink)', fontFamily:'Anton', fontSize:14,
+            borderLeft:'2px solid var(--ink)', textTransform:'uppercase' }}>
+            Solo
+            <div style={{ fontFamily:'Bebas Neue', fontSize:9, letterSpacing:'0.2em',
+              color:'var(--tomato)', marginTop:2 }}>just me · chill</div>
+          </button>
+        </div>
+
+        <div style={{ marginTop:12, fontFamily:'Bebas Neue', fontSize:10,
+          letterSpacing:'0.24em', color:'var(--ink-muted)' }}>The line-up</div>
+
+        {/* players */}
+        <div style={{ marginTop:6, display:'grid', gap:6 }}>
+          {ps.map((n,i)=>(
+            <div key={i} style={{ display:'grid',
+              gridTemplateColumns:'18px 28px 1fr 18px', gap:8, alignItems:'center',
+              border:'2px solid var(--ink)', padding:'8px 10px', background:'var(--cream)' }}>
+              <span style={{ color:'var(--ink-muted)', fontSize:14, cursor:'grab' }}>⋮⋮</span>
+              <span style={{ background:colors[i], color:'var(--cream)',
+                width:24, height:24, display:'grid', placeItems:'center',
+                fontFamily:'Anton', fontSize:14 }}>{i+1}</span>
+              <span style={{ fontFamily:'Anton', fontSize:20, color:'var(--ink)',
+                textTransform:'uppercase', letterSpacing:'-0.005em' }}>{n}</span>
+              {i>1 ? <span style={{ color:'var(--tomato)', fontSize:14 }}>×</span> : <span/>}
+            </div>
+          ))}
+          <button style={{ padding:'8px 10px', border:'2px dashed var(--ink)',
+            background:'transparent', color:'var(--ink)', textAlign:'left',
+            fontFamily:'Fraunces', fontStyle:'italic', fontSize:14 }}>
+            + add player
+          </button>
+        </div>
+
+        {/* CTA */}
+        <div style={{ marginTop:'auto', display:'grid', gridTemplateColumns:'auto 1fr',
+          gap:8 }}>
+          <button style={{ padding:'12px 14px', background:'var(--cream)',
+            color:'var(--ink)', border:'2px solid var(--ink)',
+            fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.22em',
+            textTransform:'uppercase' }}>Back</button>
+          <button style={{ padding:'12px 14px', background:'var(--ink)',
+            color:'var(--cream)', border:'3px solid var(--ink)',
+            boxShadow:'4px 4px 0 var(--tomato)',
+            fontFamily:'Anton', fontSize:18, textTransform:'uppercase',
+            letterSpacing:'-0.005em',
+            display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span>Let's go</span>
+            <span style={{ color:'var(--gold)' }}>→</span>
+          </button>
+        </div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   04 · TURN INTERSTITIAL (§5B first-party + §5D mid-party stacked as two frames)
+   ══════════════════════════════════════════════════════════════ */
+function TurnFirst(){
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--ink)',
+        color:'var(--cream)', padding:'28px 24px', display:'flex',
+        flexDirection:'column', justifyContent:'center', alignItems:'center',
+        textAlign:'center' }}>
+        <div style={{ fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.32em',
+          color:'var(--gold)' }}>You're up first</div>
+        <div style={{ marginTop:18, fontFamily:'Anton', fontSize:84, lineHeight:0.86,
+          color:'var(--cream)', textTransform:'uppercase', letterSpacing:'-0.02em',
+          textShadow:'3px 3px 0 var(--tomato), 6px 6px 0 var(--gold)' }}>
+          Riya.
+        </div>
+        <div style={{ marginTop:18, fontFamily:'Fraunces', fontStyle:'italic',
+          fontSize:17, color:'rgba(243,233,210,0.85)', maxWidth:280, lineHeight:1.45 }}>
+          Read the plot out loud. Others guess.
+        </div>
+        <div style={{ marginTop:'auto', fontFamily:'Bebas Neue', fontSize:10,
+          letterSpacing:'0.28em', color:'rgba(243,233,210,0.5)' }}>
+          Tap anywhere to continue
+        </div>
+      </div>
+    </Phone>
+  );
+}
+function TurnMid(){
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--ink)',
+        color:'var(--cream)', padding:'22px 24px 28px', display:'flex',
+        flexDirection:'column', justifyContent:'space-between', alignItems:'center',
+        textAlign:'center' }}>
+        {/* feedback pill */}
+        <div style={{ display:'inline-flex', alignItems:'center', gap:8,
+          padding:'6px 12px', background:'var(--cream)', color:'var(--ink)',
+          border:'2px solid var(--cream)', boxShadow:'3px 3px 0 var(--tomato)',
+          fontFamily:'Anton', fontSize:16, textTransform:'uppercase',
+          letterSpacing:'-0.005em' }}>
+          <span>Neha</span>
+          <span style={{ color:'var(--tomato)' }}>+2 pts</span>
+        </div>
+
+        <div>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.28em',
+            color:'var(--gold)' }}>Hand the phone to</div>
+          <div style={{ marginTop:14, fontFamily:'Anton', fontSize:84, lineHeight:0.86,
+            color:'var(--cream)', textTransform:'uppercase', letterSpacing:'-0.02em',
+            textShadow:'3px 3px 0 var(--tomato), 6px 6px 0 var(--gold)' }}>
+            Arjun.
+          </div>
+        </div>
+
+        <div style={{ fontFamily:'Bebas Neue', fontSize:10,
+          letterSpacing:'0.28em', color:'rgba(243,233,210,0.5)' }}>
+          Tap anywhere to continue
+        </div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   05 · CARD FRONT (§6A) — tap to flip
+   ══════════════════════════════════════════════════════════════ */
+function CardFront(){
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)',
+        padding:'14px 18px 22px', display:'flex', flexDirection:'column' }}>
+
+        {/* progress */}
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.24em',
+            color:'var(--gold)' }}>CARD 03 / 12</div>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+            color:'var(--ink-muted)' }}>pass &amp; play</div>
+        </div>
+
+        {/* CARD */}
+        <div style={{ marginTop:16, background:'var(--cream)',
+          border:'3px solid var(--ink)', boxShadow:'6px 6px 0 var(--ink)',
+          padding:'14px 16px', flex:1, display:'flex', flexDirection:'column' }}>
+
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline',
+            paddingBottom:8, borderBottom:'2px solid var(--ink)' }}>
+            <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontSize:16,
+              color:'var(--ink)' }}>The plot</div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+              color:'var(--ink-muted)' }}>No. 003</div>
+          </div>
+
+          <div style={{ marginTop:10, display:'flex', gap:8, alignItems:'center' }}>
+            <span style={{ padding:'3px 8px', background:'var(--tomato)',
+              color:'var(--cream)', fontFamily:'Bebas Neue', fontSize:10,
+              letterSpacing:'0.22em' }}>HINDI</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6,
+              fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.22em',
+              color:'var(--ink)' }}>
+              <span style={{ width:7, height:7, borderRadius:'50%', background:'var(--saffron)' }}/>
+              MEDIUM · 2 PTS
+            </span>
+          </div>
+
+          <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center',
+            padding:'18px 4px' }}>
+            <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontWeight:400,
+              fontSize:22, color:'var(--ink)', lineHeight:1.35,
+              letterSpacing:'-0.005em', textAlign:'center' }}>
+              "Two brothers grow up. One wears a badge, one wears a watch. Mum had a favourite."
+            </div>
+          </div>
+
+          <div style={{ paddingTop:10, borderTop:'2px solid var(--ink)' }}>
+            <div style={{ display:'inline-block', padding:'3px 8px',
+              background:'var(--ink)', color:'var(--cream)',
+              fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.22em' }}>
+              READ BY: RIYA
+            </div>
+            <div style={{ marginTop:10, fontFamily:'Anton', fontSize:22,
+              color:'var(--tomato)', textTransform:'uppercase', letterSpacing:'-0.005em',
+              textAlign:'center' }}>
+              Tap to reveal →
+            </div>
+          </div>
+        </div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   06 · CARD BACK (§6A) — party picker excludes reader, + NOBODY + skip
+   ══════════════════════════════════════════════════════════════ */
+function CardBack(){
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)',
+        padding:'14px 18px 22px', display:'flex', flexDirection:'column' }}>
+
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.24em',
+            color:'var(--gold)' }}>CARD 03 / 12</div>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+            color:'var(--tomato)' }}>⚑ REPORT</div>
+        </div>
+
+        {/* CARD BACK */}
+        <div style={{ marginTop:16, background:'var(--ink)',
+          color:'var(--cream)',
+          border:'3px solid var(--ink)', boxShadow:'6px 6px 0 var(--tomato)',
+          padding:'20px 16px', flex:1, display:'flex', flexDirection:'column',
+          justifyContent:'center', gap:22,
+          position:'relative', overflow:'hidden' }}>
+
+          {/* burst */}
+          <div aria-hidden="true" style={{ position:'absolute', inset:0,
+            background:'radial-gradient(circle at 50% 40%, rgba(232,93,58,0.45), transparent 60%)',
+            pointerEvents:'none' }}/>
+
+          <div style={{ textAlign:'center', position:'relative' }}>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.34em',
+              color:'var(--gold)' }}>The answer</div>
+            <div style={{ marginTop:6, fontFamily:'Anton', fontSize:58, lineHeight:0.88,
+              color:'var(--cream)', textTransform:'uppercase', letterSpacing:'-0.02em',
+              textShadow:'3px 3px 0 var(--tomato)' }}>
+              Deewaar
+            </div>
+            <div style={{ marginTop:8, display:'inline-block', padding:'2px 8px',
+              border:'1px solid var(--gold)', color:'var(--gold)',
+              fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em' }}>1975</div>
+            <div style={{ marginTop:10, fontFamily:'Fraunces', fontStyle:'italic',
+              fontSize:13, color:'rgba(243,233,210,0.8)', lineHeight:1.4, maxWidth:280,
+              margin:'10px auto 0' }}>
+              Bachchan vs. Bachchan. Salim–Javed. Still the template.
+            </div>
+          </div>
+
+          {/* PICKER — reader (Riya) excluded */}
+          <div style={{ position:'relative' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+              {[
+                { n:'Arjun', c:'var(--gold)' },
+                { n:'Neha',  c:'var(--emerald)' },
+                { n:'Kabir', c:'var(--mauve)' },
+                { n:'Nobody', c:'var(--ink-muted)', nobody:true },
+              ].map((p,i)=>(
+                <button key={i} style={{
+                  padding:'10px 12px',
+                  background: p.nobody ? 'rgba(243,233,210,0.05)' : 'var(--cream)',
+                  color: p.nobody ? 'var(--cream)' : 'var(--ink)',
+                  border:'2px solid var(--cream)',
+                  fontFamily:'Anton', fontSize:18, textTransform:'uppercase',
+                  letterSpacing:'-0.005em', textAlign:'left',
+                  display:'flex', justifyContent:'space-between', alignItems:'center',
+                  boxShadow: p.nobody ? 'none' : '3px 3px 0 var(--tomato)' }}>
+                  <span>{p.n}</span>
+                  <span style={{ width:10, height:10, background:p.c,
+                    borderRadius: p.nobody ? 0 : '50%',
+                    border: p.nobody ? '1px solid var(--cream)' : 'none' }}/>
+                </button>
+              ))}
+            </div>
+            <div style={{ marginTop:8, textAlign:'center',
+              fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.28em',
+              color:'rgba(243,233,210,0.55)' }}>
+              <span style={{ borderBottom:'1px solid rgba(243,233,210,0.4)' }}>skip this card</span>
+              <span style={{ margin:'0 10px', color:'var(--gold)' }}>·</span>
+              <span style={{ color:'var(--gold)' }}>worth +2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   07 · POINTS FLOAT (§6) — post-correct celebratory overlay
+   ══════════════════════════════════════════════════════════════ */
+function PointsFloat(){
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)',
+        position:'relative', overflow:'hidden', padding:'14px 18px' }}>
+
+        {/* card back ghosted behind */}
+        <div style={{ position:'absolute', left:18, right:18, top:50, bottom:40,
+          background:'var(--ink)', opacity:0.92,
+          border:'3px solid var(--ink)', boxShadow:'6px 6px 0 var(--tomato)',
+          filter:'blur(1.2px) saturate(0.9)' }}>
+          <div style={{ textAlign:'center', color:'var(--cream)', paddingTop:50 }}>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.34em',
+              color:'var(--gold)' }}>The answer</div>
+            <div style={{ marginTop:6, fontFamily:'Anton', fontSize:58, lineHeight:0.88,
+              color:'var(--cream)', textTransform:'uppercase', letterSpacing:'-0.02em',
+              textShadow:'3px 3px 0 var(--tomato)' }}>Deewaar</div>
+          </div>
+        </div>
+
+        {/* points float */}
+        <div style={{ position:'absolute', top:70, right:28 }}>
+          <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:6 }}>
+            <div style={{ padding:'6px 10px', background:'var(--gold)',
+              color:'var(--ink)', fontFamily:'Anton', fontSize:22,
+              border:'3px solid var(--ink)', boxShadow:'3px 3px 0 var(--ink)',
+              transform:'rotate(-3deg)' }}>
+              +2 PTS
+            </div>
+            <div style={{ padding:'4px 8px', background:'var(--tomato)',
+              color:'var(--cream)', fontFamily:'Bebas Neue', fontSize:11,
+              border:'2px solid var(--ink)', letterSpacing:'0.22em',
+              transform:'rotate(4deg)' }}>
+              🔥 +1 streak
+            </div>
+          </div>
+        </div>
+
+        {/* caller name */}
+        <div style={{ position:'absolute', left:28, bottom:52 }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.28em',
+            color:'var(--cream)' }}>Called for</div>
+          <div style={{ fontFamily:'Anton', fontSize:44, color:'var(--cream)',
+            textShadow:'3px 3px 0 var(--tomato)', textTransform:'uppercase',
+            letterSpacing:'-0.01em' }}>
+            Neha
+          </div>
+        </div>
+
+        <div style={{ position:'absolute', left:0, right:0, bottom:14, textAlign:'center',
+          fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.3em',
+          color:'var(--ink-muted)' }}>
+          Tap anywhere · next card
+        </div>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   08 · RESULTS (§7) — verdict + winner + leaderboard + quote + share
+   ══════════════════════════════════════════════════════════════ */
+function Results(){
+  const rows = [
+    { n:'Riya',  s:18 },
+    { n:'Arjun', s:13 },
+    { n:'Neha',  s:10 },
+    { n:'Kabir', s:6 },
+  ];
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', overflow:'auto',
+        background:'var(--cream)', padding:'14px 14px 20px' }}>
+        <div style={{ textAlign:'center', fontFamily:'Anton', fontSize:22,
+          color:'var(--ink)', textTransform:'uppercase', letterSpacing:'-0.005em' }}>
+          Final Verdict
+        </div>
+
+        <Poster style={{ marginTop:10, overflow:'hidden' }}>
+          {/* mast */}
+          <div style={{ background:'var(--tomato)', color:'var(--cream)',
+            padding:'10px 14px', borderBottom:'3px solid var(--ink)' }}>
+            <div style={{ fontFamily:'Anton', fontSize:22, textTransform:'uppercase',
+              letterSpacing:'-0.005em' }}>Picture abhi baaki hai</div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:10,
+              letterSpacing:'0.24em', color:'var(--gold)' }}>12 plots played</div>
+          </div>
+
+          <div style={{ padding:'12px 14px 14px' }}>
+            <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontSize:13,
+              color:'var(--ink)', lineHeight:1.45, textAlign:'center' }}>
+              The room was loud. One guesser was louder.
+            </div>
+
+            {/* WINNER */}
+            <div style={{ marginTop:14, textAlign:'center', position:'relative',
+              padding:'12px 8px', background:'rgba(242,167,46,0.12)',
+              border:'2px dashed var(--gold)' }}>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.28em',
+                color:'var(--tomato)' }}>★ Top guesser ★</div>
+              <div style={{ fontFamily:'Anton', fontSize:58, color:'var(--ink)',
+                textTransform:'uppercase', letterSpacing:'-0.02em', lineHeight:0.94,
+                textShadow:'3px 3px 0 var(--tomato), 6px 6px 0 var(--gold)', marginTop:4 }}>
+                Riya
+              </div>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.3em',
+                color:'var(--ink)', marginTop:6 }}>movie buff</div>
+            </div>
+
+            {/* LEADERBOARD */}
+            <div style={{ marginTop:14 }}>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+                color:'var(--ink-muted)', marginBottom:6 }}>The line-up</div>
+              {rows.map((r,i)=>(
+                <div key={i} style={{
+                  display:'grid', gridTemplateColumns:'24px 1fr auto', gap:10,
+                  alignItems:'center', padding:'8px 10px',
+                  background: i===0 ? 'rgba(242,167,46,0.15)' : 'transparent',
+                  borderLeft: i===0 ? '3px solid var(--gold)' : '3px solid transparent',
+                  borderBottom: i===rows.length-1 ? 'none' : '1px solid var(--ink-line)' }}>
+                  <span style={{ fontFamily:'Bebas Neue', fontSize:12,
+                    letterSpacing:'0.14em', color:'var(--ink-muted)' }}>0{i+1}</span>
+                  <span style={{ fontFamily:'Anton', fontSize:22, color:'var(--ink)',
+                    textTransform:'uppercase', letterSpacing:'-0.005em' }}>{r.n}</span>
+                  <span style={{ fontFamily:'Anton', fontSize:22,
+                    color: i===0 ? 'var(--tomato)' : 'var(--ink)' }}>{r.s} <span style={{ fontSize:11, color:'var(--ink-muted)' }}>pts</span></span>
+                </div>
+              ))}
+            </div>
+
+            {/* QUOTE */}
+            <div style={{ marginTop:14, padding:'8px 10px',
+              borderTop:'2px dashed var(--ink)' }}>
+              <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontSize:14,
+                color:'var(--ink-muted)', textAlign:'center', lineHeight:1.4 }}>
+                "Mogambo khush hua."
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div style={{ marginTop:12, display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
+              <button style={{ padding:'12px', background:'var(--ink)',
+                color:'var(--cream)', border:'3px solid var(--ink)',
+                boxShadow:'4px 4px 0 var(--gold)',
+                fontFamily:'Anton', fontSize:16, textTransform:'uppercase',
+                letterSpacing:'-0.005em' }}>Play again</button>
+              <button style={{ padding:'12px', background:'var(--cream)',
+                color:'var(--ink)', border:'3px solid var(--ink)',
+                boxShadow:'4px 4px 0 var(--ink)',
+                fontFamily:'Anton', fontSize:16, textTransform:'uppercase',
+                letterSpacing:'-0.005em' }}>Home</button>
+            </div>
+
+            {/* SHARE BAND — as artifact, not pills */}
+            <div style={{ marginTop:14, paddingTop:12, borderTop:'2px dashed var(--ink)' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                <div style={{ display:'flex', gap:3 }}>
+                  <span style={{ width:3, height:12, background:'var(--tomato)' }}/>
+                  <span style={{ width:3, height:12, background:'var(--gold)' }}/>
+                  <span style={{ width:3, height:12, background:'var(--emerald)' }}/>
+                </div>
+                <div style={{ fontFamily:'Bebas Neue', fontSize:11,
+                  letterSpacing:'0.26em', color:'var(--tomato)' }}>Spread the word</div>
+              </div>
+              <div style={{ marginTop:4, fontFamily:'Fraunces', fontStyle:'italic',
+                fontSize:12, color:'var(--ink-muted)' }}>
+                Send to the friend who starts the movie argument.
+              </div>
+              <div style={{ marginTop:10, display:'grid',
+                gridTemplateColumns:'repeat(6, 1fr)', gap:6 }}>
+                {[
+                  /* WhatsApp */
+                  (<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7 0-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5H7.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.3-.6.3-1.2.2-1.4 0-.2-.3-.3-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.2.8.9-3.1-.2-.3C4 15.1 3.5 13.6 3.5 12c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5-3.8 8.3-8.5 8.3z"/></svg>),
+                  /* X */
+                  (<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>),
+                  /* Reddit */
+                  (<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.14a2.14 2.14 0 0 0-3.63-1.53 10.44 10.44 0 0 0-5.69-1.8l.97-4.55 3.16.67a1.53 1.53 0 1 0 .16-.76l-3.53-.75a.38.38 0 0 0-.45.29l-1.08 5.1a10.44 10.44 0 0 0-5.77 1.8 2.14 2.14 0 1 0-2.35 3.5 4.2 4.2 0 0 0-.05.65c0 3.3 3.84 5.98 8.58 5.98s8.58-2.68 8.58-5.98a4.2 4.2 0 0 0-.05-.65A2.14 2.14 0 0 0 22 12.14zM7 13.6a1.53 1.53 0 1 1 3.06 0 1.53 1.53 0 0 1-3.06 0zm8.58 4.06a5.5 5.5 0 0 1-3.58 1.1 5.5 5.5 0 0 1-3.58-1.1.38.38 0 0 1 .54-.54 4.73 4.73 0 0 0 3.04.92 4.73 4.73 0 0 0 3.04-.92.38.38 0 0 1 .54.54zm-.18-2.52a1.53 1.53 0 1 1 0-3.06 1.53 1.53 0 0 1 0 3.06z"/></svg>),
+                  /* Instagram */
+                  (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>),
+                  /* Email */
+                  (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14"/><path d="m3 7 9 6 9-6"/></svg>),
+                  /* Link */
+                  (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>),
+                ].map((icon,i)=>(
+                  <button key={i} style={{ width:'100%', aspectRatio:'1 / 1',
+                    background:'var(--cream)', color:'var(--ink)',
+                    border:'2px solid var(--ink)', boxShadow:'2px 2px 0 var(--ink)',
+                    display:'grid', placeItems:'center', padding:6 }}>
+                    <span style={{ width:'70%', display:'block' }}>{icon}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Poster>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   09–14 · SHEETS (§8)
+   ══════════════════════════════════════════════════════════════ */
+function Sheet({ title, sub, children, height='auto' }){
+  return (
+    <div style={{ position:'absolute', inset:0,
+      background:'rgba(15,20,48,0.55)',
+      display:'flex', alignItems:'flex-end' }}>
+      <div style={{ width:'100%',
+        background:'var(--cream)', color:'var(--ink)',
+        border:'3px solid var(--ink)', borderBottom:'none',
+        borderRadius:'0', padding:'14px 16px 16px', maxHeight:'85%', overflow:'auto' }}>
+        <div style={{ width:44, height:4, background:'var(--ink)',
+          margin:'0 auto 10px', opacity:0.3 }}/>
+        <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.26em',
+          color:'var(--tomato)' }}>{sub}</div>
+        <div style={{ fontFamily:'Anton', fontSize:28, color:'var(--ink)',
+          textTransform:'uppercase', letterSpacing:'-0.01em', lineHeight:1 }}>{title}</div>
+        <div style={{ marginTop:12 }}>{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function FeedbackSheet(){
+  const tags=['🔥 love it','🛠 needs work','🃏 want more cards','🎉 great for parties','👀 ui issue','🐛 found a bug'];
+  return (
+    <Phone>
+      <TopBand inRound={false}/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)' }}>
+        {/* home peeking underneath */}
+        <div style={{ padding:'14px 18px', opacity:0.5 }}>
+          <div style={{ fontFamily:'Anton', fontSize:42, color:'var(--ink)',
+            textTransform:'uppercase' }}>Bad <span style={{ color:'var(--tomato)' }}>Desi</span></div>
+        </div>
+      </div>
+      <Sheet title="Share your thoughts" sub="Feedback · tap all that apply">
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+          {tags.map((t,i)=>(
+            <button key={i} style={{ padding:'9px 10px',
+              border:'2px solid var(--ink)',
+              background: i===0 ? 'var(--gold)' : 'var(--cream)',
+              color:'var(--ink)',
+              fontFamily:'Anton', fontSize:13, textTransform:'uppercase',
+              letterSpacing:'-0.005em', textAlign:'left' }}>{t}</button>
+          ))}
+        </div>
+        <div style={{ marginTop:10, border:'2px solid var(--ink)',
+          padding:'10px 12px', background:'rgba(255,255,255,0.5)' }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.22em',
+            color:'var(--ink-muted)' }}>Anything else?</div>
+          <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontSize:14,
+            color:'var(--ink-muted)', minHeight:40, marginTop:4 }}>
+            the reveal needs a bigger drop.
+          </div>
+        </div>
+        <div style={{ marginTop:10, display:'grid',
+          gridTemplateColumns:'auto 1fr', gap:8 }}>
+          <button style={{ padding:'10px 14px', background:'var(--cream)',
+            border:'2px solid var(--ink)', fontFamily:'Bebas Neue',
+            fontSize:11, letterSpacing:'0.22em' }}>Maybe later</button>
+          <button style={{ padding:'10px 14px', background:'var(--ink)',
+            color:'var(--cream)', border:'3px solid var(--ink)',
+            boxShadow:'3px 3px 0 var(--tomato)',
+            fontFamily:'Anton', fontSize:16, textTransform:'uppercase' }}>
+            Send feedback
+          </button>
+        </div>
+      </Sheet>
+    </Phone>
+  );
+}
+
+function ReportSheet(){
+  const reasons=['Wrong or inaccurate','Typo','Spoiler','Offensive','Too easy','Too hard','Other'];
+  return (
+    <Phone>
+      <TopBand/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)' }}/>
+      <Sheet title="Report this plot" sub="What is wrong with this card?">
+        <div style={{ display:'grid', gap:6 }}>
+          {reasons.map((t,i)=>(
+            <button key={i} style={{ padding:'9px 12px',
+              border:'2px solid var(--ink)',
+              background: i===2 ? 'var(--ink)' : 'var(--cream)',
+              color: i===2 ? 'var(--cream)' : 'var(--ink)',
+              fontFamily:'Anton', fontSize:15, textTransform:'uppercase',
+              letterSpacing:'-0.005em', textAlign:'left',
+              display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <span>{t}</span>
+              {i===2 && <span style={{ color:'var(--tomato)' }}>✓</span>}
+            </button>
+          ))}
+        </div>
+        <div style={{ marginTop:10, border:'2px solid var(--ink)',
+          padding:'10px 12px', background:'rgba(255,255,255,0.5)',
+          minHeight:48 }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.22em',
+            color:'var(--ink-muted)' }}>Any additional details?</div>
+        </div>
+        <div style={{ marginTop:10, display:'grid',
+          gridTemplateColumns:'auto 1fr', gap:8 }}>
+          <button style={{ padding:'10px 14px', background:'var(--cream)',
+            border:'2px solid var(--ink)', fontFamily:'Bebas Neue',
+            fontSize:11, letterSpacing:'0.22em' }}>Cancel</button>
+          <button style={{ padding:'10px 14px', background:'var(--tomato)',
+            color:'var(--cream)', border:'3px solid var(--ink)',
+            boxShadow:'3px 3px 0 var(--ink)',
+            fontFamily:'Anton', fontSize:16, textTransform:'uppercase' }}>
+            Submit report
+          </button>
+        </div>
+      </Sheet>
+    </Phone>
+  );
+}
+
+function HowTo(){
+  const rules = [
+    { t:'Read the bad plot', d:'Tap the card to reveal a terribly summarized movie. Read it out loud.' },
+    { t:'Guess the movie',   d:'Everyone else guesses which film it is. First correct answer wins.' },
+    { t:'Award the guesser', d:'Tap the guesser\'s name to give them points. Easy 1 · Med 2 · Hard 3.' },
+    { t:'Pass the phone',    d:'Hand it to the next reader. Keep going until the round ends.' },
+  ];
+  return (
+    <Phone>
+      <TopBand inRound={false}/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)',
+        padding:'16px 18px 20px', overflow:'auto' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
+          <div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.28em',
+              color:'var(--tomato)' }}>2 min read</div>
+            <div style={{ fontFamily:'Anton', fontSize:42, color:'var(--ink)',
+              textTransform:'uppercase', lineHeight:1, letterSpacing:'-0.015em' }}>
+              How to play
+            </div>
+          </div>
+          <button style={{ fontSize:18, color:'var(--ink)' }}>×</button>
+        </div>
+
+        <div style={{ marginTop:12, display:'grid', gap:8 }}>
+          {rules.map((r,i)=>(
+            <div key={i} style={{ border:'2px solid var(--ink)',
+              background:'var(--cream)', padding:'10px 12px',
+              display:'grid', gridTemplateColumns:'32px 1fr', gap:10, alignItems:'start' }}>
+              <div style={{ fontFamily:'Anton', fontSize:32, color:'var(--tomato)',
+                lineHeight:0.9, textShadow:'2px 2px 0 var(--ink)' }}>{i+1}</div>
+              <div>
+                <div style={{ fontFamily:'Anton', fontSize:18, color:'var(--ink)',
+                  textTransform:'uppercase', letterSpacing:'-0.005em' }}>{r.t}</div>
+                <div style={{ marginTop:3, fontFamily:'Fraunces', fontStyle:'italic',
+                  fontSize:13, color:'var(--ink)', lineHeight:1.4 }}>{r.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* score key */}
+        <div style={{ marginTop:12, background:'var(--ink)', color:'var(--cream)',
+          padding:'10px 12px', display:'grid', gridTemplateColumns:'1fr 1fr 1fr',
+          gap:6, textAlign:'center' }}>
+          {[['Easy','1 pt','var(--emerald)'],['Medium','2 pts','var(--saffron)'],['Hard','3 pts','var(--tomato)']].map(([a,b,c],i)=>(
+            <div key={i} style={{ borderRight: i<2 ? '1px solid rgba(243,233,210,0.25)' : 'none', padding:'2px 0' }}>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:10,
+                letterSpacing:'0.22em', color:c }}>{a}</div>
+              <div style={{ fontFamily:'Anton', fontSize:22, color:'var(--cream)' }}>{b}</div>
+            </div>
+          ))}
+        </div>
+
+        <button style={{ marginTop:14, width:'100%', padding:'14px',
+          background:'var(--ink)', color:'var(--cream)',
+          border:'3px solid var(--ink)', boxShadow:'4px 4px 0 var(--tomato)',
+          fontFamily:'Anton', fontSize:20, textTransform:'uppercase' }}>
+          Got it →
+        </button>
+      </div>
+    </Phone>
+  );
+}
+
+function Settings(){
+  return (
+    <Phone>
+      <TopBand inRound={false}/>
+      <div style={{ height:'calc(100% - 52px)', background:'var(--cream)',
+        padding:'16px 18px 20px' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
+          <div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.28em',
+              color:'var(--tomato)' }}>Your preferences</div>
+            <div style={{ fontFamily:'Anton', fontSize:42, color:'var(--ink)',
+              textTransform:'uppercase', lineHeight:1, letterSpacing:'-0.015em' }}>
+              Settings
+            </div>
+          </div>
+          <button style={{ fontSize:18, color:'var(--ink)' }}>×</button>
+        </div>
+
+        {/* DIFFICULTY */}
+        <div style={{ marginTop:16 }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+            color:'var(--ink-muted)' }}>Difficulty filter</div>
+          <div style={{ marginTop:6, display:'grid',
+            gridTemplateColumns:'repeat(4, 1fr)', border:'2px solid var(--ink)' }}>
+            {['All','Easy','Medium','Hard'].map((t,i)=>(
+              <button key={i} style={{
+                padding:'9px 4px',
+                background: i===0 ? 'var(--ink)' : 'var(--cream)',
+                color: i===0 ? 'var(--cream)' : 'var(--ink)',
+                fontFamily:'Anton', fontSize:14, textTransform:'uppercase',
+                borderRight: i<3 ? '2px solid var(--ink)' : 'none' }}>
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ROUND LENGTH */}
+        <div style={{ marginTop:14 }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+            color:'var(--ink-muted)' }}>Round length · party</div>
+          <div style={{ marginTop:6, display:'grid',
+            gridTemplateColumns:'repeat(4, 1fr)', border:'2px solid var(--ink)' }}>
+            {['5','8','10','12'].map((t,i)=>(
+              <button key={i} style={{
+                padding:'9px 4px',
+                background: t==='10' ? 'var(--tomato)' : 'var(--cream)',
+                color: t==='10' ? 'var(--cream)' : 'var(--ink)',
+                fontFamily:'Anton', fontSize:18,
+                borderRight: i<3 ? '2px solid var(--ink)' : 'none' }}>
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* SOUND */}
+        <div style={{ marginTop:14, border:'2px solid var(--ink)',
+          padding:'10px 12px', display:'flex', justifyContent:'space-between',
+          alignItems:'center' }}>
+          <div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+              color:'var(--ink-muted)' }}>Sound</div>
+            <div style={{ fontFamily:'Anton', fontSize:18, color:'var(--ink)',
+              textTransform:'uppercase' }}>Dhol on flip</div>
+          </div>
+          <div style={{ width:44, height:26, background:'var(--tomato)',
+            border:'2px solid var(--ink)', position:'relative' }}>
+            <div style={{ position:'absolute', top:2, right:2, width:18, height:18,
+              background:'var(--cream)', border:'1px solid var(--ink)' }}/>
+          </div>
+        </div>
+
+        <button style={{ marginTop:16, width:'100%', padding:'14px',
+          background:'var(--ink)', color:'var(--cream)',
+          border:'3px solid var(--ink)', boxShadow:'4px 4px 0 var(--tomato)',
+          fontFamily:'Anton', fontSize:20, textTransform:'uppercase' }}>
+          Done
+        </button>
+      </div>
+    </Phone>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE PREVIEWS — the REAL product is a responsive web PWA.
+   Phones above are presentation chrome; these vignettes show the
+   same components at tablet (~820px) and desktop (~1280px).
+   ══════════════════════════════════════════════════════════════ */
+
+function BrowserChrome({ url='baddesiplots.com', width=1280, height=760, children }){
+  return (
+    <div style={{ width, border:'1px solid rgba(243,233,210,0.15)',
+      borderRadius:10, overflow:'hidden',
+      boxShadow:'0 30px 80px rgba(0,0,0,0.55)' }}>
+      {/* window bar */}
+      <div style={{ display:'flex', alignItems:'center', gap:10,
+        padding:'10px 14px', background:'#1a2040',
+        borderBottom:'1px solid rgba(243,233,210,0.08)' }}>
+        <span style={{ width:12, height:12, borderRadius:'50%', background:'#E5276B' }}/>
+        <span style={{ width:12, height:12, borderRadius:'50%', background:'#F1BE3A' }}/>
+        <span style={{ width:12, height:12, borderRadius:'50%', background:'#3EA87A' }}/>
+        <div style={{ flex:1, margin:'0 14px', padding:'6px 14px',
+          background:'rgba(243,233,210,0.07)', borderRadius:6,
+          fontFamily:'DM Sans', fontSize:12, color:'rgba(243,233,210,0.65)',
+          display:'flex', alignItems:'center', gap:8 }}>
+          <span style={{ color:'var(--gold)' }}>●</span>
+          <span>{url}</span>
+        </div>
+      </div>
+      <div style={{ height, background:'var(--cream)', position:'relative', overflow:'hidden' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* Nav bar shown on every responsive preview */
+function WebNav({ compact=false }){
+  return (
+    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center',
+      padding: compact ? '12px 20px' : '16px 32px',
+      background:'var(--ink)', color:'var(--cream)',
+      borderBottom:'3px solid var(--tomato)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+        <Clap size={compact ? 22 : 26}/>
+        <span style={{ fontFamily:'Anton', fontSize: compact ? 20 : 24,
+          textTransform:'uppercase', letterSpacing:'-0.005em' }}>
+          Bad <span style={{ color:'var(--tomato)' }}>Desi</span> Plots
+        </span>
+      </div>
+      <div style={{ display:'flex', alignItems:'center', gap: compact ? 16 : 24,
+        fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.22em',
+        color:'rgba(243,233,210,0.7)' }}>
+        <span>HOW TO PLAY</span>
+        <span>SUGGEST A MOVIE</span>
+        {!compact && <span>FEEDBACK</span>}
+        <button style={{ padding:'8px 14px', background:'var(--tomato)',
+          color:'var(--cream)', border:'2px solid var(--cream)',
+          fontFamily:'Anton', fontSize:13, letterSpacing:'0.01em',
+          textTransform:'uppercase' }}>Start a game →</button>
+      </div>
+    </div>
+  );
+}
+
+/* 01 · Desktop Home — hero on the left, CTA stack on the right */
+function DesktopHome(){
+  return (
+    <BrowserChrome width={1280} height={720}>
+      <WebNav/>
+      <div style={{ padding:'56px 72px 0', display:'grid',
+        gridTemplateColumns:'1.15fr 0.85fr', gap:64, alignItems:'start',
+        height:'calc(100% - 68px)' }}>
+        {/* hero */}
+        <div>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:13, letterSpacing:'0.32em',
+            color:'var(--tomato)' }}>The desi party game</div>
+          <div style={{ marginTop:14, fontFamily:'Anton', fontSize:158, lineHeight:0.84,
+            color:'var(--ink)', textTransform:'uppercase', letterSpacing:'-0.025em' }}>
+            Bad<br/>
+            <span style={{ color:'var(--tomato)',
+              textShadow:'5px 5px 0 var(--ink), 10px 10px 0 var(--gold)' }}>Desi</span><br/>
+            Plots.
+          </div>
+          <div style={{ marginTop:28, fontFamily:'Fraunces', fontStyle:'italic', fontWeight:300,
+            fontSize:22, color:'var(--ink)', lineHeight:1.4, maxWidth:520 }}>
+            We describe Bollywood movies badly. You guess which film it is.
+            Simple, chaotic, best played with chai and friends.
+          </div>
+          <div style={{ marginTop:22, fontFamily:'Bebas Neue', fontSize:11,
+            letterSpacing:'0.3em', color:'var(--ink-muted)' }}>
+            Solo · Party · No setup · Plays in-browser
+          </div>
+        </div>
+        {/* CTA column */}
+        <div style={{ paddingTop:10, display:'grid', gap:14 }}>
+          <div style={{ padding:'12px 16px', background:'var(--gold)',
+            color:'var(--ink)', border:'2px solid var(--ink)',
+            boxShadow:'4px 4px 0 var(--ink)',
+            fontFamily:'Bebas Neue', fontSize:14, letterSpacing:'0.22em',
+            textTransform:'uppercase',
+            display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span>↺ Resume last game</span><span>→</span>
+          </div>
+          <button style={{ padding:'22px 22px', background:'var(--ink)',
+            color:'var(--cream)', border:'3px solid var(--ink)',
+            boxShadow:'6px 6px 0 var(--tomato)',
+            fontFamily:'Anton', fontSize:34, textTransform:'uppercase',
+            letterSpacing:'-0.005em', textAlign:'left',
+            display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span>
+              <span style={{ display:'block', fontFamily:'Bebas Neue', fontSize:12,
+                letterSpacing:'0.24em', color:'var(--gold)', marginBottom:6 }}>2–8 players</span>
+              <span>Pass &amp; Play</span>
+            </span>
+            <span style={{ fontSize:30, color:'var(--gold)' }}>→</span>
+          </button>
+          <button style={{ padding:'18px 22px', background:'var(--cream)',
+            color:'var(--ink)', border:'3px solid var(--ink)',
+            boxShadow:'6px 6px 0 var(--ink)',
+            fontFamily:'Anton', fontSize:28, textTransform:'uppercase',
+            letterSpacing:'-0.005em', textAlign:'left',
+            display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span>
+              <span style={{ display:'block', fontFamily:'Bebas Neue', fontSize:11,
+                letterSpacing:'0.24em', color:'var(--tomato)', marginBottom:4 }}>Just me</span>
+              <span>Solo</span>
+            </span>
+            <span style={{ fontSize:24 }}>→</span>
+          </button>
+          <div style={{ marginTop:10, display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
+            {['How to play','Suggest a movie','Feedback','Settings'].map((t,i)=>(
+              <div key={i} style={{ padding:'10px 12px', border:'2px solid var(--ink)',
+                background:'var(--cream)', color:'var(--ink)',
+                fontFamily:'Anton', fontSize:16, textTransform:'uppercase',
+                display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                <span>{t}</span><span style={{ color:'var(--tomato)' }}>→</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </BrowserChrome>
+  );
+}
+
+/* 02 · Desktop Card mid-round — card centered, side rail w/ scores */
+function DesktopCard(){
+  const players = [
+    { n:'Riya',  c:'var(--tomato)',  s:6, reader:true },
+    { n:'Arjun', c:'var(--gold)',    s:4 },
+    { n:'Neha',  c:'var(--emerald)', s:5 },
+    { n:'Kabir', c:'var(--mauve)',   s:3 },
+  ];
+  return (
+    <BrowserChrome width={1280} height={720}>
+      <WebNav/>
+      <div style={{ padding:'36px 60px', display:'grid',
+        gridTemplateColumns:'260px 1fr 260px', gap:44, alignItems:'stretch',
+        height:'calc(100% - 68px)' }}>
+        {/* left: round meta + players */}
+        <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.24em',
+              color:'var(--ink-muted)' }}>ROUND · Bollywood</div>
+            <div style={{ fontFamily:'Anton', fontSize:64, color:'var(--ink)', lineHeight:0.88,
+              textTransform:'uppercase', letterSpacing:'-0.02em' }}>
+              Card<br/>03<span style={{ color:'var(--tomato)' }}>/</span>12
+            </div>
+            <div style={{ marginTop:'auto', display:'grid', gap:6 }}>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.24em',
+                color:'var(--ink-muted)' }}>Players</div>
+              {players.map((p,i)=>(
+                <div key={i} style={{ display:'flex', justifyContent:'space-between',
+                  alignItems:'center', padding:'10px 12px',
+                  background: p.reader ? 'var(--ink)' : 'var(--cream)',
+                  color: p.reader ? 'var(--cream)' : 'var(--ink)',
+                  border:'2px solid var(--ink)',
+                  boxShadow: p.reader ? '3px 3px 0 var(--tomato)' : 'none' }}>
+                  <span style={{ display:'flex', alignItems:'center', gap:10 }}>
+                    <span style={{ width:10, height:10, borderRadius:'50%', background:p.c }}/>
+                    <span style={{ fontFamily:'Anton', fontSize:18,
+                      textTransform:'uppercase', letterSpacing:'-0.005em' }}>{p.n}</span>
+                    {p.reader && <span style={{ fontFamily:'Bebas Neue', fontSize:9,
+                      letterSpacing:'0.2em', color:'var(--gold)' }}>READER</span>}
+                  </span>
+                  <span style={{ fontFamily:'Anton', fontSize:20 }}>{p.s}</span>
+                </div>
+              ))}
+            </div>
+        </div>
+        {/* center: card */}
+        <div style={{ display:'flex', flexDirection:'column' }}>
+          <div style={{ display:'flex', justifyContent:'space-between' }}>
+            <span style={{ padding:'4px 10px', background:'var(--tomato)',
+              color:'var(--cream)', fontFamily:'Bebas Neue', fontSize:11,
+              letterSpacing:'0.24em' }}>HINDI</span>
+            <span style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.24em',
+              color:'var(--ink-muted)',
+              display:'inline-flex', alignItems:'center', gap:6 }}>
+              <span style={{ width:8, height:8, borderRadius:'50%', background:'var(--saffron)' }}/>
+              MEDIUM · 2 PTS
+            </span>
+          </div>
+          <div style={{ flex:1, marginTop:14, background:'var(--cream)',
+            border:'3px solid var(--ink)', boxShadow:'8px 8px 0 var(--ink)',
+            padding:'40px 48px', display:'flex', flexDirection:'column' }}>
+            <div style={{ flex:1, display:'flex', alignItems:'center',
+              justifyContent:'center' }}>
+              <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontWeight:400,
+                fontSize:38, color:'var(--ink)', lineHeight:1.3,
+                letterSpacing:'-0.005em', textAlign:'center', maxWidth:540 }}>
+                "Two brothers grow up. One wears a badge, one wears a watch. Mum had a favourite."
+              </div>
+            </div>
+            <div style={{ paddingTop:16, borderTop:'2px solid var(--ink)',
+              display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <span style={{ padding:'4px 10px', background:'var(--ink)',
+                color:'var(--cream)', fontFamily:'Bebas Neue', fontSize:11,
+                letterSpacing:'0.24em' }}>READ BY: RIYA</span>
+              <span style={{ fontFamily:'Anton', fontSize:26, color:'var(--tomato)',
+                textTransform:'uppercase', letterSpacing:'-0.005em' }}>
+                Tap to reveal →
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* right: log */}
+        <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.24em',
+            color:'var(--ink-muted)' }}>Round log</div>
+          {[
+            { c:'Card 01', w:'Neha · Sholay · +2' },
+            { c:'Card 02', w:'Arjun · DDLJ · +1' },
+            { c:'Card 03', w:'— in play —', live:true },
+          ].map((l,i)=>(
+            <div key={i} style={{ padding:'10px 12px',
+              background: l.live ? 'var(--gold)' : 'var(--cream)',
+              border:'2px solid var(--ink)',
+              boxShadow: l.live ? '3px 3px 0 var(--ink)' : 'none' }}>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:10, letterSpacing:'0.24em',
+                color:'var(--ink-muted)' }}>{l.c}</div>
+              <div style={{ fontFamily:'Anton', fontSize:18, color:'var(--ink)',
+                textTransform:'uppercase', letterSpacing:'-0.005em', marginTop:2 }}>
+                {l.w}
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop:'auto', padding:'12px',
+            background:'var(--ink)', color:'var(--cream)',
+            border:'2px solid var(--ink)',
+            fontFamily:'Bebas Neue', fontSize:11, letterSpacing:'0.22em',
+            textAlign:'center' }}>
+            End round early →
+          </div>
+        </div>
+      </div>
+    </BrowserChrome>
+  );
+}
+
+/* 03 · Tablet Results — portrait 820×1080, vertical poster layout */
+function TabletResults(){
+  const rows = [
+    { n:'Riya',  s:6 },
+    { n:'Neha',  s:5 },
+    { n:'Arjun', s:4 },
+    { n:'Kabir', s:3 },
+  ];
+  return (
+    <BrowserChrome url="baddesiplots.com" width={820} height={1060}>
+      <WebNav compact/>
+      <div style={{ padding:'32px 40px', display:'flex', flexDirection:'column',
+        height:'calc(100% - 58px)', overflow:'hidden' }}>
+        {/* mast */}
+        <div style={{ background:'var(--tomato)', color:'var(--cream)',
+          padding:'14px 22px', border:'3px solid var(--ink)',
+          boxShadow:'6px 6px 0 var(--ink)' }}>
+          <div style={{ fontFamily:'Anton', fontSize:32, textTransform:'uppercase',
+            letterSpacing:'-0.01em' }}>
+            Round over. <span style={{ color:'var(--gold)' }}>Verdict:</span>
+          </div>
+        </div>
+        {/* winner panel */}
+        <div style={{ marginTop:16, background:'var(--cream)',
+          border:'3px solid var(--ink)', boxShadow:'6px 6px 0 var(--ink)',
+          padding:'24px 22px 22px', textAlign:'center',
+          borderImage:'none', position:'relative' }}>
+          <div style={{ position:'absolute', inset:8, border:'2px dashed var(--gold)',
+            pointerEvents:'none' }}/>
+          <div style={{ fontFamily:'Bebas Neue', fontSize:13, letterSpacing:'0.3em',
+            color:'var(--tomato)' }}>★ Top guesser ★</div>
+          <div style={{ marginTop:8, fontFamily:'Anton', fontSize:104,
+            color:'var(--ink)', textTransform:'uppercase', letterSpacing:'-0.02em',
+            lineHeight:0.92, textShadow:'4px 4px 0 var(--tomato), 8px 8px 0 var(--gold)' }}>
+            Riya
+          </div>
+          <div style={{ marginTop:6, fontFamily:'Fraunces', fontStyle:'italic',
+            fontSize:16, color:'var(--ink-muted)' }}>
+            Also somehow the reader half the time. Suspicious.
+          </div>
+        </div>
+        {/* lineup */}
+        <div style={{ marginTop:14, border:'3px solid var(--ink)',
+          boxShadow:'6px 6px 0 var(--ink)', background:'var(--cream)' }}>
+          {rows.map((r,i)=>(
+            <div key={i} style={{ padding:'12px 18px',
+              borderBottom: i<rows.length-1 ? '2px solid var(--ink)' : 'none',
+              display:'flex', justifyContent:'space-between', alignItems:'center',
+              background: i===0 ? 'rgba(241,190,58,0.18)' : 'transparent' }}>
+              <span style={{ display:'flex', alignItems:'center', gap:14 }}>
+                <span style={{ fontFamily:'Anton', fontSize:20,
+                  color:'var(--ink-muted)', minWidth:22 }}>{String(i+1).padStart(2,'0')}</span>
+                <span style={{ fontFamily:'Anton', fontSize:22, color:'var(--ink)',
+                  textTransform:'uppercase', letterSpacing:'-0.005em' }}>{r.n}</span>
+              </span>
+              <span style={{ fontFamily:'Anton', fontSize:24,
+                color: i===0 ? 'var(--tomato)' : 'var(--ink)' }}>
+                {r.s} <span style={{ fontSize:12, color:'var(--ink-muted)' }}>pts</span>
+              </span>
+            </div>
+          ))}
+        </div>
+        {/* quote pull */}
+        <div style={{ marginTop:14, padding:'10px 16px',
+          borderTop:'2px dashed rgba(15,20,48,0.35)',
+          borderBottom:'2px dashed rgba(15,20,48,0.35)',
+          textAlign:'center' }}>
+          <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontSize:17,
+            color:'rgba(243,233,210,0.75)', lineHeight:1.4 }}>
+            "Mogambo khush hua."
+          </div>
+        </div>
+        {/* CTAs */}
+        <div style={{ marginTop:14, display:'grid',
+          gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          <button style={{ padding:'14px', background:'var(--ink)',
+            color:'var(--cream)', border:'3px solid var(--ink)',
+            boxShadow:'5px 5px 0 var(--gold)',
+            fontFamily:'Anton', fontSize:22, textTransform:'uppercase',
+            letterSpacing:'-0.005em' }}>Play again</button>
+          <button style={{ padding:'14px', background:'var(--cream)',
+            color:'var(--ink)', border:'3px solid var(--ink)',
+            boxShadow:'5px 5px 0 var(--ink)',
+            fontFamily:'Anton', fontSize:22, textTransform:'uppercase',
+            letterSpacing:'-0.005em' }}>Home</button>
+        </div>
+        {/* share band */}
+        <div style={{ marginTop:14, background:'var(--ink)', color:'var(--cream)',
+          border:'3px solid var(--ink)', boxShadow:'6px 6px 0 var(--tomato)',
+          padding:'16px 20px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+            <div style={{ display:'flex', gap:3 }}>
+              <span style={{ width:3, height:14, background:'var(--tomato)' }}/>
+              <span style={{ width:3, height:14, background:'var(--gold)' }}/>
+              <span style={{ width:3, height:14, background:'var(--emerald)' }}/>
+            </div>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:12, letterSpacing:'0.28em',
+              color:'var(--tomato)' }}>Spread the word</div>
+          </div>
+          <div style={{ marginTop:6, fontFamily:'Fraunces', fontStyle:'italic',
+            fontSize:14, color:'rgba(243,233,210,0.75)' }}>
+            Send to the friend who starts the movie arguments.
+          </div>
+          <div style={{ marginTop:10, display:'grid',
+            gridTemplateColumns:'repeat(6, 1fr)', gap:8 }}>
+            {[
+              /* WhatsApp */
+              (<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7 0-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5H7.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.3-.6.3-1.2.2-1.4 0-.2-.3-.3-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.2-1.3c1.4.7 3 1.1 4.7 1.1 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.2.8.9-3.1-.2-.3C4 15.1 3.5 13.6 3.5 12c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5-3.8 8.3-8.5 8.3z"/></svg>),
+              /* X */
+              (<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>),
+              /* Reddit */
+              (<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.14a2.14 2.14 0 0 0-3.63-1.53 10.44 10.44 0 0 0-5.69-1.8l.97-4.55 3.16.67a1.53 1.53 0 1 0 .16-.76l-3.53-.75a.38.38 0 0 0-.45.29l-1.08 5.1a10.44 10.44 0 0 0-5.77 1.8 2.14 2.14 0 1 0-2.35 3.5 4.2 4.2 0 0 0-.05.65c0 3.3 3.84 5.98 8.58 5.98s8.58-2.68 8.58-5.98a4.2 4.2 0 0 0-.05-.65A2.14 2.14 0 0 0 22 12.14zM7 13.6a1.53 1.53 0 1 1 3.06 0 1.53 1.53 0 0 1-3.06 0zm8.58 4.06a5.5 5.5 0 0 1-3.58 1.1 5.5 5.5 0 0 1-3.58-1.1.38.38 0 0 1 .54-.54 4.73 4.73 0 0 0 3.04.92 4.73 4.73 0 0 0 3.04-.92.38.38 0 0 1 .54.54zm-.18-2.52a1.53 1.53 0 1 1 0-3.06 1.53 1.53 0 0 1 0 3.06z"/></svg>),
+              /* Instagram */
+              (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>),
+              /* Email */
+              (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14"/><path d="m3 7 9 6 9-6"/></svg>),
+              /* Link */
+              (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>),
+            ].map((icon,i)=>(
+              <div key={i} style={{ aspectRatio:'1 / 1',
+                background:'var(--cream)', color:'var(--ink)',
+                border:'2px solid var(--cream)', boxShadow:'3px 3px 0 var(--tomato)',
+                display:'grid', placeItems:'center', padding:10 }}>
+                <span style={{ width:'70%', display:'block' }}>{icon}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </BrowserChrome>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   APP
+   ══════════════════════════════════════════════════════════════ */
+function App(){
+  const row1 = [
+    { tl:'Loading',        tag:'§2', C:Loading,     note:'placeholder matches final hero so no jump' },
+    { tl:'Home',           tag:'§3', C:Home,        note:'hero · cinema toggle · CTAs · chunky footer' },
+    { tl:'Setup overlay',  tag:'§4', C:Setup,       note:'mode toggle · drag grips · 2–8' },
+    { tl:'Turn · first',   tag:'§5B', C:TurnFirst,  note:'first card · party · "You\'re up first"' },
+  ];
+  const row2 = [
+    { tl:'Turn · mid',     tag:'§5D', C:TurnMid,    note:'feedback pill + hand off to next reader' },
+    { tl:'Card front',     tag:'§6A', C:CardFront,  note:'The Plot · tap to reveal' },
+    { tl:'Card back',      tag:'§6A', C:CardBack,   note:'reveal · picker excludes reader · NOBODY' },
+    { tl:'Points float',   tag:'§6',  C:PointsFloat, note:'+2 PTS chip + streak bonus · rotated stamps' },
+  ];
+  const row3 = [
+    { tl:'Results',        tag:'§7',  C:Results,     note:'verdict mast · winner · lineup · share band' },
+    { tl:'Feedback sheet', tag:'§8A', C:FeedbackSheet, note:'6 tags + textarea' },
+    { tl:'Report sheet',   tag:'§8C', C:ReportSheet,   note:'single-select reason' },
+  ];
+  const row4 = [
+    { tl:'How to play',    tag:'§8E', C:HowTo,       note:'4 numbered rules · score key strip' },
+    { tl:'Settings',       tag:'§8F', C:Settings,    note:'difficulty · round length · sound' },
+  ];
+
+  const Strip = ({rows, title, tag}) => (
+    <div>
+      <div className="section-head">
+        <div className="num">{tag}</div>
+        <div className="t">{title}</div>
+        <div className="rule"/>
+        <div className="tag">Mechanics locked · visual only</div>
+      </div>
+      <div className="strip">
+        {rows.map((f,i)=>(
+          <div key={i}>
+            <div className="frame-label">
+              <span className="ix">{f.tag}</span>
+              <span className="tl">{f.tl}</span>
+              <span className="tag"/>
+            </div>
+            <div style={{ display:'flex', justifyContent:'center' }}>
+              <f.C/>
+            </div>
+            <div className="note-caption">— {f.note}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <Strip rows={row1} tag="01" title="Start · Home · Setup · First turn"/>
+      <Strip rows={row2} tag="02" title="Play · card flip · award points"/>
+      <Strip rows={row3} tag="03" title="End · Results · Feedback · Report"/>
+      <Strip rows={row4} tag="04" title="Overlays · How to play · Settings"/>
+
+      {/* Responsive previews */}
+      <div className="section-head">
+        <div className="num">05</div>
+        <div className="t">Responsive web · tablet &amp; desktop</div>
+        <div className="rule"/>
+        <div className="tag">Same components · fluid layout · PWA</div>
+      </div>
+
+      <div style={{ padding:'8px 6px 0', fontFamily:'Fraunces', fontStyle:'italic',
+        fontSize:15, color:'rgba(243,233,210,0.7)', maxWidth:820, lineHeight:1.5 }}>
+        The phones above are just <b style={{color:'#F3E9D2', fontStyle:'normal'}}>presentation chrome</b> so eleven screens fit on one canvas. The actual product is a <b style={{color:'#F3E9D2', fontStyle:'normal'}}>mobile-first responsive web app</b> at baddesiplots.com — it scales from 320px up through tablet and desktop. Same components, same type, wider canvas.
+      </div>
+
+      <div style={{ marginTop:28, display:'flex', flexDirection:'column', gap:42,
+        alignItems:'center' }}>
+        {/* Desktop Home */}
+        <div style={{ width:'100%', maxWidth:1280 }}>
+          <div className="frame-label">
+            <span className="ix">§D1</span>
+            <span className="tl">Home · desktop 1280</span>
+            <span className="tag">HERO LEFT · CTA STACK RIGHT</span>
+          </div>
+          <DesktopHome/>
+          <div className="note-caption">— hero wordmark scales; CTAs remain the chunky poster buttons</div>
+        </div>
+
+        {/* Desktop Card */}
+        <div style={{ width:'100%', maxWidth:1280 }}>
+          <div className="frame-label">
+            <span className="ix">§D2</span>
+            <span className="tl">Card mid-round · desktop 1280</span>
+            <span className="tag">ROUND META · CARD · LIVE LOG</span>
+          </div>
+          <DesktopCard/>
+          <div className="note-caption">— reveals the round log + scoreboard side rails you can't show on a phone</div>
+        </div>
+
+        {/* Tablet Results */}
+        <div style={{ width:'100%', maxWidth:820, marginBottom:20 }}>
+          <div className="frame-label">
+            <span className="ix">§T1</span>
+            <span className="tl">Results · tablet portrait 820×1060</span>
+            <span className="tag">VERTICAL POSTER STACK</span>
+          </div>
+          <TabletResults/>
+          <div className="note-caption">— poster metaphor holds; share band reads as a proper artifact</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Bad Desi Plots — Instagram Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=IBM+Plex+Mono:wght@400;500;600&family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0F1430; --cream:#F3E9D2; --paper:#F3E9D2; --ink:#0F1430;
+    --ink-muted:#4a506e;
+    --tomato:#E5276B; --tomato-bright:#FF4A89;
+    --emerald:#3EA87A; --emerald-bright:#4FC798;
+    --gold:#F1BE3A; --gold-bright:#FFD35C;
+    --mauve:#8C6BA8;
+    --glow-bw:rgba(229,39,107,0.45);
+    --glow-tw:rgba(62,168,122,0.42);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0 }
+  html,body{
+    background:var(--bg); color:var(--cream);
+    font-family:'DM Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{ font:inherit; cursor:pointer; border:none; background:none; color:inherit }
+
+  /* design-canvas hosts artboards; nothing extra needed */
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#0F1430">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0F1430"/>
+    <g transform="translate(600 400)">
+      <rect x="-160" y="-160" width="320" height="320" fill="#F3E9D2" stroke="#0F1430" stroke-width="10"/>
+      <rect x="-145" y="-145" width="290" height="290" fill="none" stroke="#E5276B" stroke-width="3"/>
+      <text x="8" y="80" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+        font-size="320" fill="#E5276B" opacity="0.85" font-weight="700" letter-spacing="-8">B</text>
+      <text x="0" y="72" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+        font-size="320" fill="#0F1430" font-weight="700" letter-spacing="-8">B</text>
+    </g>
+    <text x="600" y="720" text-anchor="middle" font-family="Anton, Impact, sans-serif"
+      font-size="44" fill="#F3E9D2" letter-spacing="8">BAD DESI PLOTS · IG</text>
+  </svg>
+</template>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="ig/cards-data.js"></script>
+<script type="text/babel" data-presets="react" src="design-canvas.jsx"></script>
+<script type="text/babel" data-presets="react" src="tweaks-panel.jsx"></script>
+<script type="text/babel" data-presets="react" src="ig/post-templates.jsx"></script>
+<script type="text/babel" data-presets="react" src="ig/templates-a-b.jsx"></script>
+<script type="text/babel" data-presets="react" src="ig/templates-c-d-e.jsx"></script>
+<script type="text/babel" data-presets="react" src="ig/profile-mock.jsx"></script>
+<script type="text/babel" data-presets="react" src="ig/phone-views.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useMemo } = React;
+const cards = window.IG_CARDS;
+
+/* Bio candidates */
+const BIO_CANDIDATES = [
+  {
+    label:'A — Manifesto',
+    text:`a desi party game where the plots are wrong on purpose.\nsomehow this works. 🔥 BW · 🌿 TW\nplay with friends ↓`,
+  },
+  {
+    label:'B — Threat',
+    text:`we describe Bollywood movies badly.\nyou guess the film. loser pays for chai.\n350 cards. no signup. plays in browser. ↓`,
+  },
+  {
+    label:'C — Confession',
+    text:`every plot is technically correct\nand emotionally devastating.\nfree · in browser · save your favorites ↓`,
+  },
+  {
+    label:'D — Cinematic',
+    text:`some movies deserve a worse summary.\nguess them. score yourself. share the carnage.\nbaddesiplots.com ↓`,
+  },
+];
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "templateACard": "bw01",
+  "showInFeed": true,
+  "ctaCopy": "Drop your guess in comments"
+}/*EDITMODE-END*/;
+
+function App(){
+  const [tweaks, setTweak] = window.useTweaks ? window.useTweaks(TWEAK_DEFAULTS) : [TWEAK_DEFAULTS, ()=>{}];
+
+  const cardForA = useMemo(
+    () => cards.find(c => c.id === tweaks.templateACard) || cards[0],
+    [tweaks.templateACard]
+  );
+
+  // Pull a few specific cards
+  const bw = cards.filter(c => c.ind === 'BW');
+  const tw = cards.filter(c => c.ind === 'TW');
+  const ddlj = cards.find(c => c.id === 'bw01');
+  const rrr  = cards.find(c => c.id === 'tw_rrr');
+  const sholay = cards.find(c => c.id === 'bw_sh');
+  const baahu = cards.find(c => c.id === 'tw_bb');
+  const lagaan = cards.find(c => c.id === 'bw05');
+  const idiots = cards.find(c => c.id === 'bw_3i');
+
+  // 3-week grid tiles
+  const gridTiles = useMemo(() => window.ThreeWeekGrid({ cards }), []);
+
+  return (
+    <window.DesignCanvas title="Bad Desi Plots · Instagram">
+      {/* ─── SECTION 1: ON INSTAGRAM ─── */}
+      <window.DCSection
+        id="on-instagram"
+        title="01 · on instagram"
+        subtitle="The headline. How @baddesiplots actually appears on the platform — profile screen + scrolling feed. Everything below is the system that feeds these screens.">
+
+        <window.DCArtboard id="phone-profile" label="Profile · what visitors land on"
+          width={406} height={860}>
+          <window.IGPhoneProfile bio={BIO_CANDIDATES[2].text} gridTiles={gridTiles}/>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="phone-feed" label="Feed · scroll to see all 5 templates"
+          width={406} height={860}>
+          <window.IGPhoneFeed cards={cards}/>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="hero" label="The brief, in one card" width={920} height={520}>
+          <div style={{ width:920, height:520, background:'var(--bg)',
+            color:'var(--cream)', padding:'56px 60px', position:'relative',
+            overflow:'hidden' }}>
+            <div style={{ position:'absolute', inset:0,
+              background:'radial-gradient(ellipse at 70% 100%, rgba(229,39,107,0.25), transparent 55%), radial-gradient(ellipse at 0% 0%, rgba(241,190,58,0.12), transparent 60%)' }}/>
+            <div style={{ position:'relative' }}>
+              <div style={{ fontFamily:'Bebas Neue', fontSize:14,
+                letterSpacing:'0.32em', color:'var(--gold)' }}>
+                @baddesiplots · instagram visual system
+              </div>
+              <div style={{ marginTop:14, fontFamily:'Anton', fontSize:96,
+                lineHeight:0.88, textTransform:'uppercase', letterSpacing:'-0.02em' }}>
+                Same game.<br/>
+                <span style={{ color:'var(--tomato)',
+                  textShadow:'4px 4px 0 var(--ink), 8px 8px 0 var(--gold)' }}>
+                  Louder feed.
+                </span>
+              </div>
+              <div style={{ marginTop:28, fontFamily:'Fraunces', fontStyle:'italic',
+                fontWeight:300, fontSize:20, lineHeight:1.5, maxWidth:660,
+                color:'rgba(243,233,210,0.82)' }}>
+                Five static post templates, a profile mock, three weeks of grid,
+                bio candidates, and IG-context single-post views.
+                <br/><br/>
+                Tokens lifted from the v8 app — magenta/midnight/gold — translated
+                to 1080×1350 portrait so it stops a thumb in 1.5 seconds. Every
+                template is a poster: chunky ink borders, offset hard shadows,
+                Anton/Bebas/Fraunces only, paper texture as the only "ornament".
+              </div>
+              <div style={{ marginTop:32, display:'flex', gap:10, flexWrap:'wrap' }}>
+                {['A · The Card','B · Carousel','C · Reveal','D · Vote','E · Quote',
+                  'Profile · grid','Bio · ×4'].map(t => (
+                  <span key={t} style={{
+                    display:'inline-block',
+                    border:'2px solid var(--cream)',
+                    padding:'6px 14px',
+                    fontFamily:'Bebas Neue', fontSize:13,
+                    letterSpacing:'0.28em', textTransform:'uppercase' }}>{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 2: TEMPLATE A ─── */}
+      <window.DCSection
+        id="template-a"
+        title="02 · template A · the card (~40% of feed)"
+        subtitle="Single-card workhorse. BW glow or TW glow, never both. Try it on different cards via Tweaks.">
+
+        <window.DCArtboard id="a-bw" label={`A · BW · ${ddlj.n}`}
+          width={1080} height={1350} bg="#0F1430">
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateA card={ddlj}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="a-tw" label={`A · TW · ${rrr.n}`}
+          width={1080} height={1350} bg="#0F1430">
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateA card={rrr}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="a-tweakable" label={`A · live (${cardForA.n})`}
+          width={1080} height={1350} bg="#0F1430">
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateA card={cardForA}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        {/* Edge cases */}
+        <window.DCArtboard id="a-long" label={`A · longest plot (${baahu.n})`}
+          width={1080} height={1350} bg="#0F1430">
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateA card={cards.find(c => c.id === 'tw_ok')}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="a-hard" label={`A · hard glow · ${sholay.n}`}
+          width={1080} height={1350} bg="#0F1430">
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateA card={sholay}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 3: TEMPLATE B (carousel) ─── */}
+      <window.DCSection
+        id="template-b"
+        title="03 · template B · carousel of 6 (~20%, the saver)"
+        subtitle="Cover · 4 plot slides · score outro. Cover stands alone in grid. Each slide has its own pip indicator.">
+
+        <window.DCArtboard id="b-carousel" label="B · Carousel · 6 slides"
+          width={6640} height={1350}>
+          <div style={{ width:6640, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateB cards={[ddlj, rrr, idiots, baahu]}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 4: TEMPLATE C (reveal) ─── */}
+      <window.DCSection
+        id="template-c"
+        title="04 · template C · reveal pair (~15%, the punchline)"
+        subtitle="Posted ~24h after the matching card post. Front blurred under an ANSWERED stamp; back is the title slam.">
+
+        <window.DCArtboard id="c-bw" label={`C · BW · ${ddlj.n}`}
+          width={2192} height={1350}>
+          <div style={{ width:2192, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateC card={ddlj}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="c-tw" label={`C · TW · ${rrr.n}`}
+          width={2192} height={1350}>
+          <div style={{ width:2192, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateC card={rrr}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 5: TEMPLATE D (vote) ─── */}
+      <window.DCSection
+        id="template-d"
+        title="05 · template D · vote (~10%, engagement bait)"
+        subtitle="The ONE template where BW + TW glows co-exist. Two cards, vote A or B in comments.">
+
+        <window.DCArtboard id="d-vote" label="D · Vote · BW vs TW"
+          width={1080} height={1350}>
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateD bwCard={lagaan} twCard={baahu}/>
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 6: TEMPLATE E (quote) ─── */}
+      <window.DCSection
+        id="template-e"
+        title="06 · template E · meta quote (~5%, palette cleanser)"
+        subtitle="Cream paper bg breaks up the dark feed. Voice-only — no card art. Lifted from the card register.">
+
+        <window.DCArtboard id="e-1" label="E · meta · 'family road trip'"
+          width={1080} height={1350}>
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateE quote="the movie that ruined your last family road trip."/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="e-2" label="E · meta · 'kattappa'"
+          width={1080} height={1350}>
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateE quote="kattappa, despite everything, did what he had to do."/>
+            </div>
+          </div>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="e-3" label="E · meta · 'two and a half hours'"
+          width={1080} height={1350}>
+          <div style={{ width:1080, height:1350, overflow:'hidden' }}>
+            <div>
+              <window.TemplateE quote="any plot can be told in two and a half hours, eight songs, and one wedding."/>
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 7: PROFILE + GRID ─── */}
+      <window.DCSection
+        id="profile"
+        title="07 · profile · 3-week grid"
+        subtitle="Live IG profile mock with all 27 tiles below the bio. Alternation: never 3 same-color in a row.">
+
+        <window.DCArtboard id="profile-mock"
+          label="Profile · bio C · 3-week grid"
+          width={540} height={1900}>
+          <window.IGProfile bio={BIO_CANDIDATES[2].text} gridTiles={gridTiles}/>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="bio-candidates"
+          label="Bio candidates · 4 voices" width={520} height={680}>
+          <div style={{ padding:24, background:'var(--bg)', height:'100%',
+            color:'var(--cream)' }}>
+            <div style={{ fontFamily:'Bebas Neue', fontSize:13,
+              letterSpacing:'0.28em', color:'var(--gold)', marginBottom:18 }}>
+              Bio candidates · ≤150 chars · pick one
+            </div>
+            {BIO_CANDIDATES.map((b, i) => (
+              <div key={i} style={{
+                marginBottom:14,
+                background:'var(--paper)', color:'var(--ink)',
+                border:'2px solid var(--ink)',
+                boxShadow:'4px 4px 0 var(--tomato)',
+                padding:'12px 14px',
+              }}>
+                <div style={{ fontFamily:'Bebas Neue', fontSize:11,
+                  letterSpacing:'0.32em', color:'var(--tomato)' }}>
+                  {b.label} · {b.text.length} chars
+                </div>
+                <div style={{ marginTop:6, fontSize:13, lineHeight:1.45,
+                  whiteSpace:'pre-line' }}>{b.text}</div>
+              </div>
+            ))}
+            <div style={{ fontFamily:'Fraunces', fontStyle:'italic', fontSize:13,
+              color:'rgba(243,233,210,0.65)', marginTop:8, lineHeight:1.4 }}>
+              Recommendation: <b style={{color:'var(--cream)'}}>C — Confession</b>.
+              Voice-matched, doesn't read like a feature list, ends with a clean ↓.
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 8: IN-FEED CONTEXT ─── */}
+      <window.DCSection
+        id="in-feed"
+        title="08 · in-feed views"
+        subtitle="How a single template reads with IG chrome around it. Caption, like count, all the noise.">
+
+        <window.DCArtboard id="feed-a-bw"
+          label="In feed · A · DDLJ" width={540} height={920}>
+          <window.IGFeedPost
+            caption="boy meets girl. father says no. they go to Europe anyway. guess in comments. reveal tomorrow. 🔥"
+            likes="14,221" when="2 hours ago">
+            <window.TemplateA card={ddlj}/>
+          </window.IGFeedPost>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="feed-c"
+          label="In feed · C · reveal · RRR" width={540} height={920}>
+          <window.IGFeedPost
+            caption="and the answer was always — RRR. you knew. you all knew. for the record →"
+            likes="22,704" when="yesterday">
+            <window.TemplateC card={rrr}/>
+          </window.IGFeedPost>
+        </window.DCArtboard>
+
+        <window.DCArtboard id="feed-d"
+          label="In feed · D · vote" width={540} height={920}>
+          <window.IGFeedPost
+            caption="A or B. drop a comment. no neutral options today."
+            likes="9,114" when="3 hours ago">
+            <window.TemplateD bwCard={lagaan} twCard={baahu}/>
+          </window.IGFeedPost>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* ─── SECTION 9: SYSTEM NOTES ─── */}
+      <window.DCSection
+        id="system"
+        title="09 · system notes"
+        subtitle="What's in. What's out. What's next.">
+
+        <window.DCArtboard id="notes" label="Notes & rationale"
+          width={920} height={620}>
+          <div style={{ width:920, height:620, padding:'40px 50px',
+            background:'var(--bg)', color:'var(--cream)',
+            fontFamily:'DM Sans, sans-serif', fontSize:14, lineHeight:1.55 }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:36 }}>
+              <div>
+                <div style={{ fontFamily:'Bebas Neue', fontSize:13,
+                  letterSpacing:'0.32em', color:'var(--gold)', marginBottom:10 }}>
+                  What's in
+                </div>
+                <ul style={{ paddingLeft:18, listStyle:'square' }}>
+                  <li>5 ship-ready post templates (A–E), all 1080×1350</li>
+                  <li>Profile mock with 27-tile / 3-week grid</li>
+                  <li>4 bio candidates with char counts</li>
+                  <li>3 in-feed context views with captions</li>
+                  <li>BW/TW separation enforced; D is the only mixed-glow surface</li>
+                  <li>Difficulty glow opacity scaled (easy 0.35 / med 0.55 / hard 0.75)</li>
+                  <li>Watermark + handle on every post bottom edge</li>
+                </ul>
+              </div>
+              <div>
+                <div style={{ fontFamily:'Bebas Neue', fontSize:13,
+                  letterSpacing:'0.32em', color:'var(--tomato)', marginBottom:10 }}>
+                  Out of scope this pass
+                </div>
+                <ul style={{ paddingLeft:18, listStyle:'square' }}>
+                  <li>Reels (per your call)</li>
+                  <li>Stories (E1–E7) — easy follow-up</li>
+                  <li>Highlight cover SVGs (placeholder glyphs in profile mock)</li>
+                  <li>Real ornament SVGs (jharokha, mehendi) — type carries the load</li>
+                  <li>CTA copy bank, comment-reply bank — voice work</li>
+                </ul>
+
+                <div style={{ marginTop:24,
+                  fontFamily:'Bebas Neue', fontSize:13,
+                  letterSpacing:'0.32em', color:'var(--emerald)', marginBottom:10 }}>
+                  Suggested next
+                </div>
+                <ul style={{ paddingLeft:18, listStyle:'square' }}>
+                  <li>Stories: daily / poll / quiz / reveal / repost</li>
+                  <li>6 highlight covers as type-stamped marks</li>
+                  <li>Reel cover frame (1080×1920 + grid-crop test)</li>
+                </ul>
+              </div>
+            </div>
+            <div style={{ marginTop:30, paddingTop:18,
+              borderTop:'1px dashed rgba(243,233,210,0.25)',
+              fontFamily:'Fraunces', fontStyle:'italic', fontSize:14,
+              color:'rgba(243,233,210,0.7)' }}>
+              Tweak panel (top-right when toggled): swap Template A's card live, switch the in-feed CTA copy.
+            </div>
+          </div>
+        </window.DCArtboard>
+      </window.DCSection>
+
+      {/* Tweaks panel */}
+      <window.TweaksPanel title="Tweaks" defaultOpen={false}>
+        <window.TweakSection title="Template A · sample card">
+          <window.TweakSelect
+            label="Pick a card"
+            value={tweaks.templateACard}
+            onChange={v => setTweak('templateACard', v)}
+            options={cards.map(c => ({
+              value: c.id,
+              label: `${c.ind} · ${c.diff} · ${c.n}`,
+            }))}/>
+        </window.TweakSection>
+        <window.TweakSection title="In-feed">
+          <window.TweakText
+            label="CTA copy"
+            value={tweaks.ctaCopy}
+            onChange={v => setTweak('ctaCopy', v)}/>
+        </window.TweakSection>
+      </window.TweaksPanel>
+    </window.DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

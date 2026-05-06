@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=0.35" />
+<title>Template E · Meta Quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A0F0A;
+    --card-bw:#E85D3A;
+    --gold:#F2A72E;
+    --cream:#F5E8D4;
+    --ink:#1A0F0A;
+    --saffron:#E89A2E;
+    --paper-dim:rgba(245,232,212,0.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0e0805;color:var(--cream);font-family:'DM Sans',sans-serif}
+  body{display:flex;flex-direction:column;align-items:center;gap:24px;padding:24px 12px 48px;min-height:100vh}
+
+  .rationale{
+    max-width:1080px;width:100%;
+    background:#1A0F0A;border:1px solid rgba(245,232,212,0.18);
+    border-radius:8px;padding:20px 24px;color:var(--cream);
+    font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;
+  }
+  .rationale h1{font-family:'Playfair Display',serif;font-weight:600;font-size:24px;letter-spacing:-0.02em;color:var(--gold);margin-bottom:6px}
+  .rationale h2{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--saffron);margin:14px 0 4px;font-weight:500}
+  .rationale p{color:rgba(245,232,212,0.78)}
+
+  .canvas{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 45%, #2C1510 0%, #1A0F0A 55%, #120804 100%);
+    isolation:isolate;
+  }
+  .paper-noise{
+    position:absolute;inset:0;pointer-events:none;opacity:0.09;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.91 0 0 0 0 0.83 0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  }
+
+  /* gold glow halo */
+  .halo{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,167,46,0.20) 0%, rgba(242,167,46,0.05) 45%, transparent 70%);
+    filter:blur(50px);z-index:0;
+  }
+  .medallion-bg{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:1200px;height:1200px;opacity:0.10;pointer-events:none;
+  }
+
+  /* Ornament-heavy frame: outer thin gold rule + inset gold mat + ornamented corners */
+  .frame-outer{
+    position:absolute;inset:50px;border:1px solid rgba(242,167,46,0.6);z-index:2;pointer-events:none;
+  }
+  .frame-inner{
+    position:absolute;inset:88px;border:1px solid rgba(242,167,46,0.35);z-index:2;pointer-events:none;
+  }
+  .frame-inner::after{
+    content:"";position:absolute;inset:14px;border:1px dashed rgba(242,167,46,0.2);
+  }
+
+  .corner-flourish{position:absolute;width:200px;z-index:4;opacity:0.95}
+  .corner-flourish.tl{left:80px;top:80px}
+  .corner-flourish.tr{right:80px;top:80px;transform:scale(-1,1)}
+  .corner-flourish.bl{left:80px;bottom:80px;transform:scale(1,-1)}
+  .corner-flourish.br{right:80px;bottom:80px;transform:scale(-1,-1)}
+
+  .crown{position:absolute;left:50%;top:140px;transform:translateX(-50%);width:200px;z-index:5}
+  .crown-bot{position:absolute;left:50%;bottom:140px;transform:translateX(-50%) scaleY(-1);width:200px;z-index:5}
+
+  .stamp{
+    position:absolute;left:50%;top:104px;transform:translateX(-50%);
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.5em;text-transform:uppercase;
+    color:var(--gold);opacity:0.7;z-index:6;
+  }
+  .stamp::before,.stamp::after{content:"✦";margin:0 12px;color:var(--saffron);font-size:9px}
+
+  /* THE quote */
+  .quote-block{
+    position:absolute;left:140px;right:140px;top:50%;transform:translateY(-50%);
+    text-align:center;z-index:5;
+  }
+  .quote-mark{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+    font-size:200px;line-height:0.4;color:var(--gold);
+    display:block;margin-bottom:14px;
+  }
+  .quote-text{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:96px;line-height:1.08;letter-spacing:-0.025em;color:var(--cream);
+  }
+  .quote-text .accent{color:var(--gold);font-weight:600}
+  .quote-rule{
+    width:200px;height:1px;margin:48px auto 0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .quote-attr{
+    margin-top:24px;
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.5em;text-transform:uppercase;
+    color:rgba(245,232,212,0.55);
+  }
+
+  .stamp-bot{
+    position:absolute;left:50%;bottom:104px;transform:translateX(-50%);
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.5em;text-transform:uppercase;
+    color:var(--gold);opacity:0.7;z-index:6;
+  }
+  .stamp-bot::before,.stamp-bot::after{content:"✦";margin:0 12px;color:var(--saffron);font-size:9px}
+</style>
+</head>
+<body>
+
+<header class="rationale">
+  <h1>Template E — Meta Quote (Lateral Palette Cleanser)</h1>
+  <p>No card art. Just the line, framed like it's hanging in a haveli alcove. Functions as the rest beat between card-heavy days. Ornament-heavy on purpose — when there's no card, the frame has to do all the work.</p>
+  <h2>Composition</h2>
+  <p><strong>Triple frame:</strong> outer 1px gold rule, inner 1px gold rule (inset 38px), inner-inner dashed gold rule (inset another 14px). That's the "framed print on a haveli wall" reference. <strong>Crown top + bottom (mirrored):</strong> symmetric ornament bookends so the composition reads like a print, not a poster. <strong>Corner flourishes at 200px:</strong> larger than other templates because there's no card to anchor the eye — the corners do that work. <strong>Quote in 96px Playfair italic:</strong> per spec. The word "ruined" gets the gold accent — it's the load-bearing word in the joke. <strong>Gold halo, not BW halo:</strong> there's no card to belong to, so the glow goes gold (celebration of the line itself). <strong>Stamps top + bottom:</strong> "✦ unsolicited cinema review ✦" / "✦ baddesiplots.com ✦" — microcopy ornament.</p>
+  <h2>Why ship this</h2>
+  <p>Quotes are the highest-saving format on IG ratio for this kind of voice account. The card-voice rubric ("dry, cinematic, slightly unhinged") needs space to land without competing with plot text. Risk: 96px on 5 lines could overflow on shorter quotes — this one fits cleanly. Edge case: the longer quote variant should drop to 84px.</p>
+</header>
+
+<div class="canvas">
+  <div class="halo"></div>
+  <svg class="medallion-bg" viewBox="0 0 1000 1000" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1">
+      <circle cx="500" cy="500" r="480"/><circle cx="500" cy="500" r="420"/>
+      <circle cx="500" cy="500" r="340"/><circle cx="500" cy="500" r="260"/>
+      <circle cx="500" cy="500" r="180"/><circle cx="500" cy="500" r="100"/>
+      <line x1="500" y1="20" x2="500" y2="980"/><line x1="20" y1="500" x2="980" y2="500"/>
+      <line x1="160" y1="160" x2="840" y2="840"/><line x1="840" y1="160" x2="160" y2="840"/>
+    </g>
+  </svg>
+  <div class="paper-noise"></div>
+
+  <div class="frame-outer"></div>
+  <div class="frame-inner"></div>
+
+  <svg class="crown" viewBox="0 0 220 110" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="2">
+      <path d="M10 100 Q60 20 110 60 Q160 20 210 100"/>
+      <path d="M30 100 Q70 50 110 75 Q150 50 190 100"/>
+      <path d="M110 28 L110 55"/>
+    </g>
+    <circle cx="110" cy="22" r="6" fill="#F2A72E"/>
+    <circle cx="60" cy="48" r="4" fill="#F2A72E"/>
+    <circle cx="160" cy="48" r="4" fill="#F2A72E"/>
+    <circle cx="20" cy="92" r="3" fill="#E85D3A"/>
+    <circle cx="200" cy="92" r="3" fill="#E85D3A"/>
+  </svg>
+  <svg class="crown-bot" viewBox="0 0 220 110" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="2">
+      <path d="M10 100 Q60 20 110 60 Q160 20 210 100"/>
+      <path d="M30 100 Q70 50 110 75 Q150 50 190 100"/>
+      <path d="M110 28 L110 55"/>
+    </g>
+    <circle cx="110" cy="22" r="6" fill="#F2A72E"/>
+    <circle cx="60" cy="48" r="4" fill="#F2A72E"/>
+    <circle cx="160" cy="48" r="4" fill="#F2A72E"/>
+  </svg>
+
+  <div class="stamp">unsolicited cinema review</div>
+
+  <svg class="corner-flourish tl" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.4" opacity="0.95">
+      <path d="M10 150 Q40 130 60 100 Q80 70 80 30"/><path d="M10 130 Q30 110 50 90"/>
+    </g>
+    <circle cx="80" cy="30" r="5" fill="#F2A72E"/><circle cx="50" cy="90" r="3" fill="#E85D3A"/>
+  </svg>
+  <svg class="corner-flourish tr" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.4" opacity="0.95">
+      <path d="M10 150 Q40 130 60 100 Q80 70 80 30"/><path d="M10 130 Q30 110 50 90"/>
+    </g>
+    <circle cx="80" cy="30" r="5" fill="#F2A72E"/><circle cx="50" cy="90" r="3" fill="#E85D3A"/>
+  </svg>
+  <svg class="corner-flourish bl" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.4" opacity="0.95">
+      <path d="M10 150 Q40 130 60 100 Q80 70 80 30"/><path d="M10 130 Q30 110 50 90"/>
+    </g>
+    <circle cx="80" cy="30" r="5" fill="#F2A72E"/><circle cx="50" cy="90" r="3" fill="#E85D3A"/>
+  </svg>
+  <svg class="corner-flourish br" viewBox="0 0 160 160" aria-hidden="true">
+    <g fill="none" stroke="#F2A72E" stroke-width="1.4" opacity="0.95">
+      <path d="M10 150 Q40 130 60 100 Q80 70 80 30"/><path d="M10 130 Q30 110 50 90"/>
+    </g>
+    <circle cx="80" cy="30" r="5" fill="#F2A72E"/><circle cx="50" cy="90" r="3" fill="#E85D3A"/>
+  </svg>
+
+  <div class="quote-block">
+    <span class="quote-mark">&ldquo;</span>
+    <div class="quote-text">the movie that <span class="accent">ruined</span> your last family road trip</div>
+    <div class="quote-rule"></div>
+    <div class="quote-attr">— file under: bad desi plots</div>
+  </div>
+
+  <div class="stamp-bot">baddesiplots.com</div>
+</div>
+
+</body>
+</html>

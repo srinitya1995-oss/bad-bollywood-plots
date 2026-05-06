@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=0.35" />
+<title>Template D · Vote · Chennai Express vs RRR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A0F0A;
+    --card-bw:#E85D3A;
+    --card-tw:#3EA87A;
+    --gold:#F2A72E;
+    --cream:#F5E8D4;
+    --ink:#1A0F0A;
+    --glow-bw:rgba(232,93,58,0.35);
+    --glow-tw:rgba(62,168,122,0.35);
+    --saffron:#E89A2E;
+    --emerald-bright:#4FC798;
+    --paper-dim:rgba(245,232,212,0.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0e0805;color:var(--cream);font-family:'DM Sans',sans-serif}
+  body{display:flex;flex-direction:column;align-items:center;gap:32px;padding:24px 12px 64px;min-height:100vh}
+
+  .rationale{
+    max-width:1080px;width:100%;
+    background:#1A0F0A;border:1px solid rgba(245,232,212,0.18);
+    border-radius:8px;padding:20px 24px;color:var(--cream);
+    font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;
+  }
+  .rationale h1{font-family:'Playfair Display',serif;font-weight:600;font-size:24px;letter-spacing:-0.02em;color:var(--gold);margin-bottom:6px}
+  .rationale h2{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--saffron);margin:14px 0 4px;font-weight:500}
+  .rationale p{color:rgba(245,232,212,0.78)}
+  .rationale strong{color:var(--cream)}
+
+  .canvas{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    background:#1A0F0A;
+    isolation:isolate;
+  }
+  .paper-noise{
+    position:absolute;inset:0;pointer-events:none;opacity:0.07;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.91 0 0 0 0 0.83 0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  }
+
+  /* split halos — left BW, right TW */
+  .halo-l{
+    position:absolute;left:24%;top:55%;transform:translate(-50%,-50%);
+    width:680px;height:680px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,93,58,0.34) 0%, rgba(232,93,58,0.08) 45%, rgba(232,93,58,0) 70%);
+    filter:blur(40px);z-index:0;
+  }
+  .halo-r{
+    position:absolute;left:76%;top:55%;transform:translate(-50%,-50%);
+    width:680px;height:680px;border-radius:50%;
+    background:radial-gradient(circle, rgba(62,168,122,0.34) 0%, rgba(62,168,122,0.08) 45%, rgba(62,168,122,0) 70%);
+    filter:blur(40px);z-index:0;
+  }
+  /* divider */
+  .divider{
+    position:absolute;left:50%;top:200px;bottom:240px;width:1px;
+    background:linear-gradient(180deg, transparent, rgba(242,167,46,0.55) 15%, rgba(242,167,46,0.55) 85%, transparent);
+    z-index:3;
+  }
+  .divider::before{
+    content:"VS";position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);
+    background:#1A0F0A;padding:10px 16px;
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:48px;
+    color:var(--gold);letter-spacing:0.04em;
+    border:1px solid rgba(242,167,46,0.55);
+    border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 4px rgba(26,15,10,1), 0 0 30px rgba(242,167,46,0.35);
+  }
+
+  /* masthead shared */
+  .masthead{
+    position:absolute;left:0;right:0;top:0;height:120px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 80px;z-index:5;
+  }
+  .masthead .left, .masthead .right{
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;
+    letter-spacing:0.4em;text-transform:uppercase;color:rgba(245,232,212,0.65);
+  }
+  .masthead .center{
+    font-family:'Playfair Display',serif;font-weight:600;font-style:italic;
+    font-size:22px;color:var(--gold);letter-spacing:-0.01em;
+  }
+  .masthead-rule{
+    position:absolute;left:96px;right:96px;top:140px;height:1px;
+    background:linear-gradient(90deg, transparent 0%, rgba(242,167,46,0.5) 20%, rgba(242,167,46,0.5) 80%, transparent 100%);
+    z-index:5;
+  }
+
+  .vote-prompt{
+    position:absolute;left:0;right:0;top:172px;text-align:center;z-index:5;
+  }
+  .vote-prompt .head{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:64px;
+    letter-spacing:-0.02em;color:var(--cream);
+  }
+  .vote-prompt .head .bw{color:var(--card-bw);font-weight:700;font-style:normal}
+  .vote-prompt .head .tw{color:var(--card-tw);font-weight:700;font-style:normal}
+
+  /* the two panels */
+  .panel{
+    position:absolute;top:300px;bottom:280px;width:46%;
+    z-index:4;
+    display:flex;flex-direction:column;align-items:center;
+    padding:48px 36px;
+  }
+  .panel-l{ left:24px; }
+  .panel-r{ right:24px; }
+
+  .industry-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;
+    letter-spacing:0.55em;text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .industry-tag::before, .industry-tag::after{
+    content:""; width:36px;height:1px;
+  }
+  .industry-tag.bw{ color:var(--card-bw); }
+  .industry-tag.bw::before, .industry-tag.bw::after{ background:var(--card-bw); }
+  .industry-tag.tw{ color:var(--card-tw); }
+  .industry-tag.tw::before, .industry-tag.tw::after{ background:var(--card-tw); }
+
+  .meta-row{
+    display:flex;align-items:center;gap:10px;margin-bottom:34px;
+    color:rgba(245,232,212,0.65);
+    font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.4em;text-transform:uppercase;
+  }
+  .meta-row i{display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(245,232,212,0.18);border:1px solid rgba(245,232,212,0.3)}
+  .meta-row i.on{background:var(--gold);border-color:var(--gold)}
+  .meta-row .sep{color:rgba(245,232,212,0.3)}
+
+  .quote-mark{
+    font-family:'Playfair Display',serif;font-weight:700;font-style:italic;
+    font-size:140px;line-height:0.5;color:var(--gold);opacity:0.85;
+    margin-bottom:0;
+  }
+  .plot-text{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:32px;line-height:1.22;letter-spacing:-0.005em;
+    color:var(--cream);text-align:center;margin-top:22px;
+  }
+  .plot-text .accent-bw{ color:var(--card-bw);font-weight:600 }
+  .plot-text .accent-tw{ color:var(--card-tw);font-weight:600 }
+
+  .panel .vote-button{
+    margin-top:auto;
+    font-family:'DM Sans',sans-serif;font-weight:700;font-size:18px;letter-spacing:0.45em;text-transform:uppercase;
+    padding:18px 40px;
+    border-radius:2px;
+    border:1.5px solid;
+  }
+  .vote-button.bw{ color:var(--card-bw);border-color:var(--card-bw);background:rgba(232,93,58,0.08) }
+  .vote-button.tw{ color:var(--card-tw);border-color:var(--card-tw);background:rgba(62,168,122,0.08) }
+
+  .footer-block{
+    position:absolute;left:90px;right:90px;bottom:90px;
+    display:flex;flex-direction:column;align-items:center;gap:14px;z-index:6;
+  }
+  .footer-rule{
+    width:100%;height:1px;
+    background:linear-gradient(90deg, transparent, rgba(242,167,46,0.5) 20%, rgba(242,167,46,0.5) 80%, transparent);
+  }
+  .cta{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:30px;letter-spacing:-0.01em;color:var(--gold);
+  }
+  .cta .arrow-bw{font-style:normal;color:var(--card-bw)}
+  .cta .arrow-tw{font-style:normal;color:var(--card-tw)}
+  .watermark{
+    font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.4em;text-transform:uppercase;
+    color:rgba(245,232,212,0.45);
+  }
+</style>
+</head>
+<body>
+
+<header class="rationale">
+  <h1>Template D — Vote / Opinion (BW vs TW)</h1>
+  <p>The only template where the two glow families co-exist. Built as a strict left/right split with a gold "VS" disc punching through the dividing rule.</p>
+  <h2>Composition</h2>
+  <p><strong>Two halos, sharply separated:</strong> BW halo lives at 24% horizontal center, TW halo at 76% — the dark valley between them is intentional, that's where the eye lands on the gold VS pip. <strong>Vertical gold rule with VS disc:</strong> the rule fades top and bottom into transparent so the divider doesn't fight the masthead or the footer; the disc has a 4px halo of bg color so it sits above the rule cleanly. <strong>Plot text shrinks to 32px:</strong> two 60–80 character plots side-by-side need this size to breathe. Quote mark drops from 220px to 140px to match. <strong>Vote buttons at the bottom of each panel:</strong> "BW it" / "TW it" in their respective family colors — these are the prompts users save for the comments.</p>
+  <h2>Accent words</h2>
+  <p>Chennai Express → "Tamil" (BW orange). RRR → "freedom fighters" (TW green). Both are the most desi-specific noun in their plot.</p>
+  <h2>Caption pairing</h2>
+  <p>"BW or TW? both got dance numbers. one made the Oscars. guess both 👇" — sets up the joke that one card is harder than it looks. Ships in caption, not on canvas.</p>
+</header>
+
+<div class="canvas">
+  <div class="halo-l"></div>
+  <div class="halo-r"></div>
+  <div class="paper-noise"></div>
+  <div class="divider"></div>
+
+  <div class="masthead">
+    <div class="left">vol. 01 · vote 001</div>
+    <div class="center">Bad Desi Plots</div>
+    <div class="right">officially bad</div>
+  </div>
+  <div class="masthead-rule"></div>
+
+  <div class="vote-prompt">
+    <div class="head"><span class="bw">BW</span> or <span class="tw">TW</span>?</div>
+  </div>
+
+  <!-- LEFT — BW · Chennai Express -->
+  <div class="panel panel-l">
+    <div class="industry-tag bw">Bollywood</div>
+    <div class="meta-row">
+      <span>Easy</span>
+      <span><i class="on"></i><i></i><i></i></span>
+      <span class="sep">·</span>
+      <span>2013</span>
+    </div>
+    <div class="quote-mark">&ldquo;</div>
+    <div class="plot-text">
+      Man boards a train to scatter his grandfather's ashes. Accidentally ends up in a <span class="accent-bw">Tamil</span> gangster's village. Accidentally gets engaged.
+    </div>
+    <div class="vote-button bw">BW it</div>
+  </div>
+
+  <!-- RIGHT — TW · RRR -->
+  <div class="panel panel-r">
+    <div class="industry-tag tw">Tollywood</div>
+    <div class="meta-row">
+      <span>Easy</span>
+      <span><i class="on"></i><i></i><i></i></span>
+      <span class="sep">·</span>
+      <span>2022</span>
+    </div>
+    <div class="quote-mark">&ldquo;</div>
+    <div class="plot-text">
+      Two <span class="accent-tw">freedom fighters</span> meet, become best friends, and discover they are on opposite sides. They dance about it.
+    </div>
+    <div class="vote-button tw">TW it</div>
+  </div>
+
+  <div class="footer-block">
+    <div class="footer-rule"></div>
+    <div class="cta">guess both <span class="arrow-bw">↓</span> <span class="arrow-tw">↓</span></div>
+    <div class="watermark">baddesiplots.com</div>
+  </div>
+</div>
+
+</body>
+</html>

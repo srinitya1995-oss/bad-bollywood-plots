@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=0.5" />
+<title>Profile Photo · Bad Desi Plots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A0F0A;
+    --card-bw:#E85D3A;
+    --gold:#F2A72E;
+    --cream:#F5E8D4;
+    --saffron:#E89A2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0e0805;color:var(--cream);font-family:'DM Sans',sans-serif}
+  body{display:flex;flex-direction:column;align-items:center;gap:32px;padding:24px 12px 64px;min-height:100vh}
+
+  .rationale{
+    max-width:1080px;width:100%;
+    background:#1A0F0A;border:1px solid rgba(245,232,212,0.18);
+    border-radius:8px;padding:20px 24px;color:var(--cream);
+    font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;
+  }
+  .rationale h1{font-family:'Playfair Display',serif;font-weight:600;font-size:24px;letter-spacing:-0.02em;color:var(--gold);margin-bottom:6px}
+  .rationale h2{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--saffron);margin:14px 0 4px;font-weight:500}
+  .rationale p{color:rgba(245,232,212,0.78)}
+
+  .row{display:flex;align-items:center;gap:48px;flex-wrap:wrap;justify-content:center}
+  .canvas{
+    width:1080px;height:1080px;position:relative;overflow:hidden;
+    background:var(--bg);
+    border-radius:50%; /* IG masks profile to circle anyway, render the masked version */
+  }
+  /* a square companion render so designers can see what the file looks like before crop */
+  .canvas-sq{
+    width:1080px;height:1080px;position:relative;overflow:hidden;
+    background:var(--bg);
+  }
+
+  .preview-stack{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .preview-label{
+    font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.45em;text-transform:uppercase;
+    color:rgba(245,232,212,0.5);
+  }
+
+  .thumb-110{
+    width:110px;height:110px;border-radius:50%;background:var(--bg);position:relative;overflow:hidden;
+    box-shadow:0 0 0 2px rgba(245,232,212,0.1);
+  }
+  .thumb-110 svg, .thumb-330 svg{display:block;width:100%;height:100%}
+  .thumb-330{
+    width:330px;height:330px;border-radius:50%;background:var(--bg);position:relative;overflow:hidden;
+    box-shadow:0 0 0 2px rgba(245,232,212,0.1);
+  }
+
+  .pfp-stage svg{display:block;width:100%;height:100%}
+</style>
+</head>
+<body>
+
+<header class="rationale">
+  <h1>Profile photo — BP monogram in jharokha-arch crest</h1>
+  <p>1080×1080 SVG inline. Designed legible at IG profile circle thumbnail (110px) — that means the BP monogram has to stop the eye, the arch is decorative bezel, and gold + flame are the only colors that survive at thumbnail size.</p>
+  <h2>Choices</h2>
+  <p><strong>BP monogram, not full wordmark:</strong> "Bad Desi Plots" is too long for 110px circle. Stylized "BP" in Playfair Display 700 italic, the B in cream, the P in flame orange — primary brand recognition lives in the letter pair. <strong>Jharokha-arch silhouette:</strong> top half of the canvas wears the arch in gold, mehendi medallion at low opacity behind. <strong>Flame underline:</strong> a single flame-orange brushstroke under the monogram — the "officially bad" stamp microcopy. <strong>Inner ring:</strong> 2px gold ring at 90% radius gives the circle thumbnail a hard edge against IG's gray story-rings. <strong>No CSS-only ornaments:</strong> arch and medallion are real SVG.</p>
+  <h2>Render targets</h2>
+  <p>Below: the full 1080×1080 render, plus 330px (post-card avatar) and 110px (profile pill thumbnail) previews. Squint test: at 110px the BP must still be readable — if you can't read it, redesign.</p>
+</header>
+
+<div class="row">
+  <div class="preview-stack">
+    <div class="preview-label">1080 × 1080 · master file</div>
+    <div class="canvas-sq" id="pfp-master">
+      <!-- shared symbol below -->
+      <svg viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-label="Bad Desi Plots monogram">
+        <defs>
+          <linearGradient id="pfpGold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F2A72E"/>
+            <stop offset="0.5" stop-color="#FFD27D"/>
+            <stop offset="1" stop-color="#A36F1C"/>
+          </linearGradient>
+          <radialGradient id="pfpHalo" cx="50%" cy="55%" r="50%">
+            <stop offset="0" stop-color="#E85D3A" stop-opacity="0.45"/>
+            <stop offset="0.5" stop-color="#E85D3A" stop-opacity="0.10"/>
+            <stop offset="1" stop-color="#E85D3A" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- bg + halo -->
+        <rect width="1080" height="1080" fill="#1A0F0A"/>
+        <circle cx="540" cy="600" r="500" fill="url(#pfpHalo)"/>
+
+        <!-- mehendi rings backdrop -->
+        <g fill="none" stroke="#F2A72E" stroke-width="1" opacity="0.18">
+          <circle cx="540" cy="540" r="520"/>
+          <circle cx="540" cy="540" r="460"/>
+          <circle cx="540" cy="540" r="380"/>
+          <circle cx="540" cy="540" r="300"/>
+          <line x1="540" y1="20" x2="540" y2="1060"/>
+          <line x1="20" y1="540" x2="1060" y2="540"/>
+          <line x1="180" y1="180" x2="900" y2="900"/>
+          <line x1="900" y1="180" x2="180" y2="900"/>
+        </g>
+
+        <!-- inner gold ring (hard edge against IG story rings) -->
+        <circle cx="540" cy="540" r="500" fill="none" stroke="url(#pfpGold)" stroke-width="6"/>
+        <circle cx="540" cy="540" r="478" fill="none" stroke="url(#pfpGold)" stroke-width="2" opacity="0.6"/>
+
+        <!-- jharokha arch over the top half -->
+        <g fill="none" stroke="url(#pfpGold)" stroke-width="4">
+          <path d="M180 540 L180 360 Q180 240 300 170 Q420 100 540 90 Q660 100 780 170 Q900 240 900 360 L900 540"/>
+          <path d="M218 540 L218 360 Q218 260 320 200 Q430 138 540 130 Q650 138 760 200 Q862 260 862 360 L862 540"/>
+        </g>
+        <!-- arch crown finial -->
+        <g fill="#F2A72E">
+          <circle cx="540" cy="78" r="14"/>
+          <rect x="535" y="60" width="10" height="36"/>
+        </g>
+        <!-- arch dots -->
+        <g fill="#F2A72E">
+          <circle cx="380" cy="180" r="6"/>
+          <circle cx="700" cy="180" r="6"/>
+          <circle cx="280" cy="280" r="5"/>
+          <circle cx="800" cy="280" r="5"/>
+          <circle cx="220" cy="400" r="4"/>
+          <circle cx="860" cy="400" r="4"/>
+        </g>
+
+        <!-- BP monogram -->
+        <g font-family="'Playfair Display', serif" font-style="italic" font-weight="700">
+          <text x="540" y="700" text-anchor="middle" font-size="460" letter-spacing="-12" fill="#F5E8D4">B</text>
+          <text x="540" y="700" text-anchor="middle" font-size="460" letter-spacing="-12" fill="#E85D3A" transform="translate(170,0)">P</text>
+        </g>
+
+        <!-- flame underline -->
+        <path d="M340 770 Q540 800 740 770" fill="none" stroke="#E85D3A" stroke-width="8" stroke-linecap="round"/>
+        <path d="M380 800 Q540 820 700 800" fill="none" stroke="#F2A72E" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+
+        <!-- microcopy -->
+        <text x="540" y="900" text-anchor="middle" font-family="'DM Sans', sans-serif" font-weight="700"
+              font-size="40" letter-spacing="20" fill="#F2A72E" opacity="0.85">OFFICIALLY BAD</text>
+        <text x="540" y="970" text-anchor="middle" font-family="'DM Sans', sans-serif" font-weight="500"
+              font-size="28" letter-spacing="6" fill="#F5E8D4" opacity="0.55">est. 2026 · 350+ plots</text>
+
+        <!-- bottom flame dots flanking the microcopy -->
+        <circle cx="240" cy="888" r="6" fill="#E85D3A"/>
+        <circle cx="840" cy="888" r="6" fill="#E85D3A"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="preview-stack">
+    <div class="preview-label">330 px · post-card avatar</div>
+    <div class="thumb-330">
+      <svg viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-label="Bad Desi Plots monogram thumb">
+        <use href="#pfp-master svg" />
+        <rect width="1080" height="1080" fill="#1A0F0A"/>
+        <circle cx="540" cy="600" r="500" fill="url(#pfpHalo)"/>
+        <g fill="none" stroke="#F2A72E" stroke-width="1" opacity="0.18">
+          <circle cx="540" cy="540" r="520"/><circle cx="540" cy="540" r="460"/>
+          <circle cx="540" cy="540" r="380"/><circle cx="540" cy="540" r="300"/>
+        </g>
+        <circle cx="540" cy="540" r="500" fill="none" stroke="url(#pfpGold)" stroke-width="6"/>
+        <g fill="none" stroke="url(#pfpGold)" stroke-width="4">
+          <path d="M180 540 L180 360 Q180 240 300 170 Q420 100 540 90 Q660 100 780 170 Q900 240 900 360 L900 540"/>
+        </g>
+        <circle cx="540" cy="78" r="14" fill="#F2A72E"/>
+        <text x="540" y="700" text-anchor="middle" font-family="'Playfair Display',serif" font-style="italic" font-weight="700" font-size="460" letter-spacing="-12" fill="#F5E8D4">B</text>
+        <text x="710" y="700" text-anchor="middle" font-family="'Playfair Display',serif" font-style="italic" font-weight="700" font-size="460" letter-spacing="-12" fill="#E85D3A">P</text>
+        <path d="M340 770 Q540 800 740 770" fill="none" stroke="#E85D3A" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="preview-stack">
+    <div class="preview-label">110 px · profile pill thumb</div>
+    <div class="thumb-110">
+      <svg viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-label="Bad Desi Plots monogram tiny">
+        <rect width="1080" height="1080" fill="#1A0F0A"/>
+        <circle cx="540" cy="540" r="500" fill="none" stroke="#F2A72E" stroke-width="14"/>
+        <text x="540" y="700" text-anchor="middle" font-family="'Playfair Display',serif" font-style="italic" font-weight="700" font-size="500" letter-spacing="-14" fill="#F5E8D4">B</text>
+        <text x="720" y="700" text-anchor="middle" font-family="'Playfair Display',serif" font-style="italic" font-weight="700" font-size="500" letter-spacing="-14" fill="#E85D3A">P</text>
+        <path d="M280 800 Q540 850 800 800" fill="none" stroke="#E85D3A" stroke-width="14" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
