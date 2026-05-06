@@ -15,8 +15,6 @@ const mockPayload: Partial<GamePayload> = {
   idx: 12,
   industry: 'BW',
   adaptive: { ability: 1300, history: [] } as never,
-  abilityTier: 'Movie Buff',
-  abilityPercentile: 25,
 };
 
 vi.mock('../../src/hooks/useGameState', () => ({

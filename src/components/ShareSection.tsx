@@ -6,6 +6,7 @@ import {
   getShareTextSolo,
   getShareTextParty,
   type ShareChannel,
+  type ShareMode,
 } from '../utils/share';
 import { toast } from './Toast';
 
@@ -16,6 +17,14 @@ const CHANNELS: { id: ShareChannel; label: string; aria: string }[] = [
   { id: 'copy',     label: 'Copy',     aria: 'Copy share text' },
 ];
 
+const URL_BUILDERS: Record<Exclude<ShareChannel, 'copy'>, (text: string, mode: ShareMode) => string> = {
+  whatsapp: (text) => `https://wa.me/?text=${encodeURIComponent(text)}`,
+  x:        (text) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
+  reddit:   (text, mode) =>
+    `https://reddit.com/submit?title=${encodeURIComponent(text.split('\n')[0])}&url=${encodeURIComponent(buildShareUrl('reddit', mode))}`,
+};
+
+/** Renders the 4-channel share row (WhatsApp · X · Reddit · Copy) on the Results screen. */
 export function ShareSection() {
   const { payload } = useGameState();
   const { scorer, idx, scores, adaptive, industry } = payload;
@@ -46,18 +55,13 @@ export function ShareSection() {
     window.posthog?.capture('share_click', { channel, mode });
     const text = getText(channel);
     if (channel === 'copy') {
-      void navigator.clipboard.writeText(text);
-      toast('Copied');
+      navigator.clipboard.writeText(text).then(
+        () => toast('Copied'),
+        () => toast('Copy failed'),
+      );
       return;
     }
-    const enc = encodeURIComponent;
-    const url =
-      channel === 'whatsapp'
-        ? `https://wa.me/?text=${enc(text)}`
-      : channel === 'x'
-        ? `https://twitter.com/intent/tweet?text=${enc(text)}`
-        : `https://reddit.com/submit?title=${enc(text.split('\n')[0])}&url=${enc(buildShareUrl('reddit', mode))}`;
-    window.open(url, '_blank');
+    window.open(URL_BUILDERS[channel](text, mode), '_blank');
   }
 
   return (
