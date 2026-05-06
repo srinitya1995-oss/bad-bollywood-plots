@@ -1,4 +1,7 @@
+/** Channels exposed by the Results share row. */
 export type ShareChannel = 'whatsapp' | 'x' | 'reddit' | 'copy';
+
+/** Game mode the share text was produced from. Drives `utm_campaign`. */
 export type ShareMode = 'solo' | 'party';
 
 const BASE_URL = 'https://baddesiplots.com/';
@@ -13,12 +16,14 @@ export function buildShareUrl(channel: ShareChannel, mode: ShareMode): string {
   return `${BASE_URL}?${params.toString()}`;
 }
 
+/** Inputs needed to render a solo-mode share string. */
 export interface SoloShareInput {
   tier: string;
   rating: number;
   correctCount: number;
   totalPlayed: number;
   industryLabel: string;
+  /** Top-percent framing: 25 renders as "Top 25%" (lower = better). */
   percentile: number;
   emoji: string;
 }
