@@ -4,5 +4,28 @@ dist/
 .superpowers/
 .DS_Store
 .session-log.md
-screenshots/qa/
 vite.config.ts.timestamp-*
+
+# Local-only ops + audit dumps
+.audits/
+.pilot_tmp/
+.vercel/
+
+# Visual-QA + verification artifacts
+screenshots/
+!screenshots/marketing/
+
+# Local Claude hooks with hardcoded user paths
+.claude/hooks/screenshot-gate.sh
+.claude/hooks/session-log.sh
+
+# One-off debug + verification scripts (kept on disk, not in repo)
+scripts/_verify-*.cjs
+scripts/_verify-*.js
+scripts/diag-live.js
+scripts/phase2-debug.cjs
+scripts/phase2-visual-qa.cjs
+scripts/qa-preship-*.js
+scripts/shot-home.js
+scripts/v4-screenshots.cjs
+scripts/verify-points.js
