@@ -8,7 +8,7 @@ import type { Card, Industry, GameMode, Player, DifficultyFilter, RoundLength } 
 import { INDUSTRY_META, POINT_MAP } from '../core/types';
 import { buildPartyDeck, shuffle as shuffleArray } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
-import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
+import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, pickSoloEmoji, type AdaptiveState } from '../core/adaptive';
 import { getShareTextSolo, getShareTextParty } from '../utils/share';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? 'https://wmfxkkgktmfsipiihsjq.supabase.co';
@@ -303,6 +303,7 @@ class GameInstance {
     if (reason !== 'exit') this.fsm.transition('results');
   }
 
+  /** Default ('copy' channel) share blurb. Solo: rating + tier + percentile. Party: top-3 leaderboard. */
   getShareText(): string {
     if (this.scorer.players.length > 1) {
       return getShareTextParty(
@@ -313,20 +314,15 @@ class GameInstance {
         'copy',
       );
     }
-    const ind = this.industry ? INDUSTRY_META[this.industry].lang : 'Cinema';
     const ability = this.adaptive.ability;
-    const emoji = ability >= 1500 ? '\u{1F525}'
-                : ability >= 1300 ? '\u{1F4AA}'
-                : ability >= 1100 ? '\u{1F3AC}'
-                : '\u{1F605}';
     return getShareTextSolo({
       tier: getAbilityTier(ability),
       rating: ability,
       correctCount: this.scorer.correctCount,
       totalPlayed: this.idx,
-      industryLabel: ind,
+      industryLabel: this.industry ? INDUSTRY_META[this.industry].lang : 'Cinema',
       percentile: getAbilityPercentile(ability),
-      emoji,
+      emoji: pickSoloEmoji(ability),
     }, 'copy');
   }
 

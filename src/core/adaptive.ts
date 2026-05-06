@@ -122,4 +122,12 @@ export function getAbilityPercentile(ability: number): number {
   return Math.round(Math.max(1, Math.min(99, percentile)));
 }
 
+/** Brag emoji for a given ability rating. Used in solo share text. */
+export function pickSoloEmoji(ability: number): string {
+  if (ability >= 1500) return '\u{1F525}'; // fire
+  if (ability >= 1300) return '\u{1F4AA}'; // flex
+  if (ability >= 1100) return '\u{1F3AC}'; // clapperboard
+  return '\u{1F605}'; // sweat-smile
+}
+
 export { DIFFICULTY_RATING };
