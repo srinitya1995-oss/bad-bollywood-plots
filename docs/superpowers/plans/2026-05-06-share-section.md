@@ -246,7 +246,7 @@ describe('getShareTextParty', () => {
       ],
       'x',
     );
-    expect(text.split('\n')[0]).toBe('1. Priya 24 · 2. Raj 18 · 3. Anu 5');
+    expect(text.split('\n')[0]).toBe('1. Priya 24 · 2. Raj 18 · 3. Kiran 9');
     expect(text).toContain('utm_medium=x');
     expect(text).toContain('utm_campaign=results_party');
   });
