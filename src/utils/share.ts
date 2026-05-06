@@ -40,3 +40,23 @@ export function getShareTextSolo(input: SoloShareInput, channel: ShareChannel): 
     url,
   ].join('\n');
 }
+
+/** A single participant on the party-mode leaderboard. */
+export interface PartyPlayer {
+  name: string;
+  /** Points-this-game total (not adaptive rating). */
+  score: number;
+}
+
+/** Format a party-mode results brag with the top-3 leaderboard and a UTM-tagged URL. */
+export function getShareTextParty(players: PartyPlayer[], channel: ShareChannel): string {
+  const top3 = [...players].sort((a, b) => b.score - a.score).slice(0, 3);
+  const ranked = top3.map((p, i) => `${i + 1}. ${p.name} ${p.score}`).join(' · ');
+  const url = buildShareUrl(channel, 'party');
+  return [
+    ranked,
+    '',
+    'Bad Desi Plots. Terrible plots, real movies.',
+    url,
+  ].join('\n');
+}
