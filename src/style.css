@@ -3110,14 +3110,15 @@ body:has(.v8-results) .v8-bulb-glow { opacity: 0.35; }
 }
 
 /* === v8 results: share row === */
+/* Sits on the cream paper panel — uses --ink for text/borders, not --cream */
 .v8-results-share {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   padding: 16px 8px;
-  border-top: 1px solid color-mix(in srgb, var(--cream) 18%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--cream) 18%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   margin: 8px 0;
 }
 .v8-results-share__label {
@@ -3125,7 +3126,7 @@ body:has(.v8-results) .v8-bulb-glow { opacity: 0.35; }
   font-size: var(--text-sm);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--cream) 70%, transparent);
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
 }
 .v8-results-share__row {
   display: flex;
@@ -3141,10 +3142,10 @@ body:has(.v8-results) .v8-bulb-glow { opacity: 0.35; }
   gap: 6px;
   width: 64px;
   min-height: 64px;
-  border: 1px solid color-mix(in srgb, var(--cream) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   border-radius: 12px;
   background: transparent;
-  color: var(--cream);
+  color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
   letter-spacing: 0.06em;
@@ -3155,7 +3156,7 @@ body:has(.v8-results) .v8-bulb-glow { opacity: 0.35; }
 .v8-results-share__btn:hover,
 .v8-results-share__btn:focus-visible {
   transform: translateY(-1px);
-  background: color-mix(in srgb, var(--cream) 6%, transparent);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
 }
 .v8-results-share__btn:active {
   transform: translateY(0);
@@ -3174,7 +3175,7 @@ body:has(.v8-results) .v8-bulb-glow { opacity: 0.35; }
 .v8-results-share__btn--whatsapp .v8-results-share__icon { background: #25D366; color: #fff; }
 .v8-results-share__btn--x        .v8-results-share__icon { background: #000;    color: #fff; }
 .v8-results-share__btn--reddit   .v8-results-share__icon { background: #FF4500; color: #fff; }
-.v8-results-share__btn--copy     .v8-results-share__icon { background: var(--cream); color: var(--ink); }
+.v8-results-share__btn--copy     .v8-results-share__icon { background: var(--ink); color: var(--cream); }
 
 @media (max-width: 360px) {
   .v8-results-share__row { gap: 8px; }
