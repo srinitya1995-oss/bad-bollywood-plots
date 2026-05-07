@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useGameState } from '../hooks/useGameState';
 import { useGameActions } from '../hooks/useGameActions';
+import { ShareSection } from './ShareSection';
 
 const DESI_QUOTES = [
   'Picture abhi baaki hai mere dost',
@@ -116,6 +117,8 @@ export function ResultsScreen() {
         )}
 
         <p className="v8-results-quote">{`"${quote}"`}</p>
+
+        <ShareSection />
 
         <div className="v8-results-ctas">
           <button

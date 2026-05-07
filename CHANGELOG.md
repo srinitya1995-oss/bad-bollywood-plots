@@ -4,6 +4,26 @@ All notable changes to Bad Desi Plots are documented here. Format follows [Keep 
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-05-06
+
+### Added
+- **Share row on Results.** New 4-channel button row (WhatsApp · X · Reddit · Copy) sits between the desi quote and the PLAY AGAIN/HOME CTAs. Each channel opens its native share intent or copies a leaderboard-shaped string to the clipboard. Files: `src/utils/share.ts`, `src/components/ShareSection.tsx`, `.v8-results-share*` block in `src/style.css`.
+- **Multiplayer share text.** Top-3 leaderboard (`1. Priya 24 · 2. Raj 18 · 3. Anu 12`) plus tagline. Previously `gameInstance.getShareText()` returned solo format even for party games.
+- **UTM attribution on every share.** Every shared URL gets `?utm_source=share&utm_medium={channel}&utm_campaign=results_{mode}`. PostHog `share_click` event fires with `{ channel, mode }` on every click.
+- `pickSoloEmoji(ability)` helper in `src/core/adaptive.ts` — extracted from `gameInstance` so the rating-emoji ladder lives next to `getAbilityTier` / `getAbilityPercentile`.
+- Smoke test `scripts/_share-smoke.cjs` (gitignored) — drives a full party game in puppeteer and asserts share row renders, all 4 buttons click correctly with right UTM URLs, clipboard receives leaderboard text, and 4 PostHog events fire.
+
+### Changed
+- `gameInstance.getShareText()` is now a thin delegator over the pure builders in `src/utils/share.ts`. Public API preserved.
+- Solo share URL is now UTM-tagged (`?utm_source=share&utm_medium=copy&utm_campaign=results_solo`) instead of the bare `baddesiplots.com` domain.
+- `ShareSection` URL construction uses a typed dispatch table (`URL_BUILDERS: Record<Exclude<ShareChannel, 'copy'>, …>`) rather than nested ternary — adding a new channel becomes a compile error if you forget the URL.
+- Clipboard copy now honours the actual `writeText` promise: `.then(() => toast('Copied'), () => toast('Copy failed'))`. Fixes a misleading "Copied" toast on Safari/iOS permission denial.
+
+### Fixed
+- Pre-existing ESLint `prefer-const` failure on `src/core/deckBuilder.ts:39` — `let candidates` was never reassigned. Dropped to `const`.
+
+## [2.1.0-postship] - 2026-05-03 (released as `97e2105`)
+
 ### Added
 - `partyRoundCap()` and `filteredPool()` helpers in `src/hooks/gameInstance.ts`. The Settings panel (sound, difficulty filter, round length) now actually drives the game loop. Previously the UI was wired to nothing.
 - Single-tier party mode: when `difficultyFilter` is set to one tier, `gameInstance` skips the 1 easy / 1 medium / 1 hard calibration and seeds 3 cards from the chosen tier.

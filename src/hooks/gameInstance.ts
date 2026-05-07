@@ -8,7 +8,8 @@ import type { Card, Industry, GameMode, Player, DifficultyFilter, RoundLength } 
 import { INDUSTRY_META, POINT_MAP } from '../core/types';
 import { buildPartyDeck, shuffle as shuffleArray } from '../core/deckBuilder';
 import { createScorerState, scoreCard, getVerdict, getLeaderboard, type ScorerState } from '../core/scorer';
-import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, type AdaptiveState } from '../core/adaptive';
+import { createAdaptiveState, updateAbility, pickAdaptiveCard, getAbilityTier, getAbilityPercentile, pickSoloEmoji, type AdaptiveState } from '../core/adaptive';
+import { getShareTextSolo, getShareTextParty } from '../utils/share';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? 'https://wmfxkkgktmfsipiihsjq.supabase.co';
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? '';
@@ -302,19 +303,27 @@ class GameInstance {
     if (reason !== 'exit') this.fsm.transition('results');
   }
 
+  /** Default ('copy' channel) share blurb. Solo: rating + tier + percentile. Party: top-3 leaderboard. */
   getShareText(): string {
-    const ind = this.industry ? INDUSTRY_META[this.industry].lang : 'Cinema';
-    const tier = getAbilityTier(this.adaptive.ability);
-    const pct = getAbilityPercentile(this.adaptive.ability);
-    const emoji = this.adaptive.ability >= 1500 ? '\u{1F525}' : this.adaptive.ability >= 1300 ? '\u{1F4AA}' : this.adaptive.ability >= 1100 ? '\u{1F3AC}' : '\u{1F605}';
-    return [
-      `${emoji} ${tier} (${this.adaptive.ability} rating)`,
-      `${this.scorer.correctCount}/${this.idx} ${ind} movies · Top ${pct}%`,
-      '',
-      'Terrible plots. Real movies.',
-      'Think you can beat that?',
-      'baddesiplots.com',
-    ].join('\n');
+    if (this.scorer.players.length > 1) {
+      return getShareTextParty(
+        this.scorer.players.map((p, i) => ({
+          name: p.name,
+          score: this._scores[i] ?? 0,
+        })),
+        'copy',
+      );
+    }
+    const ability = this.adaptive.ability;
+    return getShareTextSolo({
+      tier: getAbilityTier(ability),
+      rating: ability,
+      correctCount: this.scorer.correctCount,
+      totalPlayed: this.idx,
+      industryLabel: this.industry ? INDUSTRY_META[this.industry].lang : 'Cinema',
+      percentile: getAbilityPercentile(ability),
+      emoji: pickSoloEmoji(ability),
+    }, 'copy');
   }
 
   /** Award points to the player at winnerIdx. Includes streak bonus. */
